@@ -1,0 +1,30 @@
+[% USE Scalar %]
+[% BLOCK block_categorie %]
+    [% WHILE (categorie = bib_cat.next) %]
+        <option
+            value="[% categorie.id %]"
+            [% (categorie.id == categorie_id ?
+            ' selected="selected"' : '') %]
+        >[% '-' | repeat(CAT_STR_DEPTH) %] [% categorie.naam %]</option>
+        [% IF categorie.scalar.bibliotheek_categories.count %]
+        [% SET CAT_STR_DEPTH = CAT_STR_DEPTH + 1 %]
+            [% inner_cat = categorie.scalar.bibliotheek_categories %]
+            [% save_categorie = bib_cat %]
+            [% INCLUDE block_categorie
+                bib_cat = inner_cat
+                CAT_STR_DEPTH = CAT_STR_DEPTH
+            %]
+            [% categorie = save_categorie %]
+            [% SET CAT_STR_DEPTH = CAT_STR_DEPTH - 2 %]
+        [% END %]
+    [% END %]
+[% END %]
+
+
+<select name="[% fieldname %]" class="replace-select-breedmenu">
+    <option value="">Selecteer</option>
+    [% 
+        INCLUDE block_categorie
+        CAT_STR_DEPTH = 1
+    %]
+</select>

@@ -1,0 +1,105 @@
+[% BLOCK milestone_definitie_tabel %]
+    [% lastorfirst = 0; %]
+    [% IF statusnumber == numstatussen; lastorfirst = 1; END %]
+    [% IF statusnumberstart == 1; lastorfirst = 1; END %]
+    [% IF !statusdata; lastorfirst = 0; END %]
+<tr
+class="ezra_table_row[% (!statusdata ? '_template' : '') %][% (statusnumberstart ? ' firstrow' : '')%][% (statusnumber == numstatussen ? ' lastrow' : '') %][% (statusdata && !statusdata.role_id && !statusnumberstart && (statusnumber != numstatussen) ? ' new_row' : '') %]"
+id="ezra_table_definitie_row_number[% (statusdata ? '_' _ statusnumber : '') %]"
+>
+    <!-- <td class="td20">&nbsp;</td> -->
+
+    <td class="td_16px td30">[% statusnumber %].</td>
+
+    <td class="tdvar">
+        <input
+        class="input-var disabled no_empty"
+        type="text"
+        value="[% statusdata.fase %]"
+        name="statussen.[% statusdata.status %].definitie.fase"
+        [% (lastorfirst ? 'disabled=""' : '') %]
+        />
+        [% IF lastorfirst %]
+        <input
+        type="hidden"
+        value="[% statusdata.fase %]"
+        name="statussen.[% statusdata.status %].definitie.fase" />
+        [% END %]
+    </td>
+
+    <td class="td30"><img src="/images/mijlpaal-pijl.gif" /></td>
+
+    <td class="tdvar">
+        <input
+        class="input-var disabled no_empty"
+        type="text"
+        value="[% statusdata.naam %]"
+        name="statussen.[% statusdata.status %].definitie.naam"
+        [% (lastorfirst ? 'disabled=""' : '') %]
+        />
+        [% IF lastorfirst %]
+        <input
+        type="hidden"
+        value="[% statusdata.naam %]"
+        name="statussen.[% statusdata.status %].definitie.naam" />
+        [% END %]
+    </td>
+    <td class="td30">[% IF statusnumber != numstatussen %]<img src="/images/mijlpaal-pijl.gif" />[% END %]</td>
+    <td class="td400">
+        [% IF statusnumber != numstatussen %]
+            <div class="auth_edit_box">
+            [% IF statusnumber == 1 %]
+                <input type="checkbox" checked="checked" disabled="disabled" />
+            [% END %]
+            [% IF statusnumber > 1 %]
+                <input type="checkbox" value="1" name="statussen.[% statusdata.status %].definitie.role_set"
+                [% IF statusdata.role_set %]checked[% END %]
+                />
+            [% END %]
+            [% PROCESS widgets/general/auth_select.tt
+                AUTH_SELECT_OU_NAME   = 'statussen.' _ statusdata.status _ '.definitie.ou_id'
+                AUTH_SELECT_OU_VALUE  = statusdata.ou_id
+                AUTH_SELECT_ROLE_NAME = 'statussen.' _ statusdata.status _ '.definitie.role_id'
+                AUTH_SELECT_ROLE_VALUE = statusdata.role_id
+                AUTH_SELECT_NO_GLOBAL = 1
+            %]
+            </div>
+        [% END %]
+    </td>
+
+    <td class="td20">
+        [% UNLESS lastorfirst %]
+        <a
+            href="#"
+            rel="action: del"
+            class="ezra_ajax_action" />
+                <img src="/images/icon-delete.png" />
+        </a>
+        [% END %]
+    </td>
+</tr>
+[% END %]
+
+<table cellspacing="0" class="mijlpalen ezra_table_table">
+    <thead>
+        <tr>
+            <!-- <th class="td20 center"><img src="/images/icon-drag-v.gif" /></th> -->
+            <th class="td30">Nr.</th>
+            <th class="tdvar">Naam fase (of status)</th>
+            <th class="td20">&nbsp;</th>
+            <th class="tdvar" colspan="2">Naam mijlpaal</th>
+            <th class="td400"><div class="fieldset-col">Toewijzing</div></th>
+            <th class="td20">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    [% numstatussen = zaaktype.statussen.keys.size %]
+    [% statusnumberstart = 1 %]
+    [% FOR statusnumber IN zaaktype.statussen.keys.nsort %]
+        [% statusdata = zaaktype.statussen.$statusnumber.definitie %]
+        [% INCLUDE milestone_definitie_tabel %]
+        [% statusnumberstart = 0 %]
+    [% END %]
+    </tbody>
+</table>
+

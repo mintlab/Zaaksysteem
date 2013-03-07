@@ -1,0 +1,76 @@
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        [% IF item.type == 'kenmerk' %][% bib_type = 'kenmerken' %][% ELSE %][% bib_type = 'sjablonen' %][% END %]
+        [% IF item.type == 'sjabloon' %]
+        <a
+            href="[%
+            c.uri_for(
+                '/beheer/bibliotheek/'
+                _ bib_type _ '/'
+                _ item.cat_id _ '/' 
+                _ item.id
+            ) %]"
+            class="icon icon-[% bib_type %] [% bib_type %]_beheer_select_item"
+        ></a>
+        [% ELSE %]
+        <span class="icon icon-[% bib_type %] [% bib_type %]_beheer_select_item"></span>
+        [% END %]
+    </td>
+    <td class="tdvar">
+        [% IF item.type == 'sjabloon' %]
+        <a  class="[% bib_type %]_beheer_select_item"
+            href="[%
+            c.uri_for(
+                '/beheer/bibliotheek/'
+                _ bib_type _ '/'
+                _ item.cat_id _ '/' 
+                _ item.id
+            ) %]"
+        >
+            [% item.titel %]
+        </a>
+        [% ELSE %]
+        <span class="[% bib_type %]_beheer_select_item">[% item.titel %]</span>
+        [% END %]
+    </td>
+    <td class="td100">[% item.type %]</td>
+    <td class="td100">[% item.versie %]</td>
+    <td class="td100">
+        [% IF item.description.size %]
+            <div class="dropdown-wrap dropdown-wrap-left">
+                <div class="dropdown-init dropdown-init-hover dropdown-init-hide icon-toelichting icon icon-hover show-info-description">
+                    <div class="dropdown dropdown-left dropdown-tooltip">
+                        <div class="dropdown-pijl"></div>
+                        <div class="dropdown-content dropdown-content-overflow">
+                        <strong>Zaaktypen:</strong><br/>
+                            [% item.description.join(', ') %]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        [% END %]
+    </td>
+
+
+
+    [% IF ! categorie.system %]
+    <td class="td200">
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option
+                        class="popup"
+                        value="[% c.uri_for('/beheer/bibliotheek/' _ bib_type _ '/' _ item.cat_id _ '/' _ item.id _ '/bewerken') %]"
+                    >Bewerken</option>
+                    <option class="popup"
+                        value="[% c.uri_for('/beheer/bibliotheek/' _ bib_type _ '/' _ item.cat_id _ '/' _ item.id _ '/verwijderen') %]"
+                    >Verwijderen</option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie icon icon-go-pijl"></a>
+            </div>
+        </div>
+    </td>
+    [% END %]
+</tr>

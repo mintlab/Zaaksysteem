@@ -1,0 +1,44 @@
+[% UNLESS zaak.vorige_fase %]
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Fout:</td>
+        <td class="table_td_right_zaakinformatie">Deze zaak kan niet in status
+        verlaagd worden. Mogelijk is de vorige fase de registratiefase.</td>
+    </tr>
+</tbody></table>
+[% RETURN %]
+[% END %]
+
+[% IF zaak.is_afhandel_fase %]
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">LET OP:</td>
+        <td class="table_td_right_zaakinformatie">Deze zaak is afgehandeld.
+        Zaak zal worden heropend, waardoor de afhandeldatum en
+        vernietigingsdatum hersteld worden naar geen datum.</td>
+    </tr>
+</tbody></table>
+[% END %]
+
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/vorige_status') %]">
+<input type="hidden" name="update" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Zaaknummer:</td>
+        <td class="table_td_right_zaakinformatie">[% zaak.id %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Naar fase:</td>
+        <td class="table_td_right_zaakinformatie">[%
+            zaak.huidige_fase.fase %]</td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Opslaan" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

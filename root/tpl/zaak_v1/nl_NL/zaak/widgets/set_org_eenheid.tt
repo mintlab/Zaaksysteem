@@ -1,0 +1,28 @@
+[% nowrapper = 1 %]
+<form method="POST" action="[% c.uri_for(c.action) %]">
+<input type="hidden" name="document_id" value="[% c.req.params.document_id %]">
+<input type="hidden" name="betrokkene_type" value="org_eenheid">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Organisatorische eenheid:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div id="new_interne_org_eenheid">
+                <select name="ztc_behandelaar_id">
+                    <option value="">Maak uw keuze</option>
+                        [% org_eenheden.reset %]
+                        [% WHILE (org_eenheid = org_eenheden.next) %]
+                        <option value="betrokkene-org_eenheid-[% org_eenheid.ex_id %]">[% org_eenheid.naam %]</option>
+                        [% END %]
+                </select>
+            </div><span class="validator"></span>
+        </td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Opslaan" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>
+

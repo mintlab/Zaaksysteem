@@ -1,0 +1,18 @@
+<!-- widgets/beheer/import/table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="tdvar">[% c.loc('plugin') %]</td>
+            <td class="td100">[% c.loc('versie') %]</td>
+            <td class="td100">[% c.loc('actief') %]</td>
+            <td class="td150">[% c.loc('actie') %]</td>
+        </tr>
+    </thead>
+    <tbody>
+        [% WHILE (entry = plugin_list.next) %]
+            [% PROCESS widgets/beheer/plugins/table_row.tt %]
+        [% END %]
+    </tbody>
+</table>
+<!-- END widgets/beheer/import/table.tt -->

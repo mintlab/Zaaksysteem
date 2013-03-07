@@ -1,0 +1,21 @@
+<!-- zaak/widgets/results.tt -->
+
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="">Bestandsnaam</td>
+            <td class="td120">Ontvangstdatum</td>
+            <td class="td200">Actie</td>
+            <td class="td30">
+                &nbsp;
+            </td>
+        </tr>
+   </thead>
+   <tbody>
+    [% WHILE (doc = dropped_documents.next) %]
+        [% PROCESS zaak/widgets/doc_intake_row.tt %]
+    [% END %]
+    </tbody>
+</table>
+<!-- END zaak/widgets/results.tt -->

@@ -1,0 +1,82 @@
+<form method="POST" action="[% c.uri_for('/zaak/intake/link/' _ doc.id) %]">
+<input type="hidden" name="[% postprefix %]document_id" value="[% doc.id %]">
+<input type="hidden" name="link" value="1">
+<input type="hidden" name="document_details" value="1">
+<input type="hidden" name="zaaknr" value="[% zaak.nr %]">
+
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Toevoegen aan zaaknummer:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% zaak.id %]
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Zaaktype:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% zaak.zaaktype_node_id.titel %]
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Bestandsnaam:</td>
+        <td class="table_td_right_zaakinformatie">
+        <input type="hidden" name="zaak_intake_old_filename_[% doc.id %]" value="[% doc.filename %]"/>
+        <input type="text" name="zaak_intake_edit_filename_[% doc.id %]" class="input_large zaak_intake_edit_filename" rel="[% doc.id %]" value="[% doc.filename %]" /><span class="zaak_intake_error_change_filename" id="zaak_intake_edit_filename_error_[% doc.id %]"></span>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Onderwerp:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% zaak.onderwerp %]
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Selecteer zaaktypedocument:</td>
+        <td class="table_td_right_zaakinformatie">
+            <select name="catalogus" class="select_zt_document zaak_[% zaak.nr %]">
+                <option value="">Geen</option>
+                    [% documenten = zaak.zaaktype_node_id.zaaktype_kenmerken.scalar.search(
+                        {
+                            'bibliotheek_kenmerken_id.value_type'    => 'file'
+                        },
+                        {
+                            'join'          => 'bibliotheek_kenmerken_id',
+                            'order_by'      => 'id',
+                        }
+                    ) %]
+                [% WHILE (cdocument = documenten.next) %]
+                    <option value="[% cdocument.id %]" class="[% (cdocument.value_mandatory ? 'verplicht_document' : "") %][% (cdocument.pip ? ' pip_document' : '') %]">
+                        [% cdocument.naam %]
+                    </option>
+                [% END %]
+            </select>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Selecteer documenttype:</td>
+        <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_categorie">
+            Laden...
+            *** [% documenten.document.category %] ***
+        </td>
+        <td class="table_td_right_zaakinformatie document_constraint_false">
+            <select name="category">
+            [% FOREACH doc_category IN constants.document.categories %]
+                    <option value="[% doc_category %]">[% doc_category %]</option>
+            [% END %]
+            </select>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatioe_tr">
+        <td class="table_td_left_zaakinformatie">Toelichting:</td>
+        <td class="table_td_right_zaakinformatie">
+            <textarea cols="60" name="help">[% document.help %]</textarea>
+        </td>
+
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Toevoegen" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

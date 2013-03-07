@@ -1,0 +1,13 @@
+[% USE Dumper %]
+
+
+<div class="block clearfix import">
+    <p class="header">Zaaktypes</p>
+    <div class="blockcontent">
+        <a href="/beheer/zaaktypen/export/download">Download een tar.gz bestand met alle zaaktypen</a><br/><br/>
+Zaaktypen:</br>
+[% FOREACH zaaktype = filenames %]
+[% zaaktype.zaaktype_id %] <a href="/beheer/zaaktypen/[% zaaktype.zaaktype_id %]/export">[% zaaktype.filename %]</a><br/>
+[% END %]
+    </div>
+</div>

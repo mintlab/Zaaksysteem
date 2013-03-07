@@ -1,0 +1,70 @@
+[% USE Scalar %]
+[% catalogus = zaak.typeinfo.kenmerken.catalogus %]
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/add') %]" enctype="multipart/form-data">
+[%
+    catalogus.scalar.documenten.reset;
+    documenten_config = catalogus.scalar.documenten;
+%]
+<pre style="display: none;" class="json_config">
+{[% WHILE document = documenten_config.next %]
+    "documents": {
+        "[% document.id %]": {
+            "mandatory": [% document.mandatory %],
+            "pip": [% document.pip %]
+        }
+    }
+}[% END %]
+</div>
+<input type="hidden" name="documenttype" value="file">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">In status:</td>
+        <td class="table_td_right_zaakinformatie">[% zaak.kenmerk.status %] van [% zaak.zaakstatusinfo.count %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Selecteer een document:</td>
+        <td class="table_td_right_zaakinformatie"><input type="file" name="filename" /></td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Verplicht document:</td>
+        <td class="table_td_right_zaakinformatie">
+            <select name="catalogus">
+                <option value="">Geen</option>
+                [% catalogus.scalar.documenten.reset %]
+                [% documenten = catalogus.documenten %]
+                [% WHILE (document = documenten.next) %]
+                [% NEXT IF zaak.documents.from_catalogus(document.id) %]
+                <option value="[% document.id %]">
+                    [% document.description %]
+                </option>
+                [% END %]
+            </select>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Selecteer het type:</td>
+        <td class="table_td_right_zaakinformatie">
+	        <select name="category">
+            [% FOREACH doc_category IN constants.document.categories %]
+                    <option value="[% doc_category %]">[% doc_category %]</option>
+            [% END %]
+			</select>
+		</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Eventuele postregistratie:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="post_registratie" value=""></td>
+    </tr>
+   </tbody>
+</table>
+   
+   
+<table class="table_ztbmenu">
+    <tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input id="dialog-submit" type="submit" class="button140" value="Toevoegen"></td>
+    </tr>
+</table>
+
+</form>

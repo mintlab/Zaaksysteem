@@ -1,0 +1,57 @@
+<div id="kenmerk_definitie">
+<form>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<table class="table_zaakinformatie" id="kenmerk_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vraag</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="text" name="kenmerk_label" value="[% history.label %]" class="input_large">
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toelichting</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea cols="60" rows="10" name="kenmerk_help">[% history.help %]</textarea>
+            </td>
+        </tr>
+        [% IF history.type == 'file' %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Documenttype</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerk_document_category">
+            [% FOREACH doc_category IN constants.document.categories %]
+                    <option value="[% doc_category %]"[% (history.document_categorie == doc_category) ? ' selected' : '' %]>[% doc_category %]</option>
+            [% END %]
+                </select>
+            </td>
+        <tr>
+        [% END %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Publiceren op PIP</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="checkbox" name="kenmerk_pip" value="1"[% (history.pip ? ' checked' : '') %] />
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Verplicht:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="kenmerk_verplicht"[% (history.verplicht ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Tonen in tabblad zaakinformatie:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="kenmerk_zaakinformatie_view"[% (history.zaakinformatie_view ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+    </tbody>
+<table>
+<input type="submit" value="Opslaan" class="button140">
+</form>
+</div>

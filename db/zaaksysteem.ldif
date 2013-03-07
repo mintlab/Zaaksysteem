@@ -1,0 +1,92 @@
+dn: o=zaaksysteem,dc=zaaksysteem,dc=nl
+objectClass: organization
+objectClass: top
+o: zaaksysteem
+
+dn: cn=Administrator,o=zaaksysteem,dc=zaaksysteem,dc=nl
+description: Admingroep
+objectClass: top
+objectClass: posixGroup
+cn: Administrator
+memberUid: cn=admin,ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl
+gidNumber: 20001
+
+dn: cn=Behandelaar,o=zaaksysteem,dc=zaaksysteem,dc=nl
+gidNumber: 20002
+memberUid: cn=admin,ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl
+memberUid: cn=gebruiker,ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl
+description: Behandelaar
+objectClass: top
+objectClass: posixGroup
+cn: Behandelaar
+
+dn: cn=Zaakbeheerder,o=zaaksysteem,dc=zaaksysteem,dc=nl
+description: Medewerker informatievoorziening
+objectClass: top
+objectClass: posixGroup
+cn: Zaakbeheerder
+gidNumber: 20003
+
+dn: cn=Zaaksysteembeheerder,o=zaaksysteem,dc=zaaksysteem,dc=nl
+description: Beheerder zaaksysteem
+objectClass: top
+objectClass: posixGroup
+cn: Zaaksysteembeheerder
+gidNumber: 20004
+
+dn: cn=Zaakverdeler,o=zaaksysteem,dc=zaaksysteem,dc=nl
+description: Zaakverdeler voor de afdeling
+objectClass: top
+objectClass: posixGroup
+cn: Zaakverdeler
+gidNumber: 20005
+
+dn: ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl
+l: 10001
+ou: Management
+description: Management
+objectClass: organizationalUnit
+objectClass: top
+
+dn: cn=admin,ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl
+initials: A
+givenName: Anton
+sn: Admin
+loginShell: /nologin
+displayName: A. Admin
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+uid: admin
+cn: admin
+homeDirectory: /home/admin
+gidNumber: 50001
+uidNumber: 500001
+mail: demo-gebruiker@zaaksysteem.nl
+telephoneNumber: 0612345678
+userPassword:: e1NTSEF9aXdidFVZQWY0d3dSUGdVVzIyMUw2QkdyVXJCNGlXUCtDZ1BCUkE9PQ=
+ =
+
+dn: cn=gebruiker,ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl
+loginShell: /nologin
+gidNumber: 55101
+uidNumber: 55101
+objectClass: top
+objectClass: inetOrgPerson
+objectClass: person
+objectClass: posixAccount
+objectClass: shadowAccount
+homeDirectory: /home/gebruiker
+uid: Ge
+sn: Bruiker
+displayName: G. Bruiker
+givenName: Bruiker
+initials: G.
+mail: demo-gebruiker@zaaksysteem.nl
+telephoneNumber: 0612345678
+cn: gebruiker
+userPassword:: e1NTSEF9UmVkNWcrQmFZWW9xdXRJcy9MZGZZNEdDeUM0WFRRV2x1aG1Ga0E9PQ=
+ =
+

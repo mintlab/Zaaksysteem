@@ -1,0 +1,44 @@
+[% IF alerttable.is_alert %]
+    <div class="dialog-help">
+        <a href="#" class="dialog-help-button" title="Alert informatie">
+            <img src="/images/icon-attention.png" width="16" height="16" border="0">
+        </a>
+        <div class="dialog-help-text" style="display: none;">
+            [% alerts = alerttable.scalar.alerts %]
+            [% WHILE (log = alerts.next) %]
+            <table class="table_zaakinformatie">
+                <tbody>
+                    <tr class="table_zaakinformatie_tr">
+                        <td class="table_td_left_zaakinformatie">Zaak nummer:</td>
+                        <td class="table_td_right_zaakinformatie">[% log.zaak_id.id || 'Onbekend' %]</td>
+                    </tr>
+                    <tr class="table_zaakinformatie_tr">
+                        <td class="table_td_left_zaakinformatie">Betrokkene:</td>
+                        <td class="table_td_right_zaakinformatie">
+                            [% c.model('Betrokkene').get({}, log.betrokkene_id).naam %]
+                        </td>
+                    </tr>
+                    <tr class="table_zaakinformatie_tr">
+                        <td class="table_td_left_zaakinformatie">Onderwerp:</td>
+                        <td class="table_td_right_zaakinformatie">[% log.onderwerp %]</td>
+                    </tr>
+                    <tr class="table_zaakinformatie_tr">
+                        <td class="table_td_left_zaakinformatie">Aangemaakt:</td>
+                        <td class="table_td_right_zaakinformatie">[% log.created.dmy %]</td>
+
+                    </tr>
+                    [% IF log.bericht %]
+                    <tr class="table_zaakinformatie_tr">
+                        <td class="table_td_left_zaakinformatie">Bericht:</td>
+                        <td class="table_td_right_zaakinformatie">[% log.bericht %]</td>
+                    </tr>
+                    [% END %]
+                </tbody>
+            </table>
+            [% END %]
+        </div>
+    </div>
+[% ELSE %]
+    &nbsp;
+[% END %]
+

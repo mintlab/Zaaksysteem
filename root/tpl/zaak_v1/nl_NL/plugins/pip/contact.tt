@@ -1,0 +1,77 @@
+<div class="block">
+    <p class="header">Mijn gegevens</p>
+    <div class="blockcontent">
+
+                <form method="POST" action="[% c.uri_for('/pip/contact') %]">
+                    <input type="hidden" name="ztc_aanvrager_id" value="[% ztc_aanvrager_id %]">
+                    <input type="hidden" name="update" value="1">
+                    [% wgt_config.post_button = 1 %]
+                    [% IF betrokkene.btype == 'bedrijf' %]
+                    [% PROCESS widgets/betrokkene/view_bedrijf.tt
+                        betrokkene_edit = 1
+                    %]
+                    [% ELSIF betrokkene.btype == 'natuurlijk_persoon' %]
+                        [% PROCESS widgets/betrokkene/view_natuurlijk_persoon.tt %]
+                    [% END %]
+                    <!--
+                    <table class="table_webformulier">
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Burgerservicenummer:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.burgerservicenummer %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Voornamen:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.voornamen %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Tussenvoegsel:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.voorvoegsel %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Achternaam:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.geslachtsnaam %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Geboortedatum:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.geboortedatum %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Geboorteplaats:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.geboorteplaats %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Straatnaam:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.straatnaam %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Huisnummer:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.huisnummer %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Postcode:</td>
+                            <td class="table_webformulier_tdvar">[% aanvrager.postcode %]</td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Telefoonnummer:</td>
+                            <td class="table_webformulier_tdvar"><input type="text" name="npc-telefoonnummer" value="[% aanvrager.telefoonnummer %]"></td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">Mobielnummer:</td>
+                            <td class="table_webformulier_tdvar"><input type="text" name="npc-mobiel" value="[% aanvrager.mobiel %]"></td>
+                        </tr>
+                        <tr class="table_webformulier_tr">
+                            <td class="table_webformulier_td200">E-mail:</td>
+                            <td class="table_webformulier_tdvar"><input type="text" name="npc-email" value="[% aanvrager.email %]"></td>
+                        </tr>
+                    </table>
+                    -->
+                    <!-- <table class="table_zaakinformatie">
+                        <tr class="table_ztbmenu_tr">
+                            <td class="table_ztbmenu_tdleft"><input type="submit" value="Bijwerken" class="button140"></td>
+                        </tr>
+                    </table> -->
+
+                </form>
+
+    </div>
+</div>

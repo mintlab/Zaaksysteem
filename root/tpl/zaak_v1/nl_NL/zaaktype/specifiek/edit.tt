@@ -1,0 +1,73 @@
+<!-- Begin Zaaktype -->
+<form method="POST">
+<div class="block clearfix">
+    <p class="header">Stap 3/5: Gebruikte kenmerken binnen dit zaaktype</p>
+    <div class="blockcontent">
+        <table class="sortable table_zaakinformatie no_margin">
+            <thead>
+                <tr>
+                    <th colspan="4">Kenmerken welke worden gevraagd in het webformulier</td>
+                </tr>
+				 <tr class="table_ztb_title_tr">
+                    <td class="td20"></td>
+					<td class="td250">Naam</td>
+                    <td class="tdvar">Vraag</td>
+                </tr>
+            </thead>
+            <tbody>
+            [% kenmerken = c.session.zaaktype_edit.status.1.kenmerken %]
+            [% sort_counter = 0 %]
+            [% FOREACH kenmerki IN kenmerken.keys.nsort %]
+                [% sort_counter = (sort_counter + 1) %]
+                [% kenmerk = kenmerken.$kenmerki %]
+
+                <tr class="table_ztb_tr row_template" id="kenmerk_id_[% kenmerk.bibliotheek_id %]">
+                   <td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></td>
+				   <td class="td250">[% kenmerk.naam %]</td>
+                   <td class="tdvar">[% kenmerk.label %]<input name="kenmerk_id_1_[% kenmerki %]" value="[% sort_counter %]" type="hidden" /> </td>
+                </tr>
+            [% END %]
+            </tbody>
+        </table>
+        <br /><br />
+        <table class="sortable table_zaakinformatie no_margin">
+            <thead>
+                <tr>
+                    <th colspan="4">Kenmerken welke worden gevraagd aan de behandelaar</td>
+                </tr>
+				 <tr class="table_ztb_title_tr">
+                    <td class="td20"></td>
+					<td class="td250">Naam</td>
+                    <td class="tdvar">Vraag</td>
+                </tr>
+            </thead>
+            <tbody>
+               
+            [% statusses = c.session.zaaktype_edit.status %]
+            [% FOREACH statusi IN statusses.keys.nsort %]
+                [% NEXT IF statusi == 1 %]
+                [% kenmerken = c.session.zaaktype_edit.status.${statusi}.kenmerken %]
+                [% sort_counter = 0 %]
+                [% FOREACH kenmerki IN kenmerken.keys.nsort %]
+                    [% sort_counter = (sort_counter + 1) %]
+                    [% kenmerk = kenmerken.$kenmerki %]
+                    <tr class="table_ztb_tr row_template ">
+						<td><span class="ui-icon ui-icon-arrowthick-2-n-s"></span></td>
+                        <td class="td250">[% kenmerk.naam %]</td>
+                        <td class="tdvar">[% kenmerk.label %]<input name="kenmerk_id_[% statusi %]_[% kenmerki %]" value="[% sort_counter %]" type="hidden" /></td>
+                    </tr>
+                [% END %]
+            [% END %]
+        </tbody>
+        </table>
+		
+        <table class="table_zaakinformatie">
+            <tr class="table_ztbmenu_tr">
+
+            <td class="table_ztbmenu_tdleft"><a href="[% c.uri_for('/zaaktype/status/edit') %]" title="Annuleren"><input type="button" value="Vorige" class="button140"></a></td>
+            <td class="table_ztbmenu_tdright"><input type="submit" value="Volgende" class="button140 right"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</form>

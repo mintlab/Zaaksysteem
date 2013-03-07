@@ -1,0 +1,103 @@
+[% config = dependency_config.$dependency_type %]
+
+
+[% USE Dumper %]
+[% BLOCK dependency_solution %]
+    [% solution = dependency_item.solution %]
+    [% IF solution.action == 'use_existing' %]
+        [% IF solution.name == dependency_item.name %]
+            Gebruik bestaand[% config.letter_e %] [% config.label %]
+        [% ELSE %]
+            Gebruik bestaand[% config.letter_e %] [% config.label %] '<strong>[% solution.name %]</strong>'
+        [% END %]
+    [% ELSIF solution.action == 'add' %]
+        [% IF solution.name == dependency_item.name %]
+            Voeg meegeleverd[% config.letter_e %] [% config.label %] toe
+        [% ELSE %]
+            Voeg meegeleverd[% config.letter_e %] [% config.label %] toe als '<strong>[% solution.name %]</strong>'        
+        [% END %]
+    [% END %]
+
+[% END %]
+
+
+
+[% 
+
+ancestry_lookup = {
+    statussen => 'Fase',
+} 
+
+%]
+[% BLOCK ancestry_info %]
+    [% config.letter_e ? 'Deze': 'Dit' %] [% config.label %] wordt gebruikt bij:<br/>
+    [% FOREACH ancestry_key = dependency_item.ancestry_hash.keys.sort %]
+        [% ancestry = dependency_item.ancestry_hash.$ancestry_key %]
+        [% count = 0 %]
+        [% cutoff = ancestry.size %]
+        [% FOREACH item = ancestry %]
+            [% count = count+1 %]
+            [% NEXT IF item == 'elementen' %]
+            [% LAST IF count >= ancestry.size %]
+            [% IF count > 1 && count < (ancestry.size) %]&gt;[% END %] 
+            [% formatted = ancestry_lookup.$item || item %] 
+            [% formatted | ucfirst %]
+        [% END %]
+        <br/>
+    [% END %]
+[% END %]
+
+
+<!--pre>[% id %]: [% #Dumper.dump(dependency_item) %]</pre-->
+    
+
+
+<div class="import_dependency_status import_item_inner[% UNLESS dependency_item.solution %] import_item_error[% END %] clearfix">
+
+    <input type="hidden" name="dependency_type" value="[% dependency_type %]" />
+    <input type="hidden" name="id" value="[% id %]" />
+    
+    <div class="title">
+        <div class="spinner-klein"></div>
+        <div class="toggle"></div> 
+        <strong class="ie7"><span class="ie7">[% dependency_item.name %][% IF dependency_item.main_zaaktype %] (MAIN)[% END %]</span></strong>
+    </div>
+    
+    <div class="rfa">
+        <div class="action ie7">
+            <span class="ie7">
+            [% IF dependency_item.solution %]
+                [% PROCESS dependency_solution %]
+            [% ELSE %]
+                [% #Dumper.dump(dependency_item) %]
+                [% IF dependency_type == 'Zaaktype' && !dependency_item.main_zaaktype %]
+                Afhankelijkheidsfout. Dit zaaktype maakt gebruik van andere zaaktypen voor
+ vervolgzaken, deelzaken of gerelateerde zaken. Deze zijn helaas niet
+ gevonden. Importeer eerst deze zaaktypen, of selecteer een ander zaaktype
+ hiervoor.
+                [% ELSE %]
+                Meerdere opties mogelijk, klik hier om te kiezen.                
+                [% END %]
+            [% END %]
+            </span>
+        </div>
+    </div>
+    
+
+    <div class="options clearfix">
+    
+        [% IF dependency_item.solution.changed %]
+            <a href="/beheer/zaaktypen/import/reset/[% dependency_type %]/[% id %]" class="revert">Terugzetten</a>
+        [% END %]
+        
+        <a class="info" title="[% PROCESS ancestry_info %]">Info</a>
+        
+    </div>
+    
+</div>
+    
+   
+ <div class="import_dependency_adjustment import_overlay">
+</div>
+
+[% IF approved_solution_new_problem_count %]<div class="ezra_import_problems">[% approved_solution_new_problem_count %]</div>[% END %]

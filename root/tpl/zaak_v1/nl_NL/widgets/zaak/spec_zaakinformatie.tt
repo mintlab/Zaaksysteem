@@ -1,0 +1,245 @@
+
+[% USE Scalar %]
+[% USE Dumper %]
+[% # This is a provision to only render a group header if there's an actual element in it %]
+[% group_header_cache = '' %]
+
+
+[% BLOCK group_header %]
+    <table class="kenmerk-groep">
+        <thead>
+            <tr>
+                <th colspan="4">
+                    <span class="blue kenmerk-titel">[% kenmerk.label %]</span>
+                [% IF kenmerk.help %]
+                    <br/>
+                    <span class="kenmerk-beschrijving">[% kenmerk.help %]</span>
+                [% END %]
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table_zaken_title_tr">
+                <td class="td350">Titel</td>
+                <td class="tdvar">Waarde</td>
+                <td class="td50">Toelichting</td>
+            </tr>
+[% END %]
+
+
+
+
+[% BLOCK kenmerk_row %]
+[% bibliotheek_id = kenmerk.bibliotheek_kenmerken_id.id %]
+
+<tr [% IF voorwaarden_kenmerken.$bibliotheek_id %]class="regels_enabled_kenmerk"[% END %]>
+    <td class="td350 td-with-dropdown" valign="top">
+        [% IF kenmerk.type == 'file' %]
+            [% kenmerkdocs = zaak.scalar.documents.documenten({zaaktype_kenmerken_id => kenmerk.id }); %]
+            [% kenmerkdoc = kenmerkdocs.first %]
+            [% kenmerkvalue = kenmerkdoc.filename %]
+            [% IF hell_freezes_over %]
+                <a href="[% c.uri_for(
+                '/zaak/' _ zaak.nr _ '/documents/'
+                _ (kenmerkdoc.pid.id || 0) _ '/get/'
+                _ kenmerkdoc.id _ '/' _ kenmerkdoc.filename
+                ) _ '?filetype=pdf'
+                %]" class="uploaded" target="_blank">[% kenmerkdoc.filename %]</a><br/>
+            [% END %]
+        [% END %]
+    [% kenmerkvalue_present = kenmerkvalue || (kenmerkvalue.size > 0 && kenmerkvalue.first) %]
+        <div class="kenmerk-titel-wrap[% IF kenmerk.value_mandatory && !kenmerkvalue_present %] verplicht[% END %]">
+        [% IF kenmerk.value_mandatory && !kenmerkvalue_present %]<a><span><small></small>Dit veld is verplicht</span></a>[% END %]
+        [% kenmerk.label || kenmerk.naam %]
+            <div class="dropdown-wrap dropdown-wrap-absolute">
+                <div class="dropdown-init kenmerk-extra-info dropdown-init-in-td dropdown-init-hover dropdown-init-hide">
+                    <div class="dropdown dropdown-left">
+                        <strong>Kenmerk:</strong> [% kenmerk.naam %]
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </td>
+    <td class="tdvar">
+        [% IF !kenmerk.is_group %]
+            [% IF(regels_result.vul_waarde_in.$bibliotheek_id) %]
+                <input type="hidden" name="[% kenmerkkey %]" value="[% regels_result.vul_waarde_in.$bibliotheek_id.value %]"/>
+                <div class="regels_fixed_value">[% regels_result.vul_waarde_in.$bibliotheek_id.value %]</div>
+            [% ELSIF c.can_change %]
+
+                [% PROCESS widgets/general/veldoptie.tt
+                veldoptie_multiple  = kenmerk.bibliotheek_kenmerken_id.type_multiple
+                veldoptie_name      = kenmerkkey
+                veldoptie_type      = kenmerk.type
+                veldoptie_opties    = kenmerk.options
+                veldoptie_value     = kenmerkvalue
+                %]
+
+            [% ELSE %]
+                [% PROCESS widgets/general/veldoptie_view.tt
+                veldoptie_multiple  = kenmerk.bibliotheek_kenmerken_id.type_multiple
+                veldoptie_type      = kenmerk.type
+                veldoptie_value     = kenmerkvalue
+                %]
+            [% END %]
+        [% END %]
+    </td>
+    <td class="td50 td-with-dropdown">
+        [% IF kenmerk.help %]
+        <div class="dropdown-wrap dropdown-wrap-right">
+            <div class="dropdown-init dropdown-init-in-td icon-toelichting icon icon-hover dropdown-init-hover">
+                <div class="dropdown dropdown-left dropdown-tooltip">
+                    <div class="dropdown-pijl"></div>
+                    <div class="dropdown-content">
+                        [% kenmerk.help %]
+                    </div>
+                </div>
+            </div>
+        </div>
+        [% END %]
+    </td>
+</tr>
+[% END %]
+
+[% kenmerken =
+    zaak.zaaktype_node_id.zaaktype_kenmerken.scalar.search_fase_kenmerken(requested_fase);
+%]
+[% values    =
+    zaak.scalar.zaak_kenmerken.scalar.search_all_kenmerken(fase => requested_fase)
+%]
+    <!--pre>[% USE Dumper %]values:[% #Dumper.dump(values) %]
+    regels: [% #Dumper.dump(regels_result) %]</pre-->
+
+[% rownumber = 0 %]
+
+[% WHILE (kenmerk = kenmerken.next) %]
+
+    [% kenmerkvalue = '' %]
+    [% kenmerkkey = kenmerk.rtkey %]
+
+    [% bibliotheek_id = kenmerk.bibliotheek_kenmerken_id.id %]
+    [% IF values.$bibliotheek_id.defined %]
+        [%
+            kenmerkvalue = values.$bibliotheek_id
+        %]
+    [% END %]
+
+    [% IF kenmerk.type == 'googlemaps' %]
+        [% locatie = values.$bibliotheek_id %]
+        [% NEXT; %]
+    [% END %]
+    [% NEXT IF (pip && ! kenmerk.pip) %]
+    [% rownumber = rownumber + 1 %]
+    
+
+    [% IF kenmerk.is_group %]
+        [% IF rownumber > 1 %]
+                </tbody>
+            </table>
+        [% END %]
+            
+        [% group_header_cache = INCLUDE group_header %]    
+        [% NEXT %]
+    [% ELSE %]
+        [% # Only show the group header if there's content. Since we're looping through items, save the group header and unless it in
+           # the next round, unless it's a group, then we start over. %]
+        [% group_header_cache %]
+        [% group_header_cache = '' %]
+    [% END %]
+
+    [% # FALLBACK VOOR MISSEN GROUPEN %]
+    [% IF rownumber == 1 && !kenmerk.is_group %]
+        <table class="kenmerk-groep">
+            <tbody>
+                <tr class="table_zaken_title_tr">
+                    
+                    <td class="td350">Titel</td>
+                    <td class="tdvar">Waarde</td>
+                    <td class="td50">Toelichting</td>
+                </tr>
+    [% END %]
+
+    [% IF !(regels_result.verberg_kenmerk.$bibliotheek_id) %]
+        [% INCLUDE kenmerk_row %]
+    [% END %]
+
+    [% IF regels_result.pauzeer_aanvraag.$bibliotheek_id %]                
+    <tr>
+        <td colspan="3" align="center">
+            <div class="start_zaak_box">
+                <div>[% regels_result.pauzeer_aanvraag.$bibliotheek_id.message %]</div>
+                <div>
+            [% IF regels_result.pauzeer_aanvraag.$bibliotheek_id.startzaak %]
+                [% zaaktype_node = regels_result.pauzeer_aanvraag.$bibliotheek_id.zaaktype_node %]
+                Klik <a href="/zaak/start_nieuwe_zaak/[% zaaktype_node.id %]">hier</a> om een zaak te starten met het type <i>[% zaaktype_node.titel %]</i>.
+            [% END %]
+                </div>
+            </div>
+        </td>
+    </tr>
+    [% LAST %]
+    [% END %]
+    
+[% END %]
+    </tbody>
+</table>
+
+
+
+
+
+[% IF requested_fase && requested_fase.status == zaak.afhandel_fase.status %]
+    <table class="kenmerk-groep">
+        <thead>
+            <tr>
+                <th colspan="4" class="td_16px blue">Resultaat</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table_zaken_title_tr">
+                <td class="td350">Titel</td>
+                <td class="tdvar">Waarde</td>
+                <td class="td300">Toelichting</td>
+            </tr>
+            <tr>
+                <td class="td300" valign="top">
+                    <div class="kenmerk-titel-wrap[% (zaak.resultaat ? '' : ' verplicht' ) %]">
+                        [% UNLESS zaak.resultaat %]<a><span><small></small>Dit veld is verplicht</span></a>[% END %]
+                        Resultaat van deze zaak
+                    </div>
+                </td>
+                <td class="tdvar">
+                    [% IF
+                        c.can_change ||
+                        (
+                            zaak.afhandeldatum &&
+                            c.check_any_zaak_permission('zaak_beheer')
+                        )
+                    %]
+                        [% KENMERK_CHANGES_ALLOWED = 1 %]
+                        [% resultaten = zaak.zaaktype_node_id.scalar.zaaktype_resultaten.scalar.search({}, {order_by => 'id'} ) %]
+                        [% veldoptie_options = [] %]
+                        [% WHILE (resultaat = resultaten.next) %]
+                            [% veldoptie_options.push(resultaat.resultaat) %]
+                        [% END %]
+                        [% PROCESS widgets/general/veldoptie.tt
+                            veldoptie_type      = 'option'
+                            veldoptie_value     = zaak.resultaat
+                            veldoptie_name      = 'system_kenmerk_resultaat'
+                            veldoptie_opties    = veldoptie_options
+                            veldoptie_multiple  = 0
+                        %]
+                    [% ELSE %]
+                        [% zaak.kenmerk.resultaat || 'Nog niet bekend' %]
+                    [% END %]
+
+                </td>
+                <td class="td300">
+
+                            Vul hier het resultaat in van de zaak
+
+                </td>
+            </tr>
+        <body>
+    </table>
+[% END %]

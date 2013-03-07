@@ -1,0 +1,1825 @@
+
+
+[% RETURN IF c.user_exists -%]
+
+                                    
+                 </div>                   
+            </div>             
+        </div>
+        </div>
+        <div id="sitemap">
+            <div class="container clear"> 
+                
+<div class="vcard">
+    <span class="adr">
+        <span class="org fn">
+            <span class="organization-name">Gemeente De Bilt</span>
+        </span>
+        
+        <span class="street-address">Soestdijkseweg Zuid 173</span>
+        <span class="postal-code">3721 AB</span>        
+        <span class="locality">Bilthoven</span> 
+        
+        
+        <span class="post-office-box">Postbus 300</span>        
+        <span class="post-office-box-postal-code">3720 AH </span>
+        <span class="post-office-box-locality">Bilthoven</span> 
+        
+    </span>
+    <span class="tel">
+        <span class="labelContainer">
+            <span class="type">Tel.</span>:
+        </span>
+        <span class="value">(030) 228 94 11</span>
+    </span>
+    <span class="tel">
+        <span class="labelContainer">
+            <span class="type">Fax</span>:
+        </span>
+        <span class="value">(030) 228 94 57 </span>
+    </span>
+    <span class="email">
+        <span class="labelContainer">
+            E-mail:
+        </span>
+        <span class="value">
+            <a href="mailto:info@debilt.nl">
+                info@debilt.nl
+            </a>
+        </span>
+    </span>
+    <div class="info">
+        <span class="value">
+		<p>
+      <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/contact.aspx">Contact/openingstijden</a> <br><a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/routebeschrijving.aspx">Routebeschrijving</a></p>
+</span>
+    </div>
+</div>
+
+<ul class="clear">
+    <!-- <li style="font-weight:normal;">
+    <span class="org fn">
+            <span><strong>Contacts</strong></span>
+        </span>
+<span class="tel">
+        <span class="labelContainer">
+            <span class="type">Tel.</span>:
+        </span>
+        <span class="value">(030) 228 94 11</span>
+    </span><br/>
+    <span class="tel">
+        <span class="labelContainer">
+            <span class="type">Fax</span>:
+        </span>
+        <span class="value">(030) 228 94 57 </span>
+    </span><br/>
+    <span class="email">
+        <span class="labelContainer">
+            E-mail:
+        </span>
+        <span class="value">
+            <a style="text-decoration:underline;" href="mailto:info@debilt.nl">
+                info@debilt.nl
+            </a>
+        </span>
+    </span><br/>
+    <div class="info">
+        <span class="value">
+		<p>
+      <a style="text-decoration:underline;" href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/contact.aspx">Contact/openingstijden</a> <br/><a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/routebeschrijving.aspx">Routebeschrijving</a></p>
+         </span>
+     </div>    
+    </li> -->
+    
+    <li>
+             
+                <ul style="font-size:12px">  
+                        <li><strong>Navigatie</strong></li>              
+                        <li class="first">
+                            <a href="http://www.debilt.nl/">
+                                Home
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/landingspaginas/hoofdmenu/actueel.aspx">
+                                Actueel
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/gemeenteloket.aspx">
+                                Gemeenteloket                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie.aspx">
+                                Bestuur en Organisatie
+                            </a> 
+                        </li>
+                                    
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven.aspx">
+                                Wonen en Leven
+                            </a> 
+                        </li>
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen.aspx">
+                                Ondernemen
+                            </a> 
+                        </li>
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur.aspx">
+                                Vrije Tijd
+                            </a> 
+                        </li>
+                        
+                        
+                    </ul> 
+            
+    </li>
+    
+    <!-- <li style="font-weight:normal;">
+    
+    <p>Copyright &copy; 2010 gemeente De Bilt</p>
+                
+<a style="text-decoration:underline" title="Privacy statement" href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/privacy-statement.aspx">
+            Privacy statement
+        </a><br/>
+
+        <a style="text-decoration:underline" title="Disclaimer" href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/disclaimer.aspx">
+            Disclaimer
+        </a> -->
+ 
+    
+        
+        
+</ul>
+
+
+<!-- <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/volg-ons.aspx">
+                                Volg ons op Twitter
+                            </a> 
+                        </li> -->
+
+
+
+                
+<!-- <h2 class="navTitle">Overzicht van deze website</h2>
+
+        <ul class="clear">
+    
+        <li>                                   
+               <strong><a href="http://www.debilt.nl/nl-nl/algemeen/artikelen.aspx">
+                        Actueel
+                   </a> 
+               </strong> 
+                <ul>                
+                        <li class="first">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/nieuwsberichten.aspx">
+                                Nieuws
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/activiteiten.aspx">
+                                Activiteiten
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/bekendmakingen.aspx">
+                                Bekendmakingen
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten.aspx">
+                                Persberichten
+                            </a> 
+                        </li>
+                                    
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/volg-ons.aspx">
+                                Volg ons op Twitter
+                            </a> 
+                        </li>
+                    </ul>         
+                                             
+               <strong><a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven.aspx">
+                        Wonen en Leven
+                   </a> 
+               </strong> 
+                <ul>                
+                        <li class="first">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken.aspx">
+                                Wijk- en dorpgericht werken
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen.aspx">
+                                Bouwen en wonen
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/belastingen.aspx">
+                                Belastingen
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/bestemmingsplannen.aspx">
+                                Bestemmingsplannen
+                            </a> 
+                        </li>
+                                    
+                        <li class="submenu">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/projecten.aspx">
+                                Projecten
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/burgerzaken.aspx">
+                                Burgerzaken
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid.aspx">
+                                Welzijn, zorg en gezondheid
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/werk-en-inkomen.aspx">
+                                Werk en inkomen
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval.aspx">
+                                Milieu en afval
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs.aspx">
+                                Onderwijs
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a>
+                                Openbare ruimte
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/openbare-orde-en-veiligheid.aspx">
+                                Openbare orde en veiligheid
+                            </a> 
+                        </li>
+                                    
+                        <li class="last submenu">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer.aspx">
+                                Verkeer en vervoer
+                            </a> 
+                        </li>
+                    </ul>         
+          </li> 
+   
+        <li>                                   
+               <strong><a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten.aspx">
+                        Gemeenteloket
+                   </a> 
+               </strong> 
+                <ul>                
+                        <li class="first">
+                            <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten/zoeken/producten-op-alfabet.aspx">
+                                Producten op alfabet
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten/zoeken/producten-op-doelgroep.aspx">
+                                Producten op doelgroep
+                            </a> 
+                        </li>
+                                    
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten/zoeken/producten-op-thema.aspx">
+                                Producten op thema
+                            </a> 
+                        </li>
+                    </ul>         
+                                             
+               <strong><a>
+                        Ondernemen
+                   </a> 
+               </strong> 
+                <ul>                
+                        <li class="first">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/economisch-beleid.aspx">
+                                Nota Economisch Beleid 2020
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/inkoop-en-aanbesteden.aspx">
+                                Inkoop en aanbestedingen
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/projecten.aspx">
+                                Projecten
+                            </a> 
+                        </li>
+                                    
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/bestaande-bedrijventerreinen.aspx">
+                                Bestaande bedrijfsterreinen en locaties
+                            </a> 
+                        </li>
+                    </ul>         
+          </li> 
+   
+        <li>                                   
+               <strong><a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie.aspx">
+                        Bestuur en organisatie
+                   </a> 
+               </strong> 
+                <ul>                
+                        <li class="first submenu">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders.aspx">
+                                Burgemeester en wethouders
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/hoe-werkt-de-gemeente.aspx">
+                                Hoe werkt de gemeente
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a>
+                                Gemeenteraad
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/raadscommissies.aspx">
+                                Raadcommissies
+                            </a> 
+                        </li>
+                                    
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen.aspx">
+                                Verordeningen
+                            </a> 
+                        </li>
+                    </ul>         
+                                             
+               <strong><a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur.aspx">
+                        Vrije tijd
+                   </a> 
+               </strong> 
+                <ul>                
+                        <li class="first">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/historie.aspx">
+                                Historie
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur.aspx">
+                                Kunst en cultuur
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/recreatie-en-toerisme.aspx">
+                                Recreatie en toerisme
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/sport.aspx">
+                                Sport
+                            </a> 
+                        </li>
+                                    
+                        <li>
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/zwembad.aspx">
+                                Zwembad
+                            </a> 
+                        </li>
+                                    
+                        <li class="last">
+                            <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/natuur-en-landschap.aspx">
+                                Natuur en landschap
+                            </a> 
+                        </li>
+                    </ul>         
+          </li> 
+   
+   </ul> -->
+   
+   
+                                          
+            </div>        
+        </div>
+        <div id="navigation">
+            
+ <div id="title-bar">
+    <h2>
+        Welkom bij de gemeente De Bilt
+    </h2>
+    <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/debilt/images/header_fietser.png" alt="">                           
+            
+    <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/de-bilt-sportgemeente-van-het-jaar-2009.aspx">
+                                             
+    </a>
+</div>                                                                          
+            
+<div id="main-nav">
+<h2 class="navTitle">Hoofdmenu</h2>
+<ul>
+    <li class="first">
+       <a href="http://www.debilt.nl/nl-nl.aspx">Home</a> 
+                 
+    </li>
+  
+    <li class="submenu">
+       <a href="http://www.debilt.nl/nl-nl/landingspaginas/hoofdmenu/actueel.aspx">Actueel</a> 
+        <!-- <ul>
+                <li class="first submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/nieuwsberichten.aspx">Nieuws</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/nieuwsberichten/2011.aspx">
+                                    2011
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/nieuwsberichten/2010.aspx">
+                                    2010
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/nieuwsberichten/2009.aspx">
+                                    2009
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/nieuwsberichten/2008.aspx">
+                                    2008
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/feiten-en-cijfers.aspx">Feiten en cijfers</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten.aspx">Persberichten</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten/2011.aspx">
+                                    2011
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten/2010.aspx">
+                                    2010
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten/2009.aspx">
+                                    2009
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten/2008.aspx">
+                                    2008
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten/2007.aspx">
+                                    2007
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/persberichten/2006.aspx">
+                                    2006
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/bekendmakingen.aspx">Bekendmakingen</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/bekendmakingen/zoeken/weekoverzicht.aspx">
+                                    Weekoverzicht
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/bekendmakingen/zoeken/bekendmakingen-op-type.aspx">
+                                    Bekendmakingen op type
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/gemeentepagina.aspx">Gemeentepagina</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/gemeentepagina/2010.aspx">
+                                    Gemeentepagina's 2010
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/gemeentepagina/2009.aspx">
+                                    Gemeentepagina's 2009
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/gemeentepagina/2008.aspx">
+                                    Gemeentepagina's 2008
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/gemeentepagina/2007.aspx">
+                                    Gemeentepagina's 2007
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/gemeentepagina/2006.aspx">
+                                    Gemeentepagina's 2006
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/activiteiten.aspx">Activiteiten</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/wegwerkzaamheden.aspx">Wegwerkzaamheden</a>           
+                    
+                </li>
+            
+                <li class="last submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/vacatures.aspx">Vacatures</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/vacatures/arbeidsvoorwaarden.aspx">
+                                    Arbeidsvoorwaarden
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/vacatures/medewerker-aan-het-woord.aspx">
+                                    Medewerker aan het woord
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/vacatures/stages.aspx">
+                                    Stages
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            </ul> -->        
+    </li>
+  
+    <li class="submenu on">
+       <a href="http://www.debilt.nl/nl-nl/gemeenteloket.aspx">Gemeenteloket</a> 
+        <!-- <ul>
+                <li class="first submenu">
+                   <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten.aspx">Producten</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten/zoeken/producten-op-alfabet.aspx">
+                                    Producten op alfabet
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten/zoeken/producten-op-doelgroep.aspx">
+                                    Producten op doelgroep
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten/zoeken/producten-op-thema.aspx">
+                                    Producten op thema
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="last submenu">
+                   <a href="http://www.debilt.nl/nl-nl/gemeenteloket/afspraak-maken.aspx">Afspraken</a>           
+                    
+                            <ul>
+                        
+                            <li class="first last">
+                               <a href="http://www.debilt.nl/nl-nl/gemeenteloket/afspraak-maken/zoeken/afspraken-op-categorie.aspx">
+                                    Afspraken op categorie
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            </ul>   -->       
+    </li>
+  
+    <li class="submenu">
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie.aspx">Bestuur en organisatie</a> 
+        <!-- <ul>
+                <li class="first">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeenteraadsverkiezingen-2010.aspx">Gemeenteraadsverkiezingen 2010</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/taken-en-werkwijze.aspx">Taken en werkwijze</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/raadsvergaderingen-archief.aspx">Raadsvergaderingen archief</a>           
+                    
+                            <ul>
+                        
+                            <li class="first last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/raadsvergaderingen-archief/vragen.aspx">
+                                    Schriftelijke vragen
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/risbis.aspx">Vergaderstukken</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/risbis/vergaderingen/2011.aspx">
+                                    2011
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/risbis/vergaderingen/2010.aspx">
+                                    2010
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/risbis/vergaderingen/2009.aspx">
+                                    2009
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/risbis/vergaderingen/2008.aspx">
+                                    2008
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/risbis/vergaderingen/2007.aspx">
+                                    2007
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/raadsleden-en-fracties.aspx">Raadsleden en fracties</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/denk-en-doe-mee.aspx">Denk en doe mee</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/raadscommissies.aspx">Raadscommissies</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen.aspx">Verordeningen</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/ambtelijke-organisatie-en-personeel.aspx">
+                                    Ambtelijke organisatie en personeel
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/bestuurlijke-organisatie.aspx">
+                                    Bestuurlijke organisatie
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/belastingen-retributies-en-heffingen.aspx">
+                                    Belastingen, retributies en heffingen 
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/openbare-orde-en-bevolking-openbare-gezondheid-en-veiligheid.aspx">
+                                    Openbare orde en bevolking, openbare gezondheid en veiligheid
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/ruimtelijke-ordening-en-volkshuisvesting-milieu-en-groen.aspx">
+                                    Ruimtelijke ordening en volkshuisvesting, Milieu en Groen
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/verkeer-vervoer-en-waterstaat.aspx">
+                                    Verkeer, vervoer en waterstaat
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/economische-aangelegenheden-en-arbeid.aspx">
+                                    Economische aangelegenheden en arbeid
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/maatschappelijke-zorg-en-welzijn-cultuur-onderwijs-sport-en-recreatie.aspx">
+                                    Maatschappelijke zorg en welzijn, cultuur, onderwijs, sport en recreatie
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/verordeningen/gemeenschappelijke-regelingen.aspx">
+                                    Gemeenschappelijke regelingen
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/raadsgriffie.aspx">Raadsgriffie</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/rekenkamercommissie.aspx">Rekenkamercommissie</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders.aspx">Burgemeester en wethouders</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders/college-samenstelling.aspx">
+                                    Samenstelling burgemeester en wethouders
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders/portefeuilleverdeling.aspx">
+                                    Portefeuilleverdeling
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders/burgerjaarverslag.aspx">
+                                    Burgerjaarverslag
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders/collegeakkoord.aspx">
+                                    Collegeakkoord 2010- 2014
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders/bwbesluitenlijsten.aspx">
+                                    Besluitenlijst college van burgemeester en wethouders
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/burgemeester-en-wethouders/mededelingenblad.aspx">
+                                    Mededelingenblad
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie.aspx">Gemeentelijke organisatie</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie/directie.aspx">
+                                    Directie
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie/koninklijke-onderscheiding.aspx">
+                                    Koninklijke onderscheiding
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie/gemeentelijke-onderscheiding.aspx">
+                                    Gemeentelijke onderscheiding
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie/burgeronderzoeken-2005-2007-en-2009.aspx">
+                                    Burgeronderzoeken 2005, 2007 en 2009
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie/financien.aspx">
+                                    Financiën
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/gemeentelijke-organisatie/brandweer.aspx">
+                                    Brandweer
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/afspraken-met-de-gemeente.aspx">Afspraken met de gemeente</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/deregulering.aspx">Deregulering</a>           
+                    
+                            <ul>
+                        
+                            <li class="first last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/deregulering/uw-melding-klacht-bezwaar-of-tip.aspx">
+                                    Uw melding, klacht, bezwaar of tip
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/internat-samenwerking.aspx">Internationale samenwerking</a>           
+                    
+                </li>
+            
+                <li class="last">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/bestuur-en-organisatie/wet-openbaarheid-van-bestuur-wob.aspx">Wet Openbaarheid Bestuur (WOB)</a>           
+                    
+                </li>
+            </ul>  -->       
+    </li>
+  
+    <li class="submenu">
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven.aspx">Wonen en Leven</a> 
+        <!-- <ul>
+                <li class="first submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken.aspx">Wijk- en dorpsgericht werken</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken/nieuws.aspx">
+                                    Nieuws
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken/bewonersverenigingen.aspx">
+                                    Bewonersverenigingen 
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken/de-wijken.aspx">
+                                    De Wijken
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken/buurtbemiddeling.aspx">
+                                    Buurtbemiddeling
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken/de-wijkagenten.aspx">
+                                    De Wijkagenten
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/wijk-en-dorpsgericht-werken/spelregels-wijken-dorpsgericht-werken.aspx">
+                                    Spelregels wijk-en dorpsgericht werken
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/belastingen.aspx">Belastingen</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen.aspx">Bouwen en wonen</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen/wonen.aspx">
+                                    Wonen
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen/bouwen-en-verbouwen.aspx">
+                                    Bouwen en verbouwen
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen/convenant-duurzaam-bouwen.aspx">
+                                    Convenant duurzaam bouwen 2010-2014
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen/groenverkoop.aspx">
+                                    Groenverkoop
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen/omgevingsvergunning.aspx">
+                                    Omgevingsvergunning
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/bouwen-en-wonen/ruimtelijke-initiatieven.aspx">
+                                    Ruimtelijke initiatieven (voorheen principeverzoeken)
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/bestemmingsplannen/ruimtelijke-plannen.aspx">Ruimtelijke plannen</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/bestemmingsplannen/ruimtelijke-plannen/bestemmingsplannen.aspx">
+                                    Bestemmingsplannen
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/bestemmingsplannen/ruimtelijke-plannen/gebiedsgerichte-besluiten.aspx">
+                                    Gebiedsgerichte besluiten
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/bestemmingsplannen/structuurvisie-2030.aspx">
+                                    Structuurvisie 2030
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/projecten.aspx">Projecten</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid.aspx">Welzijn, zorg en gezondheid</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/buurtwerk--wijkwerk.aspx">
+                                    Buurtwerk / wijkwerk
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/gezondheidszorg-en-vaccinaties.aspx">
+                                    Gezondheidszorg en vaccinaties
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/innovatieplan-wonen-zorg-en-welzijn.aspx">
+                                    Innovatieplan wonen, zorg en welzijn
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/integratie-en-respectvol-samenleven.aspx">
+                                    Integratie en respectvol samenleven
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/jeugd-en-jongeren.aspx">
+                                    Jeugd en jongeren
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/kinderopvang-en-peuterspeelzaalwerk.aspx">
+                                    Kinderopvang en peuterspeelzaalwerk
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/subsidies.aspx">
+                                    Subsidies
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/vrijetijdmarkt.aspx">
+                                    Vrijetijdsmarkt
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/vrijwilligerswerk.aspx">
+                                    Vrijwilligerswerk
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/wet-maatschappelijke-ondersteuning.aspx">
+                                    Wet Maatschappelijke Ondersteuning
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/wet-tegemoetkoming-chronisch-zieken-en-gehandicapten.aspx">
+                                    Wet tegemoetkoming chronisch zieken en gehandicapten (Wtcg)
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/welzijn-zorg-en-gezondheid/wet-werk-en-bijstand.aspx">
+                                    Wet Werk en Bijstand
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/werk-en-inkomen.aspx">Werk en inkomen</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/werk-en-inkomen/wet-sociale-werkvoorziening-persoonsgebonden-budget.aspx">
+                                    Wet Sociale Werkvoorziening (WSW)
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/werk-en-inkomen/persoonsgebonden-budget.aspx">
+                                    Persoonsgebonden budget (PGB) WSW
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/werk-en-inkomen/regelingen-voor-minima.aspx">
+                                    Regelingen voor minima
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/burgerzaken.aspx">Burgerzaken</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/burgerzaken/huwelijk-en-geregistreerd-partnerschap.aspx">
+                                    Huwelijk en Geregistreerd Partnerschap
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/burgerzaken/provinciale-statenverkiezing-2011.aspx">
+                                    Uitslagen Provinciale Statenverkiezing 2011
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval.aspx">Afval</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval/het-ophalen-van-afval.aspx">
+                                    Het ophalen van afval
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval/het-wegbrengen-van-afval-milieustraat.aspx">
+                                    Het wegbrengen van afval 
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval/oud-papier.aspx">
+                                    Oud papier inzameling
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval/plastic-inzameling.aspx">
+                                    Plastic inzameling
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/afval/kleding-inzameling.aspx">
+                                    Kleding inzameling
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs.aspx">Onderwijs</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/leerlingenvervoer.aspx">
+                                    Leerlingenvervoer
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/leerplicht-en-voortijdig-schoolverlaten.aspx">
+                                    Leerplicht en voortijdig schoolverlaten
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/onderwijsbeleid.aspx">
+                                    Onderwijsbeleid
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/scholen-in-de-gemeente-de-bilt.aspx">
+                                    Scholen in de gemeente De Bilt
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/toezichtkaarten-onderwijsinspectie.aspx">
+                                    Toezichtkaarten Onderwijsinspectie
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/vakantierooster-basisonderwijs.aspx">
+                                    Vakantierooster basisonderwijs
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/onderwijs/volwasseneneducatie-roc.aspx">
+                                    Volwasseneneducatie (ROC)
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/beheer-openbare-ruimte.aspx">Beheer Openbare ruimte</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/beheer-openbare-ruimte/algemene-informatie-beheer.aspx">
+                                    Algemene Informatie Beheer
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/beheer-openbare-ruimte/beheerkalender.aspx">
+                                    Beheerkalender
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/beheer-openbare-ruimte/inrichting-en-renovaties.aspx">
+                                    Inrichting en renovaties
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/beheer-openbare-ruimte/kabels-en-leidingen.aspx">
+                                    Kabels en leidingen
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/openbare-orde-en-veiligheid.aspx">Openbare orde en veiligheid</a>           
+                    
+                </li>
+            
+                <li class="last submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer.aspx">Verkeer en vervoer</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer/wat-beweegt-de-bilt.aspx">
+                                    Wat beweegt De Bilt?
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer/bereikbaarheid-goederenvervoer.aspx">
+                                    Bereikbaarheid goederenvervoer
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer/parkeren.aspx">
+                                    Parkeren
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer/verkeersbeleid.aspx">
+                                    Verkeersbeleid
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/wonen-en-leven/verkeer-en-vervoer/verkeerscirculatieplan-2002.aspx">
+                                    Verkeerscirculatieplan
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            </ul>   -->       
+    </li>
+  
+    <li class="submenu">
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen.aspx">Ondernemen</a> 
+        <!-- <ul>
+                <li class="first">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/verkiezing-biltse-ondernemer-2011.aspx">Verkiezing Biltse ondernemer van het jaar 2011</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/ondernemersloket.aspx">Ondernemersloket</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/antwoord-voor-bedrijven.aspx">Antwoord voor bedrijven</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/economisch-beleid.aspx">Economisch beleid</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/bestaande-bedrijventerreinen.aspx">Bedrijventerreinen en bedrijfslocaties</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/ondernemersverenigingen.aspx">Ondernemersverenigingen</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/inkoop-en-aanbesteden.aspx">Inkoop en aanbesteden</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/contact-met-gemeente.aspx">Contact met gemeente</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/werkgeverservicepunt.aspx">Werkgeverservicepunt</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/subsidies-en-regelingen.aspx">Subsidies en regelingen</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/starters.aspx">Starters</a>           
+                    
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/kerngegevens.aspx">Kerngegevens</a>           
+                    
+                </li>
+            
+                <li class="last">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/ondernemen/links.aspx">Links</a>           
+                    
+                </li>
+            </ul> -->       
+    </li>
+  
+    <li class="last submenu">
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur.aspx">Vrije tijd</a> 
+        <!-- <ul>
+                <li class="first submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/historie.aspx">Historie</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/historie/gemeentewapen-en-vlag.aspx">
+                                    Gemeentewapen en vlag
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/historie/historie-kernen.aspx">
+                                    Historie kernen
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/historie/mathildedag.aspx">
+                                    Mathildedag
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/recreatie-en-toerisme.aspx">Recreatie en toerisme</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/recreatie-en-toerisme/marketing-en-promotie-utrechtse-heuvelrug.aspx">
+                                    Marketing en promotie Utrechtse heuvelrug
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/recreatie-en-toerisme/vvv-utrecht.aspx">
+                                    VVV informatie
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li>
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/markt-planetenbaan.aspx">Markt Planetenbaan</a>           
+                    
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur.aspx">Kunst en cultuur</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/amateurkunst.aspx">
+                                    Amateurkunst
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/cultuuragenda-gemeente-de-bilt.aspx">
+                                    Cultuuragenda gemeente De Bilt
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/ouverture-op-weg-naar-nieuw-cultuurbeleid.aspx">
+                                    Ouverture: cultuurbeleid in de gemeente De Bilt
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/tentoonstellingen-in-gemeentehuis.aspx">
+                                    Tentoonstellingen in gemeentehuis
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/kabeltelevisie-en-programmaraad.aspx">
+                                    Mediabeleid
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/concerten-lezingen-uitvoeringen.aspx">
+                                    Concerten, lezingen, uitvoeringen en exposities
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/lessen-cursussen-workshops.aspx">
+                                    Lessen, cursussen, workshops
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/beeldende-kunst-te-zien-in-de-bilt.aspx">
+                                    Beeldende Kunst te zien in De Bilt
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/bibliotheken.aspx">
+                                    Bibliotheken
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/kunst-en-cultuur/gemeentelijk-cultuurbeleid.aspx">
+                                    Gemeentelijk cultuurbeleid
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/sport.aspx">Sport</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/sport/hoe-is-de-sport-georganiseerd-in-de-gemeente-de-bilt.aspx">
+                                    Hoe is de sport georganiseerd in de gemeente De Bilt?
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/sport/schoolsportdagen.aspx">
+                                    Schoolsportdagen voor het basisonderwijs
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/sport/sportaccommodaties.aspx">
+                                    Sportaccommodaties
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/sport/zaalsportaccommodaties.aspx">
+                                    Zaalsportaccommodaties
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/zwembad.aspx">Zwembad</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/zwembad/zwemlesinformatie.aspx">
+                                    Zwemlesinformatie
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/zwembad/overzicht-zwemactiviteiten-brandenburg.aspx">
+                                    Overzicht zwemactiviteiten
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/zwembad/zwemclub-brandenburg.aspx">
+                                    Zwemclub Brandenburg
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            
+                <li class="last submenu">
+                   <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/natuur-en-landschap.aspx">Natuur en landschap</a>           
+                    
+                            <ul>
+                        
+                            <li class="first">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/natuur-en-landschap/beeldkwaliteitplan.aspx">
+                                    Beeldkwaliteitplan Kromme Rijngebied vastgesteld
+                                </a>
+                            </li>
+                        
+                            <li>
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/natuur-en-landschap/ecologische-hoofdstructuur.aspx">
+                                    Ecologische hoofdstructuur
+                                </a>
+                            </li>
+                        
+                            <li class="last">
+                               <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/vrije-tijd-en-cultuur/natuur-en-landschap/landschapsontwikkelingsplan.aspx">
+                                    Landschapsontwikkelingsplan
+                                </a>
+                            </li>
+                        
+                            </ul>
+                        
+                </li>
+            </ul> -->        
+    </li>
+  </ul> 
+</div>
+
+            
+<div id="service">
+<h2 class="navTitle">Servicemenu</h2>
+<ul>        
+        <li class="first">    
+        
+        
+        <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/printen.aspx" title="Printen" class="print">
+            Printen
+        </a>
+        
+        
+            
+        </li>
+            
+        <li>    
+        
+        
+        <a href="http://www.debilt.nl/nl-nl/rss.aspx" title="RSS">
+            RSS
+        </a>
+        
+        
+            
+        </li>
+            
+        <li>    
+        
+        
+        <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/voorlezen.aspx" title="Voorlezen">
+            Voorlezen
+        </a>
+        
+        
+            
+        </li>
+            
+        <li>    
+        
+        
+        
+            <ul class="fontSize">                    
+                    <li class="first">
+                        <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten.aspx/nl-nl/gemeenteloket/producten.aspx?lettergrootte=kleiner" title="A">
+                            A</a> </li>
+                                    
+                    <li>
+                        <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten.aspx/nl-nl/gemeenteloket/producten.aspx?lettergrootte=normaal" title="A">
+                            A</a> </li>
+                                    
+                    <li class="last">
+                        <a href="http://www.debilt.nl/nl-nl/gemeenteloket/producten.aspx/nl-nl/gemeenteloket/producten.aspx?lettergrootte=groter" title="A">
+                            A</a> </li>
+                </ul>
+        </li>
+            
+        <li>    
+        
+        
+        <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/sitemap.aspx" title="Sitemap">
+            Sitemap
+        </a>
+        
+        
+            
+        </li>
+            
+        <li class="last">    
+        
+        
+        <a href="http://www.debilt.nl/nl-nl/mijn-de-bilt/inloggen.aspx" title="Mijn De Bilt">
+            Mijn De Bilt
+        </a>
+        
+        
+            
+        </li>
+    </ul>
+</div>
+
+            
+<div id="header-menu">
+<h2 class="navTitle">Secundaire navigatie</h2>
+<ul>
+    <li class="first">
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/gemeentegids.aspx" title="Gemeentegids">Gemeentegids</a> 
+    </li>
+  
+    <li>
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/contact.aspx" title="Contact en openingstijden">Contact en openingstijden</a> 
+    </li>
+  
+    <li>
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/volg-ons.aspx" title="Volg ons">Volg ons</a> 
+    </li>
+  
+    <li>
+       <a href="http://www.debilt.nl/nl-nl/algemeen/artikelen/actueel/english.aspx" title="English">English</a> 
+    </li>
+  
+    
+  <!-- <li class="last">
+      <form id="form1" action="http://www.debilt.nl/pages/Zoekresultaten.aspx" method="post">
+            <label for="ctl15_tbSearch">Zoeken</label>
+            <input name="ctl15$tbSearch" id="ctl15_tbSearch" class="text search" type="text">                
+            <input class="button" value="Zoeken" type="submit">
+        </form>
+    </li> -->
+    
+    </ul>
+    
+</div>                                                                          
+        </div>
+        <div id="footer">            
+            <div class="container">                                   
+                <p>Copyright &copy; 2010 gemeente De Bilt
+</p>
+                
+<h2 class="navTitle">Over deze website</h2>
+<ul>
+   <li>
+        <a title="Privacy statement" href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/privacy-statement.aspx">
+            Privacy statement
+        </a>
+    </li>
+    
+  
+   <li>
+        <a title="Disclaimer" href="http://www.debilt.nl/nl-nl/algemeen/artikelen/algemeen-artikelen/disclaimer.aspx">
+            Disclaimer
+        </a>
+    </li>
+    
+  </ul>   
+            </div>
+        </div>                      
+             
+    
+
+
+
+           
+    
+</body>
+</html>

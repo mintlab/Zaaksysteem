@@ -1,0 +1,25 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+
+[% layout_type = 'simple' %]
+<div class="block">
+<p class="header">[% error.titel %]</p>
+<div class="blockcontent">
+
+    <p>[% error.bericht %]<p>
+    <p>
+        Klik op annuleren om terug te gaan naar
+        <a href="[% c.config.gemeente.gemeente_portal %]" title="Annuleren"
+            >[% c.config.gemeente.website %]</a>.
+    </p>
+<div class="nextprev clearfix">
+    <a href="[% c.config.gemeente.gemeente_portal %]" title="Annuleren"><input type="button" value="Annuleren" class="button140 left" /></a>
+</div>
+</form>
+</div>
+</div>
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]
+

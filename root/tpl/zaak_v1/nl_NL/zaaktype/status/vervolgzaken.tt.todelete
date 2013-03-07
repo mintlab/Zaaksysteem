@@ -1,0 +1,45 @@
+<div id="zaaktype_definitie">
+<input type="hidden" name="destination" value="[% c.req.params.destination %]">
+<input type="hidden" name="update" value="1">
+<table class="table_zaakinformatie">
+    <thead>
+    <tr>
+        <th colspan="2">Deel/Vervolgzaak kenmerken</td>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Aanvrager deel-/vervolgzaak</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="deelvervolg_eigenaar" id="antwoord_invoertype">
+                    [% FOR eigenaar IN constants.zaaktype.deelvervolg_eigenaar %]
+                        <option
+                            value="[% eigenaar.key %]"
+                            [% (history.eigenaar == eigenaar.key) ? ' selected' : '' %]
+                        >
+                            [% eigenaar.value.label %]
+                        </option>
+                    [% END %]
+                </select>
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Kenmerken kopieren:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="deelvervolg_kenmerken_kopieren"[% (history.zaakinformatie_view ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaak standaard aanvinken</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="deelvervolg_status"[% (history.zaakinformatie_view ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        <tr>
+    </tbody>
+<table>
+<input type="button" value="Opslaan" class="button140">
+</div>

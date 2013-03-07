@@ -1,0 +1,44 @@
+<div class="ezra_view_sjabloon">
+    <form method="POST" action="[%
+        c.uri_for(
+            '/zaak/' _ zaak.nr
+            _ '/documents/' _ (document_depth.id || 0)
+            _ '/get/' _ document.id
+            _ '/'
+        ) %]">
+        <table cellspacing="1" class="table_zaakinformatie">
+            <tbody>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Bestandsnaam:</td>
+                    <td class="table_td_right_zaakinformatie"> [% document.filename %]
+                    </td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Gewenst uitvoer formaat:</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <select name="filetype" class="select_zt_document">
+                            <option
+                                value="odt"
+                                >OpenDocument (.odt)
+                            </option>
+                            [% FOR fileexport IN ZCONSTANTS.document.sjabloon.export_types %]
+                                [% filetype = fileexport.key %]
+                                [% filedata = fileexport.value %]
+                                [% NEXT IF filetype == 'odt' %]
+                                <option
+                                    value="[% filetype %]"
+                                    >[% filedata.label %] (.[% filetype %])
+                                </option>
+                            [% END %]
+                        </select>
+                    </td>
+                </tr>
+           </tbody>
+        </table>
+        <table class="table_ztbmenu">
+            <tr class="table_ztbmenu_tr">
+                <td class="table_ztbmenu_tdright"><input id="dialog-submit" type="submit" class="button140" value="Gebruiken"></td>
+            </tr>
+        </table>
+    </form>
+</div>

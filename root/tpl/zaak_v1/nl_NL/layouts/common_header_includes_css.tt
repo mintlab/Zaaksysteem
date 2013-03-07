@@ -1,0 +1,45 @@
+[% IF c.debug && !invoke_assets_minified_request %]
+    <!-- Served Template: [% c.stash.template %] -->
+[% END %]
+[%
+    page_stylesheets = [];
+    page_stylesheets.push('jquery.ui.css');
+    page_stylesheets.push('jquery.treeTable.css');
+    page_stylesheets.push('jquery.ui.selectmenu.css');
+    page_stylesheets.push('jquery.uniform.default.css');
+    page_stylesheets.push('jquery.ui.multiselect.css');
+    page_stylesheets.push('jquery.qtip.css');
+
+    page_stylesheets.push('stylesheet.css');
+    page_stylesheets.push('ztb.css');
+
+-%]
+
+
+[% IF c.debug && !invoke_assets_minified_request %]
+<!-- Stylesheets -->
+[% END %]
+
+[% USE date %]
+[% BLOCK css_invocation -%]
+    [% IF !invoke_assets_minified -%]
+        <link rel="stylesheet" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') _
+        '/css' _ PREFIX_MD5 _ '/' _ page_stylesheet _ '?' _
+        c.config.SVN_VERSION %]" type="text/css" media="screen" />
+
+    [%- ELSIF invoke_assets_minified_request %]
+        [% minified_script_name = 'css/' _ page_stylesheet %]
+        [% minified_script_name = minified_script_name _ (PREFIX_MD5 ? '/' _ PREFIX_MD5 : '') %]
+        [% INSERT $minified_script_name %]
+
+    [%- END %]
+[%- END %]
+
+[% IF !invoke_assets_minified || invoke_assets_minified_request -%]
+    [% FOREACH page_stylesheet IN page_stylesheets -%]
+        [%- PROCESS css_invocation %]
+    [%- END %]
+[%- ELSE %]
+        <link rel="stylesheet" href="[% c.uri_for('/tpl/zaak_v1/nl_NL/css/common.css')
+        %]" type="text/css" media="screen" />
+[% END -%]

@@ -1,0 +1,62 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use FindBin qw/$Bin/;
+use lib "$Bin/../lib";
+use Zaaksysteem::SchemaGM;
+use Zaaksysteem::Schema;
+
+my $db_type = shift
+    or die("USAGE: $0 producertype postgres_gegevens_db postgres_beheer_db");
+
+#my $schema = Zaaksysteem::SchemaGM->connect("dbi:SQLite:$Bin/../db/dbg.db");
+my $schemagm = Zaaksysteem::SchemaGM->connect(
+    'dbi:Pg:dbname=bussum_gegevens_2_0'
+);
+my $schema = Zaaksysteem::Schema->connect(
+    'dbi:Pg:dbname=bussum_beheer_2_0'
+);
+
+my @opts = ([ $db_type], undef, undef, undef,
+    {
+#        ignore_constraint_names     => 1,
+#        ignore_index_names          => 1,
+        producer_args       => {
+            #add_color   => 1,
+            skip_tables => [qw/
+                auth_users
+            /
+        ]},
+    }
+);
+
+$schema->create_ddl_dir(@opts);
+$schemagm->create_ddl_dir(@opts);
+
+my $schemafile = $schema->ddl_filename($opts[0]->[0], '1.x', './', $opts[3]);
+my $schemagmfile = $schemagm->ddl_filename($opts[0]->[0], '1.x', './', $opts[3]);
+
+if (-f $schemafile) {
+    fix_schema($schemafile);
+}
+
+if (-f $schemagmfile) {
+    fix_schema($schemagmfile);
+}
+
+sub fix_schema {
+    my $file = shift;
+
+    `perl -pi -e 's/(.*)\s*INTEGER PRIMARY KEY NOT NULL/\$1 INTEGER PRIMARY KEY AUTOINCREMENT/g' $file`;
+
+    ### When serial found ,it places some random PRIMARY key somewhere..remove
+    ### it
+    `perl -pi -e 's/(.*)\s*SERIAL.*/\$1 INTEGER PRIMARY KEY AUTOINCREMENT\$2,/g' $file`;
+    #`perl -pi -e 's/.*PRIMARY KEY \(.*?\).*//g' $file`;
+    `perl -pi -e 's/DROP TABLE (.*?);/DROP TABLE IF EXISTS \$1;/g' $file`;
+}
+
+#$schema->deploy();
+

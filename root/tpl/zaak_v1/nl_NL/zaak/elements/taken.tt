@@ -1,0 +1,58 @@
+[% USE Scalar %]
+<div class="fase-tl-wrap clearfix">
+    <ul id="fase-tl">
+        [% fasen = zaak.scalar.fasen %]
+        [% WHILE (fase = fasen.next) %]
+            [% UNLESS fase.status == 1 %]
+                <li class="arrow"><span>&#187;</span></li>
+            [% END %]
+            <li[% (requested_fase.status == fase.status ? ' class="active"' : '') %]>
+                <a href="[%
+                    c.uri_for('/zaak/' _ zaak.nr, undef, { fase => fase.status })
+                %]">[% fase.fase %]</a>
+            </li>
+        [% END %]
+    </ul>
+</div>
+
+
+<div id="accordion-taken">
+
+
+<!-- Accordion element voor Checklist -->
+
+[% IF requested_fase.status > 1 %]
+    [% vragen =
+        zaak.zaaktype_node_id.scalar.checklist_vraags.scalar.search({
+            zaaktype_status_id  => requested_fase.id
+        },
+        {order_by=>'id' }) %]
+    [% IF vragen.count %]
+    [% PROCESS zaak/elements/view_checklist_accordion.tt %]
+    [% END %]
+[% END %]
+
+<!-- Accordion element voor Kenmerken -->
+[% IF
+    (requested_fase.id == zaak.afhandel_fase.id) ||
+    (
+        zaak.zaaktype_node_id.zaaktype_kenmerken.scalar.search({
+            zaak_status_id => requested_fase.id,
+        }).count
+    )
+%]
+        [% PROCESS zaak/elements/view_kenmerken.tt %]
+[% END %]
+
+<!-- Accordion element voor Sjablonen -->
+
+[% USE Scalar %]
+[% sjablonen = zaak.zaaktype_node_id.scalar.zaaktype_sjablonen.scalar.search(
+    zaak_status_id => requested_fase.id,
+) %]
+[% IF (sjablonen.count) %] 
+    [% PROCESS zaak/elements/view_sjablonen_accordion.tt %]
+[% END %]
+
+
+</div>

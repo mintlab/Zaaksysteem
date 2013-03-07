@@ -1,0 +1,38 @@
+[% bibliotheek_type = 'bibliotheek_' _ bib_type _ 's' %]
+
+<!-- WIDGET beheer/categories/row.tt -->
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        <a href="[% c.uri_for('/beheer/bibliotheek/' _ bib_type _ '/' _ categorie.id) %]">
+            <img src="/images/icon-folder.gif" width="16" height="16" border="0" />
+        </a>
+    </td>
+    <td class="tdvar">
+        <a href="[% c.uri_for('/beheer/bibliotheek/' _ bib_type _ '/' _ categorie.id) %]">
+            [% categorie.naam %]
+        </a>
+    </td>
+    [% IF CHILD %]
+    <td class="td80 center">&nbsp;</td>
+    [% END %]
+    <td class="td80 center">
+            [% USE Scalar %]
+            [% categorie.scalar.$bibliotheek_type.count || 0 %]
+    </td>
+    <td class="td150">
+        [% IF ! categorie.system %]
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option value="[% c.uri_for('/beheer/bibliotheek/categorie/' _ categorie.id _ '/bewerken/' _ bib_type) %]" class="popup">Bewerken</option>
+                    <option value="[% c.uri_for('/beheer/bibliotheek/categorie/' _ categorie.id _ '/verwijderen/' _ bib_type) %]" class="popup">Verwijderen</option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+            </div>
+        </div>
+        [% END %]
+    </td>
+</tr>
+<!-- END WIDGET beheer/categories/row.tt -->

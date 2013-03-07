@@ -1,0 +1,63 @@
+<script>
+$(document).ready( function() {
+    $('.ezra_activate_zaaktype_node_id').on('click', function() {
+
+        var url = $(this).attr('href');
+        console.log('url ' + url);
+        
+        $('.ezra_beheer_zaaktypen_version').load(
+            url + ' .ezra_beheer_zaaktypen_version_inner',
+            '',
+            function() {
+                console.log('arrivederci');
+            }
+        );
+        return false;
+    });
+});
+</script>
+
+
+<div class="ezra_beheer_zaaktypen_version versiebeheer_tabel">
+    <h2>Versiebeheer "[% titel %]"</h2>
+    <div class="ezra_beheer_zaaktypen_version_inner">
+
+
+
+<strong>[% message %]</strong>
+
+    <table>
+        <thead>
+            <tr>
+                <th>id</th>
+                <th>datum</th>
+                <th>user</th>
+                <th>comment</th>
+                <th>actie</th>
+            </tr>
+        </thead>
+        <tbody>
+
+[% WHILE (zaaktype_node = zaaktype_nodes.next) %]
+
+            <tr [% IF zaaktype_node.id == current_zaaktype_node_id %]class="current_zaaktype"[% END %]>
+                <td>[% zaaktype_node.id %]</td>
+                <td>[% zaaktype_node.last_modified %]</td>
+                <td>A.admin</td>
+                <td>[% IF zaaktype_node.id % 2 %]Import[% END %]</td>
+                <td>[% IF zaaktype_node.id != current_zaaktype_node_id %]
+                    <a class="ezra_activate_zaaktype_node_id knop no-icon mini" href="/beheer/zaaktypen/[% zaaktype_id %]/version/activate/[% zaaktype_node.id %]">activeren</a>[% END %]
+                </td>
+            </tr>
+
+[% END %]
+
+        </tbody>
+    </table>
+
+[% IF zaaktype_nodes_pager && zaaktype_nodes.pager.total_entries > max_rows && !c.req.params.show_all_results %]
+Er zijn meer resultaten..
+<a href="/beheer/zaaktypen/[% zaaktype_id %]/version?show_all_results=1">Toon alle resultaten</a>
+[% END %]
+    </div>
+</div>

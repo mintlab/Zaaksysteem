@@ -1,0 +1,18 @@
+<!-- zaaktype/widgets/table_categorie.tt -->
+<table class="table_zaken_title" cellspacing="0">
+<thead>
+    <tr class="table_zaken_title_tr">
+        <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+        <td class="tdvar">Categorie</td>
+        <td class="td80 center">[% bib_type | ucfirst %]</td>
+        <td class="td150">Acties:</td>
+    </tr>
+   </thead>
+   <tbody>
+    [% WHILE (categorie = categories.next) %]
+        [% PROCESS widgets/beheer/categorie/row.tt %]
+    [% END %]
+    </tbody>
+</table>
+<!-- END zaaktype/widgets/table_categorie.tt -->
+

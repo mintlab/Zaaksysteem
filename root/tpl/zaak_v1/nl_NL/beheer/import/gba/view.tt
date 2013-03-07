@@ -1,0 +1,58 @@
+<!-- Begin GBA Changes List -->
+<div class="block">
+    <p class="header">
+        Wijzigingen import
+        [% import_data.created.strftime('%d-%m-%Y %H:%M'); %]
+        ([% c.loc('gba') %])
+    </p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Import Gegevens</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Type</td>
+                <td class="table_td_right_zaakinformatie">
+                    GBA
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Start import</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% import_data.created.strftime('%d-%m-%Y %H:%M'); %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Import afgerond</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% import_data.finished.strftime('%d-%m-%Y %H:%M'); %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Entries in importbestand</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% import_data.entries %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Import succesvol</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% (import_data.succesvol ? 'Ja' : 'Nee'); %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Import Error</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% import_data.error_message %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+        [% PROCESS widgets/beheer/import/gba/table.tt %]
+    </div>
+</div>
+<!-- End GBA Import List -->
+

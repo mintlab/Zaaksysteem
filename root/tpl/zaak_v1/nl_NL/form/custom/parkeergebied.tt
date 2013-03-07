@@ -1,0 +1,6 @@
+[%
+   webform_form_hiddens_extra = plugin_parkeervergunning_config;
+   webform_form_hiddens_extra.plugin = 'parkeergebied';
+%]
+
+[% PROCESS form/webform.tt %]

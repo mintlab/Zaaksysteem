@@ -1,0 +1,55 @@
+[% pand = bag %]
+[% USE Scalar %]
+<table class="table_zaakinformatie" id="checklist_template">
+    <thead>
+        <tr>
+            <th colspan="2">BAG Pand</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Identificatie</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.identificatie %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Bouwjaar</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.bouwjaar %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Status</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.status %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Documentnummer / Documentdatum</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.documentnummer %] / [% pand.documentdatum %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Aantal actieve verblijfsobjecten</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.scalar.verblijfsobject_panden.count %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">In onderzoek</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.inonderzoek %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Officieel</td>
+            <td class="table_td_right_zaakinformatie">
+                [% pand.officieel %]
+            </td>
+        <tr>
+
+    </tbody>
+<table>
+

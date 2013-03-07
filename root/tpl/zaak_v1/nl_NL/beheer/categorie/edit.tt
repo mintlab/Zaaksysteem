@@ -1,0 +1,19 @@
+<div id="categorie_edit">
+<form method="POST" action="[% c.uri_for('/beheer/bibliotheek/categorie/' _ bib_id _ '/bewerken/' _ bib_type _ (pid ? '/' _ pid : '')) %]">
+<input type="hidden" name="update" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Naam Categorie:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="naam" value="[% categorie.naam %]" /></td>
+    </tr>
+   </tbody>
+</table>
+
+<table class="table_ztbmenu">
+    <tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input id="dialog-submit" type="submit" class="button140" value="Verzenden"></td>
+    </tr>
+</table>
+</form>
+</div>

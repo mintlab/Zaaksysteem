@@ -1,0 +1,74 @@
+[% catalogus = zaak.typeinfo.kenmerken.catalogus %]
+<div id="popup-send-mail">
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/add') %]" enctype="multipart/form-data">
+<input type="hidden" name="documenttype" value="mail">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">In status:</td>
+        <td class="table_td_right_zaakinformatie">[% zaak.kenmerk.status %] van [% zaak.zaakstatusinfo.count %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Selecteer type ontvanger</td>
+        <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                <div class="col"><input type="radio" name="rcpt_type" value="medewerker" checked> Behandelaar</div>
+                <div class="col"><input type="radio" name="rcpt_type" value="aanvrager"> Aanvrager ([% zaak.kenmerk.aanvrager.naam %])</div>
+                </div>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr" id="behandelaar_select">
+        <td class="table_td_left_zaakinformatie">Selecteer een collega:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div id="new_externe_aanvrager">
+                <input type="hidden" name="rcpt" value="" />
+                <input type="text" value="" class="input_medium" disabled>
+                <a href="#" title="Zoek een nieuwe aanvrager" class="search_betrokkene" rel="medewerker">
+                    <img src="/images/icon-magnifier.png" width="16" height="16" border="0">
+                </a>
+                <img src="/images/empty.gif" width="24" height="16">
+                <img src="/images/icon-tick.png" style="visibility: hidden;" class="validate-ok" title="Veld is correct ingevuld" width="16" height="16">
+            </div>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Onderwerp</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="subject" /></td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie"
+        class="email_ontvanger_constraint">Bericht:</td>
+        <td class="table_td_right_zaakinformatie">
+            <textarea name="message" rows="10" cols="60">[% mailconcept %]</textarea>
+        </td>
+    </tr>
+   </tbody>
+</table>
+
+<table class="table_ztbmenu">
+    <tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input id="dialog-submit" type="submit" class="button140" value="Verzenden"></td>
+    </tr>
+</table>
+</form>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#popup-send-mail input[name="rcpt_type"]').change(function() {
+            if ($(this).attr('value') == 'medewerker') {
+                $('#popup-send-mail #behandelaar_select').show();
+            } else {
+                $('#popup-send-mail #behandelaar_select').hide();
+            }
+        });
+
+        $('.search_betrokkene').click(function() {
+            searchBetrokkene($(this));
+
+            return false;
+        });
+    });
+</script>

@@ -1,0 +1,399 @@
+[%
+
+    bag = undef;
+
+# Opties
+# veldoptie_type    => type
+# veldoptie_name    => type
+# veldoptie_value    => type
+# veldoptie_opties    => type
+    RETURN UNLESS (veldoptie_type && veldoptie_name);
+%]
+
+
+[% BLOCK veldoptie_value_row %]
+    <li>
+        [% INCLUDE veldoptie_single veldoptie_value=vokey %]
+        <a href="#" class="del">
+        </a>
+    </li>
+[% END %]
+
+
+[% BLOCK veldoptie_multiple %]
+<div class="veldoptie_multiple">
+    <ul class="veldoptie_multiple_list">
+        [% multiple_shown = 0 %]
+        [% FOREACH vokey IN veldoptie_value %]
+            [% NEXT UNLESS vokey %]
+            [% multiple_shown = 1 %]
+            [% INCLUDE veldoptie_value_row %]
+        [% END %]
+
+        [% UNLESS multiple_shown %]
+            [% INCLUDE veldoptie_value_row %]
+        [% END %]
+    </ul>
+    <a href="#" class="add add-veldoptie knop voeg-toe">toevoegen</a>
+</div>
+[% END %]
+
+
+
+
+[% BLOCK veldoptie_single %]
+
+    [% IF veldoptie_type == 'textarea' %]
+        <textarea
+            name="[% veldoptie_name %]"
+            cols="60"
+            rows="4"
+        >[% veldoptie_value %]</textarea>
+    [% ELSIF
+        veldoptie_type == 'text' ||
+        veldoptie_type == 'image_from_url' ||
+        veldoptie_type == 'numeric' ||
+        veldoptie_type == 'text_uc'
+    %]
+        [% IF veldoptie_type == 'image_from_url' && veldoptie_value %]
+            <img src="[% veldoptie_value %]" /><br />
+        [% END %]
+        <input
+            type="text"
+            name="[% veldoptie_name %]"
+            value="[% veldoptie_value %]"
+            class="veldoptie_[% veldoptie_type %]"
+            />
+    [% ELSIF veldoptie_type == 'date' %]
+        <input
+            type="text"
+            name="[% veldoptie_name %]"
+            value="[% veldoptie_value %]"
+            [% IF !veldoptie_zaaktype_kenmerk.date_fromcurrentdate || zaak.id != '' %]
+            class="veldoptie_datepicker"
+            [% ELSE %]
+            class="veldoptie_datepicker_begindate"
+            [% END %]
+            id="dp_[% veldoptie_name %]"
+        />
+    [% ELSIF
+        veldoptie_type == 'bag_adres' ||
+        veldoptie_type == 'bag_adressen' ||
+        veldoptie_type == 'bag_straat_adres' ||
+        veldoptie_type == 'bag_straat_adressen' ||
+        veldoptie_type == 'bag_openbareruimte' ||
+        veldoptie_type == 'bag_openbareruimtes'
+    %]
+        <div class="veldoptie_bag_adres_container bag_container">
+            [% IF
+                veldoptie_type == 'bag_adressen' ||
+                veldoptie_type == 'bag_straat_adressen' ||
+                veldoptie_type == 'bag_openbareruimtes'
+                %]
+            <table class="bag_adressen">
+                <tr>
+                    <th colspan="2" style="display:none"></th>
+                </tr>
+                [% IF veldoptie_value %]
+                [% FOREACH vokey IN veldoptie_value %]
+                    [% NEXT UNLESS vokey %]
+                        <tr>
+                            <td class="straatnaam">
+                                <input type="hidden" name="[% veldoptie_name %]"
+                                value="[% vokey %]">
+                                    [%
+                                    c.model('Gegevens::Bag').bag_human_view_by_id(
+                                        vokey
+                                    )
+                                    %]
+                            </td>
+                            <td class="actie">
+                                <a href="#" class="del">
+                                </a>
+                            </td>
+                        </tr>
+                    [% END %]
+                [% END %]
+            </table>
+            [% END %]
+            
+            
+            <div class="veldoptie_bag_adres_invoer">
+                    [% has_straatnaam = 0 %]
+                    [% IF
+                        veldoptie_type == 'bag_openbareruimte' ||
+                        veldoptie_type == 'bag_openbareruimtes' ||
+                        veldoptie_type == 'bag_straat_adres' ||
+                        veldoptie_type == 'bag_straat_adressen'
+                    %]
+                <div class="col bag-postcode-large">
+                    <label>Straatnaam</label>
+                    <input
+                        type="text"
+                        name="[% veldoptie_name %]_straatnaam"
+                        value=""
+                        class="medium185 veldoptie_bag_adres invoer straatnaam autocomplete"
+                    />
+                        [% has_straatnaam = 1 %]
+                    [% ELSE %]
+                <div class="col bag-postcode">
+                    <label>Postcode</label>
+                    <input
+                        type="text"
+                        name="[% veldoptie_name %]_postcode"
+                        value=""
+                        class="mini80 veldoptie_bag_adres invoer postcode autocomplete_with"
+                    />
+                    [% END %]
+                </div>
+                [% IF
+                    veldoptie_type != 'bag_openbareruimte' &&
+                    veldoptie_type != 'bag_openbareruimtes'
+                %]
+                <div class="col bag-huisnr">
+                    <label>Huisnr</label>
+                    <input
+                        type="text"
+                        name="[% veldoptie_name %]_huisnummer"
+                        value=""
+                        class="mini40 veldoptie_bag_adres invoer huisnummer autocomplete"
+                    />
+                </div>
+                [% END %]
+    
+                [% IF
+                    veldoptie_type == 'bag_adressen' ||
+                    veldoptie_type == 'bag_straat_adressen' ||
+                    veldoptie_type == 'bag_openbareruimtes'
+                %]
+                <a href="#" class="add add-veldoptie knop voeg-toe margin-top medium">toevoegen</a>
+                [% END %]
+            </div>
+            <div class="veldoptie_bag_adres_uitvoer" style="clear:both">
+                [% IF
+                    (
+                        veldoptie_type == 'bag_adres' ||
+                        veldoptie_type == 'bag_straat_adres' ||
+                        veldoptie_type == 'bag_openbareruimte'
+                    ) && veldoptie_value
+                %]
+                [% bag = c.model('Gegevens::BAG').retrieve({id => veldoptie_value}) %]
+                [% END %]
+                <input
+                    type="text"
+                    name="[% veldoptie_name %]_straatnaam"
+                    value="[% (
+                        bag.openbareruimte.woonplaats.naam ?
+                        bag.openbareruimte.woonplaats.naam _ ' > ' : '') %][% bag.openbareruimte.naam || bag.naam %]"
+                    class="bag-veld veldoptie_bag_adres uitvoer straatnaam autocomplete no_empty medium185"
+                    readonly="readonly"
+                />
+                [% IF
+                    veldoptie_type == 'bag_adres' ||
+                    veldoptie_type == 'bag_adressen' ||
+                    veldoptie_type == 'bag_straat_adres' ||
+                    veldoptie_type == 'bag_straat_adressen'
+                %]
+                <input
+                    type="text"
+                    name="[% veldoptie_name %]_huisnummer"
+                    value="[% bag.nummeraanduiding %]"
+                    class="bag-veld mini40 veldoptie_bag_adres uitvoer huisnummer no_empty"
+                    readonly="readonly"
+                />
+                [% END %]
+                <input
+                    type="hidden"
+                    name="[% veldoptie_name %]_type"
+                    value="[% veldoptie_type %]"
+                    class="veldoptie_bag_adres uitvoer veldoptie_type"
+                    />
+                <input
+                    type="hidden"
+                    name="[% veldoptie_name %][% (veldoptie_type == 'bag_adressen'
+                    || veldoptie_type == 'bag_openbareruimtes' ? '_not' : '' ) %]"
+                    value="[% veldoptie_value %]"
+                    class="veldoptie_bag_adres uitvoer bagid"
+                    />
+            </div>
+        </div>
+    [% ELSIF veldoptie_type == 'valuta' %]
+    [% veldoptie_value = veldoptie_value.replace(',','.') %]
+    [% veldoptie_value = veldoptie_value | format('%01.2f') %]
+        <input
+            type="text"
+            name="[% veldoptie_name %]"
+            value="[% veldoptie_value.replace('\.', ',') %]"
+         /> (Voorbeeld: 500,00)
+    [% ELSIF veldoptie_type == 'valutain' || veldoptie_type == 'valutaex' %]
+    [% valutasplitted = veldoptie_value.split('\.'); %]
+        <div class="veldoptie_valuta">
+            <input
+                type="hidden"
+                name="[% veldoptie_name %]"
+                value="[% veldoptie_value %]"
+                class="[% veldoptie_type %] eur"
+             />
+            &euro; <input
+                size="10"
+                type="text"
+                name="eur_[% veldoptie_name %]"
+                value="[% valutasplitted.0 %]"
+                class="[% veldoptie_type %] eur"
+             />
+            <input
+                size="2"
+                type="text"
+                name="cnt_[% veldoptie_name %]"
+                value="[% valutasplitted.1 %]"
+                class="[% veldoptie_type %] cnt"
+             />
+             <span class="veldoptie_valuta_calculation">
+                ([% (veldoptie_type == 'valutain' ? 'excl.' : 'incl.') %]
+                BTW: &euro; <span class="value [% (veldoptie_type == 'valutain' ? 'inclbtw' : 'exclbtw') %]"></span>)
+            </span>
+        </div>
+    [% ELSIF veldoptie_type == 'select' %]
+        [% FOREACH value IN veldoptie_value %]
+            [% value_escaped = value | html_entity %]
+            [% veldoptie_values.$value = value_escaped %]
+        [% END %]
+        <select name="[% veldoptie_name %]">
+            <option name="[% veldoptie_name %]">
+            [% FOR optie IN veldoptie_opties %]
+                [% optie_escaped = optie | html_entity %]
+                <option
+                    value="[% optie_escaped %]"
+                    [% (veldoptie_values.$optie ? ' selected' : '') %]
+                >
+                    [% optie | ucfirst %]
+                </option>
+            [% END %]
+        </select>
+    [% ELSIF veldoptie_type == 'checkbox' %]
+        [% FOREACH value IN veldoptie_value %]
+            [% value_escaped = value | html_entity %]
+            [% veldoptie_values.$value = value_escaped %]
+        [% END %]
+        [% FOR optie IN veldoptie_opties %]
+            [% optie_escaped = optie | html_entity %]
+            <div class="checkbox-item">
+                <input
+                    type="checkbox"
+                    name="[% veldoptie_name %]"
+                    value="[% optie %]"
+                    [% (veldoptie_values.$optie ? ' checked="checked"' : '') %]
+                />
+                <label for="[% veldoptie_name %]"> [% optie | ucfirst %]</label>
+            </div>
+        [% END %]
+    [% ELSIF veldoptie_type == 'option' %]
+        [% veldoptie_values = {} %]
+        [% FOREACH value IN veldoptie_value %]
+            [% value_escaped = value | html_entity %]
+            [% veldoptie_values.$value = value_escaped %]
+        [% END %]
+        [% FOR optie IN veldoptie_opties %]
+            [% optie_escaped = optie | html_entity %]
+            [% optielabel = optie | ucfirst | html_entity %]
+            <div class="radio-item">
+                <input
+                    type="radio"
+                    name="[% veldoptie_name %]"
+                    value="[% optie_escaped %]"
+                    [% (veldoptie_values.$optie ? ' checked="checked"' : '') %]
+                />
+               <label for="[% veldoptie_name %]">[% (optielabel || 'Onbekend') %]</label>
+            </div>
+        [% END %]
+    [% ELSIF veldoptie_type == 'file' %]
+        [% IF zaak %]
+            [% this_filename = kenmerkdoc.filename %]
+        [% ELSE %]
+            [% this_filename = veldoptie_value.filename %]
+        [% END %]
+        [% mimetype_class = PROCESS widgets/general/mimetype.tt 
+            mimetype = kenmerkdoc.mimetype
+        %]
+
+        <div class="mintloader fileUpload" id="[% veldoptie_name %]">
+        [% IF c.req.headers.user_agent.search('MSIE') %]
+            [% IF veldoptie_value %]
+                <div class="existing_file">
+                    <a href="#" class="wijzig_bestand knop no-icon mini">Wijzig</a>
+                </div>
+                <div class="fileuploadthumbnail [% mimetype_class %]">
+                [% IF zaak %]
+                    <a href="[% c.uri_for(
+                    '/zaak/' _ zaak.nr _ '/documents/'
+                    _ (kenmerkdoc.pid.id || 0) _ '/get/'
+                    _ kenmerkdoc.id _ '/' _ kenmerkdoc.filename
+                    ) _ '?filetype=pdf'
+                    %]" class="uploaded" target="_blank">[% PROCESS widgets/general/filename.tt
+                        filename = this_filename %]</a>
+                [% ELSE %]
+                    [% PROCESS widgets/general/filename.tt
+                        filename = this_filename %]
+                [% END %]
+                </div>
+                <div class="new_upload" style="visibility:hidden;">
+            [% END %]
+                <input type="file" name="[% veldoptie_name %]" />
+            [% IF veldoptie_value %]</div>[% END %]
+        [% ELSE %]
+            <input type="file" style="visibility: hidden;" class="fileToUpload [% veldoptie_name %]" />  
+            <input type="button" class="kiesbestand knop no-icon" value="[% IF veldoptie_value %]Wijzig...[% ELSE %]Kies bestand[% END %]"/><span class="slepen">of sleep [% IF veldoptie_value %]ander [% END %]bestand</span>
+            <div class="progressIndicator clearfix">
+                <div class="progressBarOuter"><div class="progressBar"></div></div>
+                <div class="progressNumber">&nbsp;</div>
+                <div class="transferBytesInfo"></div>
+            </div>
+            <div class="uploadResponse" [% IF !veldoptie_value %]style="display:none;"[% END %]>
+                [% IF veldoptie_value %]
+                <div class="fileuploadthumbnail [% mimetype_class %]">
+                [% IF zaak %]
+                    <a href="[% c.uri_for(
+                    '/zaak/' _ zaak.nr _ '/documents/'
+                    _ (kenmerkdoc.pid.id || 0) _ '/get/'
+                    _ kenmerkdoc.id _ '/' _ kenmerkdoc.filename
+                    ) _ '?filetype=pdf'
+                    %]" target="_blank">[% PROCESS widgets/general/filename.tt
+                        filename = this_filename %]</a>
+                [% ELSE %]
+                    [% PROCESS widgets/general/filename.tt
+                        filename = this_filename %]
+                [% END %]
+                </div>                    
+                [% END %]
+            </div>
+        [% END %]        
+        </div>
+        
+        
+        
+    [% ELSIF veldoptie_type == 'googlemaps' %]
+    <div class="ezramap_container">
+
+        <div id="ezramap"></div>
+        <br />
+        <input type="hidden" name="latitude" value="[% c.config.gemeente.latitude %]"/>
+        <input type="hidden" name="longitude" value="[% c.config.gemeente.longitude %]"/>
+        <input
+            type="text"
+            name="[% veldoptie_name %]"
+            value="[% veldoptie_value %]"
+            class="input_large"
+         />
+    </div>
+    [% END %]
+
+[% END %]
+
+
+[% IF veldoptie_multiple %] 
+    [% PROCESS veldoptie_multiple %]
+[% ELSE %]
+    [% PROCESS veldoptie_single %]
+[% END %]
+
+

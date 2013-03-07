@@ -1,0 +1,46 @@
+[% nowrapper=1 %]
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+[% layout_type = 'simple' %]
+
+<div id="loginwrap">
+    <div class="left flex50 block">
+        <p class="header">U bent nog niet ingelogd met [% c.config.gemeente.naam %]ID</p>
+        <div class="blockcontent">
+            <p>Voor het door u gekozen onderdeel is verificatie van uw
+            bedrijfsidentiteit vereist. Bij
+            [% c.config.gemeente.naam_lang %]
+            kunt u inloggen met [% c.config.gemeente.naam %]ID.
+            Wanneer u op het logo van [% c.config.gemeente.naam %]
+            klikt, wordt u doorgestuurd naar de
+            loginpagina van uw gemeente.  Nadat u bent ingelogd, wordt
+            u automatisch teruggestuurd naar het door u gekozen
+            onderdeel.</p>
+
+            <div id="[% c.config.gemeente_id %]idknop" class="[% c.config.gemeente_id %]idknop grote-id-knop">
+            <a href="[% c.uri_for(
+                '/auth/bedrijfid/1',
+                {
+                    verified_url =>
+                    c.req.query_params.verified_url
+                    }
+                )
+                %]">Inloggen met [% c.config.gemeente.naam %]ID</a>
+            </div>
+            
+                        <div class="digid">
+                <div class="digid-tekst">
+				    <strong>Wat is een [% c.config.gemeente.naam %]ID?</strong>
+                    <p>[% c.config.gemeente.naam %]ID is een authenticatiemiddel voor organisaties om zaken te regelen bij de gemeente [% c.config.gemeente.naam %]. Het [% c.config.gemeente.naam %]ID bestaat uit een gebruikersnaam en een wachtwoord. Bent u een onderneming of instelling en heft u nog geen [% c.config.gemeente.naam %]ID? Vraag deze dan gratis aan door op het logo te klikken.</p>
+                </div>
+                <a href="[% c.config.gemeente.gemeente_id_url %]">
+                    <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/[% c.config.gemeente_id %]id_50.gif" alt="[% c.config.gemeente.naam %]ID Logo" class="digid-logo"/>
+                </a>
+            </div>
+        </div>
+    </div>
+</div> 
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

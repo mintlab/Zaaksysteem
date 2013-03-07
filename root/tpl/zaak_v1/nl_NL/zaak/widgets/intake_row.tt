@@ -1,0 +1,13 @@
+                <table class="table_zaken" cellspacing="1">
+                    <tr class="table_zaken_tr">
+                        <td class="table_zaken_td30"><a href="zaak_245002.html"><img src="/images/icon-pdf.gif" width="16" height="16" border="0" alt="Document" /></a></td>
+                        <td class="table_zaken_tdvar"><a href="[% c.uri_for('/zaak/intake/document/get/' _ doc.id) %]">Poststuk 1000233</a></td>
+
+                        <td class="table_zaken_td100">01-09-2009</td>
+                        <td class="table_zaken_td80"><a href="zaakintake2_afdeling.html"><img src="/images/icon-move.png" style="margin-left:30px" width="16" height="16" border="0" alt="Deze zaak Verplaatsen" /></a></td>
+                        <td class="table_zaken_td80"><a href="zaakintake2_afdeling.html"><img src="/images/icon-link.png" style="margin-left:30px" width="16" height="16" border="0" alt="Deze zaak Verplaatsen" /></a></td>
+                        <td class="table_zaken_td80"><a href="zaakintake2_registreren.html"><img src="/images/icon-save.png" style="margin-left:30px" width="16" height="16" border="0" alt="Deze zaak registreren" /></a></td>
+                        <td class="table_zaken_td80"><a href="zaakintake2_registreren.html"><img src="/images/icon-delete.png" style="margin-left:30px" width="16" height="16" border="0" alt="Deze intake verwijderen" /></a></td>
+                    </tr>
+                </table>
+

@@ -1,0 +1,65 @@
+/* SIM reset: 2011-03-02 */
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend{border:0;outline:0;font-size:100%;background:transparent;margin:0;padding:0;}
+body{line-height:1;background-color:#ffffff;font-family:serif;color:#000000;}
+ol,ul{list-style:none;}
+blockquote,q{quotes:none;}
+blockquote:before,blockquote:after,q:before,q:after{content:none;}
+:focus{outline:none;}
+a:focus,input:focus,textarea:focus,select:focus{outline:1px dotted #a9aaad;}
+ins{text-decoration:none;}
+del{text-decoration:line-through;}
+ul ul,ol ol,table p{font-size:100%;}
+p{margin-bottom:1em;}
+sup,sub{font-size:75%;line-height:100%; /* Only Modern browsers */ }
+.intro ul,.text ul,.item_intro ul,.product_text ul,ul.bullets{list-style-type:disc;margin-left:1.5em;}
+.intro ol,.text ol,.item_intro ol,.product_text ol{list-style-type:decimal;margin-left:2em;}
+ul.circle{list-style-type:circle;}
+ul.disc{list-style-type:disc;}
+ul.square{list-style-type:square;}
+ol.lower-roman{list-style-type:lower-roman;}
+ol.upper-roman{list-style-type:upper-roman;}
+ol.lower-alpha{list-style-type:lower-alpha;}
+ol.upper-alpha{list-style-type:upper-alpha;}
+ol.decimal{list-style-type:decimal;}
+fieldset legend{position:static;left:0;margin:0; white-space: normal;}
+.no_bullets{list-style:none;}
+.left{float:left;}
+.right{float:right;}
+.center{text-align:center;}
+.hidden {display:none;}
+img.left,.thumbnail.left{margin-right:.5em;margin-bottom:.5em;}
+img.right,.thumbnail.right{margin-left:.5em;margin-bottom:.5em;}
+.thumbnail.left,.thumbnail.right{margin-bottom:.3em;}
+.expired{color:red;}
+.categories {overflow:hidden}
+.categories ul li h2,.categories ul li .intro,.categories ul li{margin-bottom:1em;}
+.categories ul.two_columns {width:44%;margin-right: 2%;margin-bottom:1em;float:left;}
+.categories .two_columns li li{float:none;}
+.categories ul.others {width:100%;}
+.archief{clear:both;}
+.categories .float li{float:left;margin-right:1em;}
+.categories .float li li{float:none;}
+span.file_icon{margin:0 .25em 0 .5em;}
+span.file_icon img{vertical-align: bottom;}
+span.file_size{font-size:80%;}
+span.download_information{font-size:80%;display:block;margin-bottom:.5em;}
+div.module table th {text-align:left;}
+div.linked_items {margin-bottom:1em;}
+div.linked_items ul.bullets li.tussenkop {list-style:none;margin-left:-1.5em;}
+div.module{clear:both;}
+span.new_window{padding-left: 0.5em}
+span.readspeaker_document_reader {margin-left: 0.5em}
+.align_left{text-align:left;}
+.align_right{text-align:right;}
+ul li.item {overflow:hidden;}
+.btn_print{display:none;}
+.size_100 {font-size: 100%;}
+.size_125 {font-size: 125%;}
+.size_150 {font-size: 150%;}
+.size_200 {font-size: 200%;}
+.size_400 {font-size: 400%;}
+.align_left {text-align: left;}
+.align_center {text-align: center;}
+.align_right {text-align: right;}
+.align_justify {text-align: justify;}
+a.flowplayer {display:block;width:400px;height:300px;}

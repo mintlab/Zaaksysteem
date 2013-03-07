@@ -1,0 +1,19 @@
+<!-- widgets/beheer/import/table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="tdvar">[% c.loc('import type') %]</td>
+            <td class="td100">[% c.loc('import succes') %]</td>
+            <td class="td100">[% c.loc('import start') %]</td>
+            <td class="td100">[% c.loc('import eind') %]</td>
+            <td class="td150">[% c.loc('aantal records') %]</td>
+        </tr>
+    </thead>
+    <tbody>
+        [% WHILE (entry = import_list.next) %]
+            [% PROCESS widgets/beheer/import/table_row.tt %]
+        [% END %]
+    </tbody>
+</table>
+<!-- END widgets/beheer/import/table.tt -->

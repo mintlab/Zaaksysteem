@@ -1,0 +1,384 @@
+<!-- Begin Zaaktype -->
+<form method="POST" action="[% c.uri_for('/zaaktype/algemeen/edit') %]" class="zvalidate" enctype="multipart/form-data">
+<div class="block clearfix">
+    <p class="header">Stap 1/5: Een zaaktype aanmaken</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Kenmerken</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Generieke categorie</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% categorie.categorie %]
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Naam zaaktype</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input
+                        type="text"
+                        name="zt_naam"
+                        class="input_large"
+                        value="[% params.algemeen.zt_naam %]"
+                    > <span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Zaaktypecode van het zaaktype</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input
+                        type="text"
+                        name="zt_code"
+                        class="input_large"
+                        value="[% params.algemeen.zt_code %]"
+                    > <span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Deze zaak automatisch in behandeling nemen</td>
+                <td class="table_td_right_zaakinformatie">
+                        <input
+                            type="checkbox"
+                            name="zt_automatisch_behandelen"
+                            value="1"
+                            [% (
+                                params.algemeen.zt_automatisch_behandelen
+                                    ? 'checked="checked"'
+                                    : ''
+                            ) %]
+                        > Ja<br />
+                    <span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Trigger</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="zt_trigger" id="change_aanvragers">
+                        [% FOREACH trigger IN ZOPTIONS.TRIGGERS.sort %]
+                            <option
+                                value="[% trigger %]"
+                                [%
+                                    (
+                                        params.algemeen.zt_trigger == trigger
+                                            ?  'selected="selected"'
+                                            : ''
+                                    )
+                                %]
+                            >[% c.loc(trigger) %]</option>
+                        [% END %]
+                    </select>
+                    <span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Mogelijke aanvragers selecteren</td>
+                <td class="table_td_right_zaakinformatie">
+                    <div class="aanvragers_extern">
+                        [% FOREACH aanvrager IN ZOPTIONS.AANVRAGERS_INTERN.sort %]
+                            <input
+                                type="checkbox"
+                                name="type_aanvragers"
+                                value="[% aanvrager %]"
+                                [% (
+                                        params.algemeen.type_aanvragers.$aanvrager
+                                            ? 'checked="checked"'
+                                            : ''
+                                    )
+                                %]
+                            > [% c.loc(aanvrager) %]<br />
+                        [% END %]
+                    </div>
+                    <div class="aanvragers_intern">
+                        <input
+                            type="checkbox"
+                            name="type_aanvragers"
+                            value="[% ZNAMING.AANVRAGER_TYPE_MEDEWERKER %]"
+                            [% (
+                                params.algemeen.type_aanvragers.medewerker
+                                    ? 'checked="checked"'
+                                    : ''
+                            ) %]
+                            > [% c.loc(ZNAMING.AANVRAGER_TYPE_MEDEWERKER) %]<br />
+                    </div>
+                    <span class="validator"></span>
+                </td>
+            </tr>
+            <tr class="aanvragers_extern">
+                <td class="table_td_left_zaakinformatie">
+                    Aanvragers kunnen gegevens uit vorige zaak hergebruiken
+                </td>
+                <td class="table_td_right_zaakinformatie">
+                    <input
+                        type="checkbox"
+                        name="zt_hergebruik"
+                        value="1"
+                        [% (
+                            params.algemeen.zt_hergebruik
+                                ? 'checked="checked"'
+                                : ''
+                        ) %]
+                    > Ja<br />
+                    <span class="validator"></span>
+                </td>
+            </tr>
+            <tr class="aanvragers_extern">
+                <td class="table_td_left_zaakinformatie">
+                    Kan aangevraagd worden via webform
+                </td>
+                <td class="table_td_right_zaakinformatie">
+                    <input
+                        type="checkbox"
+                        name="zt_webform_toegang"
+                        value="1"
+                        [% (
+                            params.algemeen.zt_webform_toegang
+                                ? 'checked="checked"'
+                                : ''
+                        ) %]
+                    > Ja<br />
+                    <span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">
+                    Toewijzing tonen bij zaakintake
+                </td>
+                <td class="table_td_right_zaakinformatie">
+                    <input
+                        type="checkbox"
+                        name="zt_toewijzing_zaakintake"
+                        value="1"
+                        [% (
+                            params.algemeen.zt_toewijzing_zaakintake
+                                ? 'checked="checked"'
+                                : ''
+                        ) %]
+                    > Ja<br />
+                    <span class="validator"></span>
+                </td>
+            </tr>
+        <!--
+            <tr class="aanvragers_extern">
+                <td class="table_td_left_zaakinformatie">
+                    Webform authenticatie
+                </td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="zt_webform_authenticatie">
+                        <option value=""[% (params.algemeen.zt_webform_authenticatie == '' ? ' selected' : '') %]> Geen</option>
+                        [% FOREACH authenticatie IN ZOPTIONS.WEBFORM_AUTHENTICATIE.sort %]
+                            <option
+                                value="[% authenticatie %]"
+                                [% (
+                                    params.algemeen.zt_webform_authenticatie
+                                        == authenticatie
+                                            ? 'selected="selected"'
+                                            : ''
+                                )
+                            %]> [% c.loc(authenticatie) %]</option>
+                        [% END %]
+                    </select>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+        -->
+            <tr>
+                <td class="table_td_left_zaakinformatie">Relatie met locatie</td>
+                <td class="table_td_right_zaakinformatie">
+                    <div class="aanvragers_extern">
+                        <select name="adrestype">
+                            [% FOREACH adrestype IN ZOPTIONS.AANVRAGER_ADRES_TYPEN.sort %]
+                                <option
+                                    value="[% adrestype %]"
+                                    [% (
+                                        params.algemeen.zt_adres_relatie
+                                            == adrestype
+                                                ? 'selected="selected"'
+                                                : ''
+                                    )
+                                %]> [% c.loc(adrestype) %]</option>
+                            [% END %]
+                            <option value=""[% (params.algemeen.zt_adres_relatie == '' ? ' selected' : '') %]>N.V.T</option>
+                        </select>
+                    </div>
+                    <div class="aanvragers_intern">
+                        Anders
+                    </div>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Handelingsinitiatior</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="ztc_handelingsinitiator">
+                        [% FOREACH hinit IN ZOPTIONS.HANDELINGSINITIATORS.sort %]
+                            <option
+                                value="[% hinit %]"
+                                [% (
+                                    params.algemeen.ztc_handelingsinitiator
+                                        == hinit
+                                            ? 'selected="selected"'
+                                            : ''
+                            ) %]>[% c.loc(hinit) %]</option>
+                        [% END %]
+                    </select>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">IV3 Categorie</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input type="text" name="ztc_iv3_categorie" class="input_large" value="[% params.algemeen.ztc_iv3_categorie %]">
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Grondslag</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input type="text" name="ztc_grondslag" class="input_large" value="[% params.algemeen.ztc_grondslag %]">
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Selectielijst</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input type="text" name="ztc_selectielijst" class="input_large" value="[% params.algemeen.ztc_selectielijst %]">
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Afhandeltermijn</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% PROCESS widgets/general/terms.tt
+                        terms_name  = "ztc_afhandeltermijn"
+                        terms_value = params.algemeen.ztc_afhandeltermijn
+                        terms_name_type = "ztc_afhandeltermijn_type"
+                        terms_name_type_value = params.algemeen.ztc_afhandeltermijn_type
+                    %]
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Servicenorm</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% PROCESS widgets/general/terms.tt
+                        terms_name  = "ztc_servicenorm"
+                        terms_value = params.algemeen.ztc_servicenorm
+                        terms_name_type = "ztc_servicenorm_type"
+                        terms_name_type_value = params.algemeen.ztc_servicenorm_type
+                    %]
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Besluittype</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="ztc_besluittype">
+                            <option
+                                value=""
+                                [% (
+                                    params.algemeen.ztc_besluittype
+                                        == ''
+                                            ? 'selected="selected"'
+                                            : '')
+                                %]
+                            > Maak een keuze</option>
+                        [% FOREACH besluittype IN ZOPTIONS.BESLUITTYPEN.sort %]
+                            <option
+                                value="[% besluittype %]"
+                                [% (
+                                    params.algemeen.ztc_besluittype
+                                        == besluittype
+                                            ? 'selected="selected"'
+                                            : '')
+                                %]
+                            > [% c.loc(besluittype) %]</option>
+                        [% END %]
+                    </select>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Openbaarheid</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="ztc_openbaarheid">
+                        [% FOREACH openbaarheid IN ZOPTIONS.OPENBAARHEDEN.sort %]
+                            <option
+                                value="[% openbaarheid %]"
+                                [% (
+                                    params.algemeen.ztc_openbaarheid
+                                        == openbaarheid
+                                            ? ' selected="selected"'
+                                            : '')
+                                %]
+                            >[% c.loc(openbaarheid) %]</option>
+                        [% END %]
+                    </select>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Procesbeschrijving</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input
+                        type="text"
+                        name="ztc_procesbeschrijving"
+                        class="input_large"
+                        value="[% params.algemeen.ztc_procesbeschrijving %]"
+                    > <span class="validator"></span>
+                </td>
+            <tr>
+            </tbody>
+        <table>
+
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">PDC Informatie</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Omschrijving</td>
+                <td class="table_td_right_zaakinformatie">
+                    <textarea name="pdc_description" rows="4" cols="40">[% params.algemeen.pdc_description %]</textarea>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Voorwaarden</td>
+                <td class="table_td_right_zaakinformatie">
+                    <textarea name="pdc_voorwaarden" rows="4" cols="40">[% params.algemeen.pdc_voorwaarden %]</textarea>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Aanpak</td>
+                <td class="table_td_right_zaakinformatie">
+                    <textarea name="pdc_meenemen" rows="4" cols="40">[% params.algemeen.pdc_meenemen %]</textarea>
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Tarief</td>
+                <td class="table_td_right_zaakinformatie">
+                    &euro; <input type="text" name="pdc_tarief_eur" size="8" value="[% params.algemeen.pdc_tarief_eur %]"> , <input type="text" name="pdc_tarief_cnt" size="2" value="[% params.algemeen.pdc_tarief_cnt %]">
+                    <span class="validator"></span>
+                </td>
+            <tr>
+            </tbody>
+        </table>
+        <table class="table_zaakinformatie">
+            <tr class="table_ztbmenu_tr">
+
+            <td class="table_ztbmenu_tdleft"><a href="[% c.uri_for('/zaaktype') %]" title="Annuleren"><input type="button" value="Annuleren" class="button140"></a></td>
+            <td class="table_ztbmenu_tdright"><input type="submit" value="Volgende" class="button140 right"></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</form>

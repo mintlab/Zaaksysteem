@@ -1,0 +1,64 @@
+<div id="relatie_definitie">
+<form>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<input type="hidden" name="rownumber" value="[% rownumber %]">
+<table class="table_zaakinformatie" id="relatie_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Aanvrager deel-/vervolgzaak</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="relaties_eigenaar_type" id="antwoord_invoertype">
+                    [% FOR eigenaar IN constants.zaaktype.deelvervolg_eigenaar %]
+                        <option
+                            value="[% eigenaar.key %]"
+                            [% (params.eigenaar_type == eigenaar.key) ? ' selected' : '' %]
+                        >
+                            [% eigenaar.value.label %]
+                        </option>
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Kenmerken kopieren:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="relaties_kopieren_kenmerken"[% (params.kopieren_kenmerken ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaak standaard aanvinken</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="relaties_status"[% (params.status ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toewijzing</td>
+            <td class="table_td_right_zaakinformatie">
+                [% PROCESS widgets/general/auth_select.tt
+                    AUTH_SELECT_OU_NAME   = 'relaties_ou_id'
+                    AUTH_SELECT_OU_VALUE  = params.ou_id
+                    AUTH_SELECT_ROLE_NAME = 'relaties_role_id'
+                    AUTH_SELECT_ROLE_VALUE = params.role_id
+                %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaak automatisch in behandeling nemen</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="relaties_automatisch_behandelen"[% (params.automatisch_behandelen ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        <tr>
+    </tbody>
+<table>
+<div class="nextprev clearfix nextprev-dialog">
+<input type="submit" value="Opslaan" class="button140">
+</div>
+</form>
+</div>

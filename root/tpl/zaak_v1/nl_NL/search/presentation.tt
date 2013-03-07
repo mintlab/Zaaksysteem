@@ -1,0 +1,63 @@
+
+
+<form method="POST" id="search_presentation" action="/search/[% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]presentation">
+[% current_search_page = 'presentation' %]
+
+								
+<div class="blockvar left mijlpaal_content" id="configureren">
+	
+		[% PROCESS search/navigation.tt %]
+
+		<input type="hidden" name="action" value="update_presentation" />
+
+		<div class="search_fields_selector blockcontent ui-widget-content">
+		
+            <!-- <table>
+                <thead>
+                    <tr>
+                        <th colspan="2">Kolomindeling</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Beschikbaar
+                        <td>Weergeven</td>
+                    </tr>
+                    <tr>
+                        <td><select id="countries" class="multiselect" multiple="multiple" name="search_fields">
+            			[% FOREACH display_field = display_fields %]
+            				  <option value="[% display_field.value %]"
+            				  [% IF display_field.selected %] selected="selected" [% END %]
+            				  >[% display_field.label %]</option>
+            			[% END %]
+            			</select></td>
+                    </tr>
+                </tbody>
+            </table> -->
+                
+                
+			<!--h4 class="blue">Kolomindeling</h2-->
+			<div class="config_header">
+				<div class="fixed900 clearfix">
+				<div class="filter_column">Beschikbaar</div>
+				<div class="filter_column">Weergeven</div>
+				</div>
+			</div>
+			<select id="countries" class="multiselect" multiple="multiple" name="search_fields">
+			[% FOREACH display_field = display_fields %]
+				  <option value="[% display_field.value %]"
+				  [% IF display_field.selected %] selected="selected" [% END %]
+				  >[% display_field.label %]</option>
+			[% END %]
+			</select>
+			        <a class="add_kenmerkveld knop medium width-auto voeg-toe" href="#">Kenmerkveld toevoegen</a>
+        <input type="hidden" name="additional_kenmerk" value=""/>
+			<br/>
+			 
+
+		</div>
+
+
+</div>
+	</form>
+</div>

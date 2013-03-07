@@ -1,0 +1,28 @@
+<div id="sjabloon_definitie">
+<form>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<input type="hidden" name="rownumber" value="[% rownumber %]">
+<table class="table_zaakinformatie" id="sjabloon_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toelichting</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea cols="60" rows="10" name="sjablonen_help">[% params.help %]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Automatisch genereren:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="sjablonen_automatisch_genereren"[% (params.automatisch_genereren ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+    </tbody>
+<table>
+<div class="nextprev clearfix nextprev-dialog">
+<input type="submit" value="Opslaan" class="button140">
+</div>
+</form>
+</div>

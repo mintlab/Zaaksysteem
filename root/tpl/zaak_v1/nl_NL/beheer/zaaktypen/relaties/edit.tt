@@ -1,0 +1,177 @@
+<!-- Begin Zaaktype -->
+<div id="fresh-form">
+    <form method="POST" action="[% formaction %]" class="zvalidate use_submit" enctype="multipart/form-data">
+        <input type="hidden" name="zaaktype_update" value="1" />
+        <div class="block clearfix">
+            <p class="header">Relaties</p>
+            <div class="blockcontent">
+
+
+                <table class="marginbottom form">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="th_16px blue">Relaties met subjecten</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Trigger</td>
+                            <td>
+                                <select name="node.trigger" id="change_aanvragers">
+                                    [% FOREACH trigger IN ZOPTIONS.TRIGGERS.sort %]
+                                        <option
+                                            value="[% trigger %]"
+                                            [%
+                                                (
+                                                    params.node.trigger == trigger
+                                                        ?  'selected="selected"'
+                                                        : ''
+                                                )
+                                            %]
+                                        >[% c.loc(trigger) %]</option>
+                                    [% END %]
+                                </select>
+                            </td>
+                            <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mogelijke aanvragers</td>
+                            <td>
+                                <input type="hidden" name="ezra_checkboxes" value="zaaktype_betrokkenen.betrokkene_type" />
+                                <div class="aanvragers_extern checkboxes">
+                                    [% FOREACH aanvrager IN ZOPTIONS.AANVRAGERS_INTERN.sort %]
+                                        <div><input
+                                            type="checkbox"
+                                            name="zaaktype_betrokkenen.betrokkene_type"
+                                            value="[% aanvrager %]"
+                                            [% (
+                                                    zaaktype_betrokkenen.$aanvrager
+                                                        ? 'checked="checked"'
+                                                        : ''
+                                                )
+                                            %]
+                                        > <label>[% c.loc(aanvrager) %]</label></div>
+                                    [% END %]
+                                </div>
+                                <div class="aanvragers_intern">
+                                    <input
+                                        type="hidden"
+                                        name="zaaktype_betrokkenen.betrokkene_type"
+                                        value="[% ZNAMING.AANVRAGER_TYPE_MEDEWERKER %]"
+                                        >
+                                        [% c.loc(ZNAMING.AANVRAGER_TYPE_MEDEWERKER) %]
+                                </div>
+                            </td>
+                            <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Overige relaties met subjecten</td>
+                            <td>
+                                Overige relaties met subjecten kunnen worden
+                                toegevoegd bij 'Acties' of tijdens de
+                                behandeling
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <th colspan="3" class="th_16px blue tussenkop">Relaties met objecten</th>
+                        </tr>
+                        <tr>
+                            <td>Adres van de aanvrager</td>
+                            <td>
+                                <div class="aanvragers_extern">
+                                    <div>
+                                        <input type="hidden" name="ezra_checkboxes" value="node.adres_aanvrager" />
+                                        <input
+                                            type="checkbox"
+                                            name="node.adres_aanvrager"
+                                            value="1"
+                                            [% (
+                                                    params.node.adres_aanvrager
+                                                        ? 'checked="checked"'
+                                                        : ''
+                                                )
+                                                %] > [% c.loc('Gebruiken voor correspondentie') %]
+                                    </div>
+                                    <div>
+                                        <input type="hidden" name="ezra_checkboxes" value="node.adres_andere_locatie" />
+                                        <input
+                                            type="checkbox"
+                                            name="node.adres_andere_locatie"
+                                            value="1"
+                                            [% (
+                                                    params.node.adres_andere_locatie
+                                                        ? 'checked="checked"'
+                                                        : ''
+                                                )
+                                                %] > [% c.loc('Gebruiken als zaakadres') %]
+                                    </div>
+                                </div>
+                                <div class="aanvragers_intern">
+                                    Anders
+                                </div>
+                            </td>
+                            <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Overige adressen gebruiken</td>
+                            <td>
+                                Relaties met overige adressen kunnen via
+                                kenmerken worden aangemaakt.
+                            </td>
+                        </tr>
+                        <tr>
+                            <th colspan="3" class="th_16px blue tussenkop">Relaties met Producten en diensten</th>
+                        </tr>
+                        <tr>
+                            <td>Plugin uitgeschakeld</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th colspan="3" class="th_16px blue tussenkop">Tarief</th>
+                        </tr>
+                        <tr>
+                            <td>Geen kosten</td>
+                            <td>
+                                <input value="0"
+                                [% (!(params.definitie.heeft_pdc_tarief && params.definitie.pdc_tarief) ?
+                                'checked="checked"' : '')
+                                %]
+                                type="radio" name="definitie.heeft_pdc_tarief" />
+                            </td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Tarief</td>
+                            <td>
+                                <input value="1"
+                                [% ((params.definitie.heeft_pdc_tarief || params.definitie.pdc_tarief) ?
+                                'checked="checked"' : '')
+                                %]
+                                type="radio" name="definitie.heeft_pdc_tarief" />
+                                &euro; <input type="text" name="definitie.pdc_tarief_eur" size="8" value="[% params.definitie.pdc_tarief_eur %]"> , <input type="text" name="definitie.pdc_tarief_cnt" size="2" value="[% params.definitie.pdc_tarief_cnt %]" />
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="nextprev clearfix">
+                    <input type="button" name="goback" value="Vorige" class="go_back button140 btn">
+                    <input type="submit" value="Volgende" class="button140 right btn">
+                    [% UNLESS params.create %]
+                    <input name="direct_finish" type="hidden" value="" />
+                    <input class="button140 grijs btn right ezra_direct_finish" value="Afronden" type="button" />
+                    [% END %]
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

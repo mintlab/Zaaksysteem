@@ -1,0 +1,230 @@
+
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Zaaksysteem.nl</title>
+
+
+
+<!-- Bussum CSS -->
+
+<link rel="stylesheet" type="text/css" href="css/stylesheet_07b7b911f4.css" media="all" />
+<link rel="stylesheet" type="text/css" href="css/main.css?1295608049" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/menu.css?1295275987" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/form.css?1295613621" media="screen" />
+<link rel="stylesheet" type="text/css" href="css/extensions.css?1295598922" media="screen" />
+
+<!-- End Bussum CSS -->
+
+
+
+
+<!-- Zaaksysteem CSS
+
+<link rel="stylesheet" href="css/themes/smoothness/jquery-ui-1.7.2.custom.css" /> -->
+<link media="screen" href="css/bussum.css" type="text/css" rel="stylesheet" />
+
+<!-- <link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/bussum/jquery.ui.selectmenu.css" type="text/css" rel="stylesheet" />
+<link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/bussum/jquery.uniform.default.css" type="text/css" rel="stylesheet" /> -->
+
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="css/ie7.css" />
+<![endif]-->
+
+<!-- end Zaaksysteem CSS -->
+
+
+
+<script type="text/javascript" src="js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="js/jquery-ui-1.8.7.custom.min.js"></script>
+
+
+
+
+<!-- bussum carousel -->
+
+<script src="js/jquery_functions.js" type="text/javascript"></script>
+<script src="js/jquery.carouFredSel-1.3.3.js" type="text/javascript"></script>
+<link rel="stylesheet" href="css/carousel.css" type="text/css" media="screen" />
+<style type="text/css">#jpcarousel li {width:162px; height:112px;}</style>        
+
+<script type="text/javascript">
+ /*<![CDATA[*/
+ jQuery(document).ready(function() {
+ jQuery('#jpcarousel').carouFredSel(
+ {
+        visibleItems: 5,
+        direction	: 'right',
+        autoPlay	: 0,
+        scroll      : {
+            items		: 1,
+            effect		: 'jswing',
+            speed		: 700,
+            pauseOnHover: 1,
+            onBefore	: '',
+            onAfter		: ''
+        },
+        auto : {
+             pauseDuration:  1500
+        },
+        next : {
+            button		: jQuery('.carouselnext'),
+            key			: 'right'
+        },
+        prev : {
+            button		: jQuery('.carouselprev'),
+            key			: 'left'
+        },
+        buttons : {
+                    items       : 2,
+                    effect      : 'jswing',
+                    speed       : 400
+                }
+    }
+ );
+ });
+ /*]]>*/
+</script>
+
+
+<!-- end bussum carousel -->
+
+        
+        
+
+<!-- Zaaksysteem JS
+
+    <script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/jquery.formwizard-3.0.5/js/jquery.form.wizard-min.js"></script>
+    <script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/jquery.formwizard-3.0.5/js/bbq.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/bussum/jquery.ui.selectmenu.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/bussum/jquery.uniform.min.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/bussum/script.js"></script>
+<script src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/OpenLayers-2.9.1/OpenLayers.js"></script>
+<script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script>
+<script type="text/javascript" src="https://jquery-ui.googlecode.com/svn/trunk/ui/i18n/jquery.ui.datepicker-nl.js"></script>  	
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/spin.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/jquery.hoverIntent.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/multiselect/plugins/localisation/jquery.localisation-min.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/ui.multiselect.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/js/zaaksysteem.js"></script> -->
+
+    
+  	
+
+    
+    
+    
+</head>
+<body id="home">
+
+		<div id="container">
+			<div id="main">
+			
+                <div id="header"><div id="pagetitle" class="hidden"><h1>Gemeente Bussum</h1></div><div id="logo"><h2><a href="http://www.bussum.nl" title="Gemeente Bussum"><img src="img/logo.gif" alt="Gemeente Bussum" /><span class="titel">Gemeente Bussum | Een opzet voor gemeente websites</span></a></h2></div><div id="header-bottom">&nbsp;</div>
+				</div>
+
+
+                <div class="block">
+                    <!-- <h1 style="padding:100px 0 100px 400px;font-size:3.5em;font-weight:bold;letter-spacing:-2px;background:url(img/coffee.jpg) no-repeat 40px 70px;">We zijn even koffie aan het drinken… Morgenochtend om half 12 staan de ambtenaren weer voor u klaar!<span style="font-size:0.5em;letter-spacing:0;display:block;color:#999;margin-top:10px;">Onze excuses voor de overlast.</span></h1> -->
+                    <!-- <h1 style="padding:90px 60px 100px 290px;font-size:2.8em;font-weight:bold;letter-spacing:-1px;background:url(img/beer.jpg) no-repeat 10px 70px;line-height:1.1;">Wij offeren onze vrijdagmiddagborrel op om onderhoud te plegen aan ons systeem. Allemaal voor een betere dienstverlening. Zaterdagochtend staan wij weer voor u klaar!<span style="font-size:0.5em;letter-spacing:0;display:block;color:#999;margin-top:10px;">Onze excuses voor de overlast.</span></h1> -->
+                                       <h1 style="padding:100px 60px 100px 390px;font-size:2.8em;font-weight:bold;letter-spacing:-1px;background:url(img/underconstruction2.jpg) no-repeat 10px 80px;line-height:1.1;">Wij plegen onderhoud aan ons systeem om de dienstverlening te verbeteren. Dit kan een of twee uurtjes in beslag nemen, we zien u graag na afloop weer terug!<span style="font-size:0.5em;letter-spacing:0;display:block;color:#999;margin-top:10px;">Onze excuses voor de overlast.</span></h1>
+                    <!--
+                    <h1 style="padding:90px 60px 100px 320px;font-size:2.8em;font-weight:bold;letter-spacing:-1px;background:url(img/kabouter.jpg) no-repeat 100px 40px;line-height:1.1;">Kabouters hebben ons systeem gesaboteerd. We doen ons best om de boel weer aan de praat te krijgen, maar zoals jullie allen weten gaan kabouters zeer grondig te werk!<span style="font-size:0.5em;letter-spacing:0;display:block;color:#999;margin-top:10px;">Onze excuses voor de overlast.</span></h1>
+                    <h1 style="padding:140px 100px 100px 460px;font-size:2.8em;font-weight:bold;letter-spacing:-1px;background:url(img/fret.jpg) no-repeat 70px 70px;line-height:1.1;">De fret van Ria heeft alle kabels doorgebeten!<span style="font-size:0.5em;letter-spacing:0;display:block;color:#999;margin-top:10px;">Onze excuses voor de overlast.</span></h1> -->
+                </div>
+
+
+
+
+			
+			<div id="tools">
+			<div class="browsealoud"><a href="http://www.browsealoud.nl/">Voorleeshulp</a></div>
+			<div class="rss"><a href="http://bussum.nl/rss-feeds/">RSS</a></div>
+			<div id="fontsize"><span>Tekstgrootte</span><div id="c44817" class="csc-default" >
+    			<ul>
+                	<li><a href="?style=alt90" rel="alt90" class="styleswitch default" title="normale leestekens">a</a></li>
+                	<li><a href="?style=alt91" rel="alt91" class="styleswitch large" title="grotere leestekens">a</a></li>
+                	<li><a href="?style=alt92" rel="alt92" class="styleswitch largest" title="grootste leestekens">a</a></li>
+                </ul>
+            </div>
+            
+            </div>
+            <div id="search"><div class="search-left"><div style="background:url(img/zoek-input.jpg) no-repeat 0 0; width:381px;height:27px;position:absolute;top:5px;left:8px;"></div></div></div>
+            <div class="print"><a href="#">Print</a></div>
+            
+            <!--<div id="search"><div class="search-left"><div class="tx-ncstsolrsearch-pi1">	
+	
+	
+	
+
+	<form id="searchform" action="/zoeken/" accept-charset="utf-8" method="get">
+	<fieldset>
+	<label for="tx-solr-q" class="ncsolr-label-search">Zoeken door gehele site</label>
+	<input id="tx-solr-q2" class="ac_input" type="text" value="Zoeken..." onfocus="this.value='';" name="tx_solr[q]" autocomplee="off" />
+	<input class="submit" type="submit" value="ZOEK" name="submit_button" />
+	<input class="hidden" type="hidden" value="1" name="search" />
+	</fieldset>
+	</form>
+
+	
+	
+	
+</div></div></div>-->
+
+
+
+<div class="sitemap"><a href="http://www.bussum.nl/sitemap/">Sitemap</a></div><div id="language-tool"><div id="c44869" class="csc-default" ></div></div></div>
+
+			<div id="navigation"><div id="nav-meta"><div id="taalswitcher" style="background:url(img/taalswitcher.gif) no-repeat 0 0;width:110px;height:24px;position:absolute;right:5px;top:4px;"></div><ul><li class="first"><a href="http://www.bussum.nl/politiek-en-bestuur/" title="Vind informatie over bestuur en organisatie."  class="m-511"><span>Politiek en bestuur</span></a></li><li><a href="http://www.bussum.nl/producten-en-diensten/" title="Ga direct naar Loket"  class="m-509"><span>Producten en diensten</span></a></li><li><a href="http://www.bussum.nl/plannen-en-projecten/" title="Plannen en projecten"  class="m-4106"><span>Plannen en projecten</span></a></li><li class="last"><a href="http://www.bussum.nl/vacatures/" title="Vacatures"  class="m-4098"><span>Vacatures internet</span></a></li></ul></div><div id="nav-top" class="nav-top-normal"><ul><li class="first"><a href="http://www.bussum.nl/" title="Home"  class="m-2559"><span>Home</span></a></li><li><a href="http://www.bussum.nl/wonen-en-leven/" title="Vind informatie over wonen en leven."  class="m-513"><span>Wonen en Leven</span></a></li><li><a href="http://www.bussum.nl/werk-en-inkomen/" title="Werk en inkomen"  class="m-4146"><span>Werk en inkomen</span></a></li><li><a href="http://www.bussum.nl/verkeer-en-milieu/" title="Vind informatie over werken en leren."  class="m-4004"><span>Verkeer en Milieu</span></a></li><li><a href="http://www.bussum.nl/ondernemen/" title="Vind informatie over ondernemen."  class="m-512"><span>Ondernemen</span></a></li><li class="last"><a href="http://www.bussum.nl/over-bussum/" title="Vind informatie over de stad bezoeken."  class="m-519"><span>Over Bussum</span></a></li></ul></div></div>
+		</div>
+		
+		
+		</div>
+<div id="footer-container"><div id="footer"><div class="csc-default" id="c44682"><div class="csc-default" id="c44821"><div class="tx-jpcarousel-pi1">
+		 
+
+<div class="carouselContainer">
+
+    <div class="carousel">
+        <div class="caroufredsel_wrapper" style="width: 860px; height: 122px; position: relative; overflow: hidden;"><ul id="jpcarousel" style="width: 2752px; position: absolute;">
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a href="http://www.bussum.nl/wonen-en-leven/">Omgevingsvergunning</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a href="http://www.bussum.nl/wonen-en-leven/"><img width="156" height="77" alt="De omgevingsvergunning: makkelijker en sneller uw vergunning aanvragen." src="img/bt_omgevingsvergunning.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Burgerpanel" href="http://www.burgerpanelbussum.nl/">Burgerpanel</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Burgerpanel" href="http://www.burgerpanelbussum.nl/"><img width="156" height="77" alt="Omdat we allemaal het beste willen voor Bussum." src="img/bt_burgerpanel.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Wijzer wijzer" href="http://www.wijzerwijzer.nl/">Wonen, welzijn, zorg</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="wijzerwijzer" href="http://www.wijzerwijzer.nl/"><img width="156" height="77" alt="Wijzer is dé plek voor advies, informatie en ondersteuning op het gebied van wonen, welzijn zorg." src="img/bt_wijzer.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a href="http://www.bussum.nl/doe-uzelf-niet-tekort/">Doe uzelf niet tekort</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a href="http://www.bussum.nl/doe-uzelf-niet-tekort/"><img width="156" height="77" alt="Doe uzelf niet tekort- uw recht op voorzieningen" src="img/bt_doeuzelfniettekort.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Bussum promotie" href="http://www.bussumpromotie.nl/">Bussum promotie</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Bussum promoti" href="http://www.bussumpromotie.nl/"><img width="156" height="77" alt="Alle evenementen en activiteiten op een rij." src="img/bt_bussumpromotie.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Jong Bussum" href="http://www.jongbussum.nl">Jong Bussum</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Jong Bussum" href="http://www.jongbussum.nl"><img width="156" height="77" alt="Adviesraad van JongBussum" src="img/bt_jongbussum.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Geen gedwongen fusie" href="http://www.geengedwongenfusie.nl/">Geen gedwongen fusie</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Geen gedwongen fusie" href="http://www.geengedwongenfusie.nl/"><img width="156" height="77" alt="Platform tegen gedwongen fusie van  Bussum, Naarden, Muiden en Weesp." src="img/bt_geengedwongenfusie.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Centrum voor Jeugd en Gezin" href="http://www.cjgnaardenbussum.nl">Centrum Jeugd en Gezin Naarden Bussum</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Centrum voor Jeugd en Gezin" href="http://www.cjgbussum.nl"><img width="156" height="77" alt="Het Centrum voor Jeugd en Gezin is dé vraagbaak voor (aanstaande) ouders, opvoeders en jongeren uit Naarden en Bussum." src="img/bt_cjgbussum.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+        </ul></div>
+    </div>
+ 
+    <div class="carouselbuttons">
+        <a title="" class="carouselprev" href="http://www.bussum.nl/direct-zaken-online-regelen/#"><img src="img/clear.gif" alt="" title=""></a>
+        <a title="" class="carouselnext" href="http://www.bussum.nl/direct-zaken-online-regelen/#"><img src="img/clear.gif" alt="" title=""></a>
+        
+    </div>
+     
+</div>
+
+	</div>
+	</div><div class="csc-default" id="c46586"><div class="dmailsub-footer">
+	<h5>Zorg dat u als eerste op de hoogte bent van alle ontwikkelingen in Bussum!</h5>
+	<a href="http://www.bussum.nl/over-bussum/aan-en-afmelden-nieuwsbrief/" title="button aanmelden nieuwsbrief" class="button">Aanmelden nieuwsbrief</a>
+</div></div><div class="frame-01"><div class="spacing"><h4>Wonen en leven</h4><ul> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Belastingen en heffingen</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Bouwen en wonen</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Leven, reizen, papieren</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Onderwijs</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Sport en recreatie</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Zorg en welzijn</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Werk en inkomen</h4><ul> <li><a title="werk en inkomen" href="http://www.bussum.nl/werk-en-inkomen/">Bijstand en uitkering</a></li> <li><a title="werk en inkomen" href="http://www.bussum.nl/werk-en-inkomen/">Extra financiele ondersteuning</a></li> <li><a title="werk en inkomen" href="http://www.bussum.nl/werk-en-inkomen/">(Weer) aan het werk</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Verkeer en milieu</h4><ul> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Afval</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Milieu</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Natuur en groen</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Parkeren</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Verkeer</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Ondernemen</h4><ul> <li><a title="Ondernemen" href="http://www.bussum.nl/ondernemen/">Belastingen en heffingen</a></li> <li><a title="Ondernemen" href="http://www.bussum.nl/ondernemen/">Bedrijfsvoering algemeen</a></li> <li><a title="Ondernemen" href="http://www.bussum.nl/ondernemen/">Bedrijf beginnen</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Over Bussum</h4><ul> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">In de media</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Uit in Bussum</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Recreeren</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Geschiedenis</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Overig</a></li> </ul></div></div></div><div id="copy">Copyright &copy;&nbsp;2011&nbsp;gemeente Bussum</div></div></div>
+
+
+</body>
+</html>

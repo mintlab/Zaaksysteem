@@ -1,0 +1,14 @@
+[%
+    nowrapper = 1;
+    jsfill    = 'new_externe_aanvrager';
+    jstype    = betrokkene_type
+    jsversion = '2';
+    method    = 'post';
+    url       = c.uri_for(c.action, c.req.params);
+    import_datum = 1;
+%]
+[% IF !url %]
+    [% url       = c.uri_for('/zaak/' _ zaak.nr _ '/update/aanvrager'); %]
+[% END %]
+
+[% PROCESS betrokkene/popup/search.tt %]

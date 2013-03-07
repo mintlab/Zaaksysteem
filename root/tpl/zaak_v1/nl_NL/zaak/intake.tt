@@ -1,0 +1,51 @@
+[% IF c.req.params.scope == 'documents' %]
+
+<div class="block">
+<div class="header">Documentenintake
+[% IF c.check_any_user_permission('documenten_intake') %]
+
+    <a href="[% c.uri_for('/zaak/intake', { scope => 'documents' }) %]"
+        class="element small width-auto in-header" title="Wachtrij bijwerken"
+        id="ezra_documenten_wachrij_bijwerken"><span></span>Wachtrij bijwerken</a>
+
+[% END %]
+</div>
+<div class="blockcontent">
+
+[% PROCESS zaak/widgets/doc_intake.tt %]
+
+</div>
+</div>
+
+[% ELSE %]
+
+<div class="block">
+<p class="header">Zaakintake (geregistreerd voor behandelaar)</p>
+<div class="blockcontent">
+
+[% query_status_type = 'new' %]
+[% zaken = created_zaken %]
+[% PROCESS zaak/widgets/result.tt %]
+[% PROCESS widgets/more.tt
+    more.uri = c.uri_for('/zaak/intake', { view => 'created_zaken' })
+    %]
+
+
+</div>
+</div>
+
+<div class="block">
+<p class="header">Zaakintake (geregistreerd voor afdeling)</p>
+<div class="blockcontent">
+
+[% query_status_type = 'new' %]
+[% zaken = created_zaken_afdeling %]
+[% PROCESS zaak/widgets/result.tt %]
+[% PROCESS widgets/more.tt
+    more.uri = c.uri_for('/zaak/intake', { view => 'created_zaken_afdeling' })
+    %]
+
+</div>
+</div>
+
+[% END %]

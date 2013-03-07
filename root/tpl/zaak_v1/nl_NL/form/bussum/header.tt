@@ -1,0 +1,40 @@
+[% RETURN IF c.user_exists -%]
+[% nowrapper=1 -%]
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Zaaksysteem.nl</title>
+    <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/stylesheet_07b7b911f4.css" media="all" />
+    <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/main.css?1295608049" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/menu.css?1295275987" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/form.css?1295613621" media="screen" />
+    <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/extensions.css?1295598922" media="screen" />
+    <link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/bussum.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/carousel.css" type="text/css" media="screen" />
+    
+    [% PROCESS form/common_form_header_includes.tt %]
+    [% PROCESS layouts/common_header_includes_js.tt %]
+
+    <script src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/js/jquery_functions.js" type="text/javascript"></script>
+    <script src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/js/jquery.carouFredSel-1.3.3.js" type="text/javascript"></script>
+    <script src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/js/bussum.js" type="text/javascript"></script>
+    
+</head>
+<body id="home">
+
+
+<div class="custom_overlay"><div><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/apple-spinner.gif" /></div></div>
+
+		<div id="container">
+			<div id="main">
+			
+                <div id="header"><div id="pagetitle" class="hidden"><h1>Gemeente Bussum</h1></div><div id="logo"><h2><a href="http://www.bussum.nl" title="Gemeente Bussum"><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/logo.gif" alt="Gemeente Bussum" /><span class="titel">Gemeente Bussum | Een opzet voor gemeente websites</span></a></h2></div><div id="header-bottom">&nbsp;</div>
+                    <!-- [% IF logged_in_by %]
+                        <a href="[% c.uri_for('/auth/' _
+                            logged_in_by _ '/logout') %]" class="logout">Uitloggen</a>
+                    [% END %] -->
+				</div>
+				<div id="bread" class="clearfix"><a href="http://bussum.nl/">www.bussum.nl</a> &gt;&nbsp;<a href="http://bussum.nl/direct-zaken-online-regelen/">Direct zaken online regelen</a> &gt;&nbsp;<!-- TODO hier de productnaam tonen -->Product</div>

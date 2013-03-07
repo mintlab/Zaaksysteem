@@ -1,0 +1,53 @@
+[% nowrapper = 1 %]
+[% BLOCK auth_table %]
+<tr
+    class="ezra_table_row[% (!deel ? '_template' : '') %]"
+    id="ezra_table_auth_row_number[% (deel ? '_' _ i : '') %]">
+    <td class="td250 align_top">
+        [% PROCESS widgets/general/auth_select.tt
+            AUTH_SELECT_OU_NAME   = 'delen.ou_id' _ ( i ?  '.' _ i : '')
+            AUTH_SELECT_OU_VALUE  = deel.ou_id
+            AUTH_SELECT_ROLE_NAME = 'delen.role_id' _ ( i ? '.' _ i : '')
+            AUTH_SELECT_ROLE_VALUE = deel.role_id
+        %]
+    </td>
+    <td class="td20 center" align="center">
+        <a href="#" class="ezra_table_row_del">
+            <img border="0" width="16" height="16"
+                alt="Verwijderen" src="/images/icon-delete.png"/>
+        </a>
+    </td>
+</tr>
+[% END %]
+
+<form method="POST" action="[% c.req.uri %]">
+    <input type="hidden" name="update" value="1">
+    <h1 class="in-dialog">Met welke rollen wilt u deze zoekopdracht delen?:</h1>
+    <div class="ezra_table element_tabel_auth">
+        <table class="no_margin ezra_table_table v-align-center">
+            <tbody>
+                [% INCLUDE auth_table %]
+                [% FOREACH i IN delen.keys.nsort %]
+                    [% deel = delen.$i %]
+                    [% INCLUDE auth_table %]
+                [% END %]
+            </tbody>
+        </table>
+        <div style="padding:8px 0;border-bottom:2px solid #ddd;">
+        <a
+            class="ezra_table_row_add knop rol-toevoegen voeg-toe"
+            href="#"
+            >Rol toevoegen</a>
+        </div>
+    </div>
+    <div style="padding:20px 0;">
+        <input type="checkbox" name="zoekopdracht_beveiligen"
+        [% (zoekopdracht_beveiligen ? 'checked="checked"' : '') %]
+        />
+        <label style="font-weight:bold;margin-left:5px;" for="zoekopdracht_beveiligen">Zoekopdracht beveiligen</label>
+    </div>
+    <div class="nextprev nextprev-dialog clearfix">
+        <input type="submit" value="Opslaan" class="button140 right" id="dialog-submit"/>
+    </div>
+</form>
+

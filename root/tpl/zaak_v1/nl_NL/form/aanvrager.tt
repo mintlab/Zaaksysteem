@@ -1,0 +1,38 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+[% layout_type = 'simple' %]
+
+<div class="block">
+    <p class="header">Informatie over u als aanvrager</p>
+    <div class="blockcontent">
+[% IF aanvrager_error %]
+        <div class="error_aanvrager"><b>[% aanvrager_error %]</b><br /><br /></div>
+[% END %]
+
+[% UNLESS aanvrager_error %]
+        <form method="POST" action="[% c.uri_for('/zaak/create/webformulier/aanvrager') %]" class="zvalidate" %]>
+            <input type="hidden" name="aanvrager_update" value="1" />
+            [% IF aanvrager_edit %]
+                <input type="hidden" name="aanvrager_edit" value="1" />
+                [% page = 'widgets/form/edit_' _ aanvrager_type _ '.tt' %]
+                [% INCLUDE $page %]
+            [% ELSE %]
+                <input type="hidden" name="contact_edit" value="1" />
+                [% page = 'widgets/form/view_' _ aanvrager_type _ '.tt' %]
+                [% INCLUDE $page %]
+            [% END %]
+[% END %]
+
+[% UNLESS aanvrager_error %]
+            <div class="nextprev clearfix">
+                <a href="[% c.config.gemeente.gemeente_portal %]" title="Annuleren"><input type="button" value="Annuleren" class="button140 left" /></a>
+                <input type="submit" value="Volgende" class="button140 right" />
+            </div>
+        </form>
+[% END %]
+    </div>
+</div>
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]
+

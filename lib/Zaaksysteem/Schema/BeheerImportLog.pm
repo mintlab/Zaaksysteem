@@ -1,0 +1,84 @@
+package Zaaksysteem::Schema::BeheerImportLog;
+
+use strict;
+use warnings;
+
+use base 'DBIx::Class';
+
+__PACKAGE__->load_components("InflateColumn::DateTime", "TimeStamp", "Core");
+__PACKAGE__->table("beheer_import_log");
+__PACKAGE__->add_columns(
+  "id",
+  {
+    data_type => "integer",
+    default_value => "nextval('beheer_import_log_id_seq'::regclass)",
+    is_nullable => 0,
+    size => 4,
+  },
+  "import_id",
+  { data_type => "integer", default_value => undef, is_nullable => 1, size => 4 },
+  "old_data",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "new_data",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "created",
+  {
+    data_type => "timestamp without time zone",
+    default_value => undef,
+    is_nullable => 1,
+    size => 8,
+  },
+  "last_modified",
+  {
+    data_type => "timestamp without time zone",
+    default_value => undef,
+    is_nullable => 1,
+    size => 8,
+  },
+  "kolom",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "identifier",
+  {
+    data_type => "text",
+    default_value => undef,
+    is_nullable => 1,
+    size => undef,
+  },
+  "action",
+  {
+    data_type => "character varying",
+    default_value => undef,
+    is_nullable => 1,
+    size => 255,
+  },
+);
+__PACKAGE__->set_primary_key("id");
+__PACKAGE__->add_unique_constraint("beheer_import_log_pkey", ["id"]);
+__PACKAGE__->belongs_to(
+  "import_id",
+  "Zaaksysteem::Schema::BeheerImport",
+  { id => "import_id" },
+);
+
+
+# Created by DBIx::Class::Schema::Loader v0.04006 @ 2012-04-03 15:22:56
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CZpzyWGfg3zs1qJvkAAYfQ
+
+
+# You can replace this text with custom content, and it will be preserved on regeneration
+1;

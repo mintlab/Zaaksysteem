@@ -1,0 +1,82 @@
+[% veldoptietype = params.type -%]
+<div id="kenmerk_definitie">
+<form>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<input type="hidden" name="rownumber" value="[% rownumber %]">
+<input type="hidden" name="edit_id" value="[% c.req.params.edit_id %]">
+<input type="hidden" name="kenmerken_zaakinformatie_view" value="1">
+<table class="table_zaakinformatie" id="kenmerk_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Titel</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="text" name="kenmerken_label" value="[% params.label %]" class="input_large">
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toelichting</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea cols="60" rows="10" name="kenmerken_help">[% params.help %]</textarea>
+            </td>
+        </tr>
+        [% IF params.type == 'file' %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Documenttype</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerken_document_category">
+            [% FOREACH doc_category IN constants.document.categories %]
+                    <option value="[% doc_category %]"[% (params.document_categorie == doc_category) ? ' selected' : '' %]>[% doc_category %]</option>
+            [% END %]
+                </select>
+            </td>
+        <tr>
+        [% END %]
+
+        [% IF ZCONSTANTS.veld_opties.$veldoptietype.can_zaakadres %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Gebruiken als zaakadres</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="checkbox" name="kenmerken_bag_zaakadres" value="1"[% (params.bag_zaakadres ? ' checked' : '') %] />
+            </td>
+        <tr>
+        [% END %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Publiceren op PIP</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="checkbox" name="kenmerken_pip" value="1"[% (params.pip ? ' checked' : '') %] />
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Verplicht:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="kenmerken_value_mandatory"[% (params.value_mandatory ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+        [% UNLESS params.type == 'file' %]
+        <tr>
+            <td class="table_td_left_zaakinformatie"><label>Kenmerk Besluit</label></td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="checkbox" name="kenmerken_besluit" value="1"[% (params.besluit ? ' checked="checked"' : ''); %]>
+            </td>
+        <tr>
+        [% END %]
+        [% IF bibiotheek_kenmerk.value_type == 'date' %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Begindatum op huidige datum zetten:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="kenmerken_date_fromcurrentdate"[% (params.date_fromcurrentdate ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+        [% END %]
+    </tbody>
+<table>
+<div class="nextprev nextprev-dialog clearfix">
+<input type="submit" value="Opslaan" class="button140">
+</div>
+</form>
+</div>

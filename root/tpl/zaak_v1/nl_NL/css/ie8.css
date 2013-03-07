@@ -1,0 +1,167 @@
+a.add {background: url("../images/icon-voegtoe.png") no-repeat scroll 7px center #eee;}
+
+.div_search input.button_search{
+background: #bdd752 url(../images/vergrootglas.gif) no-repeat 50% 50%;
+border-color: #111;
+}
+
+.ie-lines-gone a{float:left;margin-right:4px;}
+.ie-lines-gone a img{display: block;}
+
+.ui-selectmenu-home .ui-selectmenu-status{
+line-height: 1.4em;
+}
+
+.ezra_bibliotheek_nieuw{
+background-image: url(../images/icon-add.png);
+background-color: #eee;
+background-repeat: no-repeat;
+background-position: 5px center;
+}
+
+.ui-accordion-table-bg {
+    background: url("../images/ezra_table_table-bg.png") repeat-x scroll 0 0 transparent !important;
+    padding-bottom: 20px !important;
+    /*padding-top: 10px !important;*/
+}
+
+.tabber{}
+.knop{padding-left:8px;}
+.knop.medium{padding-left:10px;}
+.knop.voeg-toe{background:url(../images/btn-in-header.gif) repeat-x 50% 50%;}
+.knop.with-span-icon{padding-left: 28px !important;}
+
+.zaak_search_filter{border:1px solid #ddd;}
+
+
+
+input[type="text"],input[type="password"],textarea{
+border-top-color:#aaa !important;
+border-left-color:#aaa !important;
+border-right-color:#ddd !important;
+border-bottom-color:#ddd !important;
+}
+
+input[type="text"],input[type="password"],textarea{border-top-color:#aaa !important;border-left-color:#aaa !important;border-right-color:#ddd !important;border-bottom-color:#ddd !important;}
+
+.button_holder{float:right;width:400px;margin-top:5px;}
+
+.dialog-buttons input[type="submit"], .dialog-buttons input[type="button"], .buttons input[type="submit"], .buttons input[type="button"] {
+    border: 1px solid #ccc !important;
+    border-bottom-color:#999 !important;
+    border-right-color:#999 !important;
+}
+
+.select_actie_container select{
+	width: auto;
+} 
+
+.select_actie_container .col1,.select_actie_container .col2{
+	width: auto;
+}
+   
+.auth_edit_box input[type=checkbox]{
+float:left;
+width:auto;
+margin:0px 8px 0 5px;
+padding-top: 4px;
+}
+    
+.icon-edit{
+	overflow: hidden;
+} 
+    
+#regel_definitie .knop.geen-tekst{
+	background:url("../images/icon-voegtoe.png") no-repeat scroll center center #f9f9f9;
+}
+
+input.button140:hover{
+background: #333;
+}
+
+input.button140:active{
+background: #000;}
+
+
+.mintloader{
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+.fileuploadthumbnail{
+	background: url(../images/mime/icon-txt.png) no-repeat 0px center;
+	padding-left: 22px;
+	border-top: none;
+}
+
+
+.fileUpload .new_upload{
+	top: 0px;
+	width: 100%;
+	background-color: rgb(248, 248, 248);
+}
+
+.fileUpload input,input[type=file]{
+padding: 5px;
+border: 1px solid #aaa !important;
+}
+
+
+/* @group Import IE8 Styles */
+
+.import_group{
+	border-bottom: none;
+}
+
+.import_item_inner:hover .title,.import_item_inner:hover .rfa{
+	cursor: pointer;
+	background: none;
+}
+
+.import_item_inner:hover{
+	background: #b5e38f;
+}
+
+.import_item_error:hover{
+	background: #e8baba;
+}
+
+.import_overlay .import_item_inner .title{
+	background: none;
+}
+
+.import_overlay .rfa .knop.opslaan{
+	background:url("../images/icon-save.png") no-repeat scroll 5px center #e7e7e7 !important;}
+	
+
+.import .options a.revert{
+	background:url(../images/button-revert.png) no-repeat center -9px #e3f8d8 !important;
+}
+
+.import .import_item_error .options a.revert{
+	background:url(../images/button-revert.png) no-repeat center -9px #f9e9e9 !important;
+}
+
+.import .options a.info{
+	background:url(../images/button-info.png) no-repeat center -5px #e3f8d8 !important;
+}
+
+.import .import_item_error .options a.info{
+	background:url(../images/button-info.png) no-repeat center -5px #f9e9e9 !important;
+}
+
+.import_overlay{
+	border-top: 1px solid #bbb;
+}
+ 
+/* @end */
+
+.nieuwe_zaak_starten{
+	border: 1px solid #666;
+}
+.nieuwe_zaak_starten_tip{
+	background: url(../images/nieuwe_zaak_starten_tip-2.png) no-repeat 0 0;
+}
+
+.custom_overlay{background:url(../images/ie_custom_overlay.png) repeat 0 0;}

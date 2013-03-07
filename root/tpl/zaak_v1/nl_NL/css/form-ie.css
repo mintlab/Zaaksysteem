@@ -1,0 +1,19 @@
+.mintloader{
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+.fileuploadthumbnail{
+	background: url(../images/mime/icon-txt.png) no-repeat 0px center;
+	padding-left: 22px;
+	border-top: none;
+}
+
+.form{
+	margin-bottom: 0;
+}
+
+.webform .nextprev{
+	padding-top: 20px;
+}

@@ -1,0 +1,164 @@
+
+                <!-- Begin Zaken top10 -->
+                
+                <div class="block">
+                <p class="header">Filter</p>
+                	<div class="blockcontent">
+						
+						<table class="table_zaakinformatie no_margin">
+					        <tr>
+					            <td class="table_td_left_zaakinformatie">Periode:</td>
+					            <td class="table_td_right_zaakinformatie">
+						            <select name="periode-van-dag">
+			                            <option value="today">Today</option>
+										<option value="last24hours">Last 24 Hours</option>
+										<option value="yesterday">Yesterday</option>
+										<option value="thisweek">This Week</option>
+										<option value="last7days">Last 7 Days</option>
+										<option value="lastweek">Last Week</option>
+										<option value="thismonth">This Month</option>
+										<option value="last31days">Last 31 Days</option>
+										<option value="lastmonth">Last Month</option>
+										<option value="thisyear">This Year</option>
+										<option value="lastyear">Last Year</option>
+					            	</select>
+					            </td>
+					          
+					          </tr>
+					          <tr>
+					            <td class="table_td_left_zaakinformatie">Behandelaar:</td>
+					            <td class="table_td_right_zaakinformatie">
+									<div id="new_interne_zaakcoordinator">
+				                        <input type="hidden" value="" name="ztc_coordinator_id"/>
+				                        <input type="text" disabled="" class="input_medium" value="" name="zaakcoordinator"/>
+				                        <a rel="medewerker" class="search_betrokkene" title="Zoek een zaakcoordinator" href="#">
+				                            <img width="16" height="16" border="0" src="/images/icon-magnifier.png"/>
+				                        </a>
+				                        <img width="24" height="16" src="/images/empty.gif"/>
+				                        <img width="16" height="16" title="Veld is correct ingevuld" class="validate-ok" style="visibility: hidden;" src="/images/icon-tick.png"/>
+				                    </div>
+				                </td>
+				             </tr>
+				             <tr>
+				                <td class="table_td_left_zaakinformatie">Organisatorische eenheid:</td>
+				                <td class="table_td_right_zaakinformatie">
+						            <select name="periode-van-dag">
+			                            <option value="today">Today</option>
+										<option value="last24hours">Last 24 Hours</option>
+										<option value="yesterday">Yesterday</option>
+										<option value="thisweek">This Week</option>
+										<option value="last7days">Last 7 Days</option>
+										<option value="lastweek">Last Week</option>
+										<option value="thismonth">This Month</option>
+										<option value="last31days">Last 31 Days</option>
+										<option value="lastmonth">Last Month</option>
+										<option value="thisyear">This Year</option>
+										<option value="lastyear">Last Year</option>
+					            	</select>
+					            </td>
+					        </tr>
+					        <tr>
+					        <td class="no_border"><input type="submit" class="button140" value="Filter"/></td>
+					        </tr>
+					    </table>
+
+
+					</div>
+                </div>
+                
+                <!-- horizontaal -->
+                <div class="block">
+                <p class="header">Filter</p>
+                	<div class="blockcontent">
+						
+							<div id="filter_management" class="clearfix">
+								<div class="left filter_velden">
+					            <div class="left ie6fix periode margin"><label for="periode">Periode:</label></div>
+					            <div class="left ie6fix periode_dropdown margin">
+						            <select name="periode">
+			                            <option value="today">Today</option>
+										<option value="last24hours">Last 24 Hours</option>
+										<option value="yesterday">Yesterday</option>
+										<option value="thisweek">This Week</option>
+										<option value="last7days">Last 7 Days</option>
+										<option value="lastweek">Last Week</option>
+										<option value="thismonth">This Month</option>
+										<option value="last31days">Last 31 Days</option>
+										<option value="lastmonth">Last Month</option>
+										<option value="thisyear">This Year</option>
+										<option value="lastyear">Last Year</option>
+					            	</select>
+					            </div>
+					          
+
+					            <div class="left ie6fix behandelaar margin"><label for="zaakcoordinator">Behandelaar:</label></div>
+					            <div class="left ie6fix behandelaar_veld margin">
+									<div id="new_interne_zaakcoordinator">
+				                        <input type="hidden" value="" name="ztc_coordinator_id"/>
+				                        <input type="text" disabled="" class="input_medium" value="" name="zaakcoordinator"/>
+				                        <a rel="medewerker" class="search_betrokkene" title="Zoek een zaakcoordinator" href="#">
+				                            <img width="16" height="16" border="0" src="/images/icon-magnifier.png"/>
+				                        </a>
+				                        
+				                        <img width="16" height="16" title="Veld is correct ingevuld" class="validate-ok" style="visibility: hidden;" src="/images/icon-tick.png"/>
+				                    </div>
+				                </div>
+
+				                <div class="left ie6fix org_eenheid margin"><label for="org_eenheid">Organisatorische eenheid:</label></div>
+				                <div class="left ie6fix org_eenheid_dropdown margin">
+						            <select name="org_eenheid">
+			                            <option value="today">Today</option>
+										<option value="last24hours">Last 24 Hours</option>
+										<option value="yesterday">Yesterday</option>
+										<option value="thisweek">This Week</option>
+										<option value="last7days">Last 7 Days</option>
+										<option value="lastweek">Last Week</option>
+										<option value="thismonth">This Month</option>
+										<option value="last31days">Last 31 Days</option>
+										<option value="lastmonth">Last Month</option>
+										<option value="thisyear">This Year</option>
+										<option value="lastyear">Last Year</option>
+					            	</select>
+					            </div>
+					            </div>
+					            <div class="filter_button"><input type="submit" class="button140" value="Filter"/></div>
+					        </div>
+
+					        
+
+					    
+
+
+					</div>
+                </div>
+                
+                
+              
+                <!-- End Zaken top10 -->
+
+                
+
+                <table class="table_zoektabber honderd">
+                    <tr class="table_zoektabber_tr">
+
+                        <td class="table_zoektabber_tdleft">
+                         	<div class="block">
+				                <p class="header">Geregistreerd/afgehandeld</p>
+				                <div class="blockcontent">
+                                    <img src="[% c.uri_for('/plugins/management/graph/line') %]">
+				                </div>
+				            </div> 
+                        </td>
+                        
+                        <td class="table_zoektabber_tdspace"></td>
+
+                        <td class="table_zoektabber_tdright">
+                         	<div class="block">
+				                <p class="header">Binnen afhandelterijm/Buiten afhandeltermijn</p>
+				                <div class="blockcontent">
+                                    <img src="[% c.uri_for('/plugins/management/graph/pie') %]">
+				                </div>
+				            </div>                            
+                        </td>
+                    </tr>
+                </table>

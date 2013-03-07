@@ -1,0 +1,99 @@
+[% nowrapper = 1 %]
+[% USE Scalar %]
+<div class="submitWaiter">
+    <form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/' _ (document ? 'edit/' _ document.id : 'add')) %]" enctype="multipart/form-data">
+        <input type="hidden" name="documenttype" value="sjabloon">
+        <table cellspacing="1" class="table_zaakinformatie">
+            <tbody>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Sjabloon:</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <select name="sjabloon_id" class="ezra_sjabloon_suggest">
+                            [% sjablonen = zaak.zaaktype_node_id.scalar.zaaktype_sjablonen.scalar.search %]
+                            [% WHILE (sjabloon_entry = sjablonen.next) %]
+                                <option
+                                    value="[% sjabloon_entry.id %]"
+                                    [% (sjabloon_entry.id == c.req.params.sjabloon_id
+                                        ? ' selected="selected"'
+                                        : ''
+                                    ) %]
+                                    >[% sjabloon_entry.naam %]
+                                </option>
+                            [% END %]
+                        </select>
+                    </td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Naam document:</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <input type="text" size="40" class="ezra_sjabloon_naam" name="filename"> .odt
+                    </td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Zaaktype document:</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <select name="catalogus" class="select_zt_document zaak_[% zaak.nr %]">
+                            <option value="">Geen</option>
+                                [% documenten = zaak.zaaktype_node_id.scalar.zaaktype_kenmerken.scalar.search(
+                                    {
+                                        'bibliotheek_kenmerken_id.value_type'    => 'file'
+                                    },
+                                    {
+                                        'join'          => 'bibliotheek_kenmerken_id',
+                                        'order_by'      => 'id',
+                                    }
+                                ) %]
+                            [% WHILE (cdocument = documenten.next) %]
+                                [% NEXT IF zaak.documents.from_catalogus(cdocument.id) %]
+                                <option value="[% cdocument.id %]"[% (zaak.documents.from_catalogus(cdocument.id) ? ' selected="selected"' : '') %] class="[% (cdocument.value_mandatory ? 'verplicht_document' : "") %][% (cdocument.pip ? ' pip_document' : '') %]">
+                                    [% cdocument.naam %]
+                                </option>
+                            [% END %]
+                        </select>
+                    </td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Selecteer het type:</td>
+                    <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_categorie">
+                        Laden...
+                    </td>
+                    <td class="table_td_right_zaakinformatie document_constraint_false">
+                        <select name="category">
+                        [% FOREACH doc_category IN constants.document.categories %]
+                                <option value="[% doc_category %]"[% (document.category == doc_category ? ' selected="selected' : '') %]>[% doc_category %]</option>
+                        [% END %]
+                        </select>
+                    </td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Versienummer:</td>
+                    <td class="table_td_right_zaakinformatie">[% (document ? document.versie : '1') %]</td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Verplicht:</td>
+                    <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_verplicht">
+                        Laden...
+                    </td>
+                    <td class="table_td_right_zaakinformatie document_constraint_false"><input type="hidden" name="mandatory" value="0" class="is_mandatory" /><span class="text_mandatory">Nee</span></td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Publiceren op PIP:</td>
+                    <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_pip">
+                        Laden...
+                    </td>
+                    <td class="table_td_right_zaakinformatie document_constraint_false"><input type="checkbox" name="pip" value="1" [% (document.pip ? ' checked="checked"' : '') %] class="is_pip"/></td>
+                </tr>
+                <tr class="table_zaakinformatie_tr">
+                    <td class="table_td_left_zaakinformatie">Toelichting:</td>
+                    <td class="table_td_right_zaakinformatie"><textarea cols="60" name="help" class="ezra_sjabloon_toelichting textarea_toelichting">[% document.help %]</textarea></td>
+                </tr>
+
+           </tbody>
+        </table>
+        <table class="table_ztbmenu">
+            <tr class="table_ztbmenu_tr">
+                <td class="table_ztbmenu_tdright"><input id="dialog-submit" type="submit" class="button140" value="Gebruiken"></td>
+            </tr>
+        </table>
+    </form>
+</div>

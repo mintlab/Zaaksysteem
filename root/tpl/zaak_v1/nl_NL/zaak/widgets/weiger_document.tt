@@ -1,0 +1,36 @@
+<div id="create_relatie" class="form">
+    <form method="POST" action="[% c.uri_for(c.action,c.req.captures) %]/[% document.id %]" class="zvalidate">
+    <input type="hidden" name="confirmed" value="1" />
+    <table>
+        <tbody>
+            <tr>
+                <td class="td200">Weigeren van document:</td>
+                <td>[% document.filename %]</td>
+                <td class="td260"></td>
+            </tr>
+            <tr>
+                <td>Reden:</td>
+                <td><textarea name="omschrijving"></textarea></td>
+                <td>
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Geef een korte reden waarom dit document geen
+                            onderdeel van deze zaak kan zijn.
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="clearfix dialog-buttons">
+    <input type="submit" value="Weigeren" id="dialog-submit" class="" />
+    </div>
+    </form>
+</div>

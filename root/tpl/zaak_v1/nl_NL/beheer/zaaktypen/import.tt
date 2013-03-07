@@ -1,0 +1,94 @@
+[% BLOCK import_dependency_group %]
+    <div class="import_dependency import_group ezra_[% dependency_type %]">
+        <div class="ezra_import_dependency_group_inner">
+            <div class="import_title">
+                <h3 class="[% dependency_type %]">[% dependency_titles.$dependency_type || dependency_type %]<span></span></h3>
+            </div>
+            <div class="import_group_inner">
+                <div class="spinner-groot"><div></div></div>
+                [% ids = import_dependencies.$dependency_type %]
+                [% FOREACH id = ids.keys %]
+                    [% dependency_item = ids.$id %]
+                    <div class="import_dependency_item  import_item">
+                    [% PROCESS beheer/zaaktypen/import/item.tt %]
+                    </div>
+                [% END %]
+            </div>
+        </div>
+    </div>
+[% END %]
+
+<style>
+
+.import_dependency_adjustment {
+    display: none;
+}
+.ajaxreturncontainer { 
+    display: none; 
+}
+.import_mintloader {
+    width: 400px;
+}
+</style>
+
+<div class="block clearfix import">
+    <p class="header">Zaaktype importeren</p>
+    <div class="blockcontent">
+        <form method="POST" enctype="multipart/form-data">
+        [% IF !zaaktype %]
+            <div>
+                Selecteer een [% IF zaaktype %]ander [% END %]zaaktype bestand (.ztb):
+                <br/><strong style="color:red;">[% dependency_error %]<strong>
+                <div class="ezra_import_mintloader import_mintloader">
+                    [% PROCESS widgets/general/veldoptie.tt
+                        veldoptie_name      = 'upload'
+                        veldoptie_type      = 'file'
+                    %]
+                </div>
+                 <input type="submit" class="ezra_import_do_upload button140 right" value="Volgende"/>
+                 <br/><br/>
+            </div>
+        [% ELSE %]
+        <br/>                
+            <div style="font-size:20px;">
+                Geselecteerd zaaktype: <strong>[% zaaktype.filename %]</strong>
+                <a href="/beheer/zaaktypen/import/flush" class="knop no-icon mini">Ander bestand importeren</a>
+            </div>
+            <br/>
+
+            <div class="start_zaak_box"><div>Een zaaktype maakt gebruik van een aantal elementen zoals kenmerken en sjablonen. Om te voorkomen dat bij een import elementen dubbel in het systeem komen kun je gebruik maken van elementen die al aanwezig zijn.
+            Hierdoor zijn er meer zoekmogelijkheden en blijft het systeem overzichtelijk. 
+            Per element hoef je maar &eacute;&eacute;n keer op te geven hoe het geimporteerd moet worden. <br/><br/>
+            Hieronder staat een overzicht van alle elementen die het zaaktype gebruikt. Geef per element op of er een bestaand element of het meegeleverde nieuwe element gebruikt moet worden.
+            <div class="tip"></div>
+            </div>
+            </div>
+            <br/>
+
+            [% USE Dumper %]
+            [% dependency_titles = {
+                BibliotheekSjablonen => 'Sjablonen',
+                BibliotheekCategorie => 'Categorieen',
+                BibliotheekKenmerken => 'Kenmerken',
+                LdapRole => 'LDAP Rol',
+                LdapOu => 'LDAP Organisatorische eenheid',
+                Zaaktype => 'Zaaktypen',
+            } %]
+
+            [% PROCESS import_dependency_group
+                dependency_type = 'Zaaktype'
+            %]
+            [% FOREACH dependency_type = import_dependencies.keys.sort %]
+                [% UNLESS dependency_type == 'Zaaktype' || dependency_type == 'BibliotheekCategorie' %]
+                    [% PROCESS import_dependency_group %]
+                [% END %]
+            [% END %]
+            <div>
+                <input type="submit" name="import" class="button140 right" value="Importeren"/>
+            </div>
+        [% END %]
+
+
+        </form> 
+    </div>
+</div>

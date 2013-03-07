@@ -1,0 +1,63 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+<!-- [% layout_type = 'simple' %] -->
+[% USE date %]
+
+
+<div id="loginwrap">
+    <div class="block left flex50">
+        <p class="header">
+        Betaling van zaaknummer [% zaak.nr %]: 
+        [% zaak.definitie.definitie.handelingsinitiator FILTER ucfirst %]
+        [% zaak.definitie.titel %]
+        </p>
+        <div class="blockcontent">
+            <!--
+<p>Voor het door u gekozen zaaktype is een betaling vereist.
+            Bij [% c.config.gemeente.naam_lang %] kunt u betalen via onze
+            betalingsprovider 'Ogone'. Hier kunt u met iDeal of met uw
+            creditcard betalen.</p>
+-->
+            <p>U kunt online betalen door gebruik te maken van iDeal.</p>
+            
+            <table id="betaling">
+                <tbody>
+                    <tr>
+                        <td class="td200"><strong>Product of dienst</strong></td>
+                        <td class="tdvar">[% zaak.definitie.titel %]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Datum</strong></td>
+                        <td>[% date.format(date.now, '%d-%m-%Y') %]</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Bedrag</strong></td>
+                        <td>
+                            &euro;
+                            [% ogone_amount %]
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grote-id-knop">
+            <form method="post" action="[% ogone.posturl %]">
+                [% FOREACH ogone_name IN ogone.variables.keys.sort %]
+                    [% ogone_value = ogone.variables.$ogone_name %]
+                    [% UNLESS ogone.$ogone_name %]
+                        [% NEXT %]
+                    [% END %]
+                    <input
+                        type="hidden"
+                        name="[% ogone_value %]"
+                        value="[% ogone.$ogone_name %]" />
+                    [% END %]
+
+                <input type="submit" value="Betalen" class="ideal-knop" />
+            </form>
+            </div>
+        </div>
+    </div>
+</div> 
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

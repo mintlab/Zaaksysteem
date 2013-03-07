@@ -1,0 +1,64 @@
+[% USE Scalar %]
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/deelzaak') %]">
+<input type="hidden" name="update" value="1">
+<div id="next_status_subzaak">
+    <table class="table_zaakinformatie margin5px subzaken" cellspacing="0" id="next_status_subzaak">
+        <tr class="table_ztb_title_tr">
+            <td class="table_ztb_title_td30">Starten?</td>
+            <td class="table_ztb_title_td200">Zaaktype</td>
+            <td class="table_ztb_title_td100">Vorm</td>
+            <td class="table_ztb_title_td100">Starten na</td>
+            <td class="table_ztb_title_td100">Kenmerken</td>
+            <td class="table_ztb_title_td100">Verwijderen</td>
+        </tr>
+        <tr class="table_ztb_tr row_template">
+            <td class="table_ztb_td_30">
+                <input type="checkbox" name="status_zaaktype_run" value="1">
+            </td>
+            <td class="table_ztb_td_200">
+                <input type="hidden" name="status_zaaktype_id" value="">
+                <p class="description"></p>
+            </td>
+            <td class="table_ztb_td_200">
+                <select name="status_zaaktype_deelrelatie" class="ezra_milestone_zaak_type">
+                    [% IF zaak.is_volgende_afhandel_fase %]
+                        <option
+                        value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+                        class="has_start_delay">
+                            Vervolgzaak (periode)
+                        </option>
+                        <option
+                        value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+                        class="vervolgzaak_datum has_start_delay">
+                            Vervolgzaak (datum)
+                        </option>
+                    [% ELSE %]
+                    <option
+                    value="[% ZCONSTANTS.subzaken_deelzaak %]">
+                        Deelzaak
+                    </option>
+                    [% END %]
+                    <option
+                    value="[% ZCONSTANTS.subzaken_gerelateerd %]">
+                        Gerelateerde zaak
+                    </option>
+                </select>
+            </td>
+            <td class="table_ztb_td_200 ezra_milestone_zaak_type_starten">
+                <input type="text" name="status_zaaktype_start" size=4 value="0">
+                <span class="label_dagen">dagen</label>
+            </td>
+            <td class="table_ztb_td_200 status_afhandel_block">
+                <input type="checkbox" name="status_zaaktype_kopieren_kenmerken" value="1" />
+            </td>
+            <td class="table_ztb_td_100" align="center"><a href="#" class="document_row_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+        </tr>
+    </table>
+    <a href="#" rel="status: [% c.req.params.status %]" class="add
+        status_definition_add_subzaak">Toevoegen</a><br /><br />
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Aanmaken" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

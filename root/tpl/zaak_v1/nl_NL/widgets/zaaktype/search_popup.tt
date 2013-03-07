@@ -1,0 +1,30 @@
+<div id="zoek_zaaktype">
+    <div id="accordion">
+        <h3><a href="#">Zoekcriteria</a></h3>
+        <div>
+           <div id="search_zaaktype_popup" class="ui-accordion-table-bg clearfix">
+                <form>
+                [% INCLUDE widgets/zaaktype/zaaktype_search.tt %]
+                <input type="hidden" name="jsfilldescr" value="[% c.req.params.jsfilldescr %]" />
+                <input type="hidden" name="jsfillid" value='[% c.req.params.jsfillid %]' />
+                <input type="hidden" name="jstrigger" value='[% c.req.params.jstrigger %]' />
+                <input type="hidden" name="jsbetrokkene_type" value='[% c.req.params.jsbetrokkene_type %]' />
+                <input type="hidden" name="search" value='1' />
+                <input type="hidden" name="search_filter_post" value="[% search_filter_post %]"/>
+                <input type="submit" class="button140 right last" name="submit" value="Zoeken" />
+                </form>
+                <img src="images/loader.gif" id="betrokkene_loader" class="disabled">
+            </div>
+        </div>
+
+        <h3><a href="#">Resultaten</a></h3>
+
+        <div>
+            <div class="ui-accordion-table-bg">
+                <table class="table_zaken_title" id="search_zaaktype_results">
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

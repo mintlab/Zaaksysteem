@@ -1,0 +1,124 @@
+[%
+    USE Scalar;
+
+    zaak_phase = {
+        'new'       => 'Ongeopend',
+        'open'      => 'Actief',
+        'resolved'  => 'Afgehandeld',
+        'stalled'   => 'Opgeschort',
+        'deleted'   => 'Verwijderd',
+    };
+%]
+
+<!-- VIEW: zaak/view -->
+<div class="tabber ui-tabs view_zaak zaakdossier" id="tabinterface">
+    <div class="header tabbed ui-helper-clearfix zaakbehandeling">
+
+        <div class="col zaaktitel">
+            Zaak [% zaak.id %]:
+            <span>[% zaak.zaaktype_definitie.handelingsinitiator | ucfirst %]
+             [% zaak.zaaktype_node_id.titel %] voor
+                <a
+                    href="" class="betrokkene-get"
+                    title="Informatie over aanvrager"
+                    rel='zaak: [% zaak.id %]; id: [% zaak.aanvrager_object.betrokkene_identifier %]'>
+                           [% zaak.aanvrager.naam %]</a></span>
+        </div>
+
+        <div class="status col_right">
+           <div class="col marginright">
+                Huidige fase:
+                [% ((zaak.status == 'resolved' || zaak.is_afhandel_fase) ? 'Afgehandeld' : zaak.volgende_fase.fase) %]<br />
+
+                [% IF c.check_any_zaak_permission('zaak_edit') %]
+                </div>
+                <div class="select_actie_container col">
+                    <div class="col">
+                        <select name="">
+                        [% IF zaak.status != 'resolved' %]
+                            <option class="save" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next') %]">Fase afronden</option>
+                        [% END %]]
+                            <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/vorige_status')%]" class="popup">Vorige fase</option>
+                        [% IF zaak.status != 'resolved' %]
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/behandelaar') %]">Behandelaar wijzigen</option>
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/betrokkene') %]">Betrokkene toevoegen</option>
+                            <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/eigenaar')%]" class="popup">Coordinator wijzigen</option>
+                            <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/aanvrager')%]" class="popup">Aanvrager wijzigen</option>
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/afdeling') %]">Afdeling wijzigen</option>
+                            <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/zaaktype')%]" class="popup">Zaaktype wijzigen</option>
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/verlengen') %]">Zaak verlengen</option>
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/opschorten') %]">Opschorten/activeren</option>
+                            <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/afhandelen')%]" class="popup">Vroegtijdig afhandelen</option>
+                            <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/relatie') %]" class="popup">Zaak relateren</option>
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/deelzaak') %]">Zaak starten</option>
+                        [% END %]]
+                            <option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak kopieren</option>
+                        [% IF zaak.aanvrager.betrokkene_type == 'bedrijf' && zaak.zaaktype_node_id.bedrijfid_wijzigen %]
+                            <option class="popup" value="[%
+                            c.uri_for(
+                                '/zaak/' _ zaak.nr _ '/update/bedrijfid/wijzig'
+                                ); %]">[% c.config.gemeente.naam %]ID: Wijzig wachtwoord</option>
+                        [% END %]
+                        [% IF c.check_any_user_permission('zaak_beheer') %]
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/vernietigingsdatum') %]">Vernietigingsdatum wijzigen</option>
+                        [% END %]
+                        [% IF c.check_any_user_permission('admin') %]
+                            <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/set_jumbo') %]">JUMBO update (ADMIN)</option>
+                        [% END %]
+                        </select>
+                    </div>
+                    <div class="col">
+                        <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+                    </div>
+                    [% END %]
+                </div>
+                
+
+                <div class="ui-helper-clearfix"></div>
+       </div>
+    </div>
+
+
+    <ul class="ui-rounded-corners-off ui-tabs-nav">
+        <li class="ui-first"><a href="#zaak-elements-case" class="ui-state-default ui-corner-top">Zaakinformatie</a></li>
+        <li><a href="#zaak-elements-taken" class="ui-state-default ui-corner-top">Taken</a></li>
+        <li><a href="#zaak-elements-documents" class="ui-state-default ui-corner-top">Documenten</a></li>
+        <li class="ui-last"><a href="#zaak-elements-notes" class="ui-state-default ui-corner-top">Notities</a></li>
+    </ul>
+
+
+
+    <div class="tabbertab ui-tabs-hide no-padding" id="zaak-elements-case">
+        <!-- START elements/case -->
+                [% PROCESS zaak/elements/case.tt %]
+        <!-- STOP elements/case -->
+    </div>
+
+    <div class="tabbertab ui-tabs-hide no-padding" id="zaak-elements-taken">
+        <!-- START elements/checklist -->
+                [% PROCESS zaak/elements/taken.tt %]
+        <!-- STOP elements/checklist -->
+    </div>
+
+    <div class="tabbertab[% ((current_element == 'documents') ? ' tabbertabdefault' : '') %] ui-tabs-hide" id="zaak-elements-documents">
+        <div class="tab-loader">
+            <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/global_spinner.gif" alt="bezig met laden" />
+        </div>
+        <!-- START elements/documents -->
+                [% PROCESS zaak/elements/documents.tt %]
+        <!-- STOP elements/documents -->
+    </div>
+
+
+
+    <div class="tabbertab ui-tabs-hide ezra_load_zaak_element zaak_nr_[% zaak.nr %]" id="zaak-elements-notes">
+        <div class="tab-loader">
+            <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/global_spinner.gif" alt="bezig met laden" />
+        </div>
+        <!-- START elements/notes -->
+                [% #PROCESS zaak/elements/notes.tt %]
+        <!-- STOP elements/notes -->
+    </div>
+</div>
+
+<!-- END VIEW: zaak/view -->

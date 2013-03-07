@@ -1,0 +1,42 @@
+<div id="create_relatie" class="form">
+    <form method="POST" action="[% c.uri_for(c.action,c.req.captures) %]" class="zvalidate">
+    <input type="hidden" name="confirmed" value="1" />
+    <table>
+        <tbody>
+            <tr>
+                <td class="td200">Huidige vernietigingsdatum:</td>
+                <td>[% (zaak.vernietigingsdatum.dmy || 'Onbekend') %] </td>
+                <td class="td260"></td>
+            </tr>
+            <tr>
+                <td>Nieuwe vernietigingsdatum:</td>
+                <td>
+                   [% PROCESS widgets/general/veldoptie.tt
+                        veldoptie_name      = 'vernietigingsdatum'
+                        veldoptie_type      = 'date'
+                        veldoptie_value     = zaak.vernietigingsdatum.dmy
+                    %]
+ 
+                </td>
+                <td>
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Nieuwe vernietigingsdatum
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="clearfix dialog-buttons">
+    <input type="submit" value="Wijzigen" id="dialog-submit" class="" />
+    </div>
+    </form>
+</div>

@@ -1,0 +1,9 @@
+[%
+    jsfill    = 'new_externe_aanvrager'
+    jstype    = 'medewerker'
+    jsversion = '2'
+    method    = 'post'
+    url       = c.uri_for('/zaak/' _ zaak.nr _ '/update/eigenaar');
+%]
+
+[% PROCESS betrokkene/popup/search.tt %]

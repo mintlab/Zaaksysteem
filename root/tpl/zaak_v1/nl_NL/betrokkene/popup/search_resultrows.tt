@@ -1,0 +1,75 @@
+                [% IF betrokkene_type == 'medewerker' %]
+                <tr class="table_zaken_title_tr">
+                    <td class="table_zaken_title_td250">Voornamen:</td>
+                    <td class="table_zaken_title_td250">Naam:</td>
+                    <td class="table_zaken_title_td250">Afdeling:</td>
+                </tr>
+                [% ELSIF betrokkene_type == 'natuurlijk_persoon' %]
+                <tr class="table_zaken_title_tr">
+                    <td class="table_zaken_title_td30">&nbsp;</td>
+                    <td class="table_zaken_title_td250">Voornamen:</td>
+                    <td class="table_zaken_title_td250">Geslachtsnaam:</td>
+                    <td class="table_zaken_title_td250">Postcode:</td>
+                    <td class="table_zaken_title_td250">Straatnaam:</td>
+                    <td class="table_zaken_title_td250">Huisnummer:</td>
+                    [% IF c.req.params.import_datum %]
+                    <td class="table_zaken_title_td250">Aangemaakt:</td>
+                    [% END %]
+                </tr>
+                [% ELSIF betrokkene_type == 'bedrijf' %]
+                <tr class="table_zaken_title_tr">
+                    <td class="table_zaken_title_td100">KVK:</td>
+                    <td class="table_zaken_title_td250">Handelsnaam:</td>
+                    <td class="table_zaken_title_td250">Vestigingplaats:</td>
+                    <td class="table_zaken_title_td250">Straatnaam:</td>
+                    <td class="table_zaken_title_td100">Huisnummer:</td>
+                    [% IF c.req.params.import_datum %]
+                    <td class="table_zaken_title_td250">Aangemaakt:</td>
+                    [% END %]
+                </tr>
+                [% END %]
+            [% WHILE (mw = results.next) %]
+                [% IF betrokkene_type == 'medewerker' %]
+                    <tr class="table_zaken_tr betrokkene_keuze" id="betrokkene-[% betrokkene_type %]-[% mw.ldapid %]">
+                        <td class="table_zaken_td250 result_voorletters">[% mw.voornamen %]</td>
+                        <td class="table_zaken_td250 result_geslachtsnaam">[% mw.geslachtsnaam %]</td>
+                        <td class="table_zaken_td250 result_afdeling">[% mw.org_eenheid.omschrijving %]</td>
+                    </tr>
+                [% ELSIF betrokkene_type == 'bedrijf' %]
+                    <tr class="table_zaken_tr betrokkene_keuze" id="betrokkene-[% betrokkene_type %]-[% mw.gmid %]">
+                        <td class="table_zaken_td100 result_dossiernummer">[% mw.dossiernummer %]</td>
+                        <td class="table_zaken_td250 result_geslachtsnaam">[% mw.handelsnaam %]</td>
+                        <td class="table_zaken_td250 result_postcode">[% mw.vestiging_woonplaats %]</td>
+                        <td class="table_zaken_td250 result_straatnaam">[% mw.vestiging_straatnaam %]</td>
+                        <td class="table_zaken_td100 result_huisnummer">[% mw.vestiging_huisnummer %]</td>
+                        [% IF c.req.params.import_datum %]
+                        <td class="table_zaken_td100 result_import_datum">
+                            [% mw.import_datum.dmy %]
+                        </td>
+                        [% END %]
+                    </tr>
+                [% ELSE %]
+                    <tr class="table_zaken_tr betrokkene_keuze" id="betrokkene-[% betrokkene_type %]-[% mw.gmid %]">
+                        <td class="table_zaken_td30"><img src="/images/icon-[% (mw.geslachtsaanduiding == 'M' ? 'man.png' : 'vrouw.png') %]" width="16" height="16" border="0" /></td>
+                        <td style="display: none;" class="table_zaken_td250 result_voorletters">[% mw.voorletters %]</td>
+                        <td class="table_zaken_td250 result_voornamen">[% mw.voornamen %]</td>
+                        <td class="table_zaken_td250 result_geslachtsnaam">[% (mw.voorvoegsel ? mw.voorvoegsel _ ' ' : '') _ mw.geslachtsnaam %]</td>
+                        <td class="table_zaken_td250 result_postcode">[% mw.postcode %]</td>
+                        <td class="table_zaken_td250 result_straatnaam">[% mw.straatnaam %]</td>
+                        <td class="table_zaken_td100 result_huisnummer">
+                            [% mw.huisnummer %]
+                            [% (mw.huisletter ? mw.huisletter : '') %]
+                            [% (mw.huisnummertoevoeging ? ' - ' _ mw.huisnummertoevoeging : '') %]
+                        </td>
+                        [% IF c.req.params.import_datum %]
+                        <td class="table_zaken_td100 result_import_datum">
+                            [% mw.import_datum.dmy %]
+                        </td>
+                        [% END %]
+                    </tr>
+                [% END %]
+             [% END %]
+             [% IF results.dbic_rs.pager.total_entries > 40 %]
+             <tr><td colspan="5">Er zijn te veel resultaten, gelieve meer zoekcriteria op te geven.
+             </td></tr>
+             [% END %]

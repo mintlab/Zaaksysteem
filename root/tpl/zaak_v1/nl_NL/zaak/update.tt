@@ -1,0 +1,39 @@
+[% USE scalar %]
+[% possible_values = kenmerk_info.scalar.zaaktype_values %]
+[% kenmerkoptions = [] %]
+[% WHILE (kenmerkoption = possible_values.next) %]
+    [% kenmerkoptions.push(kenmerkoption.value) %]
+[% END %]
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update') %]">
+    <input type="hidden" name="kenmerk" value="[% kenmerk %]">
+    <input type="hidden" name="update" value="1">
+    <table cellspacing="1" class="table_zaakinformatie">
+        <tbody>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Vraag:</td>
+            <td class="table_td_right_zaakinformatie">[% kenmerk_info.label %]</td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Omschrijving:</td>
+            <td class="table_td_right_zaakinformatie">[% kenmerk_info.value %]</td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Antwoord:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% PROCESS widgets/general/veldoptie.tt
+                    veldoptie_name      = kenmerk
+                    veldoptie_type      = kenmerk_info.value_type
+                    veldoptie_opties    = kenmerkoptions
+                    veldoptie_value     = kenmerk_data
+                %]
+            </td>
+        </tr>
+       </tbody>
+    </table>
+    <table class="table_ztbmenu">
+            <tr class="table_ztbmenu_tr">
+                <td class="table_ztbmenu_tdright"><input type="submit" value="Opslaan" class="button140" id="dialog-submit"/></td>
+            </tr>
+    </table>
+</form>
+

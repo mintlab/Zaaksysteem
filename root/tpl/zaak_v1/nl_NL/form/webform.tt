@@ -1,0 +1,24 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+[% PROCESS form/webform_blocks.tt %]
+
+[% USE Scalar %]
+[% IF !c.user_exists %]
+    [% layout_type = 'simple' %]
+[% END %]
+
+[% PROCESS webform_form_start %]
+
+[% IF (c.user_exists && zaak_acties.doc_intake) %]
+    [% dropdocument = c.model('DB::DroppedDocuments').find(zaak_acties.doc_intake.component_id) %]
+    [% PROCESS webform_doc_intake %]
+[% END %]
+
+<div class="block ezra_form_plugin">
+    [% PROCESS widgets/form/kenmerken.tt %]
+</div>
+
+[% PROCESS webform_form_stop %]
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

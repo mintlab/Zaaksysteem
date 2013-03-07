@@ -1,0 +1,30 @@
+[% USE Scalar %]
+<!-- zaaktype/widgets/table_zaaktype.tt -->
+<table class="table_zaken_title" cellspacing="0">
+<thead>
+    <tr class="table_zaken_title_tr">
+        <td class="td30"><img src="/images/icon-down.png" width="16" height="16"></td>
+        <!-- <td class="table_zaken_title_td250">Code</td> -->
+        <td class="tdvar">Zaaktype</td>
+        <td class="td60">Versie</td>
+        <td class="td150">Acties:</td>
+    </tr>
+   </thead>
+   <tbody>
+   [% mastercategorie = categorie %]
+   [% IF categorie.scalar.zaaktype_categories.count %]
+        [% zaaktypecats = categorie.scalar.zaaktype_categories.scalar.search({},{ order_by => 'categorie' }) %]
+        [% WHILE (categorie = zaaktypecats.next) %]
+        [% PROCESS zaaktype/widgets/row_categorie.tt
+            PARENTROW=1
+        %]
+        [% END %]
+        [% categorie = mastercategorie %]
+    [% END %]
+    [% WHILE (zaaktype = zaaktypen.next) %]
+        [% PROCESS zaaktype/widgets/row_zaaktype.tt %]
+    [% END %]
+</tbody>
+</table>
+<!-- END zaaktype/widgets/table_zaaktype.tt -->
+

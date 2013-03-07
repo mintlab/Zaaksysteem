@@ -1,0 +1,10 @@
+<div class="ui-accordion-table-bg">
+    <table class="table_zaakinformatie">
+        <tbody>
+            [% PROCESS widgets/zaak/ztc.tt
+                ZAAKINFO = 1
+            %]
+        </tbody>
+    </table>
+</div>
+

@@ -1,0 +1,83 @@
+[% SearchQuery_search_query_id = SearchQuery_search_query_id | html %]
+
+<input type="hidden" name="SearchQuery_search_query_id" value="[% SearchQuery_search_query_id %]"/>
+<input type="hidden" name="current_search_page" value="[% current_search_page %]">	
+<input type="hidden" name="destination" value="[% current_search_page %]">	
+<div class="ui-corner-all zaken-zoeken ui-tabs ui-widget-content [% IF !search_query_read_only %]locked[% END %]"> 
+<div class="header tabbed" style="overflow:hidden">
+
+
+
+<input type="hidden" name="search_query_name_hidden" href="/search[% SearchQuery_search_query_id ? '/' _ SearchQuery_search_query_id : '' %]/save" value=""/>
+<input type="hidden" name="search_query_access_hidden" value="[% search_query_access %]"/>
+<div class="search_query_name">
+    <!-- [% IF SearchQuery_search_query_id %]
+    <a title="dfdfdfdf" href="#" class="search_query_access [% IF search_query_access == 'public' %]search_query_access_public[% ELSE %]search_query_access_private[% END %]">&nbsp;&nbsp;&nbsp;&nbsp;</a>
+    [% END %] -->
+
+
+[% search_query_name %]
+[% IF !search_query_read_only %]
+    <a href="#" class="element small width-auto mini bewerk static in-header"><span></span>[% SearchQuery_search_query_id ? 'Naam wijzigen' : 'Opslaan' %]</a>
+    <a href="#" class="element small width-auto mini nieuw static in-header"><span></span>Nieuw</a>
+    [% IF SearchQuery_search_query_id %]
+    <a href="[% c.uri_for('/search/' _ SearchQuery_search_query_id _ '/opties') %]" rel="callback: ezra_search_opties" class="fire-dialog element small width-auto mini delen opties static in-header"><span></span>Opties</a>
+    [% END %]
+[% END %]
+</div>
+
+[% IF current_search_page == 'results' %]
+   	[% PROCESS widgets/general/zaken_filter.tt 
+   	ZAKEN_FILTER_STATUS_DROPDOWN = 1
+   	%]
+[% END %]
+
+
+
+</div>
+
+[% IF current_search_page == 'results' %]
+        [% #PROCESS search/save.tt %]
+[% END %]
+
+
+
+
+<div class="dropdown submit_search_query_form">
+<p>Groepeer resultaten:</p>
+<div class="grouping_link"><a id="results" href="/search[% SearchQuery_search_query_id ? '/' _ SearchQuery_search_query_id : '' %]/results">Alle resultaten</a>
+</div>
+[% FOREACH grouping_field_option = grouping_field_options %]
+[% NEXT IF grouping_field_option.name == 'vernietigen' %]
+<div class="grouping_link"><a id="results" href="/search[% SearchQuery_search_query_id ? '/' _ SearchQuery_search_query_id : '' %]/results?grouping_field=[% grouping_field_option.name %]">[% grouping_field_option.label %]</a>
+</div>
+[% END %]
+</div>
+
+<div class="submit_search_query_form">
+<ul class="ui-rounded-corners-off ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+[% IF !search_query_read_only %]
+    <li class="ui-first ui-state-default ui-corner-top [% IF current_search_page == 'filters' %]ui-tabs-selected ui-state-active[% END %]">
+	   <a class="ui-state-default ui-corner-top" id="filters">Filters</a>
+    </li>
+    
+    <li class="ui-last ui-state-default ui-corner-top [% IF current_search_page == 'presentation' %]ui-tabs-selected ui-state-active[% END %]">
+	   <a class="[% IF current_search_page == 'presentation' %]ui-tabs-selected[% END %]" id="presentation">Kolommen</a>
+    </li>
+    
+	<li class="ui-no-borders ui-divider">
+	   <!--<a class="divider"><span></span></a>-->
+	</li>
+[% END %]	
+	<li class="ui-first ui-state-default ui-corner-top [% IF current_search_page == 'results' %]ui-tabs-selected ui-state-active[% END %]">
+	   <a class="[% IF current_search_page == 'results' %]ui-tabs-selected [% END %]ui-with-icon" id="results">Resultaten ([% total_results || results.pager.total_entries %])</a><div class="dropdown-init" id="groepeer-resultaten">VVV</div> 
+    </li>
+    
+	<li class="ui-last ui-state-default ui-corner-top [% IF current_search_page == 'charts' %]ui-tabs-selected ui-state-active[% END %]">
+	   <a class="[% IF current_search_page == 'chart' %]ui-tabs-selected[% END %]" id="chart">Grafiek</a> 
+    </li>
+</ul>
+
+</div>
+
+

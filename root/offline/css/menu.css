@@ -1,0 +1,256 @@
+/************************************************************
+Title:     Navcontainer | Emile Blume - Netcreators.com
+************************************************************/
+#navigation ul, #navigation li, .csc-menu li,
+#left ul, #left li, #footer ul, #footer li {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+div.csc-menu ul {
+	list-style: none;
+	margin: 0;
+	padding-bottom: 1.5em;
+}
+
+#navigation li.last, #navigation li.last { border: none;}
+
+/* Main navigation /////////////////////////////////////////*/
+/* remove all list stylings */
+#nav-top ul {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	list-style-type: none;
+	display: block;
+}
+
+#nav-top li {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	display: block;
+	float: left;
+	position: relative;
+	z-index: 5;
+	width:auto;
+}
+
+#nav-top li:hover { z-index:10000; white-space:normal;}
+
+/* -- float.clear.END --  */
+
+#nav-top {
+	background:#B1B72D;
+	top:114px;
+	position:absolute;
+	height:41px;
+	width:960px;
+	z-index:300;
+	color:#fff;
+	left:0;
+}
+
+#nav-top ul { 
+	padding-left:5px; 
+	width:960px;
+	padding-bottom:6px;
+}
+#nav-top ul li {
+	color: #FFF;
+	background: transparent;
+	float:left;
+}
+#nav-top ul li a, #nav-top .link-inactive span  {
+	color: #FFF;
+	display: block;
+	text-decoration: none;
+	cursor: pointer;
+	width:auto;
+	font-size:1.2em;
+	font-weight:bold;
+	background:url(../img/sprite.gif) no-repeat right -306px; 
+	height:41px;
+	margin-right:0;
+}
+
+#nav-top a span, #nav-top .link-inactive span { 
+	display: block;
+	padding:6px 20px 0 20px;
+	line-height:30px;
+	height:32px;
+	width:auto;
+}
+
+#nav-top a:hover {
+	background:#fff;
+	color:#083D7B;
+}
+
+#nav-top a:hover span  {
+	color:#073D7B;
+}
+
+#nav-top a.active, #nav-top a.current, #nav-top a.active:hover, 
+#nav-top a.current:hover, #home #nav-top li.first a {
+	background:#fff url(../img/mm-bg-left.gif) no-repeat left top;
+	height:41px;
+}
+
+#nav-top a.active span, #nav-top a.current span, #nav-top a.active:hover span, 
+#nav-top a.current:hover span, #home #nav-top li.first a span {
+	color:#073D7B;
+	background:url(../img/mm-bg-right.gif) no-repeat right top;
+	height:35px;
+}
+
+#nav-top li { height:1%; }
+
+/* Meta navigation ///////////////////////////////////////////*/
+#nav-meta {
+	background: url(../img/bg-meta.gif) no-repeat left top #073d7b;
+	height:33px;
+	right:1px;
+	top:0px;
+	position:absolute;
+	width:560px;
+	z-index: 1;
+}
+
+#nav-meta li { display:inline; }
+.print {
+	position:absolute;
+	left:295px;
+	top:9px;	
+}
+#nav-meta li a {
+	background:url(../img/pipe.gif) no-repeat right 10px;
+	color: #cdd8e5;
+	display:block;
+	font-size:11px;
+	height:18px;
+	padding: 7px 7px 0;
+	text-decoration:none;
+	float:left;
+	border-top:0.25em solid #073D7B;
+}
+#nav-meta li.first a
+#nav-meta li a.current { color:#95006b;text-decoration:none;}
+#nav-meta li a:hover, #nav-meta li a.active, #nav-meta li a.current { 
+	color:#fff; 
+	text-decoration:none; 
+	border-top: 0.25em solid #b1b72d;	
+}
+
+/* Nav sub ////////////////////////////////////////////////////////////////////*/
+#right .csc-menu li a {
+	background:url(../img/sprite.gif) no-repeat left -92px;
+	display:block;
+	font-size:1em;
+	height:auto;
+	line-height:1em;
+	padding:5px 7px 5px 18px;
+}
+#nav-sub li a, #left .csc-menu li a {
+	background:url(../img/sprite.gif) no-repeat -7px -92px;
+	display:block;
+	font-size:1em;
+	height:auto;
+	line-height:1em;
+	padding:5px 10px 5px 11px;
+}
+#right .csc-menu li a:hover {
+	text-decoration:underline;
+	background:#f5f5f5 url(../img/sprite.gif) no-repeat left -92px;
+}
+#nav-sub li a:hover, #left .csc-menu li a:hover {
+	text-decoration:underline;
+	background:#f5f5f5 url(../img/sprite.gif) no-repeat -7px -92px;
+}
+#nav-sub li a.current, #nav-sub li a.active {
+	background:#f5f5f5;
+	color:#073d7b;
+}
+
+#nav-sub li ul { background:#FFF; }
+#nav-sub li li a { 
+	background:#FFF url(../img/arrow-gray.gif) no-repeat 7px 8px;
+	padding: 2px 4px 2px 20px; 
+}
+
+#nav-sub li li a:hover, #nav-sub li li a.active, 
+#nav-sub li li a.current { 
+	background:#FFF url(../img/arrow-gray.gif) no-repeat 7px 8px;
+	color:#D52709; 
+}
+
+/* Breadcrumb navigation ////////////////////////////////////////////////////////////////////*/
+#bread {
+	color:#ABABBC;
+	display:block;
+	font-size:0.9em;
+	font-weight:bold;
+	left:0;
+	padding:5px 10px 5px 0;
+	position:absolute;
+	top:165px;
+	width:700px;
+	z-index:900;
+	background: url(../img/bg-bread.gif) repeat-x left top;
+}
+#bread * {color:#ABABBC; margin: 0.3em;}
+#bread a {color:#666666; text-decoration:underline;font-weight:normal;}
+#bread a:hover {color:#0099FF;}
+
+/* Anchor tag (quiet) ////////////////////////////////////////////////////////////////////*/
+.anchor { float: left; }
+
+/* nav-subpagina 3de niveau ///////////////////////////////*/
+#nav-subpagina ul {
+	border-bottom:3px solid #00354a;
+	list-style-type:none;
+	margin:0 0 10px;
+	overflow:hidden;
+	padding:0 0 10px;
+}
+#nav-subpagina li {float:left;width:33%;display:block;}
+#nav-subpagina li a {
+	background:url(../img/arrow.gif) no-repeat 5px 7px;
+	display:block;
+	padding:2px 0 2px 17px;
+	margin-right:20px;
+	overflow:hidden;
+}
+#nav-subpagina li a:hover {
+	background:#95006B url(../img/arrow-white.gif) no-repeat 5px 7px;
+	color:#fff;
+	text-decoration:none;
+}
+
+/* special colouring for "Main menu:", and for "xx submenu" items in ADxMenu
+   placed here to clarify the terminology I use when referencing submenus in posts */
+.menu>li:first-child>a, .menu li + li + li li:first-child>a {
+	/*color: #FFF;*/
+}
+
+/* Fix for IE5/Mac \*//*/
+.menu a, .pdc-nav-tabs a { float: left;}
+/* End Fix */
+
+/* additional styling pdc menu ///////////////////*/
+/*.pdc-nav-tabs {position:absolute; top: 4px; left:78px; }*/
+.pdc-nav-tabs {position:absolute; top: 4px; left:178px; }
+.pdc-nav-tabs li {float: left; }
+.link-inactive span {color: #f2c4bc; }
+
+.print {
+    left: 295px;
+    position: absolute;
+    top: 9px;
+}
+
+.print a, .change-profile {
+    border-left: 1px solid #CCCCCC;
+    margin-left: 10px;
+}

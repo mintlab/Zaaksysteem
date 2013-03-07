@@ -1,0 +1,42 @@
+[%
+    maanden = {
+        '1'   => 'januari',
+        '2'   => 'februari',
+        '3'   => 'maart',
+        '4'   => 'april',
+        '5'   => 'mei',
+        '6'   => 'juni',
+        '7'   => 'juli',
+        '8'   => 'augustus',
+        '9'   => 'september',
+        '10'  => 'oktober',
+        '11'  => 'november',
+        '12'  => 'december'
+    };
+%]
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/verlengen') %]" class="zvalidate">
+<input type="hidden" name="update" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Reden verlenging:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" class="input_large" name="reden"/><span class="validator"></span></td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Selecteer nieuwe afhandeldatum:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div class="clearfix">
+                <div class="col">
+                    <input type="text" name="datum" value="[% veldoptie_value %]" class="veldoptie_datepicker" id="dp_[% veldoptie_name %]" />
+
+                </div>
+            </div><span class="validator"></span>
+        </td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Opslaan" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

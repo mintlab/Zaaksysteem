@@ -1,0 +1,16 @@
+<div class="block clearfix import">
+    <p class="header">Zaaktype importeren resultaat</p>
+    <div class="blockcontent">
+        <div class="[% IF import_error %]error[% ELSE %]succes[% END %]">
+            [% IF import_error %]
+                Er is iets mis gegaan met importeren
+                <span>[% import_error %]</span>
+            [% ELSE %]
+                Zaaktype '<a href="/beheer/zaaktypen/[% zaaktype_node.zaaktype_id.id %]/bewerken"><strong>[% zaaktype_node.titel %]</strong></a>' is geimporteerd in Zaaksysteem <strong>[% c.hostname %]</strong>.
+            [% END %]
+            </div>
+
+            <a href="/beheer/zaaktypen/import/flush" class="knop no-icon">Ander zaaktype importeren</a>
+        
+    </div>
+</div>

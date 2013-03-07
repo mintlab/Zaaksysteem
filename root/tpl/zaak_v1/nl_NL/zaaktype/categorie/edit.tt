@@ -1,0 +1,69 @@
+[%
+    IF categorie.id;
+        ACTIONHREF=c.uri_for('/zaaktype/categorie/edit/' _ categorie.id);
+    ELSE;
+        ACTIONHREF=c.uri_for('/zaaktype/categorie/edit');
+    END;
+%]
+
+<div id="categorie_edit">
+<form method="POST" action="[% ACTIONHREF %]">
+<input type="hidden" name="action" value="add">
+<input type="hidden" name="parent_id" value="[% c.req.params.parent_id %]" />
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Naam Generieke Categorie:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="categorie" value="[% categorie.categorie %]" /></td>
+    </tr>
+    <!--
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Categorie Eigenaar:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div id="eigenaar">
+                <input type="hidden" name="eigenaar" value="[% categorie.eigenaar %]" />
+                <input type="text" value="[% c.model('Betrokkene').get({}, categorie.eigenaar).naam %]" class="input_medium" disabled>
+                <a href="#" title="Zoek een nieuwe aanvrager" class="search_betrokkene" rel="medewerker">
+                    <img src="/images/icon-magnifier.png" width="16" height="16" border="0">
+                </a>
+                <img src="/images/empty.gif" width="24" height="16">
+                <img src="/images/icon-tick.png" style="visibility: hidden;" class="validate-ok" title="Veld is correct ingevuld" width="16" height="16">
+            </div>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Categorie Bewaker:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div id="behandelaar">
+                <input type="hidden" name="behandelaar" value="[% categorie.behandelaar %]" />
+                <input type="text" value="[% c.model('Betrokkene').get({}, categorie.behandelaar).naam %]" class="input_medium" disabled>
+                <a href="#" title="Zoek een nieuwe aanvrager" class="search_betrokkene" rel="medewerker">
+                    <img src="/images/icon-magnifier.png" width="16" height="16" border="0">
+                </a>
+                <img src="/images/empty.gif" width="24" height="16">
+                <img src="/images/icon-tick.png" style="visibility: hidden;" class="validate-ok" title="Veld is correct ingevuld" width="16" height="16">
+            </div>
+        </td>
+    </tr>
+    -->
+   </tbody>
+</table>
+
+<table class="table_ztbmenu">
+    <tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input id="dialog-submit" type="submit" class="button140" value="Verzenden"></td>
+    </tr>
+</table>
+</form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('.search_betrokkene').click(function() {
+            searchBetrokkene($(this));
+
+            return false;
+        });
+    });
+</script>

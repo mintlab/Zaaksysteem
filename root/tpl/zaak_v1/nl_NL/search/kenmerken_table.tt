@@ -1,0 +1,62 @@
+[% BLOCK kenmerk_operators %]
+<select name="k-kenmerk_operator_[% kenmerkcount %]">
+    [% FOREACH option = kenmerk_item.operators %]
+        <option value="[% option.value %]"
+        [% IF kenmerk_item.operator == option.value %]selected[%END%]
+        >[% option.label %]</option>
+    [% END %]
+</select>
+[% END %]
+
+    <div class="kenmerken_container">
+        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+            <tbody>
+            <tr class="table_ztb_title_tr">
+                <td class="td100">Naam</td>
+                <td class="td250">Zoekopdracht</td>
+                <td class="td20 center"></td>
+            </tr>
+            <tr class="table_ztb_tr ztAjaxTable_template">
+                <td class="td100">
+                    <input
+                        type="hidden"
+                        size="40"
+                        class="ztAjaxTable_uniquehidden"
+                        name="k-kenmerk_id">
+                    <span class="description"></span>
+                </td>
+                <td class="td250 search_td">
+                </td>
+                <td class="td15 center"><a href="#" class="ztAjaxTable_del del"></a></td>
+            </tr>
+                [% kenmerkcount = 0 %]
+                [% FOREACH kenmerk_item IN kenmerken %]
+                    [% kenmerkcount = kenmerkcount + 1 %]
+					[% kenmerk = c.model('Bibliotheek::Kenmerken').get('id', kenmerk_item.id) %]
+			<tr class="table_ztb_tr ztAjaxTable_row ztAjaxTable_rownumber_[% kenmerkcount %]" id="kenmerk-id-[% kenmerk_item.id %]">
+				<td class="kenmerk_naam td100"><span class="description">[% kenmerk.kenmerk_naam %]</span>
+				<input type="hidden" size="40" class="ztAjaxTable_uniquehidden" name="k-kenmerk_id_[% kenmerkcount %]" value="[% kenmerk_item.id %]">
+				</td>
+				<td class="td250">
+				    [% PROCESS widgets/general/kenmerk_filter.tt 
+				        veldoptie_type = kenmerk.kenmerk_type
+    					veldoptie_opties = kenmerk.kenmerk_options
+                    	veldoptie_value  = kenmerk_item.data	
+                    	veldoptie_name = 'k-kenmerk_search_' _ kenmerkcount
+                    	veldoptie_operator_fieldname = 'k-kenmerk_operator_' _ kenmerkcount
+				    %]
+				</td>
+				<td class="td15 center"><a href="#" class="ztAjaxTable_del del"></a></td>
+			</tr>
+
+                [% END %]
+            </tbody>
+        </table>
+        <a
+            href="[% c.uri_for('/beheer/bibliotheek/kenmerken/search'); %]"
+            rel="rowcallback: ezra_zaaktype_select_kenmerk; geen_documenten: 1"
+            title="Kenmerk selecteren uit de Kenmerkenbibliotheek"
+            class="add ztAjaxTable_add float"
+            style="display: none;"
+            >Kenmerk zoeken</a>
+	</div>

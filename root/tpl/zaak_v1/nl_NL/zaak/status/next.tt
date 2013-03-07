@@ -1,0 +1,184 @@
+[% USE Scalar; %]
+[% chapter_counter = 0 %]
+[% huidige_fase = zaak.huidige_fase.fase %]
+[% volgende_fase = zaak.volgende_fase.fase %]
+[% IF
+zaak.volgende_fase.role_id != zaak.route_role ||
+zaak.volgende_fase.ou_id != zaak.route_ou
+; route_change = 1; END %]
+[% #zaak.volgende_fase.fase %]
+
+
+
+[% BLOCK status_behandelaar %]
+    <h2 class="blue">[% component_counter %]. Behandelaar</h2>
+        <span
+            [% (zaak.scalar.is_betrokkene_compleet ? ''
+            : ' style="color: red; font-weight: bold"') %]
+        >
+    [% (zaak.scalar.is_betrokkene_compleet
+        ? 'Deze zaak heeft een behandelaar' :
+        'Deze zaak heeft geen behandelaar, klik
+        <a href="' _ c.uri_for('/zaak/' _
+        zaak.nr _ '/open')
+        _ '">hier</a> om deze zaak in behandeling te nemen.' )
+    %]
+    </span>
+[% END %]
+
+
+
+
+
+[% BLOCK status_checklist %]
+    <h2 class="blue">[% component_counter %]. Checklist</h2>
+    [% (zaak.scalar.is_checklist_compleet
+        ? 'De checklist is correct ingevuld' :
+        'Checklist (nog) niet afgemaakt. Ga naar
+        de <a href="' _ c.uri_for('/zaak/' _
+        zaak.nr _ '#zaak-elements-taken')
+        _ '">checklist</a>.' )
+    %]
+[% END %]
+
+
+
+
+
+[% BLOCK status_kenmerk %]
+    <h2 class="blue">[% component_counter %]. Kenmerken</h2>
+    [% (status_kenmerken_incompleet
+            ? status_kenmerken_incompleet _ '. Ga naar '
+                _ ' de <a href="' _ c.uri_for('/zaak/') _
+            zaak.nr _ '?fase=' _ status_kenmerken_fase_incompleet _ '#zaak-elements-taken'
+            _ '">kenmerken</a>.'
+            : 'Alle verplichte kenmerken zijn ingevuld'
+    ) %]
+[% END %]
+
+[% BLOCK status_resultaat %]
+    [% IF zaak.is_volgende_afhandel_fase %]
+    [% component_counter = component_counter + 1 %]
+    <div class="next-status-block">
+        <h2 class="blue">[% component_counter %]. Resultaat</h2>
+        [% (
+            zaak.resultaat
+                ? 'Resultaat bekend.'
+                : 'Resultaat van de zaak is niet bekend.'
+                    _ ' Ga naar '
+                    _ ' de <a href="' _ c.uri_for('/zaak/' _
+                zaak.nr _ '#zaak-elements-taken')
+                _ '">kenmerken</a>.'
+        ) %]
+    </div>
+    [% END %]
+[% END %]
+
+
+
+
+[% BLOCK status_deelzaak %]
+    [% IF has_active_deelzaken %]
+    [% component_counter = component_counter + 1 %]
+        <div class="next-status-block">
+            <h2 class="blue">[% component_counter = component_counter + 1; component_counter %]. Lopende deelzaken</h2>
+            [% (has_active_deelzaken ? 'Er zijn nog lopende deelzaken welke eerst afgerond dienen te worden alvorens deze zaak gesloten kan worden.' : 'Alle deelzaken zijn afgerond.' ) %]
+        </div>
+    [% END %]
+[% END %]
+
+[% BLOCK status_toewijzing %]
+    [% component_counter = component_counter + 1 %]
+    <div class="next-status-block">
+        <h2 class="blue">[% component_counter = component_counter + 1; component_counter %]. Toewijzing</h2>
+    </div>
+[% END %]
+
+
+
+[% BLOCK status_document %]
+    <h2 class="blue">[% component_counter %]. Documenten</h2>
+    [% IF zaak.is_documenten_compleet -%]
+        [% IF zaak.is_document_queue_empty -%]
+            Alle verplichte documenten voor deze fase zijn toegevoegd.
+        [% ELSE %]
+            Documenten in de wachtrij moeten eerst verwerkt worden alvorens deze zaak afgehandeld kan worden. Ga naar de <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '#zaak-elements-documents') %]'">documenten</a>.
+        [% END %]
+    [% ELSE %]
+        Niet alle verplichte documenten voor deze fase zijn toegevoegd. Ga naar de <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '#zaak-elements-documents') %]'">documenten</a>.
+    [% END %]
+[% END %]
+
+
+
+<div id="next-status">
+    <!--<div id="zaaktitel" class="clearfix"><h2 class="zaaknummer"><a href="[% c.uri_for('/zaak/' _ zaak.nr) %]">Zaak: [% zaak.nr %] [% zaak.definitie.ztc.get_ztc('handelingsinitiator').value | ucfirst %] [% zaak.definitie.titel %]</a></h2></div>  -->
+    <div class="block">
+        <p class="header">
+        Zaak [% zaak.nr %]:
+        [% zaak.zaaktype_node_id.zaaktype_definitie_id.handelingsinitiator | ucfirst %]
+        [% zaak.zaaktype_node_id.titel %] voor
+              <a href="" class="betrokkene-get" title="Informatie over aanvrager"
+                rel='zaak: [% zaak.id %]; id: [% zaak.aanvrager.betrokkene_id %]'>
+                [% zaak.aanvrager.naam %]
+            </a>
+        </p>
+        <div class="blockcontent">
+            <form method="POST" action="[% c.uri_for('/' _ c.req.path) %]" class="zvalidate">
+                <input type="hidden" name="update" value="1">
+
+                    <div class="next-status-titel">
+                        <h1>
+                        [% ( volgende_fase
+                            ? 'Overgangspagina om naar de volgende fase te gaan'
+                            : 'Overgangspagina om de zaak af te handelen'
+                        ) %]
+                        </h1>
+                        <div class="current-fase"><span>Huidige fase:</span><br/> [% volgende_fase %]</div>
+                    </div>
+
+
+                [% component_counter = 0 %]
+                [% FOREACH component IN [
+                    'behandelaar',
+                    'checklist',
+                    'document',
+                    'kenmerk',
+                ] %]
+                    [% component_counter = component_counter + 1 %]
+                    [% block = 'status_' _ component %]
+                    <div class="next-status-block">[% INCLUDE $block %]</div>
+                [% END %]
+
+[% PROCESS status_deelzaak %]
+[% PROCESS status_resultaat %]
+[%# PROCESS status_toewijzing %]
+
+[% UNLESS zaak.can_volgende_fase && !status_next_stop %]
+    [% RETURN %]
+[% END %]
+
+[% vervolgsubzakenstring    = 'Zaken' %]
+[% vervolgsubzakenstringe   = 'zaak' %]
+[% IF !zaak.is_volgende_afhandel_fase %]
+    [% PROCESS zaak/status/toewijzing.tt %]
+[% END %]
+
+
+[% PROCESS zaak/status/zakenstarten.tt %]
+
+
+[% PROCESS zaak/status/berichten.tt %]
+
+
+
+                <div class="nextprev clearfix">
+                    <a href="[% c.uri_for('/zaak/' _ zaak.nr) %]" title="Annuleren"><input type="button" value="Annuleren" class="button140"></a>
+                        <input type="submit" value="[% (zaak.is_volgende_afhandel_fase ?
+                        'Afhandelen' : 'Volgende fase') %]" class="button140 right">
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

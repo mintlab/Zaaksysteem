@@ -1,0 +1,49 @@
+[% INCLUDE layouts/default_header.tt -%]
+[% INCLUDE layouts/default_helper_diffs.tt %]
+
+<div id="maincontainer">
+    <!-- Begin TOP -->
+
+    <!-- Begin Content -->
+    <div id="contentwrapper">
+        <!-- Begin Left Menu -->
+        [% IF pip_session %]
+        <div id="leftcolumn">
+            <!-- <a href="[% c.uri_for('/form/') %]" class="nieuwezaak">Nieuwe Aanvraag</a> -->
+            <div id="leftcolumn_inner">
+                <div id="leftcolumn_inner2">
+                    <div class="innertube">
+                        <div class="menu-title first">
+                            <div class="menu_heading contacten">Menu</div>
+                        </div>
+                        <ul id="menu-items1" class="menu-items">
+                            <li><a href="[% c.uri_for('/pip') %]" title="Hier vind je jouw zaken">Mijn zaken</a></li>
+                            <li><a href="[% c.uri_for('/pip/contact') %]" title="Hier vind je jouw gegevens">Mijn gegevens</a></li>
+                            <li><a href="[% c.uri_for('/pip/logout') %]" title="Afmelden">Afmelden</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        [% END %]
+        <div id="contentcolumn">
+            <div class="innertube">
+                [% IF c.flash.pip_result && pip %]
+                <div class="sysmessage">
+                    [% IF c.flash.pip_result.size %]
+                        <ul>
+                        [% FOREACH message IN c.flash.pip_result %]
+                            <li>[% message %]</li>
+                        [% END %]
+                        </ul>
+                    [% ELSE %]
+                        <p>[% c.flash.pip_result %]</p>
+                    [% END %]
+                </div>
+                [% END %]
+                [% content %]
+            </div>
+        </div> <!-- end contentcolumn -->
+    </div>
+</div>
+[% INCLUDE layouts/default_footer.tt -%]

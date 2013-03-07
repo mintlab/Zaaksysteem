@@ -1,0 +1,32 @@
+[% fk   = dest.fk %]
+
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        <a class="icon icon-folder" href="[% c.uri_for('/beheer/zaaktype_catalogus/' _ item.cat_id) %]"></a>
+    </td>
+    <td class="tdvar">
+        <a href="[% c.uri_for('/beheer/zaaktype_catalogus/' _ item.cat_id) %]">[% item.titel %]</a> 
+        [% categorie_id = item.id %]
+        [% IF element_count.$categorie_id > 0 %]
+    ([% element_count.$categorie_id %])
+        [% END %]
+    </td>
+    <td class="td100">[% item.type %]</td>
+    <td class="td100">[% item.versie %]</td>
+    <td class="td100" TITLE="[% item.description.join(', ') %]"></td>
+    <td class="td150">
+        [% IF !item.system %]
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option value="[% c.uri_for('/beheer/bibliotheek/categorie/' _ item.cat_id _ '/bewerken') %]" class="popup">Bewerken</option>
+                    <option value="[% c.uri_for('/beheer/bibliotheek/categorie/' _ item.cat_id _ '/verwijderen') %]" class="popup">Verwijderen</option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie icon icon-go-pijl"></a>
+            </div>
+        </div>
+        [% END %]
+    </td>
+</tr>

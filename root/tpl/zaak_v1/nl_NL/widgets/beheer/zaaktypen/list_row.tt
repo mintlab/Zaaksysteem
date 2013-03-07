@@ -1,0 +1,59 @@
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+            <a 
+                href="[% 
+                c.uri_for(
+                    '/beheer/zaaktypen/'
+                    _ item.id _ '/bewerken'
+                    ) %]"
+                class="icon icon-case"></a>
+    </td>
+    <td class="tdvar">
+            <a
+                href="[%-
+                c.uri_for(
+                    '/beheer/zaaktypen/'
+                    _ item.id _ '/bewerken'
+                ) %]"
+            >
+
+            [% item.titel %]
+        </a>
+    </td>
+    <td class="td100">[% item.type %]</td>
+    <td class="td100">[% item.versie %]</td>
+    <td class="td100">
+        [% IF item.description.size %]
+            <div class="dropdown-wrap dropdown-wrap-left">
+                <div class="dropdown-init dropdown-init-hover icon-toelichting icon icon-hover show-info-description dropdown-init-hide ">
+                    <div class="dropdown dropdown-left dropdown-tooltip">
+                        <div class="dropdown-pijl"></div>
+                        <div class="dropdown-content dropdown-content-overflow">
+                        <strong>Kenmerken:</strong><br/>
+                            [% item.description.join(', ') %]
+                        </div>
+                    </div>
+                </div>
+            </div>
+        [% END %]
+    </td>
+    [% IF ! entry.system %]
+    [% base_uri = c.uri_for('/beheer/zaaktypen/' _ item.id _ '/') %]
+    <td class="td200">
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option value="[% base_uri %]bewerken">Bewerken</option>
+                    <option value="[% base_uri  %]clone">Dupliceren</option>
+                    <option value="[% base_uri %]verwijder" class="popup">Verwijderen</option>
+                    <option value="[% base_uri %]export">Exporteren</option>
+                    <option value="[% base_uri %]version" class="popup">Versiebeheer</option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie icon icon-go-pijl"></a>
+            </div>
+        </div>
+    </td>
+    [% END %]
+</tr>

@@ -1,0 +1,50 @@
+[% BLOCK milestone_table_row %]
+<tr
+    class="ezra_table_row[% (!mregel ? '_template' : '') %]"
+    id="ezra_table_regel_row_number[% (mregel ? '_' _ mregeli : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="roworder" name="params.status.regels.mijlsort[% (mregel ? '.' _ mregeli : '') %]" value="[% mregeli %]" />
+        <span class="rownaam" />[% mregel.naam %]</span>
+    </td>
+    <td class="td40 center">
+        <a
+            href="[% formaction %]/regel/bewerken"
+            class="edit ezra_table_row_edit icon-edit" %]"
+        />
+    </td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"/></td>
+</tr>
+[% END %]
+
+
+
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_regel">
+    <a href="#">Regels
+        (<span class="number">[% milestone.elementen.regels.size || 0 %]</span>)</a> </h3>
+<div class="ezra_table element_tabel_regel">
+    <div class="ui-accordion-table-bg">
+    <table cellspacing="0" class="ezra_table_table sortable-element">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="tdvar">Naam</th>
+                <th class="td40">Bewerken</th>
+                <th class="td40">Verwijderen</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_row %]
+            [% FOREACH mregeli IN milestone.elementen.regels.keys.nsort %]
+                [% mregel = milestone.elementen.regels.$mregeli %]
+                [% INCLUDE milestone_table_row %]
+            [% END %]
+        </tbody>
+    </table>
+    <a  class="ezra_table_row_add"
+        href="#"
+        style="display: none;"
+        rel="callback: ezra_zaaktype_regel_edit"
+        ></a>
+    </div>
+</div>

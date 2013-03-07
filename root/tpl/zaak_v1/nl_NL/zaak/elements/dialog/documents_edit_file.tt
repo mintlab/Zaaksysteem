@@ -1,0 +1,163 @@
+[% BLOCK block_mappen %]
+    [% werkmappen = werkmappen.scalar.search({},{ order_by => 'pid' }); %]
+    [% WHILE (map = werkmappen.scalar.next) %]
+        <option value="[% map.id %]"
+        [% (document.pid.id == map.id
+        ? ' selected="selected"'
+        : '') %]>[% '-' | repeat(CAT_STR_DEPTH) %] [% map.filename %]</option>
+        [% IF map.scalar.pid.count %]
+            [% SET CAT_STR_DEPTH = CAT_STR_DEPTH + 1 %]
+            [% new_werkmappen = map.scalar.pid %]
+            [% save_map = werkmap %]
+            [% INCLUDE block_mappen
+                werkmappen = new_werkmappen
+                CAT_STR_DEPTH = CAT_STR_DEPTH
+            %]
+            [% werkmap = save_map %]
+            [% SET CAT_STR_DEPTH = CAT_STR_DEPTH - 2 %]
+        [% END %]
+    [% END %]
+[% END %]
+
+[% nowrapper = 1 %]
+[% USE Scalar %]
+<div class="submitWaiter">
+    <form method="POST" action="[% c.uri_for((pip ? '/pip' : '') _ '/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/' _ (document ? 'edit/' _ document.id : 'add')) %]" enctype="multipart/form-data">
+        <input type="hidden" name="documenttype" value="file" />
+        [% (document ? '<input type="hidden" name="document_id" value="' _ document.id _ '" />' : '') %]
+        [% IF pip %]
+            <input type="hidden" name="ztc_aanvrager_id" value="[% c.session.pip.ztc_aanvrager %]" />
+        [% END %]
+        <table cellspacing="1" class="table_zaakinformatie">
+            <tbody>
+            [% IF document %]
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">
+                    Documentnaam:</td>
+                <td class="table_td_right_zaakinformatie"><input type="text" name="existing_filename" value="[% filename_without_extension %]" class="input_large" />[% filename_extension %]</td>
+                <input type="hidden" name="existing_filename_suffix" value="[% filename_extension %]"/>
+            </tr>
+            [% END %]
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">
+                    Mogelijke bestandsformaten:
+                </td>
+                <td class="table_td_right_zaakinformatie">Alle</td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">
+                    [% (document ? 'Wijzig document' : 'Selecteer een document') %]:</td>
+                <td class="table_td_right_zaakinformatie"><input type="file" name="filename" /></td>
+            </tr>
+            [% IF document %]
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">
+                    Wijzig Map:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="pid">
+                        <option value=""[% (!document.pid
+                        ? ' selected="selected"'
+                        : '') %]>Hoofdmap</option>
+                        [% INCLUDE block_mappen
+                            werkmappen = mappen
+                        %]
+                    </select>
+                </td>
+            </tr>
+            [% END %]
+            [% UNLESS pip %]
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Zaaktypedocument:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="catalogus" class="select_zt_document zaak_[% zaak.nr %]">
+                        <option value="">Geen</option>
+                            [% documenten = zaak.zaaktype_node_id.zaaktype_kenmerken.scalar.search(
+                                {
+                                    'bibliotheek_kenmerken_id.value_type'    => 'file'
+                                },
+                                {
+                                    'join'          => 'bibliotheek_kenmerken_id',
+                                    'order_by'      => 'id',
+                                }
+                            ) %]
+                        [% WHILE (cdocument = documenten.next) %]
+                            <option value="[% cdocument.id %]"[% (cdocument.id == document.zaaktype_kenmerken_id  ? ' selected="selected"' : '') %] class="[% (cdocument.value_mandatory ? 'verplicht_document' : "") %][% (cdocument.pip ? ' pip_document' : '') %]">
+                                [% cdocument.naam %]
+                            </option>
+                        [% END %]
+                    </select>
+                </td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Selecteer het type:</td>
+                <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_categorie">
+                    Laden...
+                </td>
+                <td class="table_td_right_zaakinformatie document_constraint_false">
+                    <select name="category">
+                    [% FOREACH doc_category IN constants.document.categories %]
+                            <option value="[% doc_category %]"[% (document.category == doc_category ? ' selected="selected' : '') %]>[% doc_category %]</option>
+                    [% END %]
+                    </select>
+                </td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Versienummer:</td>
+                <td class="table_td_right_zaakinformatie">[% (document ? document.versie : '1') %]</td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Verplicht:</td>
+                <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_verplicht">
+                    Laden...
+                </td>
+                <td class="table_td_right_zaakinformatie document_constraint_false"><input type="hidden" name="mandatory" value="0" class="is_mandatory" /><span class="text_mandatory">Nee</span></td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Publiceren op PIP:</td>
+                <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_pip">
+                    Laden...
+                </td>
+                <td class="table_td_right_zaakinformatie document_constraint_false"><input type="checkbox" name="pip" value="1" [% (document.pip ? ' checked="checked"' : '') %] class="is_pip"/></td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Ontvangstdatum:</td>
+                <td class="table_td_right_zaakinformatie">
+                    [%
+                        PROCESS widgets/general/periode.tt
+                        input_dag   = 'ontvangst_dag'
+                        input_maand = 'ontvangst_maand'
+                        input_jaar  = 'ontvangst_jaar'
+                        value_dag   = document.ontvangstdatum.day
+                        value_maand = document.ontvangstdatum.month
+                        value_jaar  = document.ontvangstdatum.year
+                    %]
+                </td>
+            </tr>
+            <!--
+<tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Dagtekening:</td>
+                <td class="table_td_right_zaakinformatie">
+                    [%
+                        PROCESS widgets/general/periode.tt
+                        input_dag   = 'dagtekening_dag'
+                        input_maand = 'dagtekening_maand'
+                        input_jaar  = 'dagtekening_jaar'
+                        value_dag   = document.registratiedatum.day
+                        value_maand = document.registratiedatum.month
+                        value_jaar  = document.registratiedatum.year
+                    %]
+                </td>
+            </tr>
+-->
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Toelichting:</td>
+                <td class="table_td_right_zaakinformatie"><textarea cols="60" name="help" class="textarea_toelichting">[% document.help %]</textarea></td>
+            </tr>
+        [% END %]
+           </tbody>
+        </table>
+        <div class="nextprev clearfix marginbottom">
+            <input id="dialog-submit" type="submit" class="button140" value="Toevoegen" />
+        </div>
+    </form>
+</div>

@@ -1,0 +1,12 @@
+/* alternate stylesheet for fontsize - largest */
+
+h2 { font-size: 1.638em; }
+h3 {font-size: 1.513em;}
+h4 { font-size: 1.45em; }
+h5 { font-size: 1.388em; }
+h6 { font-size: 1.263em; }
+
+p { font-size: 1.2em; }
+
+#fontsize a { background-position: -19px -200px; }
+#fontsize a.largest { background-position: 0 -240px; }

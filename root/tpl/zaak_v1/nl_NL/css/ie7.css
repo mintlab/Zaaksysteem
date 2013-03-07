@@ -1,0 +1,367 @@
+.zaken_filter_wrapper{
+zoom: 1 !important;
+} 
+
+
+/* @group sort */
+
+.ie-lines-gone a{float:left;margin-right:4px;}
+.ie-lines-gone a img{display: block;}
+
+#topsection {background-image:none;background-color:#2d5a8f;}
+.block .header,.ui-tabs .ui-widget-header {background-image:none;background-color:#efeded}
+ul.vert-one li a:hover{background-image:none;background-color:#ccc;font-weight: bold;}
+ul.vert-one li a:active{background-color:#333;color:#fff;}
+.div_search input.input_normal {padding:4px;}
+/* #breadcrumb{background-color:#fff;height:43px;} */
+/* #breadcrumb a{padding-bottom:12px;} */
+
+/* .tooltip-test-wrap{position: absolute;height:20px;display: inline-block;margin-left:-1px;left:0px;} */
+
+#stappen{/* width:959px; padding-bottom:10px;*/}
+.blockcontent.webformcontent{}
+.groeptekst{zoom:-1;}
+
+.ui-selectmenu-home .ui-selectmenu-status{
+line-height: 1.47em;
+}
+
+a.add {background: url("../images/icon-voegtoe.png") no-repeat scroll 7px center #eee;}
+
+.table_zaken_title .progress-bar {text-align: left;}
+
+#zaak-elements-case .ui-accordion-table-bg, #zaak-elements-checklist .ui-accordion-table-bg, #zaak-elements-documents .ui-accordion-table-bg, zaak-elements-notes .ui-accordion-table-bg{padding-left:20px;padding-right:20px;}
+
+
+.ezra_bibliotheek_nieuw{
+background-image: url(../images/icon-add.png);
+background-color: #eee;
+background-repeat: no-repeat;
+background-position: 5px center;
+}
+ul.vert-one li a,ul.vert-one li a:hover,ul.vert-one li a:active{border:none;}
+
+#searchdialog .ui-accordion-header{position: static;}
+#searchdialog .ui-accordion-header .ui-icon {
+    float: left;
+    margin-top: 17px;
+    position: static;
+    top:auto;
+    left:auto;
+}
+#leftcolumn_inner2 {
+    background-image: none;
+    background-color:#e3e3e3;
+    border-radius: 6px 6px 6px 6px;
+}
+.search_query_name{
+width:400px;
+}
+.element.in-header.mini{top:1px;}
+
+#new_search.in-header{width:160px;}
+.element,.header{overflow: hidden;}
+.zaak_search_filter{border:1px solid #ddd;}
+.ui-tabs .ui-tabs-nav li:first-child{border-left:1px solid #ccc;}
+
+.div_search input.button_search{
+background: #bdd752 url(../images/vergrootglas.gif) no-repeat 50% 50%;
+border-color: #111;
+display: block;
+height: 28px !important;
+border-width: 1px !important;
+filter:chroma(color=#000000);
+}
+
+.search_query_name,.search_query_name:hover {border:none;}
+
+.element.submit{background: url(../images/icon-save.png) no-repeat 10px center #ccc;}
+
+.dropdown.dropdown-left{
+top:auto;bottom:0px;}
+
+.ui-accordion-table-bg {
+    background: url("../images/ezra_table_table-bg.png") repeat-x scroll 0 0 transparent;
+    padding-bottom: 20px !important;
+    /*padding-top: 10px !important;*/
+    zoom:-1;
+}
+
+.ui-widget-overlay{background:url(images/ui-bg_flat_0_aaaaaa_40x100.png) 50% 50% repeat-x #000;}
+
+.ui-accordion-table-bg{padding-left:15px;padding-right:15px;}
+.tabber{}
+
+
+.knop{padding-left:8px;}
+
+.knop.voeg-toe{
+background:url(../images/btn-in-header.gif) repeat-x 50% 50%;
+padding-left:8px !important;
+}
+
+.knop.with-span-icon{padding-left: 28px !important;}
+
+.dialog-buttons input[type="submit"], .dialog-buttons input[type="button"],.buttons input[type="submit"], .buttons input[type="button"], input.element, input.knop{
+filter:chroma(color=#000000); 
+}
+
+
+.dialog-buttons input[type="submit"], .dialog-buttons input[type="button"],.buttons input[type="submit"], .buttons input[type="button"]{
+height:31px;
+position: static;
+} 
+
+.dialog-buttons, .buttons{zoom:1;}
+.zaken_filter_form{position: absolute !important;}
+
+table {
+  border-collapse: collapse;
+} 
+
+
+div.validator.invalid div.validate-tip{left:0;}
+.table_result a, .table_result strong,.table_result span.disabled {display:inline;}
+
+.zaak-aanmaken .validator{display: none;}
+input[type="text"],textarea{border-top-color:#aaa !important;border-left-color:#aaa !important;border-right-color:#ddd !important;border-bottom-color:#ddd !important;}
+.div_search input.input_normal{padding:5px;}
+
+input[type="text"],input[type="password"],textarea{
+border-top-color:#aaa !important;
+border-left-color:#aaa !important;
+border-right-color:#ddd !important;
+border-bottom-color:#ddd !important;
+}
+
+.div_search input.input_normal{padding:5px;display: block;
+}
+
+/* input.button140{height:31px !important;} */
+
+.dialog-buttons input[type="submit"], .dialog-buttons input[type="button"], .buttons input[type="submit"], .buttons input[type="button"] {
+    border: 1px solid #ccc !important;
+    border-bottom-color:#999 !important;
+    border-right-color:#999 !important;
+    }
+    
+.button_holder{
+position: absolute;right:15px;top:10px;
+}
+
+.table_zaken_title select{width:110px;}
+input.button140{
+	line-height: 2 !important;
+}
+
+input.button140:hover{
+background: #333;
+}
+
+input.button140:active{
+background: #000;}
+
+.voeg-regel-toe strong{
+	float: left;
+}
+
+.voeg-regel-toe.last{
+	border-bottom: 1px solid #ccc;
+}
+
+#regel_definitie .knop.geen-tekst{
+	zoom: 1;
+	background:url("../images/icon-voegtoe.png") no-repeat scroll center center #f9f9f9;
+	position: static !important;
+}
+
+.select_actie_container select{
+	width: auto !important;
+}
+
+.select_actie_container .col1,.select_actie_container .col2{
+	width: auto !important;
+}
+
+
+
+.radio-item input, .checkbox-item input{
+	top: -2px;
+}
+
+.zaakdossier .kenmerk-groep td{
+	border-top: none;
+}
+
+.fileUpload .existing_file{
+	padding: 5px 0;
+}
+
+.fileUpload .new_upload{
+	top: 0px;
+	width: 100%;
+	background-color: rgb(248, 248, 248);
+}
+
+.fileUpload input, input[type=file]{
+padding: 5px;
+border: 1px solid #aaa !important;
+}
+
+
+.mintloader{
+	padding: 0;
+	background: none;
+	border: none;
+}
+
+.fileuploadthumbnail{
+	background: url(../images/mime/icon-txt.png) no-repeat 0px center;
+	padding: 0;
+	padding-left: 22px;
+	border-top: none;
+}
+
+/* @end */
+
+
+/* @group ie7 import styles */
+
+
+.import_group{
+	border-bottom: none;
+}
+
+.import_group h3 span{
+	margin-top: -11px;
+}
+
+.import_title{
+/*	background: #f3f3f3 !important;
+	border-bottom-width: 2px !important;
+	border-bottom-color: #999 !important;*/
+}
+
+.import .title, .import .rfa{
+	position: relative;
+}
+
+.import .title strong, .import .rfa .action.ie7{
+position: absolute;
+top: 50%;
+display: block;
+height: auto !important;
+background: none;
+}
+
+.import .rfa .action.ie7{
+padding-left: 0;
+}
+
+.import .title strong.ie7 span.ie7, .import .rfa .action span.ie7{
+	top: -50%;
+	position: relative;
+	display: block;
+}
+
+.import .rfa .action span.ie7{
+	padding-left: 50px;
+	background: url(../images/import-check.png) 20px center no-repeat;
+}
+
+.import .import_item_error .rfa .action span.ie7{
+	background: url(../images/import-error.png) 20px center no-repeat;
+}
+
+.import span{
+	zoom: 1;
+}
+
+.import .rfa{
+	width: 61%;
+}
+
+.import #use_existing .rfa .action label{
+	top: -4px;
+	position: relative;
+}
+
+.import #use_existing .rfa .action select{
+	margin-top: 18px;
+}
+
+.import_item_inner:hover .title,.import_item_inner:hover .rfa{
+	cursor: pointer;
+	background: none;
+}
+
+.import_item_inner:hover{
+	background: #b5e38f;
+}
+
+.import_item_error:hover{
+	background: #e8baba;
+}
+
+.import_overlay .import_item_inner .title{
+	background: none;
+}
+
+.import_overlay .rfa .knop.opslaan{
+	background:url("../images/icon-save.png") no-repeat scroll 5px center #e7e7e7 !important;}
+	
+
+.import .options a.revert{
+	background:url(../images/button-revert.png) no-repeat center -9px #e3f8d8 !important;
+}
+
+.import .import_item_error .options a.revert{
+	background:url(../images/button-revert.png) no-repeat center -9px #f9e9e9 !important;
+}
+
+.import .options a.info{
+	background:url(../images/button-info.png) no-repeat center -5px #e3f8d8 !important;
+}
+
+.import .import_item_error .options a.info{
+	background:url(../images/button-info.png) no-repeat center -5px #f9e9e9 !important;
+}
+
+.import_overlay{
+	border-top: 1px solid #bbb;
+}
+
+.nieuwe_zaak_starten{
+	border: 1px solid #666;
+}
+
+.nieuwe_zaak_starten_tip{
+	background: url(../images/nieuwe_zaak_starten_tip-2.png) no-repeat 0 0;
+}
+
+.custom_overlay{background:url(../images/ie_custom_overlay.png) repeat 0 0;}
+
+
+
+
+
+
+
+
+/* @group 1024px media query */
+
+@media screen and (max-width: 1024px) {
+
+	#leftcolumn{
+		z-index: 10;
+	}
+	
+	.menu-title{
+		width: 33.3%;
+	}
+	
+}
+
+#regel_definitie .icon{
+	display: inline;
+}

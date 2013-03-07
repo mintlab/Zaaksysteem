@@ -1,0 +1,73 @@
+<!-- Begin Zaaktype -->
+<form method="POST" action="[% c.uri_for('/zaaktype/auth/edit') %]">
+<input name="update" value="1" type="hidden" />
+<div class="block clearfix">
+    <p class="header">Rechten binnen dit zaaktype</p>
+    <div class="blockcontent" id="rol_kenmerken_container">
+        <table class="table_zaakinformatie no_margin dynamic_rows">
+            <thead>
+                <tr>
+                    <th colspan="4">Rechten binnen dit zaaktype</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table_ztb_title_tr">
+                    <td class="td300 align_top">Rol</td>
+                    <td class="tdvar">Rechten</td>
+                    <td class="td50" align="center">Verwijderen</td>
+                </tr>
+                <tr class="table_ztb_tr row_template">
+                    <td class="td300 align_top">
+                        [% PROCESS widgets/general/auth_select.tt
+                            AUTH_SELECT_OU_NAME   = 'ou_id'
+                            AUTH_SELECT_ROLE_NAME = 'role_id'
+                        %]
+                    </td>
+                    <td class="tdvar">
+                        [% FOREACH recht = c.list_available_permissions %]
+                            [% NEXT UNLESS recht.value.is_systeem_recht %]
+                            <input type="checkbox" name="role_recht" value="[% recht.key %]"> [% recht.value.label %]<br />
+                        [% END %]
+                    </td>
+                    <td class="td50" align="center"><a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                </tr>
+                [% rolcount = 0; %]
+                [% FOREACH roli IN params.auth.keys.nsort %]
+                    [% authrow = params.auth.${roli} %]
+                    [% rolcount = rolcount + 1 %]
+                <tr class="table_ztb_tr document_row">
+                    <td class="td300 align_top">
+                        [% PROCESS widgets/general/auth_select.tt
+                            AUTH_SELECT_OU_NAME   = 'ou_id_' _ rolcount
+                            AUTH_SELECT_OU_VALUE  = authrow.ou_id
+                            AUTH_SELECT_ROLE_NAME = 'role_id_' _ rolcount
+                            AUTH_SELECT_ROLE_VALUE = authrow.role_id
+                        %]
+                    </td>
+                    <td class="tdvar">
+                        [% FOREACH recht = c.list_available_permissions %]
+                            [% NEXT UNLESS recht.value.is_systeem_recht %]
+                            <input
+                                type="checkbox"
+                                name="role_recht_[% rolcount %]" 
+                                value="[% recht.key %]"
+                                [% (authrow.rechten.${recht.key} ? ' checked="checked"' : '') %]
+                            > [% recht.value.label %]<br />
+                        [% END %]
+                    </td>
+                    <td class="td50" align="center"><a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                </tr>
+                [% END %]
+            </tbody>
+        </table>
+        <a href="#" class="add add_row">Een rol toevoegen</a><br /><br />
+        <table class="table_zaakinformatie">
+            <tr class="table_ztbmenu_tr">
+            <td class="table_ztbmenu_tdleft"><a href="[% c.uri_for('/zaaktype') %]" title="Annuleren"><input type="button" value="Annuleren" class="button140"></a></td>
+            <td class="table_ztbmenu_tdright"><input type="submit" value="Volgende" class="button140 right"></td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+</form>

@@ -1,0 +1,60 @@
+[% BLOCK format_filter_title %]
+	[% IF filtertype == 'aanvrager_bedrijf' %]Organisatie
+	[%- ELSE -%]
+	[% filtertype FILTER ucfirst %]
+	[%- END %] 
+[% END %]
+
+<div class="search_filters_wrap">
+	<div class="search_filters_inner">
+        <form method="POST" id="search_filters" action="/search[% SearchQuery_search_query_id ? '/' _ SearchQuery_search_query_id : '' %]">
+   		[% current_search_page = 'filters' %]
+				
+
+		<div id="blockvar-wrap" class="mijlpaal_configureren">
+			<div class="blockvar left search_filters no-padding" id="configureren">
+			[% PROCESS search/navigation.tt %]
+				<input type="hidden" name="action" value="update_filters"/>
+				<input type="hidden" name="current_filter_type" value="[% current_filter_type %]"/>
+					
+				<div class="accordion_search_wrap block-minheight ui-widget-content">    
+            	    <div class="spinner-groot"><div></div></div>
+					<div id="search_no_filters" style="display:[% IF filters.size + kenmerken.size == 0 %] block [% ELSE %] none [% END %];">
+						Kies een filter om te beginnen &raquo;
+					</div>
+					<div id="accordion_search_filters">	
+						[% FOREACH filtertype = filtertypes %]
+							[% IF filtertype == 'kenmerk' %]
+								[% IF kenmerken.size > 0 || show_kenmerken_filters %]
+									[% PROCESS search/accordion_container.tt %]
+								[% END %]
+							[% ELSIF filters.$filtertype %]
+								[% PROCESS search/accordion_container.tt %]
+							[% END %]
+						[% END %]
+					</div>
+				</div>		
+			</div>
+		</div>
+
+		<div class="block300 left">
+			<div class="block" id="elementen">
+				<p class="header">Filter toevoegen</p>
+				<div class="blockcontent add_search_filter">
+					[% FOREACH filtertype = filtertypes %]
+					[% IF filters.$filtertype && filters.$filtertype.first.class == 'checkbox' %]
+							<a href="#" id="[% filtertype %]" class="element search_filter_not_available"><span class="bg"></span>[% PROCESS format_filter_title %]<span class="tooltip">Deze filter is al toegevoegd.</span></a>
+						[% ELSE %]
+							<a href="#" class="element" id="[% filtertype %]"><span class="bg"></span>[% PROCESS format_filter_title %]</a>
+						[% END %]
+					[% END %]
+				</div>
+			</div>
+	
+			<div class="blockcontent">
+			</div>
+		</div>
+
+		</form>
+	</div>
+</div>

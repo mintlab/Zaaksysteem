@@ -1,0 +1,7 @@
+[% IF results.pager.total_entries > results.pager.entries_per_page %]
+<table class="table_result">
+    <tr class="table_result_tr">
+        <td class="table_result_tdvar" class="center"><a href="[% more.uri %]">Meer (nog [% (results.pager.total_entries - results.pager.entries_per_page) %] zaken)</a></td>
+    </tr>
+</table>
+[% END %]

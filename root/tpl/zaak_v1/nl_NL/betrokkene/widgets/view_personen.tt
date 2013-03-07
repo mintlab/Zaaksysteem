@@ -1,0 +1,55 @@
+<table class="table_zaakinformatie">
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">BSN:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.burgerservicenummer %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Voornamen:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.voornamen %]</td>
+    </tr>
+
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Tussenvoegsels:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.voorvoegsel %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Achternaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.geslachtsnaam %]</td>
+
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Geboortedatum:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.geboortedatum %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Geslacht:</td>
+
+        <td class="table_td_right_zaakinformatie">[% (betrokkene.geslachtsaanduiding == 'M' ? 'Man' : 'Vrouw') %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Straatnaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.straatnaam %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+
+        <td class="table_td_left_zaakinformatie">Huisnummer:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.huisnummer %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Huisletter:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.huisletter %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Toevoeginghuisnr:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.huisnummertoevoeging %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Postcode:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.postcode %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Plaats:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.woonplaats %]</td>
+    </tr>
+</table>
+

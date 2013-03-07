@@ -1,0 +1,7 @@
+<div class="documentpreview">
+[% IF no_image %]
+Geen preview beschikbaar voor dit document.
+[% ELSE %]
+<img src="/zaak/documentpreview/[% document_id %]"/>
+[% END %]
+</div>

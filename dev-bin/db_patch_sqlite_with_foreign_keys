@@ -1,0 +1,6 @@
+#!/bin/sh
+patchdir=`pwd`/`dirname $0`;
+workdir=`pwd`;
+cd /usr/share/perl5
+patch -p2 <$patchdir/sqlfairy_sqlite_foreign_keys.patch
+cd $workdir;

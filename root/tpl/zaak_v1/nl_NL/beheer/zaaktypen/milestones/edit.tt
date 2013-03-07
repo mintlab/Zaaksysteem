@@ -1,0 +1,43 @@
+<div id="blockvar-wrap" class="mijlpaal_configureren">
+    <div class="block blockvar left mijlpaal_content no-padding" id="configureren">
+        <form method="POST" action="[% formaction %]">
+            <input type="hidden" name="zaaktype_update" value="1" />
+            <input type="hidden" name="status_update" value="1" />
+            <input
+            type="hidden"
+            name="milestone_number"
+            value="[% milestone_number %]" />
+
+            <p class="header">Fase "[% milestone.definitie.fase %]" configureren</p>
+            <div class="blockcontent">
+                [% PROCESS widgets/beheer/zaaktypen/mijlpaal_configureren.tt %]
+            </div>
+        </form>
+    </div>
+
+    <div class="block300 left">
+        <div class="block" id="elementen">
+            <p class="header">Element toevoegen</p>
+            <div class="blockcontent add_element">
+                <a href="#" class="element" id="kenmerk"><span></span>Kenmerk</a>
+                <a href="#" class="element" id="regel"><span></span>Regel</a>
+                <a href="#" class="element" id="sjabloon"><span></span>Sjabloon</a>
+                [% UNLESS milestone_first %]
+                <a href="#" class="element" id="checklist"><span></span>Checklistitem</a>
+                [% END %]
+                <!-- <a href="#" class="element" id="statusteller"><span></span>Statusteller</a> -->
+                <a href="#" class="element" id="relatie"><span></span>Zaak</a>
+                <a href="#" class="element" id="notificatie"><span></span>Bericht</a>
+                [% IF milestone_last %]
+                <a href="#" class="element" id="resultaat"><span></span>Resultaatmogelijkheid</a>
+                [% END %]
+            </div>
+        </div>
+        <div class="block" id="mijlpaal_overzicht">
+            <p class="header">Fasenoverzicht</p>
+            <div class="blockcontent">
+                [% PROCESS widgets/beheer/zaaktypen/mijlpaal_overzicht.tt %]
+            </div>
+        </div>
+    </div>
+</div>

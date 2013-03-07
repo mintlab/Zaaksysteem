@@ -1,0 +1,4 @@
+[% catalogus = zaak.zaaktype_node_id %]
+<table class="table_zaakinformatie marginbottom">
+[% PROCESS widgets/zaak/ztc.tt %]
+</table>

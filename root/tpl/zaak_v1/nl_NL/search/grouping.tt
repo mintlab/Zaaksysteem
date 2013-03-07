@@ -1,0 +1,64 @@
+<form method="POST" id="zaken_results" name="zaken_results" action="/search/[% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]results">
+    <input type="hidden" name="action" value="update_results"/>
+    <input type="hidden" name="grouping_field" value="[% grouping_field %]" />
+    [% current_search_page = 'results' %]
+    [% PROCESS search/navigation.tt %]
+
+
+    <div class="blockcontent no-padding">
+
+        <div id="search_results_accordion">
+        [% IF results %]
+                
+            
+            [% # cache the group names %]
+            [% USE Scalar %]
+            [% IF grouping_field == 'route_ou' %]		
+                [% ous = c.model('Groups').scalar.search_ou %]
+                [% OUMAP = {} %]
+                [% FOREACH ou IN ous %]
+                    [% OUMAP.${ou.id} = ou.ou %]
+                [% END %]
+            [% END %]
+    
+    
+            [% WHILE (group_item = results.next) %]
+                [% IF (grouping_field =='behandelaar_gm_id' &&
+                !group_item.get_column('group_naam')); group_id = 'empty'; END %]
+            <h3>
+            <a href="#">
+                    [% IF group_item.get_column('group_naam') %]
+                        [% group_id = group_item.get_column('group_naam') %]
+                        [% IF grouping_field == 'route_ou' %]
+                            [% OUMAP.${group_item.get_column('group_naam')} %]
+                        [% ELSIF grouping_field =='me.zaaktype_id' %]
+                            [% c.model('Zaaktypen').retrieve('id', group_item.get_column('group_naam')).titel %]
+                        [% ELSIF grouping_field =='behandelaar_gm_id' %]
+                            [% group_id = group_item.get_column('group_naam') || 'empty' %]
+                            [% c.model('DB::ZaakBetrokkenen').search({gegevens_magazijn_id => group_item.get_column('group_naam')}).first.naam || 'USERID: ' _ group_item.get_column('group_naam') %]
+                        [% ELSIF grouping_field == 'status' %]
+                            [% status_labels.${group_item.get_column('group_naam')} %]							
+                        [% ELSE %]
+                            [% group_item.get_column('group_naam') %]	
+                        [% END %]		
+                    [% ELSE %]
+                        -
+                    [% END %]
+                
+                ([% group_item.get_column('group_count') %])</a>
+                <img src="images/zaakinfo-loader.gif" alt="bezig met laden" style="display: none; ">
+                </h3>
+            <div class="grouping_choice" id="[% group_id || '' %]">
+                <div class="zaken_filter_wrapper">
+                    <div class="zaken_filter_inner">
+                    </div>
+                </div>
+            </div>
+            [% END %]
+    
+        [% END %]
+        </div>
+
+    </div>
+</form>
+

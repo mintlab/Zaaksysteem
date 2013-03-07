@@ -1,0 +1,43 @@
+[% UNLESS paging_rows && paging_total && paging_page %]
+<!--
+    <tr class="table_result_tr">
+        <td class="table_result_tdvar"><a href="#"></a></td>
+        <td class="table_result_td20"><a href="#" class="button_control_first button_control"></a></td>
+        <td class="table_result_td20"><a href="#" class="button_control_previous button_control"></a></td>
+        <td class="table_result_td20"><a href="#">1</a></td>
+        <td class="table_result_td20"><a href="#" class="button_control_next button_control"></a></td>
+        <td class="table_result_td20"><a href="#" class="button_control_last button_control"></a></td>
+        <td class="table_result_tdvar"><a href="#"></a></td>
+    </tr>
+-->
+[% ELSIF paging_total > paging_rows %]
+    [% IF paging_page < 6 %]
+        [%
+            page_page    = 0;
+            paging_end   = 10;
+        %]
+    [% ELSE %]
+        [%
+            page_page    = (paging_page - 5);
+            paging_end   = (paging_page + 5);
+        %]
+    [% END %]
+    [% thisurl = thisurl || '/' _ c.req.path %]
+<table class="table_result">
+    <tr class="table_result_tr">
+        <td class="table_result_tdvar"></td>
+        <!-- <td class="table_result_td20"><a href="[% c.req.uri_with( { paging_page => 1 }) %]" class="button_control_first button_control"></a></td> -->
+
+    	<td class="td60"><a href="[% c.req.uri_with( { paging_page => ( paging_page < 2 ? 1 : (paging_page - 1)) }) %]" class="[% (paging_page == 1 ? 'disabled ' : '') %]button_control_previous button_control prev"><span></span>Vorige</a></td>
+    [% WHILE page_page < paging_lastpage && page_page < paging_end %]
+    [% page_page = page_page + 1 %]
+        <td class="table_result_td20"><a href="[% c.req.uri_with( { paging_page => page_page }) %]" class="[% (paging_page == page_page ?  'pager_current' : 'pager') %]">[% page_page %]</a></td>
+    [% END %]
+
+		<td class="td60"><a href="[% c.req.uri_with( { paging_page => ( paging_page == page_page ? paging_page : (paging_page + 1)) }) %]" class="[% (paging_page >= paging_lastpage ? 'disabled ' : '') %]button_control_next button_control next"><span></span>Volgende</a></td>[% paging_lastpage %]
+
+        <!-- <td class="table_result_td20"><a href="[% c.req.uri_with( { paging_page => paging_lastpage }) %]" class="button_control_last button_control"></a></td> -->
+        <td class="table_result_tdvar"></td>
+    </tr>
+</table>
+[% END %]

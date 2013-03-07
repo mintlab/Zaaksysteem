@@ -1,0 +1,22 @@
+[% FOREACH uploaded_file = uploaded_files %]
+        [% mimetype_class = PROCESS widgets/general/mimetype.tt 
+            mimetype = uploaded_file.value.type
+        %]
+    <input type="hidden" name="filestore_id" value="[% filestore_id %]"/>
+    <div class="fileuploadthumbnail [% mimetype_class %]">
+                [% IF zaak %]
+                    <a href="[% c.uri_for(
+                    '/zaak/' _ zaak.nr _ '/documents/'
+                    _ (kenmerkdoc.pid.id || 0) _ '/get/'
+                    _ kenmerkdoc.id _ '/' _ uploaded_file.value.filename
+                    ) _ '?filetype=pdf'
+                    %]" class="uploaded" target="_blank">[% PROCESS widgets/general/filename.tt
+                        filename = uploaded_file.value.filename %]</a>
+                [% ELSE %]
+                    [% PROCESS widgets/general/filename.tt
+                        filename = uploaded_file.value.filename %]
+                [% END %]
+    </div>                    
+[% END %]
+
+

@@ -1,0 +1,44 @@
+<div class="block clearfix">
+    <p class="header">Overzicht van Sjabloon</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Sjabloonkenmerken</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Naam</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% bib_entry.naam %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Bestandstype</td>
+                <td class="table_td_right_zaakinformatie">
+                    odf
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Download sjabloon</td>
+                <td class="table_td_right_zaakinformatie">
+                    <a href="[%
+                        c.uri_for('/beheer/bibliotheek/sjablonen/'
+                        _ bib_entry.bibliotheek_categorie_id.id _ '/' _
+                        bib_entry.id _ '/download/') %]">
+                        [% bib_entry.naam %].odt</a>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Aantal kenmerken</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% bib_entry.scalar.bibliotheek_sjablonen_magic_strings.count %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+        [% PROCESS widgets/beheer/bibliotheek/sjablonen/string_table.tt %]
+    </div>
+</div>
+

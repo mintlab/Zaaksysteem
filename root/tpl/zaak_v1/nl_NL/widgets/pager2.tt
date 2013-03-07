@@ -1,0 +1,106 @@
+[%
+#
+# Pager widget 2
+# Feed this widget with a resultset object "results" that 
+# has paging enabled (DBIX::Class->search({page=>$page, ..
+# The number of rows per page is determined in the
+#
+# Input:
+# - results: a DBIx::Class resultset with paging enabled
+# - page: (optional) the current page number, starting at 1
+#
+%]
+
+[% IF !results %]
+Geen resultaten.
+[% RETURN %]
+[% END %]
+
+[% IF !results.pager %]
+Geen gepagineerde resultaten.
+[% RETURN %]
+[% END %]
+
+[% IF !results.pager.entries_per_page %]
+Geen geheel getal voor entries_per_page
+[% RETURN %]
+[% END %]
+
+[% IF results.pager.total_entries <= results.pager.entries_per_page  %]
+[% RETURN %]
+[% END %]
+
+
+[% page = c.req.param('page') || 1 %]
+
+<br/>
+[% max_paging_links = 9 %]
+
+<table class="table_result">
+    <tr class="table_result_tr">
+        <td class="table_result_tdvar"></a></td>
+
+[% IF results.pager.total_entries > results.pager.entries_per_page && page > 1 %]
+	[% previous_page = page - 1 %]
+		<!-- <td class="table_result_td20"><a class="set_page_number button_control_first button_control" href="" id="1"></a></td> -->
+		<td class="td60"><a class="set_page_number button_control_previous button_control prev" href="" id="[% previous_page %]"><span></span>Vorige</a></td>
+[% ELSE %]
+		<!-- <td class="table_result_td20"></td> -->
+		<td class="td60"><span class="prev disabled button_control"><span></span>Vorige</a></td>
+[% END %]
+
+
+[% USE Math %]
+[% page_count = Math.int(results.pager.total_entries / results.pager.entries_per_page) %]
+[% IF page_count * results.pager.entries_per_page < results.pager.total_entries %]
+	[% page_count = page_count + 1 %]
+[% END %]
+
+
+	[% i = 1 %]
+	[% half_max_paging_links = Math.int(max_paging_links / 2) %]
+
+
+	[% IF page >  half_max_paging_links %]
+		[% i = page - half_max_paging_links %]
+	[% END %]
+	[% IF page > page_count - half_max_paging_links %]
+		[% i = page_count - max_paging_links + 1 %]
+	[% END %]
+	[% IF i < 1 %]
+		[% i = 1 %]
+	[% END %]
+	[% paging_links = 0 %]
+<!--pre>
+	page: [% page %]
+	total: [% results.pager.total_entries %]
+	page_count: [% page_count %]
+	halfmax:[% half_max_paging_links %]
+	i:[% i %]
+</pre-->
+	[% WHILE i <= page_count && paging_links < max_paging_links %]
+		[% paging_links = paging_links + 1 %]
+			[% IF i == page %]
+			<td class="table_result_td20"><strong>[% i %]</strong></td>
+			[% ELSE %]
+			<td class="table_result_td20"><a class="set_page_number" href="#" id="[% i %]">[% i %]</a></td>
+			[% END %]
+		[% i = i + 1 %]
+	[% END %]
+
+
+	[% IF page < page_count %]
+		[% next_page = page + 1 %]
+		<td class="td60"><a class="set_page_number button_control_next button_control next" href="" id="[% next_page %]">Volgende<span></span></a></td>
+	[% ELSE %]
+		<td class="td60"><span class="next disabled button_control"><span></span>Volgende</span></td>
+	[% END %]
+
+	<!-- [% IF page < page_count %]
+		<td class="table_result_td20"><a class="set_page_number button_control_last button_control" href="" id="[% page_count %]"></a></td>
+	[% ELSE %]
+		<td class="table_result_td20"></td>
+	[% END %]	 -->
+        <td class="table_result_tdvar"></td>
+    </tr>
+</table>

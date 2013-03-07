@@ -1,0 +1,376 @@
+[% USE Scalar %]
+[% UNLESS ZAAKINFO %]
+<tr>
+    <td class="td200 label">
+        Zaaktypecode:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_node_id.code %]
+    </td>
+</tr>
+[% END %]
+[% IF ZAAKINFO %]
+<tr>
+    <td class="td200 label">Zaaknummer:</td>
+    <td class="td300">[% zaak.id %]</td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Naam zaaktype:
+    </td>
+    <td
+        class="table_td_right_zaakinformatie">
+        [% UNLESS pip %]
+            <a
+                href="[% (pip ? '/pip' : '') %]/zaak/[% zaak.nr %]/zaaktypeinfo"
+                class="fire-dialog"
+                title="Informatie over dit zaaktype"
+                rel="zaak: [% zaak.nr %]"
+                >
+            [% zaak.zaaktype_node_id.titel %]
+        </a>
+        [% ELSE %]
+            [% zaak.zaaktype_node_id.titel %]
+        [% END %]
+    </td>
+</tr>
+    [% UNLESS pip %]
+<tr>
+    <td class="td200 label">
+        Zaaktypeversie:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_node_id.version %]
+        ([% (zaak.zaaktype_node_id.scalar.is_huidige_versie ? 'Actief' : 'Inactief') %])
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Generieke categorie:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_id.bibliotheek_categorie_id.naam %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">Extra informatie:</td>
+    <td class="td300">[% zaak.onderwerp %]</td>
+</tr>
+    [% END %]
+[% END %]
+
+[% UNLESS ZAAKINFO %]
+<tr>
+    <td class="td200 label">
+        Zaaktype versie:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_id.version %]
+        [% (catalogus.is_current_versie ? 'Actief' : 'Inactief') %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Handelingsinitiator:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.handelingsinitiator | ucfirst %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Generieke categorie:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_id.bibliotheek_categorie_id.naam %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        IV3-categorie:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.iv3_categorie || 'N.v.t' %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Grondslag:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.grondslag || 'N.v.t' %]
+    </td>
+</tr>
+[% END %]
+
+[% UNLESS ZAAKINFO %]
+<tr>
+    <td class="td200 label">
+        Selectielijst:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.selectielijst || 'N.v.t' %]
+    </td>
+</tr>
+[% END %]
+[% IF ZAAKINFO %]
+    [% UNLESS pip %]
+<tr>
+    <td class="td200 label">Zaakniveau:</td>
+    <td class="td300">[% (zaak.pid ? 'B (Subzaak)' : 'A (Hoofdzaak)') %]</td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Handelingsinitiator:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.handelingsinitiator | ucfirst %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Trigger:
+    </td>
+    <td class="td300">
+        [% zaak.aanvraag_trigger | ucfirst %]
+    </td>
+</tr>
+    [% END %]
+<tr>
+    <td class="td200 label">
+        Grondslag:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.grondslag || 'N.v.t' %]
+    </td>
+</tr>
+    [% UNLESS pip %]
+<tr>
+    <td class="td200 label">
+        IV3 categorie:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.iv3_categorie || 'N.v.t' %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Selectielijst:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.selectielijst || 'N.v.t' %]
+    </td>
+</tr>
+    [% END %]
+<tr>
+    <td class="td200 label">Ontvangen via:</td>
+    <td class="td300">
+        [% zaak.contactkanaal %]
+    </td>
+</tr>
+    [% UNLESS pip %]
+<tr>
+    <td class="td200 label">Verificatie aanvrager:</td>
+    <td class="td300">[% zaak.aanvrager.verificatie %]</td>
+</tr>
+    [% END %]
+<tr>
+    <td class="td200 label">
+        Besluittype:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.besluittype | ucfirst %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Openbaarheid:
+    </td>
+    <td class="td300">
+        [% c.loc(zaak.zaaktype_definitie.openbaarheid) %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Afhandeltermijn wettelijk:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.afhandeltermijn | ucfirst %]
+        [% zaak.zaaktype_definitie.afhandeltermijn_type | ucfirst %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Afhandeltermijn norm:
+    </td>
+    <td class="td300">
+        [% zaak.zaaktype_definitie.afhandeltermijn | ucfirst %]
+        [% zaak.zaaktype_definitie.afhandeltermijn_type | ucfirst %]
+    </td>
+</tr>
+    [% UNLESS pip %]
+<tr>
+    <td class="td200 label">
+        Uiterste vernietigingsdatum:
+    </td>
+    <td class="td300">
+        [%
+            zaak.vernietigingsdatum.dmy
+            || 'Onbekend'
+        %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Producten en diensten:
+    </td>
+    <td class="td300">
+        Plugin uitgeschakeld
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">Procesbeschrijving:</td>
+    <td class="td300">
+        <a href="[% catalogus.definitie.procesbeschrijving %]">
+            [% zaak.zaaktype_definitie.procesbeschrijving %]
+        </a>
+    </td>
+</tr>
+
+<!--
+<tr>
+    <td class="td200 label">Huidige status:</td>
+    <td class="td300">[% zaak.kenmerk.status %] ([% zaak.zaakstatusinfo.status.${zaak.kenmerk.status} %])</td>
+</tr>
+<tr>
+    <td class="td200 label">Ontvangen via:</td>
+    <td class="td300">
+        [% zaak.kenmerk.contactkanaal %]
+    </td>
+</tr>
+-->
+<tr>
+    <td class="td200 label">Aanvrager:</td>
+    <td class="td300"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel='zaak: [% zaak.nr %]; id: [% zaak.aanvrager_object.betrokkene_identifier %]'>
+        [% zaak.aanvrager.naam %]
+    </a></td>
+
+</tr>
+<tr>
+    <td class="td200 label">Zaakcoordinator:</td>
+
+    <td class="td300"><a href="" class="betrokkene-get" title="Informatie over coordinator" rel='zaak: [% zaak.nr %]; id: [% zaak.coordinator_object.betrokkene_identifier %]'>
+        [% zaak.coordinator.naam %]
+    </a></td>
+</tr>
+<tr>
+    <td class="table_td_left_zaakinformatie td-2px">Huidige behandelaar:</td> <td class="table_td_right_zaakinformatie td-2px">
+    <a href="" class="betrokkene-get" title="Informatie over [% zaak.kenmerk.behandelaar.naam %]" rel='zaak: [% zaak.nr %]; id: [% zaak.behandelaar_object.betrokkene_identifier %]'>
+        [% zaak.behandelaar.naam %]
+    </a></td>
+</tr>
+    [% END %]
+<!--
+<tr>
+    <td class="td200 label">Servicenorm:</td>
+    <td class="td300">
+        [% zaak.kenmerk.servicenorm %]
+        [% IF
+            zaak.kenmerk.servicenorm_type
+            != ZNAMING.TERMS_TYPE_EINDDATUM
+        %]
+            [% c.loc(zaak.kenmerk.servicenorm_type) %]
+        [% END %]
+    </td>
+</tr>
+-->
+<tr>
+    <td class="td200 label">Registratiedatum:</td>
+    <td class="td300">
+        [% zaak.registratiedatum.dmy %]
+    </td>
+</tr>
+
+<tr>
+    <td class="td200 label">Afhandelen voor:</td>
+    <td class="td300">
+        [% zaak.streefafhandeldatum.dmy %]
+    </td>
+
+</tr>
+
+<!--
+<tr>
+    <td class="td200 label">Besluittype:</td>
+    <td class="td300">
+        [% zaak.kenmerk.besluittype %]
+    </td>
+</tr>
+-->
+<tr>
+    <td class="td200 label">Afgehandeld op:</td>
+    <td class="td300">
+        [% zaak.afhandeldatum.dmy || 'Niet bekend' %]
+    </td>
+</tr>
+[% END %]
+[% UNLESS ZAAKINFO %]
+<!--
+<tr>
+    <td class="td200 label">
+        Afhandeltermijn:
+    </td>
+    <td class="td300">
+        [% catalogus.definitie.afhandeltermijn | ucfirst %]
+        [% catalogus.definitie.afhandeltermijn_type | ucfirst %]
+    </td>
+</tr>
+
+<tr>
+    <td class="td200 label">
+        Openbaarheid:
+    </td>
+    <td class="td300">
+        [% c.loc(catalogus.definitie.openbaarheid) %]
+    </td>
+</tr>
+<tr>
+    <td class="td200 label">
+        Besluittype:
+    </td>
+    <td class="td300">
+        [% catalogus.definitie.besluittype | ucfirst %]
+    </td>
+</tr>-->
+<tr>
+    <td class="td200 label">
+        Uiterste vernietigingsdatum:
+    </td>
+    <td class="td300">
+        [%
+            zaak.vernietigingsdatum.dmy
+            || 'Onbekend'
+        %]
+    </td>
+</tr>
+<!--
+<tr>
+    <td class="td200 label">
+        Bezwaar mogelijk:
+    </td>
+    <td class="td300">
+        [% catalogus.definitie.bezwaar %]
+    </td>
+</tr>
+-->
+
+<tr>
+    <td class="td200 label">Procesbeschrijving:</td>
+    <td class="td300">
+        <a href="[% catalogus.definitie.procesbeschrijving %]">
+            [% zaak.zaaktype_definitie.procesbeschrijving %]
+        </a>
+    </td>
+</tr>
+
+[% END %]

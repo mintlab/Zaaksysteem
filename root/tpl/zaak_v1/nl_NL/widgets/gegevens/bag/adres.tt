@@ -1,0 +1,51 @@
+<table class="table_zaakinformatie" id="checklist_template">
+    <thead>
+        <tr>
+            <th colspan="2">BAG Adres</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Nummeraanduiding ID</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.identificatie %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Straatnaam</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.openbareruimte.naam %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Huisnummer</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.huisnummer %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Huisnummer toevoeging</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.huisnummertoevoeging %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Huisletter</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.huisletter %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Postcode</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.postcode %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Woonplaats</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.hoofdadres.openbareruimte.woonplaats.naam %]
+            </td>
+        <tr>
+    </tbody>
+<table>

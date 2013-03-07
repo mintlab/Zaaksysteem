@@ -1,0 +1,126 @@
+<!-- Begin Zaaktype -->
+<form method="POST" action="[% c.uri_for('/zaaktype/finish') %]">
+<input type="hidden" name="confirm" value="1">
+<div class="block clearfix">
+    <p class="header">Stap 5/5: Controleer onderstaande gegevens</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Kenmerken</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Zaaktypecode van het zaaktype</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.zt_code %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Trigger</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.zt_trigger %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Aanvragers geselecteerd</td>
+                <td class="table_td_right_zaakinformatie">
+                    <ul>
+                    [% FOREACH aanvrager IN c.session.zaaktype_edit.algemeen.type_aanvragers %]
+                        <li>[% aanvrager.key %]</li>
+                    [% END %]
+                    </ul>
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Relatie zaaktype adres</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.zt_adres_relatie %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">PDC Informatie</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Omschrijving</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.pdc_description %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Voorwaarden</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.pdc_voorwaarden %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Meenemen</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.pdc_meenemen %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Tarief</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.pdc_tarief %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Bijlagen</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Aantal documenten</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.algemeen.documenten.size %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Aantal specifieke kenmerken</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.specifiek.size %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Statussen</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Aantal statussen</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% c.session.zaaktype_edit.status.size %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+        [% UNLESS zaaktype_view %]
+        <table class="table_zaakinformatie">
+            <tr class="table_ztbmenu_tr">
+
+            <td class="table_ztbmenu_tdleft"><a href="[% c.uri_for('/zaaktype/status/edit') %]" title="Annuleren"><input type="button" value="Vorige" class="button140"></a></td>
+            <td class="table_ztbmenu_tdright"><input type="submit" value="Publiceren" class="button140 right"></td>
+            </tr>
+        </table>
+        [% END %]
+    </div>
+</div>
+</form>

@@ -1,0 +1,94 @@
+<!-- Overzicht Zaken -->
+<div class="block">
+    <form name="zaken_onafgerond">
+    [% results = onafgeronde_zaken %]
+
+    <input type="hidden" name="sort_field" value="[% sort_field | html%]"/>
+    <input type="hidden" name="sort_direction" value="[% sort_direction | html %]"/>
+    <input type="hidden" name="page" value="[% page | html%]"/>
+    <input type="hidden" name="pager_request" value="" />
+    <input type="hidden" name="total_entries" value="[% onafgeronde_zaken.pager.total_entries %]"/>
+    
+    <p class="header">Mijn onafgeronde zaken (<span class="total_entries">[% onafgeronde_zaken.pager.total_entries %]</span>)</p>
+        <div class="blockcontent">
+            <div class="zaken_filter_wrapper">
+			    <div class="spinner-groot"><div></div></div>
+                <div class="zaken_filter_inner">
+                [% IF onafgeronde_zaken.pager.total_entries > 0 %]
+                    <table class="table_zaken_title v-align-center" cellspacing="0">
+                    <thead>
+                    <tr class="table_zaken_title_tr">
+
+                    [% FOREACH my_display_field = display_fields_onafgerond %]
+                        <td id="[% my_display_field %]">[% my_display_field FILTER ucfirst %]</td>
+                    [% END %]
+
+                    <td class="td20">&nbsp;</td>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    [% WHILE (zaak = onafgeronde_zaken.next) %]
+
+                        [% IF(display_fields_onafgerond) %]	
+                            <tr class="table_zaken_tr">
+                                <td>
+                                    [% lowercase = '/aanvraag/' _ zaak.zaaktype_node_id.titel _
+                                    '/' _ (c.session.pip.ztc_aanvrager.match('bedrijf') ?
+                                    'niet_natuurlijk_persoon' :
+                                    'natuurlijk_persoon') _ '/afronden' | trim | replace('\s+', '-') FILTER lower %]
+                                    <a href="[% c.uri_for(lowercase) %]">
+                                    <span class='text'>[% zaak.zaaktype_node_id.titel %]</span>
+                                    [% PROCESS widgets/general/zaak_veld.tt 
+                                    display_field = zaak.zaaktype_node_id.titel
+                                    display_class = 'text'
+                                    %]
+                                    </a>
+                                </td>
+                            </tr>
+                        [% ELSE %]
+                            <tr><td>NEED display_fields_onafgerond array!</td></tr>
+                        [% END %]
+                    [% END %]
+                            <tr><td><span style="display:block"><em>Onafgeronde zaken worden na 30 dagen automatisch uit het systeem gehaald.&nbsp;</em></span></td></tr>
+                    </tbody>
+                    </table>
+                [% ELSE %]
+                    Geen resultaten.
+                [% END %]
+                [% PROCESS widgets/pager2.tt %]
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="block">
+    <form name="zaken_openstaand">
+    <p class="header">Mijn lopende zaken (<span class="total_entries">[% zaken.pager.total_entries %]</span>)</p>
+        <div class="blockcontent">
+            <div class="zaken_filter_wrapper">
+                <div class="zaken_filter_inner">
+                [% results = zaken %]
+                [% PROCESS zaak/widgets/result.tt %]
+                [% PROCESS widgets/pager2.tt %]
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="block">
+    <form name="zaken_afgehandeld">
+    <p class="header">Mijn afgehandelde zaken (<span class="total_entries">[% afgehandelde_zaken.pager.total_entries %]</span>)</p>
+        <div class="blockcontent">
+            <div class="zaken_filter_wrapper">
+                <div class="zaken_filter_inner">
+                [% results = afgehandelde_zaken %]
+                [% PROCESS zaak/widgets/result.tt %]
+                [% PROCESS widgets/pager2.tt %]
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

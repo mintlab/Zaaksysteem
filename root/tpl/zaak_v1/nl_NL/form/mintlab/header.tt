@@ -1,0 +1,39 @@
+[% RETURN IF c.user_exists -%]
+[% nowrapper=1 -%]
+<!DOCTYPE html
+     PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+     "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl">
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Zaaksysteem.nl</title>
+
+    [% PROCESS form/common_form_header_includes.tt %]
+
+    
+    <link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/stylesheet.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/ztb.css" type="text/css" rel="stylesheet" />
+    <link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/mintlab/css/mintlab.css" type="text/css" rel="stylesheet" />
+    
+    [% PROCESS layouts/common_header_includes_js.tt %]
+</head>
+<body id="home">
+<div id="globalSpinner"><div><div>Een moment geduld a.u.b.</div></div></div>
+<div class="milestoneSpinner">
+    <div class="spinner_wrap">
+        <div class="spinner_header">Een ogenblik geduld a.u.b. ...</div>
+        <div class="spinner_content">
+        </div>
+        <div class="spinner_buttons">
+        </div>
+    </div>
+</div>
+
+		<div id="container">
+			<div id="main">
+			
+                <div id="header">
+                <h1 id="logo">Mintlab</h1>
+                <div class="pijl"></div>
+                </div>

@@ -1,0 +1,124 @@
+[% BLOCK checkbox_filter_display %]
+	Mogelijke waarden: 
+	<b>[% filter.options.join(', ') %]</b>
+[% END %]
+
+[% BLOCK period_filter_display %]
+	[% IF filter.period_type == 'this_month' %]Alle zaken van <b>deze maand</b>[% END %]
+	[% IF filter.period_type == 'last_month' %]Alle zaken van <b>afgelopen maand</b>[% END %]
+	[% IF filter.period_type == 'last_week' %]Alle zaken van <b>afgelopen week</b>[% END %]
+	[% IF filter.period_type == 'this_week' %]Alle zaken van <b>deze week</b>[% END %]
+	[% IF filter.period_type == 'specific' %]
+		[% IF filter.start_date %]
+			[% IF filter.end_date %]
+				Alle zaken tussen <b>[% filter.start_date %]</b> en <b>[% filter.end_date %]</b>
+			[% ELSE %]
+				Alle zaken vanaf <b>[% filter.start_date %]</b>
+			[% END %]
+		[% ELSE %]
+			Alle zaken tot <b>[% filter.end_date %]</b>
+		[% END %]
+	[% END %]
+[% END %]
+
+[% BLOCK zaaktype_filter_display %]
+	[% c.model('Zaaktypen').retrieve('id', filter.value).titel %]
+[% END %]
+
+
+[% BLOCK text_filter_display %]
+	[% filter.value %]
+[% END %]
+
+
+[% BLOCK address_filter_display %]
+	[% c.model('Gegevens::Bag').bag_human_view_by_id(filter.value) %]
+[% END %]
+
+[% BLOCK afdeling_filter_display %]
+	[% # cache the group names %]
+	[% USE Scalar %]
+		[% ous = c.model('Groups').scalar.search_ou %]
+		[% OUMAP = {} %]
+		[% FOREACH ou IN ous %]
+			[% OUMAP.${ou.id} = ou.ou %]
+		[% END %]
+    [% IF filter.ou_id %]
+        Rol: <b>[% OUMAP.${filter.ou_id} %]</b>
+    [% END %]
+    [% IF filter.role_id %]
+        [% USE Scalar %]
+		[% rollen= c.model('Groups').scalar.search %]
+		[% ROLE_MAP = {} %]
+		[% FOREACH rol IN rollen %]
+			[% ROLE_MAP.${rol.id} = rol.short_name %]
+		[% END %]
+
+        Rol: <b>[%ROLE_MAP.${filter.role_id} %]</b>
+    [% END %]
+    [% END %]
+
+
+[% BLOCK user_filter_display %]
+	[% betrokkene = c.model('Betrokkene').get({}, filter.value) %]
+	[% betrokkene.naam %]
+[% END %]
+
+
+[% BLOCK aanvrager_filter_display %]
+    [% filter.betrokkene_type FILTER ucfirst %] = 
+    <b>[% filter.betrokkene %]</b>
+[% END %]
+
+
+
+[% BLOCK select_filter_display %]
+	[% filter.value %]
+[% END %]
+
+
+[% BLOCK my_table_row %]
+<tr class="table_row">
+	<input type="hidden" name="filter_type" value="[% filter.type %]"/>
+	<input type="hidden" name="filter_value" value="[% filter.value %]"/>
+    <td class="td15 ver_center no-border"></td>
+    <td class="td_14px tdvar">
+    [% filter_display = filter.class _ '_filter_display' %]
+    [% INCLUDE $filter_display %]    
+</td>
+    <td class="td40 center">
+    	[% IF filter.class != 'user' && filter.class != 'zaaktype' && filter.class != 'aanvrager' %]
+		<a href="#" type="[% filter.type %]" value="[% filter.value %]" class="edit_search_filter icon-edit icon"></a>[% END %]</td>
+    <td class="td40 center"><a href="#" class="delete_search_filter icon-delete icon" id="[% filter.type %]"></a></td>
+</tr>
+[% END %]
+
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="search_filter_holder_[% filtertype %]"[% IF kenmerken_filters_hidden %] style="display:none;"[% END %]>
+    <a href="#">[% PROCESS format_filter_title %]
+        (<span class="number">[% IF filtertype == 'kenmerk' %][% kenmerken.size %][% ELSE %][% filters.$filtertype.size || 0 %][% END %]</span>)</a></h3>
+<div class="ezra_table element_tabel_[% filtertype %]" id="search_filter_div_[% filtertype %]"[% IF kenmerken_filters_hidden %] style="display:none;"[% END %]>
+    <div class="ui-accordion-table-bg">
+    [% IF filtertype == 'kenmerk' %]
+    	[% PROCESS search/kenmerken_table.tt %]
+    [% ELSE %]
+    <table cellspacing="0" class="ezra_table search_filter_table ezra_[% filtertype %]_grouping">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="tdvar">Naam</th>
+                <th class="td40">[% IF filters.$filtertype AND filters.$filtertype.size > 0 AND 
+                	(filters.$filtertype.first.class != 'user' && filters.$filtertype.first.class != 'zaaktype' && filters.$filtertype.first.class != 'aanvrager') 
+                %]Bewerken[% END %]</th>
+                <th class="td40">Verwijderen</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% FOREACH filter = filters.$filtertype %]
+                [% INCLUDE my_table_row %]
+            [% END %]
+        </tbody>
+    </table>
+    [% END %]
+    </div>
+</div>
+

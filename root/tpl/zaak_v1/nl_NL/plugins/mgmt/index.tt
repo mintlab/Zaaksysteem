@@ -1,0 +1,291 @@
+[%
+    views = {
+        'dag'       => {
+            label   => 'Dag',
+        },
+        'week'       => {
+            label   => 'Week',
+        },
+        'maand'       => {
+            label   => 'Maand',
+        },
+#        'kwartaal'       => {
+#            label   => 'Kwartaal',
+#        },
+        'jaar'       => {
+            label   => 'Jaar',
+        },
+    };
+
+    maanden = {
+        '1'   => 'januari',
+        '2'   => 'februari',
+        '3'   => 'maart',
+        '4'   => 'april',
+        '5'   => 'mei',
+        '6'   => 'juni',
+        '7'   => 'juli',
+        '8'   => 'augustus',
+        '9'   => 'september',
+        '10'  => 'oktober',
+        '11'  => 'november',
+        '12'  => 'december'
+    };
+%]
+
+<div class="block">
+<p class="header">Filter</p>
+<div class="blockcontent">
+    <table class="table_zaakinformatie no_margin">
+        <tbody>
+        [% view = (view ? view : 'jaar') %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Grafiekbereik:</td>
+            <td class="table_td_right_zaakinformatie">[% view %] ([% startdate %] tot [% stopdate %])</td>
+        </tr>
+        [% IF (!betrokkene_type || betrokkene_type == 'all') %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Bereik:</td>
+            <td class="table_td_right_zaakinformatie">Alle zaken</td>
+        </tr>
+        [% END %]
+        [% IF betrokkene_type == 'medewerker' %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Behandelaar:</td>
+            <td class="table_td_right_zaakinformatie">[% ztc_behandelaar_label %]</td>
+        </tr>
+        [% END %]
+        [% IF betrokkene_type == 'org_eenheid' %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Organisatorische eenheid:</td>
+            <td class="table_td_right_zaakinformatie">[% ztc_org_eenheid_label %]</td>
+        </tr>
+        [% END %]
+        [% IF zaaktype %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaaktype:</td>
+
+            <td class="table_td_right_zaakinformatie">[% zaaktype %]</td>
+        </tr>
+        [% END %]
+        [% IF generiek_proces %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Generiek proces:</td>
+
+            <td class="table_td_right_zaakinformatie">[% generiek_proces %]</td>
+        </tr>
+        [% END %]
+      </tbody>
+    </table>
+
+</div>
+</div>
+
+
+
+<table class="table_zoektabber honderd">
+    <tr class="table_zoektabber_tr">
+
+        <td class="table_zoektabber_tdleft">
+            <div class="block">
+                <p class="header">Geregistreerd/afgehandeld</p>
+                <div class="blockcontent ajaxloader" id="graph-img-line">
+                    <div class="error">Helaas, er zijn geen zaken om resultaten te kunnen tonen</div>
+                    <a href="#" rel="[% c.uri_for('/plugins/management/graph/line') %]"></a>
+                </div>
+            </div> 
+        </td>
+        
+        <td class="table_zoektabber_tdspace"></td>
+
+        <td class="table_zoektabber_tdright">
+            <div class="block">
+                <p class="header">Binnen afhandeltermijn/Buiten afhandeltermijn</p>
+                <div class="blockcontent ajaxloader" id="graph-img-pie">
+                    <div class="error">Helaas, er zijn geen zaken om resultaten te kunnen tonen</div>
+                    <a href="#" rel="[% c.uri_for('/plugins/management/graph/pie') %]"></a>
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+
+
+<!-- Begin Tabber -->
+<form method="POST" action="[% c.uri_for('/plugins/management') %]">
+<div class="tabber" id="tabinterface">
+	<p class="header tabbed">Resultaten filteren</p>
+    <ul class="ui-rounded-corners-off">
+        <li><a href="#tab-wgt-periode">1: Periode</a></li>
+        <li><a href="#tab-wgt-aanvrager">2: Filter eenheid/behandelaar</a></li>
+        <li><a href="#tab-wgt-zaakkenmerken">3: Filter op informatie</a></li>
+    </ul>
+
+
+    <div class="tabbertab" id="tab-wgt-periode">
+        <!--
+<table class="table_zaakinformatie_title">
+            <tr>
+                <td>Periode</td>
+            </tr>
+        </table>
+-->
+        <table class="table_zaakinformatie">
+            <tr>
+                <td class="table_td_left_zaakinformatie">Grafiekbereik</td>
+                <td class="table_td_right_zaakinformatie">
+                    <select name="view">
+                        [% FOREACH option_view IN views %]
+                        <option value="[% option_view.key %]"[% (mgmt.profile.name == option_view.key ? ' selected' : '') %]>[% option_view.value.label %]</option>
+                        [% END %]
+                    </select>
+                 </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Selecteer willekeurige datum binnen bereik:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <div class="clearfix">
+                        <div class="col">
+                            <select name="day" class="auto">
+                                [% day=0; WHILE day < 31 %]
+                                [% day = day+1 %]
+                                <option value="[% day %]"[% (mgmt.profile.date.day == day ? ' selected' : '') %]>[% day %]</option>
+                                [% END %]
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="month" class="auto">
+                                [% maand=0; WHILE maand < 12 %]
+                                [% maand = maand+1 %]
+                                <option value="[% maand %]"[% (mgmt.profile.date.month == maand ? ' selected' : '') %]>[% maanden.${maand} %]</option>
+                                [% END %]
+                            </select>
+                        </div>
+                        <div class="col">
+                            <select name="year" class="auto">
+                                [% jaar=2000; WHILE jaar < 2032 %]
+                                [% jaar = jaar+1 %]
+                                <option value="[% jaar %]"[% (mgmt.profile.date.year == jaar ? ' selected' : '') %]>[% jaar %]</option>
+                                [% END %]
+                            </select>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        <tr>
+        <td class="table_td_left_zaakinformatie"></td>
+            <td class="table_td_right_zaakinformatie">
+               <input type="submit" value="Filter" class="button140 right">
+                
+            
+            </td>
+        
+        </tr>
+        </table>
+    </div>
+    <div class="tabbertab" id="tab-wgt-aanvrager">
+
+        <table class="table_zaakinformatie">
+            <tr>
+                <td class="table_td_left_zaakinformatie">Behandelaar:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <input type="radio" name="betrokkene_type" value="all"[% (!betrokkene_type ? ' checked' : '') %]> Alle zaken<br />
+                    <input type="radio" name="betrokkene_type" value="medewerker"[% (betrokkene_type == 'medewerker' ? ' checked' : '') %]> Behandelaar<br />
+                    <input type="radio" name="betrokkene_type" value="org_eenheid"[% (betrokkene_type == 'org_eenheid' ? ' checked' : '') %]> Organisatorische eenheid<br />
+                </td>
+            </tr>
+                  <tr>
+            <td class="table_td_left_zaakinformatie">Behandelaar:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div id="new_interne_zaakcoordinator">
+                    <input type="hidden" value="" name="ztc_behandelaar_id"[% (ztc_behandelaar_id ? 'value="' _ ztc_behandelaar_id _ '"' : '') %]/>
+                    <input type="text" disabled="" class="input_medium"[% (ztc_behandelaar_label ? 'value="' _ ztc_behandelaar_label _ '"' : '') %] name="zaakcoordinator"/>
+                    <a rel="medewerker" class="search_betrokkene" title="Zoek een zaakcoordinator" href="#">
+                        <img width="16" height="16" border="0" src="/images/icon-magnifier.png"/>
+                    </a>
+                    <img width="24" height="16" src="/images/empty.gif"/>
+                    <img width="16" height="16" title="Veld is correct ingevuld" class="validate-ok" style="visibility: hidden;" src="/images/icon-tick.png"/>
+                </div>
+            </td>
+         </tr>
+         <tr>
+            <td class="table_td_left_zaakinformatie">Organisatorische eenheid:</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="ztc_org_eenheid_id">
+                    <option value="">Maak uw keuze</option>
+                        [% org_eenheden.reset %]
+                        [% WHILE (org_eenheid = org_eenheden.next) %]
+                        <option value="betrokkene-org_eenheid-[% org_eenheid.ex_id %]"[% (ztc_org_eenheid_id == 'betrokkene-org_eenheid-' _ org_eenheid.ex_id ? ' selected' : '') %]>[% org_eenheid.naam %]</option>
+                        [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr>
+        <td class="table_td_left_zaakinformatie"></td>
+            <td class="table_td_right_zaakinformatie">
+               <input type="submit" value="Filter" class="button140 right">
+                
+            
+            </td>
+        
+        </tr>
+       </table>
+    </div>
+
+    <div class="tabbertab" id="tab-wgt-zaakkenmerken">
+        <!--
+<table class="table_zaakinformatie_title">
+            <tr>
+                <td>Zaakkenmerken</td>
+            </tr>
+        </table>
+-->
+       <table class="table_zaakinformatie">
+        <tr>
+            <td class="table_td_left_zaakinformatie">Generieke categorie:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div class="col">
+                        [% cats = c.model('DB::ZaaktypeCategorie').search({}) %]
+                        [% FOREACH cat IN cats %]
+                        <input type="checkbox" name="generiek_proces" value="[% cat.categorie %]"[% (generiek_proces == cat.categorie ? ' checked' : '') %]> [% cat.categorie %]
+                        [% END %]
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaaktype:</td>
+            <td class="table_td_right_zaakinformatie">
+                <select multiple size=5 name="zaaktype" style="width: 300px;">
+                <option value="">Kies een zaaktype</option>
+                [% zts = c.model('Zaaktype').list %]
+                [% WHILE (zt = zts.next) %]
+                    <option value="[% zt.zaaktype_node_id.id %]">[% zt.zaaktype_node_id.titel %]</option>
+                [% END %]
+                </select>
+                
+            
+            </td>
+
+            
+        </tr>
+        <tr>
+        <td class="table_td_left_zaakinformatie"></td>
+            <td class="table_td_right_zaakinformatie">
+               <input type="submit" value="Filter" class="button140 right">
+                
+            
+            </td>
+        
+        </tr>
+       </table>
+    </div>
+    
+</div>
+
+
+
+</form>
+<!-- End Tabber --> 

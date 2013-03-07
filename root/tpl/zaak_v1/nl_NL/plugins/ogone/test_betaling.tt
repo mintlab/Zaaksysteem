@@ -1,0 +1,60 @@
+<form method="post" action="[% ogone.posturl %]">
+    [% FOREACH ogone_name IN ogone.variables.keys.sort %]
+        [% ogone_value = ogone.variables.$ogone_name %]
+        [% UNLESS ogone.$ogone_name %]
+            [% NEXT %]
+        [% END %]
+        <input
+            type="hidden"
+            name="[% ogone_value %]"
+            value="[% ogone.$ogone_name %]" />
+        [% END %]
+
+    <input type="submit" value="Pay" />
+</form>
+
+<!--
+    <INPUT type="hidden" NAME="PSPID" value="[% ogone.pspid %]">
+    <INPUT type="hidden" NAME="orderID" value="fill here your REF">
+    <INPUT type="hidden" NAME="amount" value="fill here your amount * 100">
+    <INPUT type="hidden" NAME="currency" value="fill here your currency">
+    <INPUT type="hidden" NAME="language" value="fill here your Client language">
+    <INPUT type="hidden" NAME="CN" value="fill here your Client name">
+    <INPUT type="hidden" name="EMAIL" value="fill here your Client email">
+    <!-- lay out information -->
+    <INPUT type="hidden" NAME="TITLE" value="fill here your title">
+    <INPUT type="hidden" NAME="BGCOLOR" value="fill here your background color">
+    <INPUT type="hidden" NAME="TXTCOLOR" value="fill here your text color">
+    <INPUT type="hidden" NAME="TBLBGCOLOR" value="fill here your table background color">
+    <INPUT type="hidden" NAME="TBLTXTCOLOR" value="fill here your table text color">
+    <INPUT type="hidden" NAME="BUTTONBGCOLOR" value="fill here your background button color">
+    <INPUT type="hidden" NAME="BUTTONTXTCOLOR" value="fill here your button text color">
+    <INPUT type="hidden" NAME="FONTTYPE" value="fill here your font">
+    <INPUT type="hidden" NAME="LOGO" value="fill here your logo file name">
+    <!-- or dynamic template page -->
+    <INPUT type="hidden" NAME="TP" value="fill here your template page">
+    <!-- post-payment redirection -->
+    <INPUT type="hidden" NAME="accepturl" VALUE="">
+    <INPUT type="hidden" NAME="declineurl" VALUE="">
+    <INPUT type="hidden" NAME="exceptionurl" VALUE="">
+    <INPUT type="hidden" NAME="cancelurl" VALUE="">
+    <INPUT type="hidden" NAME="backurl" VALUE="">
+    <!-- miscellanous -->
+    <INPUT type="hidden" NAME="homeurl" VALUE="">
+    <INPUT type="hidden" NAME="catalogurl" VALUE="">
+    <INPUT type="hidden" NAME="PM" VALUE="">
+    <INPUT type="hidden" NAME="BRAND" VALUE="">
+    <INPUT type="hidden" NAME="ownerZIP" VALUE="">
+    <INPUT type="hidden" NAME="owneraddress" VALUE="">
+    <INPUT type="hidden" NAME="owneraddress2" VALUE="">
+    <INPUT type="hidden" NAME="SHASign" value="fill here your signature">
+    <INPUT type="hidden" NAME="Alias" VALUE="">
+    <INPUT type="hidden" NAME="AliasUsage" VALUE="">
+    <INPUT type="hidden" NAME="AliasOperation" VALUE="">
+    <INPUT type="hidden" NAME="COM" VALUE="">
+    <INPUT type="hidden" NAME="COMPLUS" VALUE="">
+    <INPUT type="hidden" NAME="PARAMPLUS" VALUE="">
+    <INPUT type="hidden" NAME="USERID" VALUE="">
+    <INPUT type="hidden" NAME="CreditCode" VALUE="">
+</form>
+-->

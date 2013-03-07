@@ -1,0 +1,39 @@
+
+body {
+	font-size: 62.5%;
+	font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
+	color: #333333;
+}
+
+.skiplinks {
+	display: none;
+}
+
+p, ul, ol {
+	margin: 0 0 10px 0;
+}
+
+ul li.item {
+	overflow: visible;
+}
+
+ins {
+    text-decoration: underline;
+}
+
+h3 {
+    font-size: 120%
+}
+
+h4 {
+    font-size: 110%;
+}
+
+h5 {
+
+}
+
+h6 {
+    font-style: italic;
+    font-weight: normal;
+}

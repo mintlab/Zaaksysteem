@@ -1,0 +1,19 @@
+<!-- zaak/widgets/intake.tt -->
+                <table class="table_zaken_title">
+                    <tr class="table_zaken_title_tr">
+                        <td class="table_zaken_title_td30"><img src="/images/icon-down.png" width="16" height="16"></td>
+                        <td class="table_zaken_title_tdvar"><a href="sorteren">Bestandsnaam:</a></td>
+                        <td class="table_zaken_title_td100"><a href="sorteren">Ontvangdatum:</a></td>
+                        <td class="table_zaken_title_td80"><a href="sorteren">Verplaatsen:</a></td>
+                        <td class="table_zaken_title_td80"><a href="sorteren">Koppelen:</a></td>
+                        <td class="table_zaken_title_td80"><a href="sorteren">Registreren:</a></td>
+                        <td class="table_zaken_title_td80"><a href="sorteren">Verwijderen:</a></td>
+                    </tr>
+                <table>
+                <table class="table_zaken">
+                [% WHILE (zaak = zaken.next) %]
+                    [% PROCESS zaak/widgets/intake_row.tt %]
+                [% END %]
+                </table>
+
+<!-- END zaak/widgets/intake.tt -->

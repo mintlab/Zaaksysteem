@@ -1,0 +1,22 @@
+<div class="zaken_filter_form">
+
+	<div class="filter">
+	
+[% IF ZAKEN_FILTER_STATUS_DROPDOWN %]
+		<div class="col">
+			<select id="zaakfilter" name="statusfilter" class="replace-select">
+				<option value="">Alles</option>
+				<option value="new">Nieuw</option>
+				<option value="open">In behandeling</option>
+				<option value="resolved">Afgehandeld</option>
+				<option value="stalled">Opgeschort</option>
+				<!--option value="urgent">Urgente zaken</option-->		
+			</select>
+		</div>
+[% END %]
+		<div class="col">
+			<input type="text" name="[% zaken_filter_prefix %]textfilter" class="zaak_search_filter medium" value="[% zaak_search_filter %]"/>
+		</div>
+		
+	</div>	 
+</div>

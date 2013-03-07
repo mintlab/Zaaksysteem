@@ -1,0 +1,18 @@
+<link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/form.css" type="text/css" rel="stylesheet" />
+<link media="screen" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/jquery.ui.css" type="text/css" rel="stylesheet" />
+
+<!--[if lte IE 9]>
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/form-ie.css" />
+<![endif]-->
+
+<!--[if IE 7]>
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/form-ie7.css" />
+<![endif]-->
+
+<!--[if IE 8]>
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/form-ie8.css" />
+<![endif]-->
+
+<!--[if IE 9]>
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css/form-ie9.css" />
+<![endif]-->

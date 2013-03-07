@@ -1,0 +1,446 @@
+[% USE Dumper %]
+
+
+[% # preprocess kenmerk to create a lookup for kenmerk id => { kenmerk data } %]
+[% kenmerk_info = {} %]
+[% first_kenmerk_id = 0 %]
+[% available_kenmerken = milestone.elementen.kenmerken %] 
+[% FOREACH mkenmerki IN available_kenmerken.keys.nsort %]
+    [% kenmerk_item = available_kenmerken.$mkenmerki %]
+    [% IF !kenmerk_item.is_group %]
+        [% kenmerk_info.${kenmerk_item.bibliotheek_kenmerken_id} = kenmerk_item %]
+        [% IF !first_kenmerk_id %]
+            [% first_kenmerk_id = kenmerk_item.bibliotheek_kenmerken_id %]
+        [% END %]
+    [% END %]
+[% END %]
+
+[% USE Dumper %]
+
+
+[% available_acties_order = [ 'toon_kenmerk', 'verberg_kenmerk', 'pauzeer_aanvraag', 'vul_waarde_in', 'wijzig_afhandeltermijn', 'sjabloon_genereren'] %]
+[% available_acties = {
+        'pauzeer_aanvraag' => 'Pauzeer aanvraag',
+        'toon_kenmerk' => 'Toon kenmerk',
+        'verberg_kenmerk' => 'Verberg kenmerk',
+        'vul_waarde_in' => 'Vul waarde in',
+        'wijzig_afhandeltermijn' => 'Wijzig afhandeltermijn',
+        'sjabloon_genereren' => 'Genereer sjabloon',
+    } 
+%]
+[% # contains kenmerken that have been referenced in the voorwaarden, to make sure a kenmerk does not alter itself. %]
+[% avoid_kenmerken = {} %] 
+[% global.kenmerk_selection =  '' %]
+
+
+
+[% BLOCK zaaktype_keuze %]
+[% zaaktype_id_fieldname = zaaktype_fieldname _ '_id' %]
+
+
+    <div>
+    [% IF trigger == 'extern' %]
+        <div class="radio-item" style="display:inline-block;margin-right:10px;">
+            <input style="border: 0px none;" id="burger" name="betrokkene_type" value="natuurlijk_persoon" checked="checked" type="radio"> 
+            <label for="burger">Burger</label>
+        </div>
+        <div class="radio-item" style="display:inline-block;">
+            <input style="border: 0px none;" id="organisatie" name="betrokkene_type" value="bedrijf" type="radio"> 
+            <label for="organisatie">Organisatie</label>
+        </div>
+    [% ELSE %]
+        <div class="radio-item" style="display:inline-block;">
+            <input style="border: 0px none;" id="organisatie" name="betrokkene_type" value="medewerker" type="radio"> 
+            <label for="organisatie">Organisatie</label>
+        </div>
+    [% END %]
+    </div>
+    
+<div class="ezra_zaaktype_keuze" style="display:inline">
+    <input type="hidden" name="regels_[% zaaktype_id_fieldname %]" class="zaaktype_id_finder" value="[% params.$zaaktype_id_fieldname %]"/>
+    <input type="hidden" name="jstrigger" value="[% trigger %]" />
+
+
+
+    <input
+        id="textbox-[% trigger %]"
+        type="text"
+        name="regels_[% zaaktype_fieldname %]"
+        class="flexible80 ezra_zaaktype_keuze_textbox"
+        value="[% params.$zaaktype_fieldname %]"
+        autocomplete="off"
+        />
+</div>
+[% END %]
+
+
+
+
+[% BLOCK selecteer_milestone_kenmerk %]
+[% # show_all_kenmerken: display the full list, otherwise only show kenmerken that can be used as
+   # filters.
+   # show_value_kenmerken: display the list minus a few types that are impractical for this purpose
+%]
+    [% global.kenmerk_selection = undef %]
+    Kenmerk: 
+    <select name="[% kenmerk_name %]">
+    [% FOREACH kenmerk_index IN milestone.elementen.kenmerken.keys.nsort %]
+        [% kenmerk_item = milestone.elementen.kenmerken.$kenmerk_index %]
+        [% NEXT IF kenmerk_item.is_group %]
+
+        [% bibliotheek_kenmerken_id = kenmerk_item.bibliotheek_kenmerken_id %]
+        [% NEXT IF !populate_avoid_array && avoid_kenmerken.$bibliotheek_kenmerken_id %]
+        
+        [% IF show_all_kenmerken || kenmerk_item.type == 'option' || kenmerk_item.type == 'checkbox' || kenmerk_item.type == 'select' %]
+            [% IF !(show_value_kenmerken && kenmerk_item.type == 'bag_adressen') %]
+                [% IF !global.kenmerk_selection %]
+                    [% original_kenmerk = value %]
+                    [% IF original_kenmerk && !avoid_kenmerken.$original_kenmerk %]
+                        [% global.kenmerk_selection = original_kenmerk %]
+                    [% ELSE %]
+                        [% global.kenmerk_selection = bibliotheek_kenmerken_id %]
+                    [% END %]
+                [% END %]
+
+            <option value="[% bibliotheek_kenmerken_id %]"                 
+                [% IF bibliotheek_kenmerken_id == global.kenmerk_selection %]
+                    [% IF populate_avoid_array; avoid_kenmerken.$bibliotheek_kenmerken_id = 1; END %]
+                    selected="selected"
+                [% END %]
+            >[% kenmerk_item.naam %]</option>
+            [% END %]
+        [% END %]
+    [% END %]
+    
+    [% # aanvrager option, a special case %]
+    [% IF !hide_aanvrager_option %]
+        <option value="aanvrager" 
+            [% IF value == 'aanvrager' || !global.kenmerk_selection %][% global.kenmerk_selection = 'aanvrager' %]selected="selected"[% END %]
+            >Aanvrager</option>
+    [% END %]
+    </select>
+
+    <input type="hidden" name="[% kenmerk_name %]_previous" value="[% global.kenmerk_selection %]"/>
+[% END %]
+
+
+
+[% BLOCK actie_row %]
+<tr>
+    <input type="hidden" name="regels_[% fieldgroup %]" value="[% actie_index %]"/>
+    <td class="td350">
+        Actie:
+        [% actie_type = params.$fieldname || available_acties_order.0 %]
+        <select name="regels_[% fieldname %]">  
+            [% FOREACH available_actie = available_acties_order %]
+            <option value="[% available_actie %]"
+                [% IF available_actie == actie_type %]selected="selected"[% END %]
+            >[% available_acties.$available_actie %]</option>
+            [% END %]
+        </select>
+    </td>
+    <td>
+        [% IF actie_type == 'pauzeer_aanvraag' %]  
+            [% message_fieldname = fieldname _ '_message';
+               startzaak_fieldname = fieldname _ '_startzaak';
+            %]             
+            <table id="pauzeer-aanvraag">
+                <tr>
+                    <td class="border-bottom">Melding:</td>
+                    <td class="border-bottom"><textarea rows="2" name="regels_[% message_fieldname %]">[% params.$message_fieldname %]</textarea></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" class="regels_startzaak_checkbox" name="regels_[% startzaak_fieldname %]"
+                        [% IF params.$startzaak_fieldname == 'on' %]checked="checked"[% END %]
+                    /> Start zaak:</td>
+                    <td>
+                        [% zaaktypen = c.model('DB::Zaaktype').search({}) %]
+                        [% selected_value = fieldname _ '_zaaktype' %]
+                        [% INCLUDE zaaktype_keuze 
+                            trigger = c.session.zaaktypen.node.trigger
+                            zaaktype_fieldname = fieldname _ '_zaaktype'
+                        %]
+                    </td>
+                </tr>
+            </table>          
+        [% ELSIF actie_type == 'toon_kenmerk' || actie_type == 'verberg_kenmerk' %]
+            [% kenmerk_fieldname = fieldname _ '_kenmerk' %]
+            [% INCLUDE selecteer_milestone_kenmerk 
+               kenmerk_name = 'regels_' _ kenmerk_fieldname
+               value = params.$kenmerk_fieldname
+               show_all_kenmerken = 1
+               hide_aanvrager_option = 1
+            %]
+        [% ELSIF actie_type == 'vul_waarde_in' %]
+            <table>
+                <tr><td>
+            [% kenmerk_fieldname = fieldname _ '_kenmerk' %]
+            [% PROCESS selecteer_milestone_kenmerk 
+               kenmerk_name = 'regels_' _ kenmerk_fieldname
+               value = params.$kenmerk_fieldname
+               show_all_kenmerken = 1
+               show_value_kenmerken = 1
+               hide_aanvrager_option = 1
+            %]
+                </td><td>Waarde:
+
+            [%  value_fieldname = fieldname _ '_value'
+                value_kenmerk = kenmerk_info.${global.kenmerk_selection}
+            %]
+            
+            [% PROCESS widgets/general/veldoptie.tt 
+                veldoptie_type   = value_kenmerk.type
+                veldoptie_opties = value_kenmerk.options
+                veldoptie_value  = params.$value_fieldname	
+                veldoptie_name   = 'regels_' _ value_fieldname
+            %]
+                </td>
+            </tr></table>
+        [% ELSIF actie_type == 'kopieer_waarde' %]
+            <table><tr>
+                <td>Kopieer de waarde uit:</td>
+                <td>naar bestemming:</td>
+            </tr><tr>
+                <td>
+            [% kenmerk_fieldname = fieldname _ '_kenmerk' %]
+            [% INCLUDE selecteer_milestone_kenmerk 
+               kenmerk_name = 'regels_' _ kenmerk_fieldname
+               value = params.$kenmerk_fieldname
+               show_all_kenmerken = 1
+               hide_aanvrager_option = 1
+            %]
+                </td>
+                <td>
+            [% destination_fieldname = fieldname _ '_destination' %]                    
+                    <select name="regels_[% destination_fieldname %]">
+                        <option value="dfdfdfd">een bestemmings veld</option>
+                    </select>
+                </td>
+            </tr></table>
+        [% ELSIF actie_type == 'wijzig_afhandeltermijn' %]
+            Geef nieuwe afhandeltermijn (dagen): 
+            [% afhandeltermijn_fieldname = fieldname _ '_afhandeltermijn' %]
+            [% afhandeltermijntype_fieldname = fieldname _ '_afhandeltermijntype' %]
+            [% PROCESS widgets/general/terms.tt 
+                dont_make_widget = 1
+                terms_name = 'regels_' _ afhandeltermijn_fieldname 
+                terms_value = params.$afhandeltermijn_fieldname
+                terms_name_type = 'regels_' _ afhandeltermijntype_fieldname
+                terms_name_type_value = params.$afhandeltermijntype_fieldname
+            %]
+            
+        [% ELSIF actie_type == 'sjabloon_genereren' %]
+            [% zaaktype = c.model('DB::Zaaktype').search({id=> zaaktype_id}) %]
+            [% sjablonen = zaaktype.zaaktype_node_id.scalar.zaaktype_sjablonen.scalar.search %]
+
+            [% sjabloon_fieldname = fieldname _ '_sjabloon' %]
+            [% IF sjablonen.count == 0 %]
+            	Geen sjablonen beschikbaar.
+            [% ELSE %]
+				<select name="regels_[% sjabloon_fieldname %]">
+				[% WHILE (sjabloon = sjablonen.next) %]
+					[% NEXT IF sjabloon.automatisch_genereren %]
+					<option value="[% sjabloon.id %]"
+					[% IF params.$sjabloon_fieldname == sjabloon.id %]selected="selected"[% END %]
+					>[% sjabloon.naam %]</option>
+				[% END %]
+				</select>    
+			[% END %]
+			
+			
+			<div class="dropdown-wrap dropdown-wrap-left">
+                <div class="dropdown-init dropdown-init-hover dropdown-init-hide icon-toelichting icon icon-hover show-info-description">
+                    <div class="dropdown dropdown-left dropdown-tooltip">
+                        <div class="dropdown-pijl"></div>
+                        <div class="dropdown-content dropdown-content-overflow">
+                            Sjablonen die automatisch gegenereerd worden verschijnen hier niet.
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			            
+        [% END %]       
+    </td>
+    [% new_item_id = 'new_' _ fieldgroup %]
+    
+    <td class="td20">
+        [% IF (params.$fieldgroup && params.$fieldgroup.size > 1) || $new_item_id || can_remove_always %]<a class="remove icon-delete" href="#"/>[% END %]
+    </td>
+</tr>
+[% END %]
+
+
+[% BLOCK voorwaarde_row %]
+<tr>
+    <input type="hidden" name="regels_voorwaarden" value="[% voorwaarde_index %]"/>
+    <td class="td350">
+        [% kenmerk_fieldname = fieldname _ '_kenmerk' %]
+        [% INCLUDE selecteer_milestone_kenmerk 
+            kenmerk_name = 'regels_' _ fieldname _ '_kenmerk'
+            populate_avoid_array = 1
+            value = params.$kenmerk_fieldname
+        %]
+        
+    </td>
+    <td>
+        <div class="kenmerk_filter">
+            [% value_fieldname = fieldname _ '_value' %]
+            [% kenmerk_fieldname = fieldname _ '_kenmerk' %]
+            [% kenmerk_id = global.kenmerk_selection %]
+            [% operator_name = fieldname _ '_operator' %]
+
+            [% IF kenmerk_id == 'aanvrager' %]
+                [% kenmerk.kenmerk_options = [ 'Natuurlijk persoon' , 'Niet natuurlijk persoon' ] %]
+                [% kenmerk_item = { 'type' => 'select' } %]
+            [% ELSE %]
+                [% kenmerk_item = kenmerk_info.${kenmerk_id} %]
+                [% kenmerk = c.model('Bibliotheek::Kenmerken').get('id', kenmerk_item.bibliotheek_kenmerken_id) %]
+            [% END %]
+
+            [% kenmerk_item.data = params.${value_fieldname} %]
+            [% kenmerk_item.operator = params.${operator_name} %]
+
+            
+            [% PROCESS widgets/general/kenmerk_filter.tt 
+                veldoptie_type =  kenmerk_item.type
+                veldoptie_opties = kenmerk.options
+                veldoptie_name = 'regels_' _ value_fieldname
+                veldoptie_operator_fieldname = 'regels_' _ operator_name
+            %]
+        </div>
+    </td>
+    <td class="td20">
+        [% IF params.voorwaarden && params.voorwaarden.size > 1 || new_voorwaarde %]<a class="remove icon-delete" href="#" />[% END %]
+    </td>
+</tr>
+[% END %]
+
+
+
+<div id="regel_definitie">
+<form>
+<input type="hidden" name="milestone_number" value="[% milestone_number %]" />
+<input type="hidden" name="zaaktype_id" value="[% zaaktype_id %]" />
+<input type="hidden" name="zaaktype_update" value="" />
+<div class="regel_definitie_wrapper">
+<div class="regel_definitie_inner">
+<div class="spinner-groot"><div></div></div>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]"/>
+<input type="hidden" name="update" value="1"/>
+<input type="hidden" name="rownumber" value="[% rownumber %]"/>
+<table class="table_zaakinformatie" border="0" id="regel_template">
+    <tbody>
+        <tr class="naam_regel">
+            <td class="td200">
+                <strong style="margin-right:6px;">Regelnaam:</strong>
+                <input type="text"
+                    class="large300 input_large"
+                    value="[% params.naam %]"
+                    name="regels_naam"
+                />
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <div class="voeg-regel-toe"><strong>Voorwaarden</strong><a class="add_voorwaarde knop voeg-toe geen-tekst right" href="#"></a></div>
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <table border="0" width="100%" class="rules_inner_table">
+                    [% voorwaarden = params.voorwaarden %]
+                    [% IF !voorwaarden %][% voorwaarden = [ '1' ] %][% END %]
+                    [% FOREACH voorwaarde_index = voorwaarden %]
+                        [% INCLUDE voorwaarde_row 
+                            fieldname = 'voorwaarde_' _ voorwaarde_index
+                        %]
+                    [% END %]
+        
+                    [% IF new_voorwaarde %]
+                        [% INCLUDE voorwaarde_row 
+                            fieldname = 'voorwaarde_' _ new_voorwaarde
+                            voorwaarde_index = new_voorwaarde
+                        %]
+                    [% END %]
+        
+                </table>
+                
+            </td>
+        </tr>
+        
+        <tr>
+            <td>
+                <div class="voeg-regel-toe"><strong>Acties</strong><a class="add_actie knop voeg-toe geen-tekst right" href="#"></a></div>
+            </td>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                <table class="rules_inner_table">
+                    [% acties = params.acties %]
+                    [% IF !acties %][% acties = [ '1' ] %][% END %]
+                    [% FOREACH actie_index = acties %]
+                        [% INCLUDE actie_row 
+                            fieldname = 'actie_' _ actie_index
+                            fieldgroup = 'acties'
+                            can_remove_always = new_actie
+                        %]
+                    [% END %]
+                    [% IF new_actie %]
+                        [% INCLUDE actie_row 
+                            fieldname = 'actie_' _ new_actie 
+                            actie_index = new_actie
+                            fieldgroup = 'acties'
+                            can_remove_always = 1
+                        %]
+                    [% END %]
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <div class="voeg-regel-toe last"><strong>Anders</strong><a class="add_anders knop voeg-toe geen-tekst right" href="#"></a></div>
+            </td>
+        </tr>
+        
+        
+        <tr>
+            <td>
+                <table class="rules_inner_table last">
+                    [% anders = params.anders %]
+                    [% IF !anders %]
+                        [% anders = [] %]
+                    [% END %]
+                    [% FOREACH actie_index = anders %]
+                        [% INCLUDE actie_row 
+                            fieldname = 'ander_' _ actie_index
+                            fieldgroup = 'anders'
+                            can_remove_always = 1
+                        %]
+                    [% END %]
+                    [% IF new_anders %]
+                        [% INCLUDE actie_row 
+                            fieldname = 'ander_' _ new_anders 
+                            actie_index = new_anders
+                            fieldgroup = 'anders'
+                            can_remove_always = 1
+                        %]
+                    [% END %]
+                </table>
+            </td>
+        </tr>
+        
+    </tbody>
+</table>
+<div class="nextprev clearfix nextprev-dialog">
+    <input type="button" value="Opslaan" class="button140 right save_regel"/>
+</div>
+</div>
+</div>
+</form>
+</div>

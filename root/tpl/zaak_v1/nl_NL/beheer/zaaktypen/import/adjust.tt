@@ -1,0 +1,99 @@
+
+
+[% USE Dumper %]
+[% #Dumper.dump(dependency_config.$dependency_type) %]
+[% config = dependency_config.$dependency_type %]
+<!--pre>[% #Dumper.dump(dependency_item) %]</pre-->
+
+<input type="hidden" name="action" value="[% dependency_item.solution.action %]" />
+<input type="hidden" name="dependency_type" value="[% dependency_type %]" />
+<input type="hidden" name="id" value="[% id %]" />
+
+[% is_ldap = (dependency_type == 'LdapRole' || dependency_type == 'LdapOu') %]
+[% IF is_ldap || (options && options.size > 0) %]
+    <div class="[% IF dependency_item.solution.action == 'use_existing' %]import_item_active [% ELSE %] import_item_inactive[% END %] import_dependency_option import_item_inner top clearfix"
+        id="use_existing">
+        
+        
+        <div class="title">
+            <div class="radio-button"></div>
+            <strong class="ie7"><span class="ie7">Gebruik bestaand[% config.letter_e%] [% config.label %]</span></strong>
+        </div>
+        
+        <div class="rfa">
+            <div class="action">
+                <label>Maak een keuze:</label>
+
+                <select name="new_id">
+                [% selected_id = dependency_item.solution.id %]
+                [% IF !selected_id %]
+                    <option value="0">Kies ...</option>
+                [% END %]
+                [% FOREACH option = options %]
+                    <option value="[% option.id %]"
+                    [% IF option.id == selected_id %]selected="selected"[% END %]
+                    >[% option.name %]</option>
+                [% END %]
+                </select>
+                
+                <span class="import_error_tooltip import_dependency_error">
+                    <span class="tip"></span>
+                    <span class="import_error_tooltip_text"></span>
+                </span>
+
+            </div>
+            <input type="button" name="opslaan" value="Opslaan" class="knop opslaan mini" />
+        </div>
+        
+    </div>
+[% END %]
+
+
+[% cannot_add_new_item = is_ldap || (dependency_type == 'Zaaktype' && !dependency_item.main_zaaktype) %]
+[% UNLESS cannot_add_new_item %]
+    <div class="import_dependency_option[% IF dependency_item.solution.action == 'add' %] import_item_active[% ELSE %] import_item_inactive[% END %] import_item_inner bottom clearfix [% IF config.has_category %] with-category[% ELSE %] no-category[% END %]" id="add">
+        <div class="title">
+            <div class="radio-button"></div>
+            <strong class="ie7"><span class="ie7">Voeg meegeleverd[% config.letter_e %] [% config.label %] toe</span></strong>
+        </div>
+        
+        <div class="rfa">
+            <div class="voeg-meegeleverd-toe action">
+                <label>Wijzig naam: </label>
+                <input type="text" class="dependency_item_name medium" name="new_name" value="[% IF dependency_item.solution.action == 'add' %][% dependency_item.solution.name %][% ELSE %][% dependency_item.name %][% END %]" />
+                <span class="import_error_tooltip import_dependency_error">
+                    <span class="tip"></span>
+                    <span class="import_error_tooltip_text"></span>
+                </span>
+            </div>
+
+            [% IF config.has_category %]
+            <div class="geef-categorie action">
+                <label>Plaats in Categorie:</label> 
+                [% PROCESS widgets/general/categorie.tt 
+                    fieldname = 'bibliotheek_categorie_id'
+                    categorie_id = dependency_item.solution.bibliotheek_categorie_id
+                %] 
+                <span class="import_error_tooltip import_dependency_categorie_error">
+                    <span class="tip"></span>
+                    <span class="import_error_tooltip_text"></span> 
+                </span>
+            </div>
+            <div class="action multi-categorie" style="color: #444444;font-size: 11px;font-weight: bold;padding-top: 5px;">
+                <input name="multi_cat" type="checkbox" style="margin-left: 145px;margin-right: 6px;"/>Geselecteerde categorie voor alle nieuwe [% config.label %] gebruiken
+            </div>
+            <!--div class="action">
+                <label>Subcategorie <span>(optioneel):</span></label>
+                <input type="text" name="sub_categorie" class="medium" />
+                <span class="import_error_tooltip import_dependency_sub_categorie_error">
+                    <span class="tip"></span>
+                    <span class="import_error_tooltip_text"></span>
+                </span>
+            </div-->
+            [% END %]
+            <input type="button" name="action" class="import_dependency_name_change knop opslaan mini" value="Opslaan" />
+        </div>
+        
+    </div>
+
+[% END %]

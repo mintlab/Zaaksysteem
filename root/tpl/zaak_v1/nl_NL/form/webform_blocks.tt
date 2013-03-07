@@ -1,0 +1,506 @@
+[% BLOCK webform_doc_intake %]
+<div class="block">
+    <p class="header">Toevoegen document</p>
+    <div class="blockcontent">
+        <input type="hidden" name="doc_intake_update" value="1" />
+        <table class="no_margin form">
+            <tbody>
+            <tr>
+                <td>Document:</td>
+                <td>
+                    <a
+                        href="[% c.uri_for('/zaak/intake/document/get/' _
+                        dropdocument.id _ '/' _ dropdocument.filename) %]"
+                        target="_blank"
+                        >[% dropdocument.filename %]</a>
+                 </td>
+            </tr>
+            <tr>
+                <td>Zaaktype document:</td>
+                <td>
+                    <select name="intake_document_catalogus" class="select_zt_document replace-select zaakdefinitie_[% definitie.zaaktype_id.zaaktype_node_id.id %]">
+                        <option value="">Geen</option>
+                            [% documenten = definitie.zaaktype_kenmerken.scalar.search(
+                                {
+                                    'bibliotheek_kenmerken_id.value_type'    => 'file'
+                                },
+                                {
+                                    'join'          => 'bibliotheek_kenmerken_id',
+                                    'order_by'      => 'id',
+                                }
+                            ) %]
+                        [% WHILE (cdocument = documenten.next) %]
+                            <option value="[% cdocument.id %]" class="[% (cdocument.value_mandatory ? 'verplicht_document' : "") %][% (cdocument.pip ? ' pip_document' : '') %]"
+                            [% (doc_intake.document_catalogus == cdocument.id ? ' selected="selected"' : '') %]
+                            >
+                                [% cdocument.naam %]
+                            </option>
+                        [% END %]
+                    </select>
+                </td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Selecteer het type:</td>
+                <td class="table_td_right_zaakinformatie document_constraint_true document_constraint_categorie">
+                    Laden...
+                </td>
+                <td class="table_td_right_zaakinformatie document_constraint_false">
+                    <select name="intake_document_category">
+                    [% FOREACH doc_category IN constants.document.categories %]
+                            <option value="[% doc_category %]"[% (doc_intake.document_category == doc_category ? ' selected="selected"' : '') %]>[% doc_category %]</option>
+                    [% END %]
+                    </select>
+                </td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Toelichting:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <textarea cols="60" name="intake_document_help">[% doc_intake.document_help %]</textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+[% END %]
+
+
+[% BLOCK webform_block_header %]
+
+    <div class="header clearfix">
+    <div>[% zaaktype.zaaktype_definitie_id.handelingsinitiator FILTER ucfirst %]
+    [% zaaktype.titel %] voor
+    [% IF c.user_exists %]
+        <a href="#" class="betrokkene-get" rel="id: [% aanvrager.betrokkene_identifier %]; zaak: 0" title="Informatie over eigenaar">
+            [% aanvrager.naam %]
+        </a>
+    [% ELSE %]
+        [% aanvrager_naam %]
+    [% END %]
+    </div>
+    [% IF logged_in_by %]
+        <a href="[% c.uri_for('/auth/' _
+            logged_in_by _ '/logout') %]" class="logout knop in-header floatright logout">Uitloggen</a>
+    [% END %]
+
+    [% IF c.is_externe_aanvraag() %]
+    <input type="submit" name="submit_to_pip" value="Later afronden" class="submit_to_pip in-header knop opslaan floatright" />
+    [% END %]
+
+    </div>
+
+    <div id="stappen" class="clearfix">
+        [% count = 1 %]
+        [% FOREACH kenmerk IN kenmerken_groups_keep_sort %]
+            [% rawkenmerk = kenmerk %]
+            [% kenmerk = kenmerk.replace('[^a-zA-Z0-9]', '_'); %]
+
+            [% NEXT UNLESS kenmerk %]
+            <div class="formwizard-stappen stap[% (rawkenmerk == process.current_stap ? ' active' : ' next-level') %][% (count == 1 ? ' first' : '') %]" id="stap-[% kenmerk %]">Stap [% count %]</div>
+
+            [% count = count + 1 %]
+        [% END %]
+    </div>
+[% END %]
+
+
+
+
+[% BLOCK webform_form_start %]
+    <form method="POST"
+        action="[% c.uri_for('/zaak/create/' _ aangevraagd_via  _ '/webform') %]"
+        enctype="multipart/form-data"
+        [% c.req.user_agent.match('MSIE') ? 'class="wizard_disabled webform"' : ' class="wizard_disabled submit_waiter webform"' %]>
+[% END %]
+
+
+
+
+[% BLOCK webform_form_stop %]
+        [% # for uploading files, these requests are done through the iframe to stay on the same page. fake ajax. %]
+    </form>
+[% END %]
+
+
+
+[% BLOCK webform_form_hiddens %]
+    <!--
+    [% FOREACH item IN c.req.params %]
+    <input type="hidden" name="[% item.key %]" value="[% item.value %]">
+    [% END %]
+    -->
+    [% FOREACH item IN webform_form_hiddens_extra %]
+    <input type="hidden" name="[% item.key %]" value="[% item.value %]">
+    [% END %]
+    <input type="hidden" name="submit_value" value="" />
+    <input type="hidden" name="create" value="1"/>
+    <input type="hidden" name="update_kenmerken" value="[% process.current_stap %]"/>
+    <input type="hidden" name="process_stap" value="[% process.next_stap %]" />
+    <input type="hidden" name="process_previous_stap" value="[% process.previous_stap %]" />
+    <input type="hidden" name="process_step_index" value="[% process_step_index %]" />
+    <input type="hidden" name="ztc_aanvrager_id" value="[% aanvrager.betrokkene_identifier %]"/>
+    <input type="hidden" name="allow_cheat" value="[% allow_cheat %]"/>
+[% END %]
+
+
+
+
+[% BLOCK webform_fields %]
+    [% USE Scalar %]
+    [% values           = form.kenmerken %]
+    [% groupname        = process.current_stap %]
+    [% shortgroupname   = groupname.replace('[^a-zA-Z0-9]', '_'); %]
+    [% kenmerkgroup     = kenmerken_groups_only.$groupname %]
+
+    [% IF kenmerkgroup %]
+<div class="step" id="[% shortgroupname %]">
+    <div class="groeptekst" style="position:relative;">
+        <div class="current-group"></div>
+        <h1>[% kenmerkgroup.label %]</h1>
+        <h2>[% kenmerkgroup.help %]</h2>
+        
+        
+        [% IF allow_cheat %]
+   		<div class="cheating" style="position:absolute;bottom:20px;right:20px;"> 
+   			<input type="checkbox" name="do_cheat" id="do_cheat" style="margin:0 5px 0 0;" /><label for="do_cheat">Vul verplichte velden later in</label>
+   		</div>
+   		[% END %]
+        
+        
+    </div>
+    <table class="form vragen_form table_window no_margin">
+        <tbody>
+    [% END %]
+
+    [% count = 1; %]
+    [% kenmerkkeys = [] %]
+    [% FOREACH kenmerk IN kenmerken_groups.$groupname %]
+        [% vorig_value = '' %]
+        [% NEXT UNLESS kenmerk.zaak_status_id && kenmerk.zaak_status_id.status == 1 %]
+        [% kenmerkkey = kenmerk.rtkey %]
+        
+
+        [% bibliotheek_id = kenmerk.bibliotheek_kenmerken_id.id %]
+
+        [% IF values.$bibliotheek_id %]
+            [%
+                vorig_value = values.$bibliotheek_id
+            %]
+        [% END %]
+            [% prevgroupname = shortgroupname %]
+            [% kenmerkkeys.push(kenmerkkey) %]
+
+            [% IF !(regels_result.verberg_kenmerk.$bibliotheek_id) %]
+            <tr [% IF voorwaarden_kenmerken.$bibliotheek_id %]class="regels_enabled_kenmerk"[% END %]>
+                <td class="td280">
+                    <label class="titel">
+                        [% kenmerk.label || kenmerk.naam %]<!-- ([% bibliotheek_id %],hidden:[% hidden_kenmerken.$bibliotheek_id %])-->
+                    </label>
+                </td>
+                <td class="tdvar">
+                    [% IF(regels_result.vul_waarde_in.$bibliotheek_id) %]
+                        <input type="hidden" name="[% kenmerk.rtkey %]" value="[% vorig_value %]"/>
+                        <div class="regels_fixed_value">[% vorig_value %]</div>
+                    [% ELSE %]
+                        [% IF kenmerk.type == 'file' %]
+                            [% vorig_value = uploads.$bibliotheek_id %]
+                        [% END %]
+                        [% IF kenmerk.type == 'option' || kenmerk.type == 'checkbox' || kenmerk.type == 'file' %]
+                            <input type="hidden" name="defined_kenmerk" value="[% kenmerk.rtkey %]"/>
+                        [% END %]
+                        [% PROCESS widgets/general/veldoptie.tt
+                            veldoptie_multiple  = kenmerk.bibliotheek_kenmerken_id.type_multiple
+                            veldoptie_name      = kenmerk.rtkey
+                            veldoptie_type      = kenmerk.type
+                            veldoptie_opties    = kenmerk.options
+                            veldoptie_value     = vorig_value 
+                            veldoptie_bibliotheek = kenmerk.bibliotheek_kenmerken_id
+                            veldoptie_zaaktype_kenmerk = kenmerk
+                            %]
+                    [% END %]
+                </td>
+                <td class="td310">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded">
+                            <span></span> Dit veld is verplicht
+                        </div>
+                    </div>
+                    [% IF (kenmerk.help) %]
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            [% kenmerk.help %]
+                            <a class="icon_close"></a>
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                    [% END %]
+                </td>
+            [% count = count+1 %]
+            </tr>
+            [% END %]
+
+
+            [% IF regels_result.pauzeer_aanvraag.$bibliotheek_id %]                
+            [% #Dumper.dump(regels_result.$bibliotheek_id) %]
+            <tr>
+                <td colspan="3" align="center">
+                    <div class="start_zaak_box">
+                        <div>[% regels_result.pauzeer_aanvraag.$bibliotheek_id.message %]</div>
+                        <div>
+                    [% IF regels_result.pauzeer_aanvraag.$bibliotheek_id.startzaak %]
+                        [% zaaktype_node = regels_result.pauzeer_aanvraag.$bibliotheek_id.zaaktype_node %]
+                        Klik <a href="/zaak/start_nieuwe_zaak/[% zaaktype_node.id %]">hier</a> om een zaak te starten met het type <i>[% zaaktype_node.titel %]</i>.
+                    [% END %]
+                        </div>
+                    </div>
+                </td>
+            </tr>
+                [% LAST %]
+            [% END %]
+        [% END %]
+
+        [% IF c.user_exists && aanvraag_trigger == 'intern' %]
+            [% IF kenmerken_groups_keep_sort.last == groupname %]
+                [% PROCESS behandel_acties %]
+            [% END %]
+        [% END %]
+    [% IF kenmerkgroup %]
+            </tbody>
+        </table>
+        <input type="hidden" name="stepfields-[% prevgroupname %]"
+        value="[% kenmerkkeys.join(',') %]" />
+    </div>
+    [% END %]
+
+    [% IF process.current_stap == 'contactgegevens' %]
+        [% PROCESS webform_contact %]
+    [% END %]
+
+[% END %]
+
+
+
+
+
+[% BLOCK webform_contact %]
+    <div class="step" id="contactgegevens">  
+        <div class="groeptekst">
+            <h1>Contactgegevens</h1>
+            <h2>Onderstaand kun je de contactgegevens invullen van de aanvrager. Wanneer er al contactgegevens bekend zijn, worden deze velden ingevuld getoond. Controleer eventueel of deze contactgegevens nog actueel zijn.</h2>
+        </div>
+
+        <table class="form marginbottom">
+            <tbody>
+                [% IF aanvraag_trigger == 'extern' %]
+                <tr>
+                    <td class="td280">
+                        <label class="titel">
+                            E-mailadres
+                        </label>
+                    </td>
+                    <td class="tdvar">
+                        <input class="large" type="text" name="npc-email" value="[% aanvrager.email %]">
+                    </td>
+                    <td class="td310">
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                E-mailadres van aanvrager
+                                <a class="icon_close"></a>
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td280">
+                        <label class="titel">
+                            Telefoonnummer
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" class="large" name="npc-telefoonnummer" value="[% aanvrager.telefoonnummer %]">
+                    </td>
+                    <td class="td310">
+                        <div class="validator">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Telefoonnummer van aanvrager
+                                <a class="icon_close"></a>
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td280">
+                        <label class="titel">
+                            Mobiel nummer
+                        </label>
+                    </td>
+                    <td>
+                        <input type="text" class="large" name="npc-mobiel" value="[% aanvrager.mobiel %]">
+                    </td>
+                    <td class="td310">
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Mobiel nummer van aanvrager
+                                <a class="icon_close"></a>
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+            [% END %]
+            [% PROCESS behandel_acties %]
+            </tbody>
+        </table>
+        <input type="hidden" name="stepfields-contactgegevens"
+        value="npc-telefoonnummer,zt_automatisch_behandelen,npc-mobiel,npc-email" />
+    </div>
+[% END %]
+
+[% BLOCK behandel_acties %]
+    [% RETURN UNLESS c.user_exists %]
+    [% IF definitie.toewijzing_zaakintake %]
+                <tr>
+                    <td class="td280">
+                        <label class="titel">
+                            Naar organisatorische eenheid
+                        </label>
+                    </td>
+                    <td>
+                        [% PROCESS widgets/general/auth_select.tt
+                            AUTH_SELECT_OU_NAME     = 'actie_ou_id'
+                            AUTH_SELECT_OU_VALUE    = zaaktype.scalar.zaaktype_statussen.scalar.search(
+                                {
+                                    status  => 1
+                                }
+                            ).first.ou_id
+                            AUTH_SELECT_ROLE_NAME   = 'actie_role_id'
+                            AUTH_SELECT_ROLE_VALUE  = zaaktype.scalar.zaaktype_statussen.scalar.search(
+                                {
+                                    status  => 1
+                                }
+                            ).first.role_id
+                            AUTH_SELECT_NO_GLOBAL = 1
+                        %]
+                    </td>
+                    <td class="td310">
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Zaak wordt geplaatst in de zaakintake van
+                                deze organisatorische eenheid / rol
+                                <a class="icon_close"></a>
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+    [% END %]
+    [% IF definitie.extra_relaties_in_aanvraag %]
+                <tr>
+                    <td class="td280">
+                        <label class="titel">
+                            Relaties
+                        </label>
+                    </td>
+                    <td>
+                        [% PROCESS widgets/general/simple_table.tt
+                            table_config = {
+                                header  => [
+                                    {
+                                        label => 'Relatietype',
+                                    },
+                                    {
+                                        label => 'Naam',
+                                    },
+                                    {
+                                        label => 'Rol',
+                                    }
+                                ],
+                                options => {
+                                    action              => '/form/register_relaties',
+                                    init                => 1,
+                                    has_delete_button   => 1,
+                                    add                 => {
+                                        label   => 'Relatie toevoegen',
+                                        popup   => 1,
+                                    }
+                                }
+                            }
+                        %]
+                    </td>
+                    <td class="td310">
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Overige relaties met personen/bedrijven kunnen
+                                hier worden aangemaakt.
+                                <a class="icon_close"></a>
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+    [% END %]
+    [% IF definitie.automatisch_behandelen %]
+                <tr>
+                    <td class="td280">
+                        <label class="titel"></label>
+                    </td>
+                    <td>
+                        <input
+                        type="checkbox"
+                        name="actie_automatisch_behandelen"
+                        checked="checked"
+                        value="1" />
+                        Zaak automatisch in behandeling nemen 
+                    </td>
+                    <td class="tdv310">
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Na aanmaken van deze zaak wordt u direct
+                                behandelaar
+                                <a class="icon_close"></a>
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+    [% END %]
+[% END %]

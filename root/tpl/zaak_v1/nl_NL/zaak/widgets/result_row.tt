@@ -1,0 +1,86 @@
+[% USE Scalar %]
+[% USE date %]
+[% zaak_status_icon = 'images/zaak-unrd.gif';
+   IF (zaak.status == 'open'); zaak_status_icon = 'images/zaak-rd.gif'; END;
+   IF (zaak.status == 'resolved'); zaak_status_icon = 'images/zaak-closed.png'; END;
+   IF (zaak.status == 'stalled'); zaak_status_icon = 'images/zaak-stalled.png'; END;
+%]
+<!-- zaak/widgets/result_row.tt -->
+                    <tr class="table_zaken_tr">
+                        <td class="td30 ver_center"><a href="[% c.uri_for(( pip ? '/pip' : '') _ '/zaak/' _ zaak.nr) %]"><img src="[% zaak_status_icon %]" width="16" height="16" border="0" /></a></td>
+                        <td class="td50"><a href="[% c.uri_for(( pip ? '/pip' : '')_ '/zaak/' _ zaak.nr) %]">[% zaak.nr %]</a></td>
+                        <td class="td115 center">
+                        	[% INCLUDE widgets/general/zaak_veld.tt 
+                        	display_class = 'voortgang'
+                        	display_field = 'voortgang'
+                        	%]
+                        </td>
+                        <td class="td175">[% zaak.essentials.zaaktype_naam %]</td>
+                        <td class="td200">[% zaak.onderwerp %]</td>
+
+                    [% UNLESS pip %]
+                        <td class="td150"><a href="#" class="betrokkene-get" rel="zaak: [% zaak.nr %]; id: [% zaak.aanvrager.id %]" title="Informatie over eigenaar">[% zaak.essentials.aanvrager_naam %]</a></td>
+                    [% END %]
+                    [% UNLESS pip %]
+                        <td class="td60"> [% PROCESS widgets/general/remaining_time.tt
+                                remaining   = zaak.zaakstatus.remaining_streefafhandeltijd
+                                totaal      = zaak.zaakstatus.total_streefafhandeltijd
+                            %]</td>
+                        <td class="td130">
+                            <div class="select_actie_container">
+                                <div class="col">
+                                    <select name="">
+                                        [% IF zaak.zaakstatus.is_afgehandeld %]
+                                        <option value="[% c.uri_for('/zaak/' _ zaak.nr) %]">Openen</option>
+                                        
+                                        <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _
+                                        '/update/aanvrager') %]">Aanvrager wijzigen</option>
+                                        
+                                        <option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak kopieren</option>
+
+                                        [% ELSE %]
+
+                                    	[% IF zaak.status == 'new' && !force_result_finish %]
+									    <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/open') %]">In behandeling nemen</option>
+                                        <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/actie/weiger') %]" class="popup">Weigeren</option>
+                                        <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/behandelaar') %]" class="popup">Verplaats</option>
+                                        <!--<option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/actie/verplaats', { betrokkene_type => 'org_eenheid' }) %]" class="popup">Verplaats (eenheid)</option> -->
+									    <option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak kopieren</option>
+                                    	[% ELSE %]
+									    <option value="[% c.uri_for('/zaak/' _ zaak.nr) %]">Openen</option>
+
+                                        <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next') %]">Volgende fase</option>
+                                        <option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/behandelaar') %]">Behandelaar wijzigen</option>
+										<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/aanvrager') %]">Aanvrager wijzigen</option>
+										<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/verlengen') %]">Verlengen</option>
+										<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/opschorten') %]">Opschorten</option>
+                                        <option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak kopieren</option>
+                                        [% END %]
+                                        [% END %]
+									</select>
+                                </div>
+                                <div class="col">
+                                    <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+                                </div>
+                            </div>
+                       </td>
+                       <td class="td20">
+                           [% IF zaak.bericht.is_alert %]
+                           <!-- TODO LET OP: Dit is tijdelijk, attachment icon -->
+                           <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '#zaak-elements-documents') %]">
+                                <img
+                                src="images/icon_attachment.png"
+                                width="16"
+                                height="16"
+                                alt="Er staan documenten in de wachtrij voor deze zaak"
+                                border="0" />
+                            </a>
+                            [% END %]
+                        </td>
+
+                    [% END %]
+                    </tr>
+
+<!-- END zaak/widgets/result_row.tt -->
+
+

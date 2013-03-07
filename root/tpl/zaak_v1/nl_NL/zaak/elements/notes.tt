@@ -1,0 +1,78 @@
+[% USE Scalar %]
+[% notes = zaak.scalar.logging.scalar.search(
+    {
+        component => "notitie"
+    },
+    {
+        order_by => { '-desc' => 'created' }
+    }
+) %]
+
+    [% WHILE (note = notes.next) %]
+
+                        <table class="table_zaken_title notes">
+                        <tbody>
+                            <tr class="table_zaken_title_tr">
+                                <td width="400">
+                                    [% note.created.dmy %] [% note.created.hms %]
+                                    door
+                                    [% c.model('Betrokkene').get({ intern => 0 }, note.betrokkene_id).naam %]
+                                </th>
+                            </tr>
+                        
+                            <tr>
+                                <td width="400"><p>[% note.bericht %]</p></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        
+    [% END %]
+
+    [% IF c.check_any_zaak_permission('zaak_edit','zaak_beheer') %]
+
+                        <form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/notes/add'); %]">
+                        <input type="hidden" name="update_element" value="notes" />
+                        <div id="opmerking">
+                      	<p>
+                        U kunt hier een interne opmerking plaatsen:</p>
+                        <textarea name="content" cols="60" rows="10"></textarea>
+                        </div>
+
+                        <div style="margin-top:10px;">
+                        <input type="submit" class="button140" name="submit" value="Toevoegen" />
+                        </div>
+                        </form>
+    [% END %]
+
+<br/>
+<br/>
+<table class="table_zaken_title marginbottom" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th colspan="6">Logboek</th>
+
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                            <tr class="table_zaken_title_tr">
+                                <td class="table_zaken_title_td200">Datum</td>
+                                <td class="table_zaken_title_tdvar">Gebeurtenis</td>
+                                <td class="table_zaken_title_tdvar">Component</td>
+                                <td class="table_zaken_title_td200">Behandelaar</td>
+                            </tr>
+    [% notes = zaak.scalar.logging.scalar.search({}, { order_by => { '-desc' => 'created' }}) %]
+    [% WHILE (note = notes.next) %]
+        [% NEXT IF (note.commenttype == 'note' ) %]
+                            <tr class="table_zaken_tr">
+                                <!-- <td class="table_zaken_td60">0 van 4</td> -->
+                                <td class="table_zaken_td200">[% note.created.dmy %] [% note.created.hms %]</td>
+                                <td class="table_zaken_tdvar">[% note.onderwerp %]</td>
+                                <td class="table_zaken_tdvar">[% note.component | ucfirst %]</td>
+                                <td class="table_zaken_td200">[% c.model('Betrokkene').get({ intern => 0 }, note.betrokkene_id).naam  %]</td>
+
+                            </tr>
+    [% END %]
+                            </tbody>
+                        </table>
+

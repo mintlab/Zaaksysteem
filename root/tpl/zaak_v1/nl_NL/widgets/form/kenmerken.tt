@@ -1,0 +1,43 @@
+[% PROCESS form/webform_blocks.tt %]
+
+[% PROCESS webform_block_header %]
+
+[% PROCESS webform_form_hiddens %]
+<div class="blockcontent webformcontent">
+    <div class="webform_inner">
+        <div class="formOverlay"></div>
+        <div class="spinner-groot">
+            <div>
+                <span class="spinner-groot-message">
+                </span>
+            </div>
+        </div>
+        
+        
+        
+        <div id="fieldWrapper">
+            [% PROCESS webform_fields %]
+        </div>
+    
+    
+        
+    
+        <div id="wizard-navigation">
+            <div class="nextprev clearfix">
+                [% IF process.previous_stap %]
+                <input type="submit" name="submit_to_previous" value="Vorige" class="submit_to_previous button140"/>
+                [% ELSE %]
+                <input type="hidden" name="externe_login" value="[% IF c.is_externe_aanvraag() %]1[% ELSE %]0[% END %]"/>
+                <input type="submit" name="cancel" value="Annuleren" class="cancel_webform[% (!c.user_exists ? ' cancel_webform_burger' : '') %] button140"/>
+                [% END %]
+
+               [% IF !zaak_afhandeling_beeindigd %]
+               
+                <input type="submit" name="submit_to_next" value="Volgende" class="submit_to_next button140 right btn" />
+               [% END %]
+               
+               
+            </div>
+        </div>
+    </div>
+</div>

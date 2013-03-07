@@ -1,0 +1,53 @@
+[% IF results.pager.total_entries > 0 %]        
+
+
+<div class="zaken_filter_wrapper">
+        <div class="zaken_filter_inner">
+            <div class="knoppen">
+                <a href="[% c.uri_for('/search/') %][% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]results/?filetype=oocalc" id="oocal" class="knop right with-icon" style=""><span></span>OO Calc</a>
+                <a href="[% c.uri_for('/search/') %][% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]results/?filetype=excel" id="excel" class="knop right with-icon" style=""><span></span>Excel</a>
+                <a href="[% c.uri_for('/search/') %][% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]results/?filetype=csv" id="excel" class="knop right with-icon" style=""><span></span>CSV</a>
+            </div>
+            <div class="ui-accordion-table-bg">
+            <div class="spinner-groot"><div></div></div>
+            [% IF grouping_choice %]<input type="hidden" name="grouping_choice" value="[% grouping_choice %]" />[% END %]
+            <div class="left">
+                <p class="block-description">
+                    <b>
+                    [% page_index = page - 1 %]
+                    [% first_entry = (page_index * results.pager.entries_per_page) + 1 %]
+                    Getoonde zaken: 
+                    [% IF results.pager.total_entries > page_index * results.pager.entries_per_page %]
+                        [% last_entry = first_entry + results.pager.entries_per_page - 1 %]
+                        [% IF last_entry > results.pager.total_entries %]
+                            [% last_entry = results.pager.total_entries %]
+                        [% END %]
+                        [% first_entry %] - [% last_entry %]<!-- van --> 
+                    [% ELSE %]
+                        [% IF results.pager.total_entries > 1 %]
+                            [% first_entry %] - 
+                        [% END %]
+                    [% END %]<!--span class="total_entries">[% results.pager.total_entries %]</span-->
+                    </b>
+                </p>
+            </div>
+            <div style="clear: both;" class="blockcontent no-padding">
+                    [% PROCESS zaak/widgets/result.tt %]
+                    [% PROCESS widgets/pager2.tt %]
+            </div>
+            </div>
+        </div>   
+    </div>
+</div>
+
+[% ELSE %]
+
+<div style="clear: both;" class="blockcontent zaken_filter_wrapper">
+    <div class="zaken_filter_inner">
+        <p class="ui-accordion-table-bg geen-resultaten">
+            Geen resultaten.
+        </p>
+    </div>
+</div>
+
+[% END %]

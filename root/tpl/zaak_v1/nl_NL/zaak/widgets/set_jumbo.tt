@@ -1,0 +1,23 @@
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/set_jumbo') %]">
+<input type="hidden" name="jumboupdate" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Status:</td>
+        <td class="table_td_right_zaakinformatie">
+            <select name="status">
+            [% FOREACH status IN ZCONSTANTS.zaken_statussen %]
+                <option
+                value="[% status %]"
+                [% (zaak.status == status ? 'selected="selected"' : '') %]
+                >[% status %]</option>
+            [% END %]
+        </td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Opslaan" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

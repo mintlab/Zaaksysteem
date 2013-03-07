@@ -1,0 +1,22 @@
+<form method="POST" id="search_presentation" action="/search/[% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]results">
+
+
+									
+<div class="blockvar left mijlpaal_content no-padding" id="configureren">
+[% current_search_page = 'charts' %]
+[% PROCESS search/navigation.tt %]
+		<div class="blockcontent chart_profile_selector ui-widget-content" style="margin: 20px;">
+		
+			<div class="chart_profile_chooser clearfix">
+                <label for="chart_profile" class="label_chart_profile">Kies profiel:</label>
+                <select id="chart_profile" name="chart_profile" class="replace-select-large">
+                    <option value="status">Geregistreerd/afgehandeld</option>
+    				<option value="afhandeltermijn">Binnen afhandeltermijn/Buiten afhandeltermijn</option>
+    			</select>
+			</div>
+			
+			<div id="search_query_chart_container" style="width: 100%; height: 400px"></div>
+		</div>
+	</form>
+
+

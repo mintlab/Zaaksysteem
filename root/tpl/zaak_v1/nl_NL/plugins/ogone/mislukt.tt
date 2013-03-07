@@ -1,0 +1,14 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+<div class="block left flex50">
+    <div class="mislukt">
+        <div class="blockcontent">
+            <h1>[% ogone_error %]</h1>
+            <p>Neem contact op met uw gemeente voor meer informatie.</p>
+        </div>
+    </div>
+</div>
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

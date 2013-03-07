@@ -1,0 +1,33 @@
+<!-- zaaktype/widgets/row_zaaktype.tt -->
+<tr class="table_zaken_tr">
+    <td class="td30">
+        <a href="[% c.uri_for('/zaaktype/' _ zaaktype.id) %]">
+            <img src="/images/icon-case.gif" width="16" height="16" border="0" />
+        </a>
+    </td>
+    <td class="tdvar">
+        <a href="[% c.uri_for('/zaaktype/' _ zaaktype.id) %]">
+            [% zaaktype.zaaktype_node_id.titel %]
+        </a>
+    </td>
+    <td class="td60">
+            [% zaaktype.version %]
+    </td>
+    <td class="td150">
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option value="[% c.uri_for('/zaaktype/edit/' _ zaaktype.id) %]">Bewerken</option>
+                    <option value="[% c.uri_for('/zaaktype/edit/' _ zaaktype.id _ '/auth') %]">Rechten</option>
+                    <option value="[% c.uri_for('/zaaktype/clone/' _ zaaktype.id) %]">Dupliceren</option>
+                    <option value="[% c.uri_for('/zaaktype/verplaats/' _ zaaktype.id) %]" class="popup">Verplaatsen</option>
+                    <option value="[% c.uri_for('/zaaktype/delete/' _ zaaktype.id) %]" class="popup">Verwijderen</option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+            </div>
+        </div>
+    </td> 
+</tr>
+<!-- zaaktype/widgets/row_zaaktype.tt -->

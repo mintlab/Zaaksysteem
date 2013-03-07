@@ -1,0 +1,21 @@
+<!-- zaaktype/widgets/table_categorie.tt -->
+<table class="table_zaken_title" cellspacing="0">
+<thead>
+    <tr class="table_zaken_title_tr">
+        <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+        <td class="tdvar">Generieke Categorie</td>
+<!--
+        <td class="table_zaken_title_td100">Categorie Eigenaar</td>
+        <td class="table_zaken_title_td100">Categorie Bewaker</td>
+-->
+        <td class="td150">Acties:</td>
+    </tr>
+   </thead>
+   <tbody>
+    [% WHILE (categorie = categorien.next) %]
+        [% PROCESS zaaktype/widgets/row_categorie.tt %]
+    [% END %]
+</tbody>
+</table>
+<!-- END zaaktype/widgets/table_categorie.tt -->
+

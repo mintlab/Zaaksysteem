@@ -1,0 +1,36 @@
+[%
+    page_stylesheets = [];
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.ui.css" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.treeTable.css" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/stylesheet.css" type="text/css" media="screen" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.ui.selectmenu.css" type="text/css" media="screen" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/ztb.css" type="text/css" media="screen" />');  
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.uniform.default.css" type="text/css" media="screen" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.ui.multiselect.css" type="text/css" media="screen" />');
+
+	
+    page_scripts     = [];
+    page_scripts.push('jquery-1.4.4.min.js');
+    page_scripts.push('jquery-ui-1.8.16.custom.min.js');
+    page_scripts.push('OpenLayers-2.9.1/OpenLayers.js');
+    page_scripts.push('jquery.formwizard-3.0.5/js/jquery.form.wizard-min.js');
+    page_scripts.push('jquery.formwizard-3.0.5/js/bbq.js');
+    page_scripts.push('jquery.uniform.min.js');
+    page_scripts.push('jquery.cookie.js');
+    page_scripts.push('jquery.treeTable.js');
+    page_scripts.push('zaaksysteem.js');
+    page_scripts.push('jquery.ui.selectmenu.js');
+    page_scripts.push('jquery.hoverIntent.js');
+    page_scripts.push('easing.js');
+    page_scripts.push('multiselect/plugins/localisation/jquery.localisation-min.js');
+    page_scripts.push('ui.multiselect.js');
+    page_scripts.push('highcharts.js');
+    page_scripts.push('prefixfree.js');
+    page_scripts.push('jquery.ui.datepicker-nl.js');
+    page_scripts.push('regel_editor.js');
+    page_scripts.push('jquery.defaultvalue.js');
+    page_scripts.push('webform.js');
+    page_scripts.push('validate.js');
+    page_scripts.push('jquery.fileUploader.js');
+
+-%]

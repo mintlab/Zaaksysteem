@@ -1,0 +1,43 @@
+<h3><a href="#">Kenmerken</a><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/zaakinfo-loader.gif" alt="bezig met laden" style="display:none" /></h3>
+    <div class="ztAjaxUpdate ui-accordion-content ui-accordion-taken-kenmerken">[% UNLESS pip %]<div class="ztAjaxUpdate_loader"></div>[% END %]
+    <div class="ui-accordion-table-bg clearfix">
+        <form action="/zaak/[% zaak.nr %]/update" class="webform" method="post" enctype="multipart/form-data">
+            <div class="formOverlay"></div>
+            <input type="hidden" name="fase" value="[% requested_fase.status %]" />
+            <div class="ztAjaxUpdate_dest webformcontent">
+                <div class="webform_inner">
+                    <div class="spinner-groot">
+                        <div>
+                            <span class="spinner-groot-message">
+                            </span>
+                        </div>
+                    </div>
+                    [% PROCESS widgets/zaak/spec_zaakinformatie.tt %]
+                </div>
+            </div>
+
+            [% IF (!pip && c.can_change) || KENMERK_CHANGES_ALLOWED %]  
+                <!--
+                [% IF !c.can_change && c.check_any_zaak_permission('zaak_beheer') && zaak.afhandeldatum %]
+                <a
+                    class="ztAjaxUpdate_update col_right"
+                    href="[%
+                        c.uri_for('/zaak/' _ zaak.nr _ '/update')
+                    %]"
+                    rel="form: 1; "
+                    >
+                [% END %]
+                -->
+    
+                <input type="submit" class="button140 right ahref margin last" name="my_submit" value="Opslaan" />
+                <!-- 
+                 [% IF !c.can_change && c.check_any_zaak_permission('zaak_beheer') && zaak.afhandeldatum %]
+                   </a>
+                [% END %]
+                -->
+
+            [% END %]
+            </form>
+        <br />
+        </div>
+    </div> 

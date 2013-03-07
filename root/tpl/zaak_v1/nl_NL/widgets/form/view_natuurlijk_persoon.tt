@@ -1,0 +1,135 @@
+<table class="form aanvrager">
+   <tr>
+        <td class="td200"><label>Burgerservicenummer:</label></td>
+        <td>[% aanvrager.burgerservicenummer %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Voornamen:</label></td>
+        <td>[% aanvrager.voornamen %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Tussenvoegsel:</label></td>
+        <td>[% aanvrager.voorvoegsel %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Achternaam:</label></td>
+        <td>[% aanvrager.geslachtsnaam %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Geboortedatum:</label></td>
+        <td>[% aanvrager.geboortedatum.dmy %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Geboorteplaats:</label></td>
+        <td>[% aanvrager.geboorteplaats %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Straatnaam:</label></td>
+        <td>[% aanvrager.straatnaam %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Huisnummer:</label></td>
+        <td>[% aanvrager.huisnummer %]</td>
+        <td class="tdvar"></td>
+    </tr>
+   <tr>
+        <td class="td200"><label>Postcode:</label></td>
+        <td>[% aanvrager.postcode %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr>
+        <td class="td280">Telefoon:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-telefoonnummer"
+                value="[% aanvrager.telefoonnummer %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw telefoonnummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr>
+        <td class="td280">Mobiel:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-mobiel"
+                value="[% aanvrager.mobiel %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw mobiele nummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr>
+        <td class="td280">E-mail:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-email"
+                value="[% aanvrager.email %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw e-mailadres in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+</table>
+
+<div class="aanvullende-gegevens">
+            Uw telefoonnummer, mobiele nummer en e-mailadres kunt u desgewenst
+            aanvullen of aanpassen. Dit zijn gegevens die geen deel uitmaken
+            van de Gemeentelijke Basisadministratie (GBA), maar wel
+            toegevoegde waarde kunnen hebben bij het behandelen van de zaak.
+</div>
+

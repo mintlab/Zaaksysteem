@@ -1,0 +1,17 @@
+<!-- widgets/beheer/import/gba/table_row.tt -->
+<tr class="table_zaken_tr">
+    <td></td>
+    <td class="td100">
+        [% entry.identifier %]
+    </td>
+    <td class="td100">
+        [% entry.kolom %]
+    </td>
+    <td class="tdvar">
+        [% entry.old_data %]
+    </td>
+    <td class="tdvar">
+    [% entry.new_data %]
+    </td>
+</tr>
+<!-- widgets/beheer/import/gba/table_row.tt -->

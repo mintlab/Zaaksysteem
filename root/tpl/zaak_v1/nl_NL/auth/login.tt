@@ -1,0 +1,33 @@
+
+
+[% bodyid = 'login' %]
+
+				<div id="loginwrap">
+				
+					<div class="block">
+					<p class="header">Login</p>
+						
+						<div class="blockcontent">
+										
+										[% IF c.user_exists %]
+                                            <p>U bent al ingelogd</p>
+                                        [% ELSE %]
+                                            <form action="[% c.uri_for('/auth/login') %]" method="POST">
+                                            <input type="hidden" name="referer" value="[% referer | html %]" />
+                                            
+                                                    <div><label for="username">Gebruikersnaam:</label></div>
+                                                    <div><input type="text" name="username" class="input_medium"/></div>
+                                                	<div><label for="password">Wachtwoord:</label></div>
+                                                    <div><input type="password" name="password" class="input_medium" autocomplete="off" /></div>
+                                               		<div><input type="submit" value="Inloggen" class="button140 inloggen"></td></div>
+                                                
+                                            </form>
+                                        [% END %]
+
+							</div>
+
+					</div>
+							
+						
+				</div>
+				

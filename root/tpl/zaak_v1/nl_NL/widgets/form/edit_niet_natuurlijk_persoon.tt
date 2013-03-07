@@ -1,0 +1,77 @@
+[% USE String %]
+[%
+rechtsvormmap = ZCONSTANTS.kvk_rechtsvormen;
+rechtsvormenabled = ZCONSTANTS.kvk_rechtsvormen_enabled;
+%]
+<table class="table_webformulier">
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">KvK-nummer:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="dossiernummer" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Handelsnaam:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="handelsnaam" class="input_medium"><span class="validator"></span></td>
+
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Rechtsvorm:</td>
+        <td class="table_webformulier_tdvar">
+                [% currentrechtsvormid = betrokkene.rechtsvorm | format('%02d') %]
+                [% FOREACH rechtsvormid IN rechtsvormenabled %]
+                    <input
+                        type="radio"
+                        name="rechtsvorm"
+                        value="[% rechtsvormid %]"
+                        [% (rechtsvormid == currentrechtsvormid ?
+                        'checked="checked"' : ''
+                        ) %]
+                        >
+                        [% rechtsvormmap.$rechtsvormid %] <br>
+                [% END %]
+            <span class="validator"></span>
+        </td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging straat:</td>
+
+        <td class="table_webformulier_tdvar"><input type="text" name="vestiging_straatnaam" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging huisnummer:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="vestiging_huisnummer" class="input_mini"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging toevoeging:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="vestiging_huisnummertoevoeging" class="input_mini"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging postcode:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="vestiging_postcode" class="input_mini"> 1234AZ<span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging woonplaats:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="vestiging_woonplaats" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Telefoonnummer:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="telefoonnummer" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">E-mailadres:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="email" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    <!--
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Contactpersoon voorletters:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="contact_voorletters" class="input_mini"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Contactpersoon tussenvoegsel:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="contact_tussenvoegsel" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Contactpersoon achternaam:</td>
+        <td class="table_webformulier_tdvar"><input type="text" name="contact_geslachtsnaam" class="input_medium"><span class="validator"></span></td>
+    </tr>
+    -->
+</table>

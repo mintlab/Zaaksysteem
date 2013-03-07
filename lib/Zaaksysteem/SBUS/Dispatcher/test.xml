@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <SectorModel:vraagBericht
+                 xmlns:SectorModel="http://www.egem.nl/StUF/sector/bg/0204"
+                 xmlns:StUF="http://www.egem.nl/StUF/StUF0204"
+                 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+     <stuurgegevens xmlns="http://www.egem.nl/StUF/StUF0204">
+       <berichtsoort>Lv01</berichtsoort>
+       <entiteittype>PRS</entiteittype>
+       <sectormodel>bg</sectormodel>
+       <versieStUF>0204</versieStUF>
+       <versieSectormodel>0204</versieSectormodel>
+       <zender>
+        <applicatie>BRS</applicatie>
+        <gebruiker>makelaar</gebruiker>
+       </zender>
+       <ontvanger>
+        <applicatie>BRS</applicatie>
+       </ontvanger>
+
+       <referentienummer>P12367521</referentienummer>
+       <tijdstipBericht>2009040717084815</tijdstipBericht>
+       <vraag>
+         <sortering> 7</sortering>
+         <maximumAantal>1</maximumAantal>
+       </vraag>
+     </stuurgegevens>
+
+     <body xmlns="http://www.egem.nl/StUF/sector/bg/0204">
+ <PRS soortEntiteit="F">
+   <bsn-nummer>24241933</bsn-nummer>
+  </PRS>
+  <PRS soortEntiteit="F">
+   <bsn-nummer>24241933</bsn-nummer>
+  </PRS>
+       <PRS soortEntiteit="F" xsi:nil="true" StUF:noValue="GeenWaarde"/>     </body>
+ </SectorModel:vraagBericht>
+

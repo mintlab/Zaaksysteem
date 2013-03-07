@@ -1,0 +1,10 @@
+<!-- Begin KVK Import List -->
+<div class="block">
+    <p class="header">Import ([% c.loc('kvk') %])</p>
+    <div class="blockcontent">
+        [% PROCESS widgets/beheer/import/table.tt %]
+    </div>
+</div>
+<!-- End KVK Import List -->
+
+

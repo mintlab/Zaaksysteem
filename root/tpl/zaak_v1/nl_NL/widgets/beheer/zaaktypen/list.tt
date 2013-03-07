@@ -1,0 +1,58 @@
+[% USE Scalar %]
+<form name="zaaktypen_list">
+<input type="hidden" name="page" value="[% page %]"/>
+<div class="block">
+    <p class="header">Zaaktype Bibliotheek</p>
+   	[% PROCESS widgets/general/zaken_filter.tt 
+   	%]
+    <div class="blockcontent">
+    <div class="zaken_filter_wrapper">
+    <div class="zaken_filter_inner">
+        <table class="table_zaken_title" cellspacing="0">
+            <thead>
+                <tr class="table_zaken_title_tr">
+                    <td class="td30 center" class="icon icon-down"></td>
+                    <td class="tdvar">[% dest.table_naam %]</th>
+                    <td class="tdvar"></td>
+                    <td class="td200">[% c.loc('versie') %]</th>
+                    [% IF ! categorie.system %]
+                    <td class="td150">[% c.loc('acties') %]</th>
+                    [% END %]
+                </tr>
+            </thead>
+            <tbody>
+                [% IF categories.count %]
+                    <!-- FOUND -->
+                    [% # AI WE WILL LOOSE THE CATEGORIE VARIABLE HERE,SAVE IT,LOCAL IT
+                    %]
+                    [% bib_cat_children = categories %]
+                    [% save_categorie = categorie %]
+                    [% WHILE (categorie = bib_cat_children.next) %]
+                        [% PROCESS widgets/beheer/categorie/row.tt
+                            CHILD=1
+                        %]
+                    [% END %]
+                    [% categorie = save_categorie %]
+                [% END %]
+                [% WHILE (entry = entries.next) %]
+                    [% PROCESS widgets/beheer/zaaktypen/list_row.tt %]
+                [% END %]
+            </tbody>
+        </table>
+[% PROCESS widgets/pager2.tt
+	results = entries
+%]
+        </div>
+        </div>
+    </div>
+</div>
+</form>
+[% IF ! categorie.system %]
+<a rel="" href="[% c.uri_for('/beheer/bibliotheek/categorie/0/bewerken/' _ bib_type _ '/' _ categorie.id ) %]" class="add dialog-post" title="Categorie bewerken of aanmaken">Nieuwe categorie</a>
+<a
+    rel=""
+    href="[% c.uri_for('/beheer/zaaktypen/0/bewerken') %]"
+    class="add"
+    title="[% c.loc(bib_type _ '1') %] bewerken of aanmaken"
+>Nieuw zaaktype</a>
+[% END %]

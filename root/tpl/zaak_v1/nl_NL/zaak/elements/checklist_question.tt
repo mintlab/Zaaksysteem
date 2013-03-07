@@ -1,0 +1,64 @@
+<table class="table_checklist">
+        <tbody>
+    [% counter = 0 %]
+    [% WHILE (vraag = vragen.next) %]
+        [% antwoord = 0 %]
+        [% counter = (counter + 1) %]
+        [% antwoorden = vraag.scalar.checklist_antwoords.scalar.search({
+            zaak_id => zaak.nr 
+        }) %]
+        [% IF antwoorden.count %]
+            [% antwoord = antwoorden.first %]
+        [% END %]
+
+        <tr class="table_checklist_tr_[% (c.can_change ? 'active' : 'done') %]">
+            <td class="td20">[% counter %]</td>
+            <td class="tdvar">[% vraag.vraag %]<br/>
+                <input type="checkbox" value="1" [% (c.can_change ? '' : 'disabled') %] name="checklist_[% vraag.id %]_ja" id="chk-option-696" class="yesno_[% vraag.id %]" style="border: 0px none;"[% (antwoord.antwoord == 'ja' ? ' checked="checked"' : '') %]> Ja
+                <input type="checkbox" value="1" [% (c.can_change ? '' : 'disabled') %] name="checklist_[% vraag.id %]_nee" id="chk-option-696" class="yesno_[% vraag.id %]" style="border: 0px none;"[% (antwoord.antwoord == 'nee' ? ' checked="checked"' : '') %]> Nee
+            </td>
+        </tr>
+    [% END %]
+    [% IF c.can_change %]
+        <tr>
+            <td colspan="2">
+                <input type="hidden" name="update_fase" value="[% requested_fase.id %]" />
+                <input type="submit" class="button140 btn" value="Opslaan" />
+            <td>
+        </tr>
+    [% END %]
+    </tbody>
+</table>
+<div class="checklist-log rounded shadow">
+    <table class="table_zaken_title">
+        <thead>
+            <tr>
+                <th colspan ="3" class="blue th_16px">Checklist log</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table_zaken_title_tr">
+                <td class="table_zaken_title_td200">Datum</td>
+                <td class="table_zaken_title_tdvar">Gebeurtenis</td>
+                <td class="table_zaken_title_td200">Behandelaar</td>
+            </tr>
+
+    [% notes = zaak.scalar.logging.scalar.search(
+        {
+            component       => "checklist"
+            component_id    => requested_fase.id
+        },
+        {
+            order_by => { '-desc' => 'created' }
+        }
+        ) %]
+    [% WHILE (note = notes.next) %]
+            <tr class="table_zaken_tr">
+                <td class="table_zaken_td200">[% note.created.dmy %] [% note.created.hms %]</td>
+                <td class="table_zaken_tdvar">[% note.onderwerp %]</td>
+                <td class="table_zaken_td200">[% c.model('Betrokkene').get({ intern => 0 }, note.betrokkene_id).naam  %]</td>
+            </tr>
+    [% END %]
+        </tbody>
+    </table>
+</div>

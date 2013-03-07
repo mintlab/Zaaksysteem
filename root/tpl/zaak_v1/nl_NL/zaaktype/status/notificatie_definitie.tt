@@ -1,0 +1,83 @@
+<div id="start_intern">
+<div id="notificatie_definitie">
+<form[% (
+    popupaction ? ' action="' _ popupaction _ '"': ''
+) %]>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<input type="hidden" name="ztc_trigger" value="intern">
+<input type="hidden" name="betrokkene_type" value="medewerker">
+<table class="table_zaakinformatie" id="notificatie_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Ontvanger</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="notificatie_rcpt" class="ezra_notificatie_rcpt">
+                    [% FOR rcpt_hash IN ZCONSTANTS.mail_rcpt %]
+                        [% NEXT IF in_status && !IN_ZAAKSTATUS %]
+                        <option
+                            value="[% rcpt_hash.key %]"
+                            [% (rcpt_hash.key == history.rcpt ? ' selected="selected"' : '') %]
+                        >[% rcpt_hash.value.naam %]</option>
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr class="ezra_notificatie_rcpt_behandelaar">
+            <td class="table_td_left_zaakinformatie">Behandelaar:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="ezra_select_betrokkene">
+                    <div class="medewerker">
+                        <input
+                            type="hidden"
+                            name="notificatie_ztc_aanvrager_id"
+                            value="[%
+                                history.ztc_aanvrager_id || ''
+                            %]"
+                        />
+                        <input type="text"
+                            value="[% history.ztc_aanvrager %]"
+                            class="input_large"
+                            name="notificatie_ztc_aanvrager"
+                        />
+                        <a href="#" title="Zoek een nieuwe aanvrager" class="ezra_search_betrokkene" rel="medewerker">
+                            <img src="/images/icon-magnifier.png" width="16" height="16" border="0" />
+                        </a><span class="validator"></span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr class="ezra_notificatie_rcpt_overig">
+            <td class="table_td_left_zaakinformatie">E-mailadres:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="text" name="notificatie_email" value="[% history.email %]" />
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Onderwerp:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="text" name="notificatie_onderwerp" value="[% history.onderwerp %]" />
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Bericht:</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea name="notificatie_bericht" rows="10" cols="60">[% history.bericht %]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Niet versturen bij balie aanvraag:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="notificatie_intern_block"[% (history.intern_block ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+    </tbody>
+<table>
+<div class="nextprev nextprev-dialog clearfix">
+    <input type="submit" value="Opslaan" class="button140">
+</div>
+</form>
+</div>
+</div>

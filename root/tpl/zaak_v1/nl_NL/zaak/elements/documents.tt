@@ -1,0 +1,200 @@
+[%
+    USE scalar;
+
+    icons = ZCONSTANTS.mimetypes;
+
+    document_search_args = {};
+
+    IF pip; document_search_args.pip = 1; END;
+%]
+
+[% USE format %]
+
+[% IF c.req.params.documentdepth && !document_depth %]
+    [% document_depth = zaak.scalar.documents.find(c.req.params.documentdepth) %]
+    [% IF document_depth; document_search_args.pid = document_depth.id; END; %]
+[% END %]
+
+[% documents = zaak.scalar.documents.scalar.documenten(document_search_args) %]
+
+[% PROCESS widgets/general/documents.tt
+    TABLE_TITLE = '(Archief)documenten'
+        _ (
+            document_depth
+                ? ' / '
+                _ document_depth.filename
+                _ ' &nbsp;&nbsp;&nbsp; <a href="' _ c.uri_for((pip ? '/pip' : '') _ '/zaak/' _ zaak.nr) _ '/?current_element=documents"> &laquo; terug</a>'
+                : ''
+        )
+%]
+
+[% IF document_depth %]
+    [% queue_search_opts = 
+        {
+            pid     => document_depth.id,
+            queue   => 1,
+        }
+    %]
+[% ELSE %]
+    [% queue_search_opts = 
+        {
+            queue   => 1,
+        }
+    %]
+[% END %]
+
+[% IF pip %]
+    [% queue_search_opts.betrokkene_id = c.session.pip.ztc_aanvrager %]
+[% END %]
+
+[% documents = zaak.scalar.documents.scalar.documenten(queue_search_opts) %]
+
+[% #QUEUE_LOGGING = zaak.notes.scalar.search({
+   #     component   => 'zaak_documents_queue'
+   # })
+%]
+
+[% IF QUEUE_LOGGING.count || documents.count %]
+    [% PROCESS widgets/general/documents.tt
+        QUEUE       = 1,
+        LOGGING     = QUEUE_LOGGING,
+        TABLE_TITLE = 'Documentenwachtrij'
+            _ (
+                document_depth
+                    ? ' / '
+                    _ document_depth.filename
+                    _ ' &nbsp;&nbsp;&nbsp; <a href="' _ c.uri_for((pip ?  '/pip' : '/')) _ '/zaak/' _ zaak.nr _ '/?current_element=documents"> &laquo; terug</a>'
+                    : ''
+            )
+    %]
+[% END %]
+
+[% UNLESS pip %]
+<table class="table_zaakinformatie marginbottom"  cellspacing="0">
+<thead>
+    <tr>
+        <th class="blue th_16px" colspan="5">Documenten voor dit zaaktype</th>
+    </tr>
+</thead>
+    <tbody>
+    <tr class="table_ztb_title_tr">
+        <td class="">Naam</td>
+        <td class="td80">Fase</td>
+        <!-- <td class="table_ztb_title_td200">Omschrijving</td> -->
+        <td class="td100">Verplicht</td>
+        <td class="td100">In dossier?</td>
+        <td class="td30">Info</td>
+    </tr>
+    [% USE Scalar %]
+    [% documenten = zaak.zaaktype_node_id.zaaktype_kenmerken.scalar.search(
+        {
+            'bibliotheek_kenmerken_id.value_type'    => 'file'
+        },
+        {
+            'join'          => 'bibliotheek_kenmerken_id',
+            'order_by'      => 'id',
+        }
+    ) %]
+    [% WHILE (document = documenten.next) %]
+        [% mandatory_string = (document.value_mandatory ? 'Ja' : 'Nee') %]
+        [% uploaded_doc = zaak.scalar.documents.scalar.is_zaaktype_document(zaaktype_kenmerken_id => document.id) %]
+        [% document_naam = document.naam %]
+        [% IF uploaded_doc %]
+            [% document_naam = '<a href="' _ c.uri_for(
+                                '/zaak/' _ zaak.nr _ '/documents/'
+                                _ (uploaded_doc.pid.id || 0) _ '/get/'
+                                _ uploaded_doc.id _ '/' _ uploaded_doc.filename
+                                ) _ '?filetype=pdf'
+                            _ '">' _ document_naam _ '</a>'; %]
+        [% END %]
+        <tr class="table_ztb_tr">
+            <td class="">[% document.label %]</td>
+            <td class="td80">[% (document.zaak_status_id ?  document.zaak_status_id.status : 1) %]/[% zaak.afhandel_fase.status %]</td>
+            <!-- <td class="table_ztb_td_td200">[% document.description %]</td> -->
+            <td class="td100">[% mandatory_string %]</td>
+            <td class="td100">[% (uploaded_doc ? '<img src="/images/icon-check.png" />' : '<img src="/images/icon-cross.png" />') %]</td>
+            <td class="td30">
+                [% IF document.help %]
+                <div class="dialog-help">
+                    <a href="#" class="dialog-help-button" title="Toelichting">
+                        <img src="/images/icon-help.png" width="16" height="16" border="0">
+                    </a>
+                    <div class="dialog-help-text" style="display: none;">
+                        [% document.help %]
+                    </div>
+                </div>
+                [% END %]
+            </td>
+        </tr>
+    [% END %]
+</tbody>
+</table>
+[% END %]
+
+<!-- [% UNLESS !zaak.is_open || (pip && document_depth) %]
+<table class="table_zaken_title marginbottom">
+    <thead>
+    <tr>
+        <th>Een document toevoegen</th>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td>
+            <div><input type="hidden" id="option-documentdepth" name="documentdepth" value="[% (document_depth.id || 0) %]" /></div>
+            <a
+                title="Handmatig document toevoegen"
+                class="add fire-dialog"
+                rel="callback: ezra_document_functions"
+                href="[% c.uri_for(
+                    (pip ? '/pip' : '') _ '/zaak/' _ zaak.nr
+                    _ '/documents/'
+                    _ (document_depth.id || 0) _'/add/file')
+                %]">Handmatig toevoegen</a>
+            [% UNLESS pip %]
+            <a title="Email versturen met zaakinformatie" class="add dialog-post" href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _'/add/mail') %]">E-mail versturen</a>
+            <a
+                title="Sjabloon gebruiken"
+                class="add dialog-post"
+                rel="callback: ezra_document_functions"
+                href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _'/add/sjabloon') %]">Sjabloon gebruiken</a>
+            [% END %]
+           </td>
+     </tr>
+    </tbody>
+</table>
+[% END %]
+
+
+[% IF !document_depth && c.can_change %]
+<table class="table_zaken_title marginbottom">
+    <thead>
+        <tr>
+            <th>Een map toevoegen</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                Naam:
+                <form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0)_ '/add') %]">
+                    <input type="hidden" name="documenttype" value="dir" />
+                    <input type="text" name="filename" class="input_medium" />
+                    <br /><br />
+                    <table class="table_ztbmenu">
+                        <tr class="table_ztbmenu_tr">
+                            <td class="table_ztbmenu_tdleft">
+                                <input type="submit" class="button140" name="submit" value="Map toevoegen" /></td>
+[% IF c.can_change %]
+                                <td class="table_ztbmenu_tdright">
+                                    <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next') %]"><input type="button" class="button140" name="next_status" value="Volgende status" /></a></td>
+                        </tr>
+[% END %]
+                    </table>
+                </form>
+            </td>
+        </tr>
+    </tbody>
+</table>
+[% END %]
+-->

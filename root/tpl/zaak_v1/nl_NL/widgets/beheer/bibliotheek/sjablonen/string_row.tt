@@ -1,0 +1,15 @@
+<!-- widgets/beheer/import/gba/table_row.tt -->
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        <img src="/images/icon-kenmerk.png" width="16" height="16" border="0" />
+    </td>
+    <!--
+    <td class="tdvar">
+        [% entry.value %]
+    </td>
+    -->
+    <td class="tdvar">
+    [[[% entry.value %]]]
+    </td>
+</tr>
+<!-- widgets/beheer/import/gba/table_row.tt -->

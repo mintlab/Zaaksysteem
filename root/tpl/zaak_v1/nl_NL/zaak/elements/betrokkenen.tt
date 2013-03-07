@@ -1,0 +1,54 @@
+                <!-- 
+                <table class="table_ztb">
+                <thead>
+                    <tr>
+                        <th class="td150">Type</th>
+
+                        <th class="table_ztb_title_td250">Naam</th>
+                        <th class="table_ztb_title_var">Rol</th>
+                        <th class="table_ztb_title_td30"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    <tr class="table_ztb_tr">
+                        <td class="td_150">[% zaak.kenmerk.aanvrager.btype %]</td>
+                        <td class="table_ztb_td_250"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.aanvrager.id %]">[% zaak.kenmerk.aanvrager.naam %]</a></td>
+                        <td class="table_ztb_td_var">Aanvrager (bij aanmaken zaak)</td>
+                        <td class="table_ztb_td_30"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel='zaak: [% zaak.nr %]; id: [% zaak.kenmerk.aanvrager.id %]'><img src="/images/icon-info.png" border="0" width="16" height="16" alt="Verwijderen" title="Meer informatie over deze betrokkene"></a></td>
+                    </tr>
+                    <tr class="table_ztb_tr">
+                        <td class="td_150">[% zaak.kenmerk.aanvrager.btype %]</td>
+                        <td class="table_ztb_td_250"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.aanvrager.id %]">[% zaak.kenmerk.aanvrager.naam %]</a></td>
+                        <td class="table_ztb_td_var">Aanvrager (actueel)</td>
+                        <td class="table_ztb_td_30"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.aanvrager.id %]"><img src="/images/icon-info.png" border="0" width="16" height="16" alt="Verwijderen" title="Meer informatie over deze betrokkene"></a></td>
+                    </tr>
+                [% IF zaak.kenmerk.zaakeigenaar %]
+                    <tr class="table_ztb_tr">
+                        <td class="td_150">Behandelaar</td>
+                        <td class="table_ztb_td_250"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.zaakeigenaar.id %]">[% zaak.kenmerk.zaakeigenaar.naam %]</a></td>
+                        <td class="table_ztb_td_var">Zaakcoordinator</td>
+                        <td class="table_ztb_td_30"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.zaakeigenaar.id %]"><img src="/images/icon-info.png" border="0" width="16" height="16" alt="Verwijderen" title="Meer informatie over deze betrokkene"></a></td>
+                    </tr>
+                [% END %]
+                [% IF zaak.kenmerk.behandelaar %]
+                    <tr class="table_ztb_tr">
+                        <td class="td_150">Behandelaar</td>
+                        <td class="table_ztb_td_250"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.behandelaar.id %]">[% zaak.kenmerk.behandelaar.naam %]</a></td>
+                        <td class="table_ztb_td_var">Behandelaar</td>
+                        <td class="table_ztb_td_30"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.behandelaar.id %]"><img src="/images/icon-info.png" border="0" width="16" height="16" alt="Verwijderen" title="Meer informatie over deze betrokkene"></a></td>
+                    </tr>
+                [% END %]
+                [% IF zaak.kenmerk.org_eenheid %]
+                    <tr class="table_ztb_tr">
+                        <td class="td_150">Afdeling</td>
+                        <td class="table_ztb_td_250">[% zaak.kenmerk.org_eenheid.naam %]</a></td>
+                        <td class="table_ztb_td_var">-</td>
+                        <td class="table_ztb_td_30">&nbsp;</td>
+                    </tr>
+                [% END %]
+                </tbody>
+                </table>
+                -->
+    
+

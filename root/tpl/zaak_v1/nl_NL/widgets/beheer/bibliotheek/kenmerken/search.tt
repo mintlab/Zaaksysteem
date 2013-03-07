@@ -1,0 +1,62 @@
+[% USE Scalar %]
+
+[% BLOCK block_categorie %]
+    [% WHILE (categorie = bib_cat.next) %]
+        <option
+            value="[% categorie.id %]"
+            class="[% (invoertype.value.multiple ? ' has_options' : '') %][% (invoertype.key == 'file' ? ' file' : '') %]"
+        >[% '-' | repeat(CAT_STR_DEPTH) %] [% categorie.naam %]</option>
+        [% IF categorie.scalar.bibliotheek_categories.count %]
+        [% SET CAT_STR_DEPTH = CAT_STR_DEPTH + 1 %]
+            [% inner_cat = categorie.scalar.bibliotheek_categories %]
+            [% save_categorie = bib_cat %]
+            [% INCLUDE block_categorie
+                bib_cat = inner_cat
+                CAT_STR_DEPTH = CAT_STR_DEPTH
+            %]
+            [% categorie = save_categorie %]
+            [% SET CAT_STR_DEPTH = CAT_STR_DEPTH - 2 %]
+        [% END %]
+    [% END %]
+[% END %]
+
+<!-- WIDGET: beheer/bibliotheek/kenmerken/search.tt -->
+<div class="wgt-beheer-bibliotheek-kenmerken-search">
+    <table class="table_zaakinformatie marginbottom">
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Naam:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="naam" class="input_large" value=""></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Categorie</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="bibliotheek_categorie_id">
+                    <option value="">Selecteer</option>
+                    [% 
+                        INCLUDE block_categorie
+                        CAT_STR_DEPTH = 1
+                    %]
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Invoertype</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerk_type" id="kenmerk_invoertype">
+                    <option value="">Selecteer</option>
+                    [% FOR invoertype IN constants.veld_opties %]
+                    [% hide_veld_opties.${invoertype.key} %]
+                    	[% UNLESS search_filter_post && hide_veld_opties.${invoertype.key} %] 
+                        <option
+                            value="[% invoertype.key %]"
+                            class="[% (invoertype.value.multiple ? ' has_options' : '') %][% (invoertype.key == 'file' ? ' file' : '') %]"
+                        >[% invoertype.value.label %]</option>
+                        [% END %]
+                    [% END %]
+                </select>
+                <span class="validator"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- END WIDGET: beheer/bibliotheek/kenmerken/search.tt -->

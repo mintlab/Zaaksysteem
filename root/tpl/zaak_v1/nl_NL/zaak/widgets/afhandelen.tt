@@ -1,0 +1,15 @@
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/afhandelen') %]">
+<input type="hidden" name="update" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Reden afhandeling:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" class="input_large" name="reden"/><span class="validator"></span></td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Afhandelen" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

@@ -1,0 +1,16 @@
+[% IF !xmlrequest %]
+
+[% ELSE %]
+    [% UNLESS confirmation.msgonly %]
+    <form method="POST" action="[% confirmation.uri || c.uri_for(c.action) %]" class="ztSpinnerWait">
+        <input type="hidden" name="confirmed" value="1" />
+    [% END %]
+    [% FOR param IN confirmation.params %]
+    <input type="hidden" name="[% param.key %]" value="[% param.value %]" />
+    [% END %]
+    <p class="bericht paragraph">[% confirmation.message %]</p>
+    [% UNLESS confirmation.msgonly %]
+    <input type="submit" value="Bevestigen" class="button140 right" id="dialog-submit"/>
+    </form>
+    [% END %]
+[% END %]

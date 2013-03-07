@@ -1,0 +1,13 @@
+<tr class="table_zaken_title_tr">
+    <td class="table_zaken_title_td250">Naam:</td>
+</tr>
+[% WHILE (zt = zaaktypen.next) %]
+    <tr class="table_zaken_tr zaaktype_keuze" id="zaaktype-id-[% zt.id %]">
+        <td style="display: none;">
+            <input type="hidden" name="zaaktype_id" value="[% zt.id %]" />
+            <input type="hidden" name="zaaktype_name" value="[% zt.zaaktype_node_id.titel %]" />
+            <input type="hidden" name="zaaktype_descr" value="[% zt.zaaktype_node_id.titel %]" />
+        </td>
+        <td class="">[% zt.zaaktype_node_id.titel %]</td>
+    </tr>
+[% END %]

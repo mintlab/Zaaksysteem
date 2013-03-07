@@ -1,0 +1,37 @@
+<div id="document_definitie">
+<input type="hidden" name="destination" value="[% c.req.params.destination %]">
+<input type="hidden" name="update" value="1">
+<table class="table_zaakinformatie">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Documenttype</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerk_category">
+            [% FOREACH doc_category IN constants.document.categories %]
+                    <option value="[% doc_category %]"[% (history.category == doc_category) ? ' selected' : '' %]>[% doc_category %]</option>
+            [% END %]
+                </select>
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toelichting</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea name="kenmerk_help" cols=60 rows=10>[% history.help %]</textarea>
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Publiceren op PIP</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="checkbox" name="kenmerk_pip" value="1"[% (history.pip ? ' checked' : '') %] />
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Verplicht</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="checkbox" name="kenmerk_mandatory" value="1"[% (history.mandatory ? ' checked' : '') %] />
+            </td>
+        <tr>
+    </tbody>
+<table>
+<input type="button" value="Opslaan" class="button140">
+</div>

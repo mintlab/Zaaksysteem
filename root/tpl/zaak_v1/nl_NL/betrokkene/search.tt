@@ -1,0 +1,49 @@
+                            <!-- Begin Tabber -->
+                                <div class="tabber" id="tabinterface">
+                                    <div class="header tabbed">Contact zoeken</div>
+                                    <ul class="ui-rounded-corners-off">
+                                        <li><a href="#tab-wgt-personen">Personen</a></li>
+                                        <li><a href="#tab-wgt-bedrijven">Organisaties</a></li>
+                                        <li><a href="#tab-wgt-behandelaar">Behandelaars</a></li>
+                                    </ul>
+                                    
+
+                                    <div class="tabbertab clearfix" id="tab-wgt-personen">
+                                        <form method="POST" action="[% c.uri_for('/betrokkene/search') %]">
+                                        <input type="hidden" name="betrokkene_type" value="natuurlijk_persoon">
+                                        <input type="hidden" name="search" value="1">
+                                        [% INCLUDE widgets/betrokkene/natuurlijk_persoon_search.tt %]
+                                        <input type="submit" value="Zoeken" class="button140 right">
+
+
+                                        </form>
+                                    [% IF c.check_any_user_permission('contact_nieuw') %]
+                                        <a href="[% c.uri_for('/betrokkene/create#tab-wgt-personen') %]" id="voegtoe" class="element small width-auto in-header" style=""><span></span>Voeg persoon toe</a>
+                                    [% END %]
+
+                                    </div>
+
+                                    <div class="tabbertab clearfix" id="tab-wgt-bedrijven">
+                                        <form method="POST" action="[% c.uri_for('/betrokkene/search') %]">
+                                        <input type="hidden" name="betrokkene_type" value="bedrijf">
+                                        <input type="hidden" name="search" value="1">
+                                        [% PROCESS widgets/betrokkene/bedrijf_search.tt %]
+                                        <input type="submit" value="Zoeken" class="button140 right">
+                                        </form>
+                                    [% IF c.check_any_user_permission('contact_nieuw') %]
+                                        <a href="[% c.uri_for('/betrokkene/create#tab-wgt-bedrijven') %]" id="voegtoe" class="element small width-auto in-header" style=""><span></span>Voeg organisatie toe</a>
+                                    [% END %]
+
+                                    </div>
+                    
+                                    <div class="tabbertab clearfix" id="tab-wgt-behandelaar">
+                                        <form method="POST" action="[% c.uri_for('/betrokkene/search') %]">
+                                        <input type="hidden" name="betrokkene_type" value="medewerker">
+                                        <input type="hidden" name="search" value="1">
+                                        [% INCLUDE widgets/betrokkene/medewerker_search.tt %]
+                                        <input type="submit" value="Zoeken" class="button140 right">
+                                        </form>
+                                    </div>
+                    
+                                </div>
+                            <!-- End Tabber --> 

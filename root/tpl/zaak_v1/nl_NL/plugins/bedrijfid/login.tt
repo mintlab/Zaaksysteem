@@ -1,0 +1,24 @@
+[% nowrapper=1 %]
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+[% bodyid = 'login' %]
+<div id="loginwrap">
+    <div class="block">
+    <p class="header">Login met [% c.config.gemeente.naam %]ID</p>
+        <div class="blockcontent">
+            <form action="[% c.action_for('auth/bedrijfid/login/1') %]" method="POST">
+                <input type="hidden" name="referer" value="[% referer %]" />
+                <input type="hidden" name="do_auth" value="1" />
+                <div><label for="login">[% c.config.gemeente.naam %]ID login (kvknummer):</label></div>
+                <div><input type="text" name="login" class="input_medium"/></div>
+                <div><label for="password">Wachtwoord:</label></div>
+                <div><input type="password" name="password" class="input_medium"/></div>
+                <div><input type="submit" value="Inloggen" class="button140 inloggen"></td></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

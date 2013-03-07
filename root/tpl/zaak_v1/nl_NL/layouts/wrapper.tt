@@ -1,0 +1,8 @@
+[% PROCESS layouts/preprocessor.tt -%]
+[% IF nowrapper -%]
+[% content -%]
+[% ELSIF template_layout -%]
+[% content WRAPPER $template_layout -%]
+[% ELSE -%]
+[% content WRAPPER layouts/default.tt -%]
+[% END %]

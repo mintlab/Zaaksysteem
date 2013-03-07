@@ -1,0 +1,118 @@
+[% IF wgt_config.post_button && !pip %]
+<form
+    method="POST"
+    action="[% c.uri_for('/betrokkene/info/update/' _ requested_bid) %]"
+    class="submitWaiter"
+    >
+    <input type="hidden" name="referer" value="[% c.req.uri %]" />
+[% END %]
+<table class="table_zaakinformatie">
+    [% UNLESS pip %]
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Authentiek:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% IF betrokkene.authenticated %]
+                <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+            [% ELSE %]
+                <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+            [% END %]
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Bron:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% IF betrokkene.authenticated %]
+                GBA
+            [% ELSE %]
+                [% betrokkene.authenticatedby %]
+            [% END %]
+        </td>
+    </tr>
+    [% END %]
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">BSN:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.burgerservicenummer %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Voornamen:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.voornamen %]</td>
+    </tr>
+
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Tussenvoegsels:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.voorvoegsel %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Geslachtsnaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.geslachtsnaam %]</td>
+
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Naamgebruik:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.achternaam %]</td>
+
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Geboortedatum:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.geboortedatum.dmy %]</td>
+    </tr>
+    [% UNLESS pip %]
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Overlijdensdatum:</td>
+        <td class="table_td_right_zaakinformatie">[%
+            betrokkene.datum_overlijden.dmy %]</td>
+    </tr>
+    [% END %]
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Geslacht:</td>
+
+        <td class="table_td_right_zaakinformatie">[% (betrokkene.geslachtsaanduiding == 'M' ? 'Man' : 'Vrouw') %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Straatnaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.straatnaam %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+
+        <td class="table_td_left_zaakinformatie">Huisnummer:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.huisnummer %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Huisletter:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.huisletter %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Toevoeginghuisnr:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.huisnummertoevoeging %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Postcode:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.postcode %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Plaats:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.woonplaats %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="npc-telefoonnummer" class="input_medium" value="[% betrokkene.telefoonnummer %]"><span class="validator"></span></td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Mobielnummer:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="npc-mobiel" class="input_medium" value="[% betrokkene.mobiel %]"><span class="validator"></span></td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">E-mail:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="npc-email" class="input_medium" value="[% betrokkene.email %]"><span class="validator"></span></td>
+    </tr>
+    </table>
+        [% IF wgt_config.post_button %]
+        
+    <div class="nextprev clearfix">
+         <input type="submit" value="Opslaan" class="button140 right">    
+    </div>       
+
+        [% END %]
+[% IF wgt_config.post_button %]
+</form>
+[% END %]

@@ -1,0 +1,47 @@
+<div id="start_[% zaak.definitie.trigger %]">
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/zaaktype') %]" class="submitWaiter">
+<input type="hidden" name="confirmed" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Waarschuwing:</td>
+        <td class="table_td_right_zaakinformatie">
+            <p>
+            Het wijzigen van een zaaktype betekent dat de huidige zaak
+            vroegtijdig wordt afgehandeld. De aanvrager, kenmerken en
+            documenten worden daar waar mogelijk verplaatst. Alle overige
+            informatie zal verloren gaan.
+            </p>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Zaaktype:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div class="ezra_zaaktype_keuze">
+                <!--zaaktype_keuze_container_[% trigger %]"> -->
+                <input
+                    type="hidden"
+                    name="zaaktype_id" />
+                <input type="hidden" name="ztc_trigger" value="[% zaak.aanvraag_trigger %]" />
+                <input type="hidden" name="betrokkene_type" value="[% zaak.aanvrager_object.btype %]" />
+                <input
+                    id="textbox-[% zaak.aanvraag_trigger %]"
+                    type="text"
+                    name="zaaktype_name"
+                    class="input_large ezra_zaaktype_keuze_textbox wijzig_zaaktype"
+                    autocomplete="off"
+                    />
+                <a href="#" title="Zoek een nieuwe zaaktype" class="ezra_kies_zaaktype">
+                    <img src="/images/icon-magnifier.png" width="16" height="16" border="0">
+                </a><span class="validator"></span>
+            </div>
+            <!-- <img src="/images/icon-magnifier.png" width="16" height="16" border="0"> -->
+        </td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Wijzigen" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

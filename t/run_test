@@ -1,0 +1,55 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use FindBin;
+use lib "$FindBin::Bin/../lib", "$FindBin::Bin/inc";
+
+use CleanDB;
+use Test::Harness;
+
+
+unless (
+    @ARGV && (
+        $ARGV[0] eq 'all' ||
+        -f $ARGV[0]
+    )
+) {
+    die("USAGE: $0 all|test1.tt [test2.tt [test3.tt]]")
+}
+
+my @testfiles;
+
+### Start a clean DB
+my $dbs = CleanDB->new(
+    type    => 'pg',            # pg = PostgreSQL, sqlite = SQLite
+    in_env  => 1
+);
+
+### Find tests
+if ($ARGV[0] eq 'all') {
+    @testfiles = glob('*.t') if $ARGV[0] eq 'all';
+} else {
+    for my $filename (@ARGV) {
+        if (-f $filename) {
+            push(@testfiles, $filename);
+        }
+    }
+}
+
+if ($ENV{TEST_KEEP}) {
+    print "Note: Database files kept:\n";
+    print "  DB: " . $dbs->db . "\n";
+    print " DBG: " . $dbs->dbg . "\n";
+}
+
+$Test::Harness::verbose = 1
+    if $ENV{TEST_DEBUG};
+
+die('No test files found') unless @testfiles;
+
+runtests(@testfiles);
+
+1;
+

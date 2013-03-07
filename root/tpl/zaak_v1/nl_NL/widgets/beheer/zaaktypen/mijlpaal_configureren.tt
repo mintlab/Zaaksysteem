@@ -1,0 +1,431 @@
+[% BLOCK milestone_table_kenmerken %]
+<tr
+    class="ezra_table_row[% (!mkenmerk ? '_template' : '') %][% (mkenmerk.is_group ? ' ezra_kenmerk_grouping_group' : '') %]"
+    id="ezra_table_kenmerk_row_number[% (mkenmerk ? '_' _ mkenmerki : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="rowid ezra_table_row_edit_identifier" name="params.status.kenmerken.bibliotheek_kenmerken_id[% (mkenmerk ? '.' _ mkenmerki : '') %]" value="[% mkenmerk.bibliotheek_kenmerken_id %]" />
+        <input type="hidden" class="rownaam" name="params.status.kenmerken.naam[% (mkenmerk ? '.' _ mkenmerki : '') %]" value="[% mkenmerk.naam %]" />
+        <input type="hidden" class="roworder" name="params.status.kenmerken.mijlsort[% (mkenmerk ? '.' _ mkenmerki : '') %]" value="[% mkenmerki %]" />
+        <span class="rownaam" />[% (mkenmerk.is_group ? mkenmerk.label : mkenmerk.naam) %]</span>
+    </td>
+    <td class="td40 center">
+        <a
+            href="[% formaction _ '/kenmerk' _ (mkenmerk.is_group ? 'group' : '') _ '/bewerken' %]"
+            class="edit ezra_table_row_edit icon-edit"
+            rel="callback: [% (mkenmerk.is_group ? 'ezra_kenmerk_grouping_update_row' : '') %]"
+            ></a></td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"></a></td>
+</tr>
+[% END %]
+
+
+[% BLOCK milestone_table_sjablonen %]
+<tr
+    class="ezra_table_row[% (!msjabloon ? '_template' : '') %]"
+    id="ezra_table_sjabloon_row_number[% (msjabloon ? '_' _ msjablooni : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="rowid ezra_table_row_edit_identifier" name="params.status.sjablonen.bibliotheek_sjablonen_id[% (msjabloon ? '.' _ msjablooni : '') %]" value="[% msjabloon.bibliotheek_sjablonen_id %]" />
+        <input type="hidden" class="rownaam" name="params.status.sjablonen.naam[% (msjabloon ? '.' _ msjablooni : '') %]" value="[% msjabloon.naam %]" />
+        <input type="hidden" class="roworder" name="params.status.sjablonen.mijlsort[% (msjabloon ? '.' _ msjablooni : '') %]" value="[% msjablooni %]" />
+        <span class="rownaam" />[% msjabloon.naam %]</span>
+    </td>
+    <td class="td40 center">
+        <a
+            href="[% formaction _ '/sjabloon/bewerken' %]"
+            class="edit ezra_table_row_edit icon-edit"
+            rel="callback: "
+            ></a></td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"></a></td>
+</tr>
+[% END %]
+
+[% UNLESS milestone_first %]
+[% BLOCK milestone_table_checklist %]
+<tr
+    class="ezra_table_row[% (!mchecklist ? '_template' : '') %]"
+    id="ezra_table_checklist_row_number[% (mchecklist ? '_' _ mchecklisti : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="roworder" name="params.status.checklists.mijlsort[% (mchecklist ? '.' _ mchecklisti : '') %]" value="[% mchecklisti %]" />
+        <input
+        type="text"
+        size="40"
+        name="params.status.checklists.vraag[% (mchecklist ? '.' _ mchecklisti : '') %]"
+        value="[% mchecklist.vraag %]">
+    </td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"></a></td>
+</tr>
+[% END %]
+[% END %]
+
+
+[% BLOCK milestone_table_relatie %]
+<tr
+    class="ezra_table_row[% (!mrelatie ? '_template' : '') %]"
+    id="ezra_table_relatie_row_number[% (mrelatie ? '_' _ mrelatiei : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="rowid ezra_table_row_edit_identifier" name="params.status.relaties.relatie_zaaktype_id[% (mrelatie ? '.' _ mrelatiei : '') %]" value="[% mrelatie.relatie_zaaktype_id %]" />
+        <input type="hidden" class="roworder" name="params.status.relaties.mijlsort[% (mrelatie ? '.' _ mrelatiei : '') %]" value="[% mrelatiei %]" />
+        <span class="rownaam" />[% mrelatie.relatie_naam %]</span>
+    </td>
+    <td class="tdvar">
+        <select class="ezra_milestone_zaak_type" name="params.status.relaties.relatie_type[% (mrelatie ? '.' _ mrelatiei : '') %]">
+        [% IF milestone_last %]
+            <option
+            [% ( (
+                mrelatie.relatie_type == ZCONSTANTS.subzaken_vervolgzaak &&
+                mrelatie.delay_type == 'datum'
+                ) ? 'selected="selected"' : '' )
+            %]
+            value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+            class="vervolgzaak_datum has_start_delay">
+                Vervolgzaak (datum)
+            </option>
+            <option
+            [% ( (
+                mrelatie.relatie_type == ZCONSTANTS.subzaken_vervolgzaak &&
+                (!mrelatie.delay_type || mrelatie.delay_type == 'dagen')
+                ) ? 'selected="selected"' : '' )
+            %]
+            value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+            class="has_start_delay">
+                Vervolgzaak (periode)
+            </option>
+        [% ELSE %]
+            <option
+            [% (
+                mrelatie.relatie_type == ZCONSTANTS.subzaken_deelzaak
+                    ? 'selected="selected"' : ''
+            ) %]
+            value="[% ZCONSTANTS.subzaken_deelzaak %]">
+                Deelzaak
+            </option>
+        [% END %]
+            <option
+            [% (
+                mrelatie.relatie_type == ZCONSTANTS.subzaken_gerelateerd
+                    ? 'selected="selected"' : ''
+            ) %]
+            value="[% ZCONSTANTS.subzaken_gerelateerd %]">
+                Gerelateerde zaak
+            </option>
+        </select>
+    </td>
+    <td class="table_ztb_td_200 status_afhandel_block ezra_milestone_zaak_type_starten">
+        <input
+        type="text"
+        name="params.status.relaties.start_delay[% (mrelatie ? '.' _ mrelatiei : '') %]"
+        value="[% mrelatie.start_delay || 0 %]"
+        size=4> <span class="label_dagen">dagen</label>
+    </td>
+    <td class="td40 center">
+        <a
+            href="[% formaction _ '/relatie/bewerken' %]"
+            class="edit ezra_table_row_edit icon-edit"
+            rel="callback: "
+            ></td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"></a></td>
+</tr>
+[% END %]
+
+
+[% BLOCK milestone_table_notificatie %]
+<tr
+    class="ezra_table_row[% (!mnotificatie ? '_template' : '') %]"
+    id="ezra_table_notificatie_row_number[% (mnotificatie ? '_' _ mnotificatiei : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="roworder" name="params.status.notificaties.mijlsort[% (mnotificatie ? '.' _ mnotificatiei : '') %]" value="[% mnotificatiei %]" />
+        <input
+        type="text"
+        size="40"
+        name="params.status.notificaties.label[% (mnotificatie ? '.' _ mnotificatiei : '') %]"
+        value="[% mnotificatie.label %]">
+    </td>
+    <td class="td40 center">
+        <a
+            href="[% formaction _ '/notificatie/bewerken' %]"
+            class="edit ezra_table_row_edit icon-edit"
+            rel="callback: "
+            ></a></td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"></a></td>
+</tr>
+[% END %]
+
+
+[% BLOCK milestone_table_resultaten %]
+<tr
+    class="ezra_table_row[% (!mresultaat ? '_template' : '') %]"
+    id="ezra_table_resultaat_row_number[% (mresultaat ? '_' _ mresultaati : '') %]">
+    <td class="td15 ver_center no-border drag"></td>
+    <td class="td_14px tdvar">
+        <input type="hidden" class="roworder" name="params.status.resultaten.mijlsort[% (mresultaat ? '.' _ mresultaati : '') %]" value="[% mresultaati %]" />
+        <select name="params.status.resultaten.resultaat[% (mresultaat ? '.' _ mresultaati : '') %]">
+            [% FOREACH resultaattype IN ZOPTIONS.RESULTAATTYPEN.sort %]
+                <option
+                    value="[% resultaattype %]"
+                [% resultaattype == mresultaat.resultaat
+                    ? 'selected="selected"'
+                    : ''
+                %]
+                > [% resultaattype | ucfirst %]</option>
+            [% END %]
+        </select>
+    </td>
+    <td class="td_14px tdvar">
+        <select name="params.status.resultaten.bewaartermijn[% (mresultaat ? '.' _ mresultaati : '') %]">
+            [% FOREACH bewaartermijn IN ZOPTIONS.BEWAARTERMIJN.keys.nsort %]
+                <option
+                    value="[% bewaartermijn %]"
+                [% bewaartermijn == mresultaat.bewaartermijn
+                    ? 'selected="selected"'
+                    : ''
+                %]
+                > [% ZOPTIONS.BEWAARTERMIJN.$bewaartermijn | ucfirst %]</option>
+            [% END %]
+        </select>
+    </td>
+    <td class="td_14px tdvar">
+        <select name="params.status.resultaten.dossiertype[% (mresultaat ? '.' _ mresultaati : '') %]">
+            [% FOREACH dossiertype IN ZOPTIONS.DOSSIERTYPE %]
+                <option
+                    value="[% dossiertype %]"
+                [% dossiertype == mresultaat.dossiertype
+                    ? 'selected="selected"'
+                    : ''
+                %]
+                > [% dossiertype | ucfirst %]</option>
+            [% END %]
+        </select>
+    </td>
+    <td class="td_14px tdvar">
+        <select name="params.status.resultaten.ingang[% (mresultaat ? '.' _ mresultaati : '') %]">
+            [% FOREACH ingang IN ZOPTIONS.RESULTAATINGANGEN %]
+                <option
+                    value="[% ingang %]"
+                [% ingang == mresultaat.ingang
+                    ? 'selected="selected"'
+                    : ''
+                %]
+                > [% ingang | ucfirst %]</option>
+            [% END %]
+        </select>
+    </td>
+    <td class="td40 center"><a href="#" class="ezra_table_row_del icon-delete"></a></td>
+</tr>
+[% END %]
+
+<div class="ui-accordion" id="accordion_milestones">
+
+
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_kenmerk">
+    <a href="#">Kenmerken
+        (<span class="number">[% milestone.elementen.kenmerken.size || 0 %]</span>)</a> </h3>
+<div class="ezra_table element_tabel_kenmerk">
+    <div class="ui-accordion-table-bg">
+    <table cellspacing="0" class="ezra_table_table sortable-element ezra_kenmerk_grouping">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="tdvar">Naam</th>
+                <th class="td40">Bewerken</th>
+                <th class="td40">Verwijderen</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_kenmerken %]
+            [% FOREACH mkenmerki IN milestone.elementen.kenmerken.keys.nsort %]
+                [% mkenmerk = milestone.elementen.kenmerken.$mkenmerki %]
+                [% INCLUDE milestone_table_kenmerken %]
+            [% END %]
+        </tbody>
+    </table>
+    <a
+        class="ezra_table_row_add"
+        href="[% c.uri_for('/beheer/bibliotheek/kenmerken/search'); %]"
+        style="display: none;"
+        rel="newcallback: kenmerk; callback: ezra_zaaktype_select_kenmerk_search"
+        ></a>
+    <a
+        id="voegtoe"
+        class="ezra_kenmerk_grouping_add voeg-toe knop medium width-auto add-group with-span-icon"
+        href="[% formaction _ '/kenmerkgroup/bewerken' %]"
+        rel="callback: ezra_kenmerk_grouping_add_dialog"
+        ><span></span>Voeg groep toe</a>
+    </div>
+</div>
+
+
+
+[% # enable this to include a accordion entry for regels. it got a generic name so that in the future
+# every item can be routed through it. 
+PROCESS widgets/beheer/zaaktypen/accordion_container.tt %]
+
+
+
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_sjabloon"><a href="#">Sjablonen (<span class="number">[% milestone.elementen.sjablonen.size || 0 %]</span>)</a></h3>
+<div class="ezra_table element_tabel_sjabloon">
+    <div class="ui-accordion-table-bg">
+    <table cellspacing="0" class="ezra_table_table sortable-element">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="tdvar">Naam</th>
+                <th class="td40">Bewerken</th>
+                <th class="td40">Verwijderen</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_sjablonen %]
+            [% FOREACH msjablooni IN milestone.elementen.sjablonen.keys.nsort %]
+                [% msjabloon = milestone.elementen.sjablonen.$msjablooni %]
+                [% INCLUDE milestone_table_sjablonen %]
+            [% END %]
+        </tbody>
+    </table>
+    <a
+        class="ezra_table_row_add"
+        href="[% c.uri_for('/beheer/bibliotheek/sjablonen/search'); %]"
+        style="display: none;"
+        rel="newcallback: sjabloon; callback: ezra_zaaktype_select_sjabloon_search"
+        ></a>
+    </div>
+</div>
+
+[% UNLESS milestone_first %]
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_checklist"><a href="#">Checklist (<span class="number">[% milestone.elementen.checklists.size || 0 %]</span>)</a></h3>
+<div class="ezra_table element_tabel_checklist">
+    <div class="ui-accordion-table-bg">
+        <table cellspacing="0" class="ezra_table_table sortable-element">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="tdvar">Naam</th>
+                <th class="td40">Verwijderen</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_checklist %]
+            [% FOREACH mchecklisti IN milestone.elementen.checklists.keys.nsort %]
+                [% mchecklist = milestone.elementen.checklists.$mchecklisti %]
+                [% INCLUDE milestone_table_checklist %]
+            [% END %]
+        </tbody>
+    </table>
+    <a
+        class="ezra_table_row_add"
+        href="#"
+        style="display: none;"
+        ></a>
+    </div>
+</div>
+[% END %]
+
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_relatie"><a href="#">Zaken (<span class="number">[% milestone.elementen.relaties.size || 0 %]</span>)</a></h3>
+<div class="ezra_table element_tabel_relatie">
+    <div class="ui-accordion-table-bg">
+    <table cellspacing="0" class="ezra_table_table sortable-element">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="td_14px tdvar">Zaaktype</td>
+                <th class="tdvar">Vorm</td>
+                <th class="table_ztb_td_200 status_afhandel_block">Starten na</td></td>
+                <th class="td40 center">Bewerken</td>
+                <th class="td40 center">Verwijderen</td>
+            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_relatie %]
+            [% FOREACH mrelatiei IN milestone.elementen.relaties.keys.nsort %]
+                [% mrelatie = milestone.elementen.relaties.$mrelatiei %]
+                [% INCLUDE milestone_table_relatie %]
+            [% END %]
+        </tbody>
+    </table>
+    <!-- TODO went here, zaaktype selectie window -->
+    <a
+        class="ezra_table_row_add"
+        href="[% c.uri_for('/zaaktype/search'); %]"
+        style="display: none;"
+        rel="callback: ezra_zaaktype_select_zaaktype"
+        ></a>
+    </div>
+</div>
+
+<h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_notificatie"><a href="#">Berichten (<span class="number">[% milestone.elementen.notificaties.size || 0 %]</span>)</a></h3>
+<div class="ezra_table element_tabel_notificatie">
+<div class="ui-accordion-table-bg">
+    <table cellspacing="0" class="ezra_table_table sortable-element">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                <th class="tdvar">Naam</th>
+                <th class="td40">Bewerken</th>
+                <th class="td40">Verwijderen</th>
+            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_notificatie %]
+            [% FOREACH mnotificatiei IN milestone.elementen.notificaties.keys.nsort %]
+                [% mnotificatie = milestone.elementen.notificaties.$mnotificatiei %]
+                [% INCLUDE milestone_table_notificatie %]
+            [% END %]
+        </tbody>
+    </table>
+    <a
+        class="ezra_table_row_add"
+        href="#"
+        style="display: none;"
+        ></a>
+    </div>
+</div>
+
+
+[% IF milestone_last %]
+    <h3 class="ui-accordion-header ui-state-default ui-helper-reset" id="milestone_acc_resultaat"><a href="#">Resultaten (<span class="number">[% milestone.elementen.resultaten.size || 0 %]</span>)</a></h3>
+    <div class="ezra_table element_tabel_resultaat">
+    <div class="ui-accordion-table-bg">
+    <table cellspacing="0" class="ezra_table_table sortable-element">
+        <thead>
+            <tr>
+                <th class="td15 center no-border"></th>
+                            <th class="tdvar">Resultaat</th>
+                            <th class="tdvar">Bewaartermijn</th>
+                            <th class="tdvar">Dossiertype</th>
+                            <th class="tdvar">Ingang</th>
+                            <th class="td40"></th>            </tr>
+        </thead>
+        <tbody>
+            [% INCLUDE milestone_table_resultaten %]
+            [% FOREACH mresultaati IN milestone.elementen.resultaten.keys.nsort %]
+                [% mresultaat = milestone.elementen.resultaten.$mresultaati %]
+                [% INCLUDE milestone_table_resultaten %]
+            [% END %]
+        </tbody>
+    </table>
+    <a
+        class="ezra_table_row_add"
+        href="#"
+        style="display: none;"
+        ></a>
+    </div>
+</div>
+[% END %]
+
+
+</div>
+
+<div class="nextprev clearfix bottom">
+    <input type="submit" name="goback" value="Vorige" class="button140 btn left">
+    <input type="submit" value="Volgende" class="button140 right btn last">
+    [% UNLESS params.create %]
+    <input name="direct_finish" type="hidden" value="" />
+    <input class="button140 grijs btn right ezra_direct_finish novalidation" value="Afronden" type="submit" />
+    [% END %]
+    <!-- <input class="button140 grijs btn right" value="Afronden" type="submit" /> -->
+</div>
+

@@ -1,0 +1,28 @@
+<div class="block mijlpaal_definitie form" id="mijlpalen_configureren">
+    <form method="POST" action="[% formaction %]">
+        <input type="hidden" name="zaaktype_update" value="1" />
+        <input type="hidden" name="definitie_update" value="1" />
+
+        <p class="header">Mijlpalen benoemen</p>
+        <div class="blockcontent">
+            <div class="ezra_ajax_widget">
+                [%
+                    PROCESS beheer/zaaktypen/milestone_definitie/ajax_table.tt
+                %]
+            </div>
+            <div class="nextprev clearfix">
+                <input type="submit" name="goback" class="button140 btn left rounded" value="Vorige" />
+                <input type="submit" class="button140 btn right rounded" value="Volgende" />
+                [% UNLESS params.create %]
+                <input name="direct_finish" type="hidden" value="" />
+                <input class="button140 grijs btn right ezra_direct_finish" value="Afronden" type="button" />
+                [% END %]
+            </div>
+            <a
+            href="[% formaction %]"
+            class="element small width-auto in-header voeg-toe ezra_ajax_action"
+            rel="action: add"
+            >Fase toevoegen<span></span></a>
+        </div>
+    </form>
+</div>

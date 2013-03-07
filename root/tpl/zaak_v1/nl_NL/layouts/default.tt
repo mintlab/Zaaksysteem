@@ -1,0 +1,20 @@
+[% INCLUDE layouts/default_header.tt %]
+[% INCLUDE layouts/default_helper_diffs.tt %]
+
+<div id="maincontainer">
+    [% INCLUDE layouts/default_container_top.tt %]
+
+    <div id="contentwrapper" class="clearfix[% (layout_type == 'simple' ?  ' layout_simple' : '') %]">
+        <div id="leftcolumn">
+            [% INCLUDE layouts/default_container_mainmenu.tt %]
+        </div>
+
+        <div id="contentcolumn">
+            <div class="innertube">
+                [% INCLUDE layouts/default_container_content.tt %]
+            </div>
+        </div>
+    </div>
+</div>
+
+[% INCLUDE layouts/default_footer.tt %]

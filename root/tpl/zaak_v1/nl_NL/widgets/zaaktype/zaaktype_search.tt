@@ -1,0 +1,47 @@
+[% BLOCK show_categorie %]
+[% USE Scalar %]
+[% categorie_prefix = '&mdash;' %]
+<option value="[% categorie.id %]">[% categorie_prefix.repeat(show_categorie_depth) %] [% categorie.naam %]</option>
+    [% IF categorie.scalar.categorien.count %]
+        [% subcategorien = categorie.scalar.categorien.scalar.search({}
+            { order_by => naam },
+        ) %]
+        [% show_categorie_depth = (show_categorie_depth + 1) %]
+
+        [% WHILE (subcategorie = subcategorien.next) %]
+            [% INCLUDE show_categorie categorie=subcategorie %]
+        [% END %]
+    [% END %]
+[% END %]
+
+<!-- WIDGET: zaaktype/zaaktype_search.tt -->
+<div class="wgt-betrokkene-medewerker_search">
+    <table class="table_zaakinformatie marginbottom">
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Naam:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="zaaktype_naam" class="input_large" value=""></td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Categorie:</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="zaaktype_categorie">
+                    <option value="">Geen keuze</option>
+                    [% WHILE (zaaktype_categorie = zaaktype_categorien.next) %]
+                        [% show_categorie_depth = 0 %]
+                        [% INCLUDE show_categorie categorie=zaaktype_categorie %]
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Trefwoorden:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="zaaktype_trefwoorden" class="input_large" value=""></td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Omschrijving:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="zaaktype_omschrijving" class="input_large" value=""></td>
+        </tr>
+    </table> 
+</div>
+<!-- END WIDGET: zaaktype/zaaktype_search.tt -->
+

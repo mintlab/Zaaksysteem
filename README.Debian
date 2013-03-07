@@ -1,0 +1,290 @@
+NAME
+    Zaaksysteem - Een complete oplossing om de dienstverlening te verbeteren
+
+SYNOPSIS
+    Maak gebruik van <http://wiki.zaaksysteem.nl/> voor de complete
+    documentatie van het zaaksysteem.
+
+DESCRIPTION
+    LET OP: ONDERSTAANDE DOCUMENTATIE IS ENKEL VOOR PARTIJEN WELKE TOEGANG
+    HEBBEN GEKREGEN TOT DE ZAAKSYSTEEM PACKAGE REPOSITORY.
+
+    Het zaaksysteem.nl is een complete oplossing (all-in-one) voor gemeenten
+    om de dienstverlening te verbeteren. Het biedt functionaliteit voor
+    burgers en medewerkers om zaken af te handelen vanuit huis, in het KCC
+    of in de backoffice.
+
+    Zaaksysteem.nl is het enige zaaksysteem in Nederland dat volledig is
+    ontwikkeld in en als open source software. Dit is gedaan onder andere
+    gedaan om zoveel mogelijk te voldoen aan het landelijke beleid en om
+    gemeenten een gunstig tarief te bieden.
+
+INSTALLATIE
+    Er is kennis van linux omgevingen en een gedegen kennis van de
+    programmeertaal perl vereist om aan de hand van deze handleiding
+    zaaksysteem succesvol te installeren. Hoewel alle stappen in deze
+    handleiding door ons team nauwkeurig zijn vastgesteld, kan de exacte
+    methode om zaaksysteem.nl te installeren afhangen van verschillende
+    factoren: de gebruikte versie van de linux distributie, de
+    geinstalleerde perl modules etc.
+
+    Mocht u onderdelen tegenkomen die verbetert kunnen worden, aarzel dit
+    niet op te nemen in onze wiki.
+
+  SYSTEEMVEREISTEN
+    Ubuntu Server (Oneiric)
+    Minimaal 1 GB Ram
+        Zaaksysteem, tomcat en openoffice samen.
+
+    Diskspace minimaal 1,5 GB
+        Zaaksysteem.nl met alle relevante packages neemt ongeveer 1 GB in
+        gebruik. Extra ruimte is aanbevolen voor het uploaden van documenten
+
+  Voeg mintlab package repository toe aan het systeem
+    We maken gebruik van de standaard mintlab repository voor het
+    installeren van de juiste zaaksysteem packages. Voeg de volgende url toe
+    aan /etc/apt/sources.list: <http://packages.mintlab.nl/ubuntu/>
+
+     # vim /etc/apt/sources.list
+     ### Ergens onderin dit bestand
+
+     # Zaaksysteem repository:
+     deb http://packages.mintlab.nl/ubuntu/ oneiric main
+
+    Zorg ervoor dat de apt repository is bijgewerkt d.m.v.: apt-get update
+
+  Installeer zaaksysteem packages
+    Het installeren van het zaaksysteem is eenvoudig genoeg te installeren
+    door middel van het invoeren van het volgende commando:
+
+     apt-get install libzaaksysteem-perl zip unzip gnupg
+
+  Installeer de bijbehorende componenten
+    Zaaksysteem maakt gebruik van een aantal extra componenten, hieronder
+    een lijst met instructies hoe deze geinstalleerd kunnen worden op uw
+    systeem. Maakt u al gebruik van een van de packages, raadpleeg dan uw
+    lokale beheerder voor het bijwerken hiervan.
+
+    nginx
+         apt-get install nginx
+
+    openoffice.org
+        Openoffice.org wordt gebruikt voor het converteren van documenten.
+
+         apt-get install openoffice.org
+
+    clamav
+        Aangeleverde bestanden worden gescand op virussen met het open
+        source programma ClamAV
+
+         apt-get install clamav-daemon
+
+    tomcat7 + webapp jodconverter
+        Installatie van tomcat versneld het proces voor documentconversie
+
+         apt-get install jodconverter tomcat7
+         cp /usr/share/perl5/Zaaksysteem/contrib/converter.war \
+          /var/lib/tomcat7/webapps
+
+  Installeer PostgreSQL + OpenLDAP
+    Voor de datastorage maken we gebruik van PostgreSQL als database en
+    OpenLDAP als authenticatie backend.
+
+     apt-get install postgresql slapd ldap-utils
+
+CONFIGURATIE
+  Configuratie verschillende componenten
+    openoffice.org
+        Start openoffice.org als headless server om tegenaan te babbelen.
+
+         soffice --headless --accept="socket,host=127.0.0.1,port=8100;urp;" \
+          --nologo --nodefault --nofirststartwizard
+
+    tomcat7
+        Om ervoor te zorgen dat niet elke leecher op het interweb gebruik
+        maakt van onze document converter, zorgen we ervoor dat tomcat enkel
+        luistert op localhost. Zoek de juiste connector, en voeg de
+        address="127.0.0.1" attribute toe.
+
+         # vim /etc/etc/tomcat7/server.xml
+
+            <Connector port="8080" protocol="HTTP/1.1"
+                       address="127.0.0.1"
+                       connectionTimeout="20000" 
+                       URIEncoding="UTF-8"
+                       redirectPort="8443" />
+
+  Configuratie PostgreSQL + OpenLDAP
+   PostgreSQL
+    Zaaksysteem maakt gebruik van 2 databases, een server voor het opslaan
+    van het gegevensmagazijn en een database voor het zaaksysteem zelf.
+
+    create database user
+        Maak een databaseusers aan als user postgres
+
+         sudo -u postgres createuser zaaksysteem
+
+    create databases
+        Maak beide databases aan
+
+         psql template1
+         > create database zaaksysteem_gegevens with owner zaaksysteem;
+         > create database zaaksysteem_beheer with owner zaaksysteem;
+
+    import database
+        Importeer beide kale databases
+
+         cat /usr/share/perl5/Zaaksysteem/db/gegevens.sql | psql zaaksysteem_gegevens
+         cat /usr/share/perl5/Zaaksysteem/db/beheer.sql | psql zaaksysteem_beheer
+
+    ADVANCED
+        Zorg voor de juiste access permissions in
+        /etc/postgresql/pg_hba.conf
+
+   OpenLDAP
+    Configureer slapd
+
+     dpkg-reconfigure slapd
+
+    DNS Domeinnaam: zaaksysteem.nl
+
+     ldapadd -W -x -D "cn=admin,dc=zaaksysteem,dc=nl" -f zaaksysteem.ldif
+
+    Authorisatie per container
+
+     olcAccess: {3}to dn.base="o=zaaksysteem,dc=zaaksysteem,dc=nl" by
+     dn="cn=admin,ou=Management,o=zaaksysteem,dc=zaaksysteem,dc=nl" write by *
+     read
+
+   NGINX
+    Na installatie nginx, plaats het voorbeeld nginx script in
+    /etc/nginx/sites-available
+
+     cp /usr/share/perl5/Zaaksysteem/drafts/nginx-zaaksysteem.conf \
+      /etc/nginx
+     cp /usr/share/perl5/Zaaksysteem/drafts/nginx-zaaksysteem-virtualhost.conf \
+      /etc/nginx/sites-available/default
+
+    Vergeet de fastcgi_params niet, ivm met catalyst zit er een kleine
+    wijziging in PATH_INFO waardoor deze lichtelijk gewijzigd is.
+
+     cp /usr/share/perl5/Zaaksysteem/drafts/nginx-fastcgi_params /etc/nginx/
+
+    Met SSL
+
+     mkdir /etc/nginx/ssl
+     cmod 700 /etc/nginx/ssl
+
+    Plaats uw ssl certificaten in /etc/nginx/ssl
+
+  Configuratie Zaaksysteem.nl
+   Config
+    Kopieer de zaaksysteem dist config naar /etc/zaaksysteem.
+
+     sudo mkdir /etc/zaaksysteem
+     cp /usr/share/perl5/Zaaksysteem/zaaksysteem.conf.dist \
+      /etc/zaaksysteem/zaaksysteem.conf
+
+    En edit accordingly
+
+   StartUP
+    Wanneer het gebruikte OS gebruik maakt van UPSTART, kopieer dan de
+    upstart jobs naar /etc/init.
+
+     cp /usr/share/perl5/Zaaksysteem/drafts/upstart-openoffice-headless.conf \
+      /etc/init
+     cp /usr/share/perl5/Zaaksysteem/drafts/upstart-zaaksysteem.conf \
+      /etc/init
+
+    Vergeet niet de benodigde users aan te maken
+
+     adduser zaaksysteem
+     adduser openoffice
+
+   Data directory
+    Maak de juiste data directory aan, wij maken gebruik van /srv:
+
+    mkdir -p /srv/zaaksysteem/data/localhost mkdir
+    /srv/zaaksysteem/data/localhost/{documents,,drops,filestore,kenmerken}
+    mkdir /srv/zaaksysteem/data/localhost/{thumbnails,tmp,zaaktype} mkdir
+    /srv/zaaksysteem/data/localhost/tmp/store
+
+   Security
+    Zorg dat de volgende paden de juiste permissie ontvangen
+
+     chmod -R 750 /srv/zaaksysteem/data/localhost
+     chmod 640 /etc/zaaksysteem/zaaksysteem.conf
+     chown :zaaksysteem /etc/zaaksysteem/zaaksysteem.conf
+     chown -R zaaksysteem:zaaksysteem /srv/zaaksysteem/data/localhost
+
+START ZAAKSYSTEEM
+  Start bijbehorende componenten
+     start tomcat7
+     start openoffice-headless
+     start clamav-daemon
+     start clamav-freshclam
+
+  Start zaaksysteem
+    Zaaksysteem maakt gebruik van FCGI::ProcManager, wat betekent dat er een
+    proces met 5 children wordt opgestart. Om memory leaks te voorkomen pakt
+    elk child maximaal 100 requests.
+
+    De optie respawn is gezet, wat ervoor zorgt dat zaaksysteem opnieuw
+    opstart wanneer op de een of andere manier de processmanager crashed.
+
+     start zaaksysteem
+     start nginx
+
+INLOGGEN
+    De standaard gebruikersnaam voor de admin gebruiker is "admin" met
+    wachtwoord "admin"
+
+    Enjoy!
+
+SUPPORT
+    Op de community editie wordt enkel support geleverd via de wiki. Voor
+    professionele support kunt u contact opnemen met Mintlab
+    <http://www.mintlab.nl>
+
+SEE ALSO
+    Maak gebruik van <http://wiki.zaaksysteem.nl/> voor de complete
+    documentatie van het zaaksysteem.
+
+PROJECT FOUNDER
+    Mintlab B.V. <info@mintlab.nl>
+
+CONTRIBUTORS
+    Arne de Boer
+
+    Nicolette Koedam
+
+    Marjolein Bryant
+
+    Peter Moen
+
+    Michiel Ootjers
+
+    Jonas Paarlberg
+
+    Jan-Willem Buitenhuis
+
+    Martin Kip
+
+    Gemeente Bussum
+
+COPYRIGHT
+    Copyright (c) 2009, the above named PROJECT FOUNDER and CONTRIBUTORS.
+
+LICENSE
+    The contents of this file and the complete zaaksysteem.nl distribution
+    are subject to the EUPL, Version 1.1 or - as soon they will be approved
+    by the European Commission - subsequent versions of the EUPL (the
+    "Licence"); you may not use this file except in compliance with the
+    License. You may obtain a copy of the License at
+    <http://joinup.ec.europa.eu/software/page/eupl>
+
+    Software distributed under the License is distributed on an "AS IS"
+    basis, WITHOUT WARRANTY OF ANY KIND, either express or implied. See the
+    License for the specific language governing rights and limitations under
+    the License.
+

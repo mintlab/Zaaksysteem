@@ -1,0 +1,63 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+<!-- [% IF nowrapper %]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Leidend zaaksysteem</title>
+<link rel="stylesheet" href="/tpl/zaak_v1/nl_NL/css/stylesheet.css" type="text/css" media="screen" />
+<base href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/" />
+</head>
+<body id="webform">
+	<h2>[% zaak.zaaktype.node.titel %]</h2>
+
+[% END %]  -->  
+	<!-- Begin Zaakintake -->
+						
+    <div class="block">
+    <p class="header succes">Zaak geregistreerd</p>
+        
+        <div class="blockcontent">	
+    <form>
+    <table class="table_window" style="width:450px;">
+        <tr class="table_window_tr">
+            <td class="table_window_tdvar" style="border-bottom:none !important;">
+                Bedankt voor het registreren van een
+                [% zaak.zaaktype_node_id.titel %]. Uw zaak is bij ons
+                geregistreerd onder zaaknummer [% zaak.id %].
+                Wij verzoeken u om bij verdere communicatie over deze zaak dit
+                zaaknummer te gebruiken. De verdere behandeling van de zaak
+                zal spoedig plaatsvinden.
+
+                [% UNLESS behandelaar_form %]
+                <br />
+                <br />
+                Ook kunt u op elk moment van de dag de voortgang en inhoud van
+                uw zaakdossier inzien via
+                <a href="[% c.uri_for('/pip'); %]">
+                    MijnGemeente
+                </a>
+                <br/>
+                <br/>
+                
+                [% END %]
+            </td>
+        </tr>
+    </table>
+    </form>
+    </div>
+    </div>
+	<!-- End Zaakintake -->
+
+<!-- [% IF nowrapper %]
+</body>
+</html>
+[% END %] -->
+
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

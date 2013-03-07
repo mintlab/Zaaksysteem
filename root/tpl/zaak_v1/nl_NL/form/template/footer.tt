@@ -1,0 +1,4 @@
+[% RETURN IF c.user_exists -%]
+
+                                    
+<!-- footer -->

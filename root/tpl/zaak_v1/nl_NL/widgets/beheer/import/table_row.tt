@@ -1,0 +1,31 @@
+<!-- widgets/beheer/bibliotheek/table_row.tt -->
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        <a
+            href="[%
+            c.uri_for(
+                '/beheer/import/' _ (import_type || 'gba') _ '/'
+                _ entry.id
+            ) %]"
+        >
+            <img src="/images/icon-text.png" width="16" height="16" border="0" />
+        </a>
+    </td>
+    <td class="tdvar">
+        <a
+            href="[%
+            c.uri_for(
+                '/beheer/import/' _ (import_type || 'gba') _ '/'
+                _ entry.id
+            ) %]"
+        >
+            [% entry.importtype %]
+        </a>
+    </td>
+    <td class="td150">[% (entry.succesvol ? 'Ja' : 'Nee') %]</td>
+    <td class="td150">[% entry.created.strftime('%d-%m-%Y %H:%M'); %]</td>
+    <td class="td150">[% entry.finished.strftime('%d-%m-%Y %H:%M'); %]</td>
+    <td class="td150">[% entry.entries %]</td>
+    </td>
+</tr>
+<!-- zaaktype/widgets/row_categorie.tt -->
