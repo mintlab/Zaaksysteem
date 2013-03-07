@@ -1,0 +1,133 @@
+diff --git a/lib/SQL/Translator/Parser/SQLite.pm b/lib/SQL/Translator/Parser/SQLite.pm
+index 0188028..4f46c8b 100644
+--- a/lib/SQL/Translator/Parser/SQLite.pm
++++ b/lib/SQL/Translator/Parser/SQLite.pm
+@@ -433,6 +433,17 @@ table_constraint : PRIMARY_KEY parens_field_list conflict_clause(?)
+             on_conflict => $item[5][0],
+         }
+     }
++    |
++    FOREIGN_KEY parens_field_list REFERENCES ref_def
++    {
++        $return              = {
++            supertype        => 'constraint',
++            type             => 'foreign_key',
++            fields           => $item[2],
++            reference_table  => $item[4]{'reference_table'},
++            reference_fields => $item[4]{'reference_fields'},
++        }
++    }
+ 
+ ref_def : /(\w+)\s*\((\w+)\)/
+     { $return = { reference_table => $1, reference_fields => $2 } }
+@@ -573,6 +584,8 @@ NOT_NULL : /not null/i
+ 
+ PRIMARY_KEY : /primary key/i
+ 
++FOREIGN_KEY : /foreign key/i
++
+ CHECK_C : /check/i
+ 
+ DEFAULT : /default/i
+diff --git a/lib/SQL/Translator/Producer/SQLite.pm b/lib/SQL/Translator/Producer/SQLite.pm
+index 2e7aa6a..8ebea42 100644
+--- a/lib/SQL/Translator/Producer/SQLite.pm
++++ b/lib/SQL/Translator/Producer/SQLite.pm
+@@ -234,6 +234,9 @@ sub create_table
+     #
+     my $c_name_default = 'A';
+     for my $c ( $table->get_constraints ) {
++        if ($c->type eq FOREIGN_KEY) {
++            push @field_defs, create_foreignkey($c, $options);
++        }
+         next unless $c->type eq UNIQUE; 
+         push @constraint_defs, create_constraint($c);
+     }
+@@ -243,6 +246,39 @@ sub create_table
+     return (@create, $create_table, @index_defs, @constraint_defs );
+ }
+ 
++sub create_foreignkey {
++    my ($c, $options) = @_;
++
++    my @fields = $c->fields;
++    my $fk_sql = "FOREIGN KEY (" . join(', ',@fields) . ") REFERENCES ";
++    $fk_sql .= $c->{reference_table};
++
++    # Copied from Producer::MySQL::create_constraint and slightly adjusted
++    my $table = $c->table;
++    my @rfields = map { $_ || () } $c->reference_fields;
++    unless ( @rfields ) {
++        my $rtable_name = $c->reference_table;
++        if ( my $ref_table = $table->schema->get_table( $rtable_name ) ) {
++            push @rfields, $ref_table->primary_key;
++        }
++        else {
++            warn "Can't find reference table '$rtable_name' " .
++                "in schema\n" if $options->{show_warnings};
++        }
++    }
++
++    if ( @rfields ) {
++        $fk_sql .= '(' . join( ", ", @rfields ) . ')';
++    }
++    else {
++        warn "FK constraint on " . $table->name . '.' .
++            join('', @fields) . " has no reference fields\n"
++            if $options->{show_warnings};
++    }
++
++    return $fk_sql;
++}
++
+ sub create_field
+ {
+     my ($field, $options) = @_;
+diff --git a/t/30sqlt-new-diff-sqlite.t b/t/30sqlt-new-diff-sqlite.t
+index 5d6ad92..3778779 100644
+--- a/t/30sqlt-new-diff-sqlite.t
++++ b/t/30sqlt-new-diff-sqlite.t
+@@ -98,7 +98,8 @@ CREATE TABLE added (
+ CREATE TEMPORARY TABLE employee_temp_alter (
+   position varchar(50) NOT NULL,
+   employee_id int(11) NOT NULL,
+-  PRIMARY KEY (position, employee_id)
++  PRIMARY KEY (position, employee_id),
++  FOREIGN KEY (employee_id) REFERENCES person(person_id)
+ );
+ 
+ INSERT INTO employee_temp_alter SELECT position, employee_id FROM employee;
+@@ -108,7 +109,8 @@ DROP TABLE employee;
+ CREATE TABLE employee (
+   position varchar(50) NOT NULL,
+   employee_id int(11) NOT NULL,
+-  PRIMARY KEY (position, employee_id)
++  PRIMARY KEY (position, employee_id),
++  FOREIGN KEY (employee_id) REFERENCES person(person_id)
+ );
+ 
+ INSERT INTO employee SELECT position, employee_id FROM employee_temp_alter;
+diff --git a/t/48xml-to-sqlite.t b/t/48xml-to-sqlite.t
+index 8f38fec..5d76841 100644
+--- a/t/48xml-to-sqlite.t
++++ b/t/48xml-to-sqlite.t
+@@ -48,7 +48,8 @@ CREATE TABLE Basic (
+   -- Hello emptytagdef
+   emptytagdef varchar DEFAULT '',
+   another_id int(10) DEFAULT 2,
+-  timest timestamp
++  timest timestamp,
++  FOREIGN KEY (another_id) REFERENCES Another(id)
+ );
+ 
+ CREATE INDEX titleindex ON Basic (title);
+@@ -105,7 +106,8 @@ eq_or_diff(\@sql,
+   -- Hello emptytagdef
+   emptytagdef varchar DEFAULT \'\',
+   another_id int(10) DEFAULT 2,
+-  timest timestamp
++  timest timestamp,
++  FOREIGN KEY (another_id) REFERENCES Another(id)
+ )',
+           'CREATE INDEX titleindex ON Basic (title)',
+           'CREATE UNIQUE INDEX emailuniqueindex ON Basic (email)',

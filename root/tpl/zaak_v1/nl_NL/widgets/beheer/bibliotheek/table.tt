@@ -1,0 +1,20 @@
+<!-- widgets/beheer/bibliotheek/table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <th class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></th>
+            <th class="tdvar">[% c.loc(bib_type _ '1') %]</th>
+            <th class="td100">[% c.loc('optie type') %]</th>
+            <th class="td100">[% c.loc('magic string') %]</th>
+            [% IF ! categorie.system %]
+            <th class="td150">[% c.loc('acties') %]</th>
+            [% END %]
+        </tr>
+    </thead>
+    <tbody>
+        [% WHILE (entry = bib_list.next) %]
+            [% PROCESS widgets/beheer/bibliotheek/table_row.tt %]
+        [% END %]
+    </tbody>
+</table> 
+<!-- END widgets/beheer/bibliotheek/table.tt -->

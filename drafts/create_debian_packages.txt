@@ -1,0 +1,16 @@
+DEB_BUILD_OPTIONS="nocheck"; dh-make-perl --arch ALL --build --recursive --cpan Catalyst::Plugin::ClamAV
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --recursive --cpan Catalyst::Plugin::Unicode::Encoding
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --depends libcatalyst-perl,libdata-formvalidator-perl --cpan Params::Profile
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --depends libcatalyst-perl,libparams-profile-perl --cpan Catalyst::Plugin::Params::Profile
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --depends libnet-ldap-server-perl --cpan Net::LDAP::Server::Test
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --depends libcatalyst-perl,libnet-ldap-server-perl --cpan Catalyst::Authentication::Store::LDAP
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --depends libcatalyst-perl --cpan Catalyst::View::Download::CSV
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --cpan Geo::Coder::Google
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --cpan Log::Report
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --cpan XML::Compile::Tester
+DEB_BUILD_OPTIONS=""; dh-make-perl --depends libxml-perl,liblog-report-perl,libxml-compile-tester-perl,libtest-deep-perl --arch ALL --build --cpan XML::Compile
+DEB_BUILD_OPTIONS=""; dh-make-perl --depends libxml-libxml-simple-perl,libxml-compile-perl --arch ALL --build --cpan XML::Compile::Cache
+DEB_BUILD_OPTIONS=""; dh-make-perl --depends libxml-compile-perl,libxml-compile-cache-perl --arch ALL --build --cpan XML::Compile::SOAP
+DEB_BUILD_OPTIONS=""; dh-make-perl --depends libxml-compile-perl --arch ALL --build --cpan Catalyst::Controller::SOAP
+DEB_BUILD_OPTIONS=""; dh-make-perl --arch ALL --build --cpan Data::UUID
+

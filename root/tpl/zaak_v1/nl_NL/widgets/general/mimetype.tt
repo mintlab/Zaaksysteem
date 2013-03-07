@@ -1,0 +1,30 @@
+[% # print a css class corresponding to a given mimetype -%]
+[% RETURN UNLESS mimetype -%]
+[% #mimetype %]
+[%
+mimetypes = {
+    text_html => 'text_html',
+    image_jpeg => 'image_jpeg',
+    application_msword => 'application_msword',
+    application_vnd_openxmlformats_officedocument_wordprocessingml_document => 'application_msword',
+    application_vnd_ms_excel => 'application_msexcel',
+    application_vnd_openxmlformats_officedocument_spreadsheetml_sheet => 'application_msexcel',
+    application_vnd_ms_powerpoint => 'application_mspowerpoint',
+    application_vnd_openxmlformats_officedocument_presentationml_presentation => 'application_mspowerpoint',
+    application_vnd_oasis_opendocument_text => 'application_openoffice',
+    application_vnd_oasis_opendocument_spreadsheet => 'application_msexcel',
+    image_png => 'image_png',
+    image_gif => 'image_gif',
+    application_pdf => 'application_pdf',
+    text_plain => 'text_plain'
+};
+
+ mimetype_class = mimetype.replace('/','_').replace('\.','_').replace('-','_');
+
+-%]
+[% IF mimetypes.$mimetype_class -%]
+[%  mimetype_class = mimetypes.$mimetype_class -%]
+[% ELSE -%]
+[%  mimetype_class = 'text_plain' -%]
+[% END -%]
+[% mimetype_class -%]

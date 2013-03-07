@@ -1,0 +1,46 @@
+                                        <form>
+                                        <table class="table_zoeken">
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Voornaam:</td>
+
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Achternaam:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Afdeling:</td>
+
+                                                <td class="table_zoeken_tdvar">
+                                                    <select />
+                                                        <option>Bestuurs- en managementondersteuning</option>
+                                                        <option>Burgerzaken</option>
+                                                        <option>Vergunningen en handhaving</option>
+                                                        <option>E-mail</option> 
+                                                        <option>Website</option>    
+                                                    </select>                                               
+                                                </td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Functie:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Telefoon:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_mini"></td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">E-mail:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr_bottom">
+                                                <td class="table_zoeken_td100_2"></td>
+                                                <td class="table_zoeken_tdvar"><input type="button" value="Zoeken" class="button140"></td>
+
+                                            </tr>
+                                        </table>
+                                        </form>
+

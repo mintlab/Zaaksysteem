@@ -1,0 +1,92 @@
+<!-- Default container mainmenu -->
+[% IF c.user_exists && layout_type != 'simple'  %]
+<div class="nieuwezaak_wrap">
+    <a href="[% c.uri_for('/zaak/create') %]" class="nieuwezaak ezra_nieuwe_zaak_tooltip-button">Nieuwe Zaak</a>
+</div>
+
+<div id="leftcolumn_inner" class="clearfix">
+    <div id="leftcolumn_inner2" class="clearfix">
+        <ul class="innertube menu menu-responsive">
+        
+            <li class="menu-title first">
+                <a class="menu_heading werkvoorraad first"><span></span>Werkvoorraad</a>
+
+                <ul class="menu-items" id="menu-items1">
+                [% IF c.check_any_user_permission('dashboard'); %]
+                    <li><a href="[% c.uri_for('/') %]" title="De zaken die door jou in behandeling genomen kunnen worden en de zaken die je in behandeling hebt">Dashboard</a></li>
+                [% END %]
+                [% IF c.check_any_user_permission('documenten_intake'); %]
+                    <li><a href="[% c.uri_for('/zaak/intake', { scope => 'documents' } ) %]" title="Hier vind je de documenten zonder zaak">Documentintake</a></li>
+                [% END %]
+                [% IF c.check_any_user_permission('zaak_eigen'); %]
+                    <li><a href="[% c.uri_for('/zaak/list/own') %]" title="De zaken waar je behandelaar van bent">Mijn zaken</a></li>
+                [% END %]
+                [% IF c.check_any_user_permission('zaak_afdeling'); %]
+                        <li><a href="[% c.uri_for('/zaak/list/eenheid') %]" title="Hier vind je de zaken van jouw afdeling">Zaken van afdeling</a></li>
+                [% END %]
+                </ul>
+            
+            </li>
+            
+            
+            
+            <li class="menu-title bb">
+                <a class="menu_heading zoeken"><span></span>Zoeken</a>
+
+                <ul class="menu-items" id="menu-items2">
+                [% IF c.check_any_user_permission('search'); %]
+                    <li><a href="[% c.uri_for('/search') %]" title="Uitgebreid zoeken">Zaken</a></li>
+                [% END %]
+                
+                <!-- <li><a href="#" title="Zoek hier binnen de kennisbank">Kennisbank</a></li> -->
+                [% IF c.check_any_user_permission('contact_search'); %]
+                    <li><a href="[% c.uri_for('/betrokkene/search') %]" title="Zoek in contacten">Contact</a></li>
+                [% END %]
+                    <li><a href="/Publiek.cc/?zaaksysteem_ident=[% c.user.cn %]" title="Kennisbank">Kennisbank</a></li>
+                
+                </ul>
+                
+            </li>
+
+            [% IF c.check_any_user_permission('beheer_kenmerken_admin', 'beheer_sjablonen_admin','beheer_zaaktype_admin','beheer_gegevens_admin','beheer_plugin_admin','vernietigingslijst'); %]
+
+            
+            
+             <li class="menu-title bb last">
+                             
+                <a class="menu_heading beheer"><span></span>Beheer</a>
+
+                <ul class="menu-items bottom" id="menu-items3">
+                [% IF c.check_any_user_permission('beheer_zaaktype_admin'); %]
+                    <li>
+                        <a
+                            href="[% c.uri_for('/beheer/zaaktype_catalogus') %]"
+                            title="Beheer de zaaktype categories (kenmerken/sjablonen) binnen Zaaksysteem.nl"
+                        >Zaaktypecatalogus</a>
+                    </li>
+                    [% END %]
+    
+                [% IF c.check_any_user_permission('beheer_gegevens_admin'); %]
+                    <li><a href="[% c.uri_for('/beheer/import/gba') %]" title="Gegevensbeheer">Gegevens</a></li>
+                [% END %]
+                [% IF c.check_any_user_permission('beheer_plugin_admin'); %]
+                    <li><a href="[% c.uri_for('/beheer/plugins') %]" title="Pluginbeheer">Plugins</a></li>
+                [% END %]
+                [% IF c.check_any_user_permission('vernietigingslijst'); %]
+                    <li>
+                        <a
+                            href="[% c.uri_for('/beheer/vernietiging') %]"
+                            title="Vernietigingslijst"
+                        >Vernietigingslijst</a>
+                    </li>
+                [% END %]
+                </ul>
+            </li>
+        [% END %]  
+        </ul>
+        
+    </div>
+</div>
+[% END %]
+
+<!-- END Default container mainmenu -->

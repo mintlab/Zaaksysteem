@@ -1,0 +1,17 @@
+<!-- widgets/beheer/bibliotheek/sjablonen/string_table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <!--<td class="tdvar">[% c.loc('naam') %]</td> -->
+            <td class="tdvar">[% c.loc('magic string') %]</td>
+        </tr>
+    </thead>
+    <tbody>
+        [% magic_strings = bib_entry.scalar.bibliotheek_sjablonen_magic_strings %]
+        [% WHILE (entry = magic_strings.next) %]
+            [% PROCESS widgets/beheer/bibliotheek/sjablonen/string_row.tt %]
+        [% END %]
+    </tbody>
+</table>
+<!-- END widgets/beheer/bibliotheek/sjablonen/string_table.tt -->

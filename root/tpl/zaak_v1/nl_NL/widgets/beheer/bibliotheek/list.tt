@@ -1,0 +1,75 @@
+[% USE Scalar %]
+<form name="zaaktypen_list">
+<input type="hidden" name="page" value="[% page %]"/>
+<div class="block">
+    <p class="header">Zaaktypecatalogus</p>
+    [% PROCESS widgets/general/zaken_filter.tt %]
+    <div class="blockcontent">
+    <div class="zaken_filter_wrapper">
+    <div class="zaken_filter_inner">
+        <div class="spinner-groot"><div></div></div>
+        <table class="table_zaken_title" cellspacing="0">
+            <thead>
+                <tr class="table_zaken_title_tr">
+                    <td class="td30 center icon-down"></td>
+                    <td class="tdvar">[% c.loc('Titel') %]</th>
+                    <td class="td100">[% c.loc('Type') %]</th>
+                    <td class="td100">[% c.loc('Versie') %]</th>
+                    <td class="td100">[% c.loc('Gebruik') %]</th>
+                    [% IF ! categorie.system %]
+                    <td class="td150">[% c.loc('acties') %]</th>
+                    [% END %]
+                </tr>
+            </thead>
+            <tbody>
+
+                [% WHILE (item = items.next) %]
+                    [% IF item.type == 'zaaktypefolder' %]
+                         [% PROCESS widgets/beheer/categorie/row.tt %]
+                    [% ELSE %]
+                        [% IF item.type == 'zaaktype' %]
+                            [% PROCESS widgets/beheer/zaaktypen/list_row.tt %]
+                        [% ELSE %]
+                            [% PROCESS widgets/beheer/bibliotheek/table_row.tt %]
+                        [% END %]
+                    [% END %]
+                [% END %]
+
+            </tbody>
+        </table>
+[% PROCESS widgets/pager2.tt
+	results = items
+%]
+        </div>
+        </div>
+    </div>
+</div>
+</form>
+
+
+[% IF ! categorie.system %]
+<a rel="" href="[% c.uri_for('/beheer/bibliotheek/categorie/0/bewerken/' _ bib_type _ '/' _ categorie.id ) %]" class="knop voeg-toe dialog-post float" title="Categorie bewerken of aanmaken">Nieuwe categorie</a>
+    [% IF categorie.id %]
+<a rel="" 
+   href="[% c.uri_for('/beheer/bibliotheek/kenmerken/' _ categorie.id _'/0/bewerken') %]" 
+   class="knop voeg-toe dialog-post float" 
+   title="Kenmerk bewerken of aanmaken">Nieuw Kenmerk</a>
+
+<a rel="" 
+   href="[% c.uri_for('/beheer/bibliotheek/sjablonen/' _ categorie.id _'/0/bewerken') %]" 
+   class="knop voeg-toe dialog-post float" 
+   title="Sjabloon bewerken of aanmaken">Nieuw sjabloon</a>
+
+<a  rel=""
+    href="[% c.uri_for('/beheer/zaaktypen/0/bewerken') %]"
+    class="knop voeg-toe float"
+    title="[% c.loc('zaaktypen' _ '1') %] bewerken of aanmaken"
+>Nieuw zaaktype</a>
+
+<a  rel=""
+    href="[% c.uri_for('/beheer/zaaktypen/import') %]"
+    class="knop voeg-toe float"
+    title="[% c.loc('zaaktypen' _ '1') %] importeren"
+>Zaaktype importeren</a>
+    [% END %]
+[% END %]

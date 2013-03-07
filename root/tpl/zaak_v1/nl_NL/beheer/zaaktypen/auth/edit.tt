@@ -1,0 +1,88 @@
+[% BLOCK auth_table %]
+<tr
+    class="ezra_table_row[% (!mauth ? '_template' : '') %]"
+    id="ezra_table_auth_row_number[% (mauth ? '_' _ mauthi : '') %]">
+    <td class="td250 align_top">
+        [% PROCESS widgets/general/auth_select.tt
+            AUTH_SELECT_OU_NAME   = 'aparams.authorisaties.ou_id' _ ( mauth ?  '.' _ mauthi : '')
+            AUTH_SELECT_OU_VALUE  = mauth.ou_id
+            AUTH_SELECT_ROLE_NAME = 'aparams.authorisaties.role_id' _ ( mauth ? '.' _ mauthi : '')
+            AUTH_SELECT_ROLE_VALUE = mauth.role_id
+            AUTH_SELECT_NO_GLOBAL = 1
+        %]
+    </td>
+    <td class="td300">
+        <div class="checkboxes-wrap">
+        <a class="show ui-selectmenu ui-widget ui-state-default ui-corner-all ui-selectmenu-dropdown replace-select">Kies rechten<span class="ui-selectmenu-icon ui-icon ui-icon-triangle-1-s"></span></a>
+        <div class="checkbokses" style="display:none">
+        [% FOREACH recht = c.list_available_permissions %]
+            [% NEXT UNLESS recht.value.is_systeem_recht %]
+            [% systeemrecht = recht.key %]
+            <div class="checkboks">
+            <input
+                type="checkbox"
+                name="aparams.authorisaties.recht[% ( mauth ? '.' _ mauthi : '') %]"
+                value="[% recht.key %]"
+                [% (mauth.recht.$systeemrecht ? ' checked="checked"' : '') %]
+            > [% recht.value.label %]
+            </div>
+        [% END %]
+            <a class="hide-checkbokses">Opslaan</a>
+        </div>
+        </div>
+        
+    </td>
+    <td class="td20 center" align="center">
+        <a href="#" class="ezra_table_row_del" rel="callback: beheer_zaaktype_auth_delete">
+            <img border="0" width="16" height="16"
+                alt="Verwijderen" src="/images/icon-delete.png"/>
+        </a>
+    </td>
+</tr>
+[% END %]
+
+
+<!-- Begin Zaaktype -->
+<div class="block block-minheight auth_definitie form">
+    <form method="POST" action="[% formaction %]">
+        <input type="hidden" name="zaaktype_update" value="1" />
+        <input type="hidden" name="auth_update"     value="1" />
+
+        <p class="header">Rechten binnen dit zaaktype</p>
+        <div class="blockcontent" id="rol_kenmerken_container">
+            <div class="ezra_table element_tabel_auth">
+                <table class="no_margin ezra_table_table v-align-center">
+                    <thead [% IF !pauthorisaties.keys.size %]style="display: none;"[% END %]>
+                        <tr>
+                            <th class="td250">Rol</th>
+                            <th class="td300">Rechten</th>
+                            <th class="td20"><!-- Verwijderen --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        [% INCLUDE auth_table %]
+                        [% FOREACH mauthi IN pauthorisaties.keys.nsort %]
+                            [% mauth = pauthorisaties.$mauthi %]
+                            [% INCLUDE auth_table %]
+                        [% END %]
+                        [% IF !pauthorisaties.keys.size %]<div class="auth_message">Geen rollen toegevoegd.</div>[% END %]
+                    </tbody>
+                </table>
+                <a
+                    class="ezra_table_row_add element in-header voeg-toe small"
+                    href="#"
+                    rel="callback: beheer_zaaktype_auth_add"
+                    ><span></span>Rol toevoegen</a>
+            </div>
+            
+        </div>
+        <div class="nextprev clearfix bottom">
+                <input type="submit" name="goback" value="Vorige" class="button140 btn">
+                <input type="submit" value="Volgende" class="button140 right btn last">
+                [% UNLESS params.create %]
+                <input name="direct_finish" type="hidden" value="" />
+                <input class="button140 grijs btn right ezra_direct_finish" value="Afronden" type="button" />
+                [% END %]
+            </div>
+    </form>
+</div>

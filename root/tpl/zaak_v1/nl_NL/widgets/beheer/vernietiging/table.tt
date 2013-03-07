@@ -1,0 +1,84 @@
+<!-- zaaktype/widgets/table_categorie.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="table_zaken_title_td30"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="table_zaken_title_td60">
+                <a href="[%
+                    c.req.uri_with( {
+                        order        => 'nr',
+                        order_direction   => (
+                            c.req.params.order_direction == 'ASC'
+                                ? 'DESC'
+                                : 'ASC'
+                            )
+                    })
+                %]"[% (c.req.params.order == 'nr' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Zaaknr</a>
+            </td>
+            <td class="table_zaken_title_td60">
+                <a href="[%
+                    c.req.uri_with( {
+                        order        => 'status',
+                        order_direction   => (
+                            c.req.params.order_direction == 'ASC'
+                                ? 'DESC'
+                                : 'ASC'
+                            )
+                    })
+                %]"[% (c.req.params.order == 'status' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Vernietigingsdatum</a>
+            </td>
+            <td class="table_zaken_title_td200">
+                <a href="[%
+                    c.req.uri_with( {
+                        order        => 'zaaktype',
+                        order_direction   => (
+                            c.req.params.order_direction == 'ASC'
+                                ? 'DESC'
+                                : 'ASC'
+                            )
+                    })
+                %]"[% (c.req.params.order == 'zaaktype' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Zaaktype<a>
+            </td>
+            <td class="table_zaken_title_td200">
+                <a href="[%
+                    c.req.uri_with( {
+                        order        => 'subject',
+                        order_direction   => (
+                            c.req.params.order_direction == 'ASC'
+                                ? 'DESC'
+                                : 'ASC'
+                            )
+                    })
+                %]"[% (c.req.params.order == 'subject' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Extra informatie<a>
+            </td>
+        [% UNLESS pip %]
+            <td class="table_zaken_title_td150">
+                <a href="[%
+                    c.req.uri_with( {
+                        order        => 'aanvrager',
+                        order_direction   => (
+                            c.req.params.order_direction == 'ASC'
+                                ? 'DESC'
+                                : 'ASC'
+                            )
+                    })
+                %]"[% (c.req.params.order == 'aanvrager' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Aanvrager</a>
+            </td>
+        [% END %]
+        [% UNLESS pip %]
+            <td class="table_zaken_title_td60">Dagen</td>
+            <td class="td150">Acties:</td>
+            <td class="table_zaken_title_td30">
+                &nbsp;
+            </td>
+        [% END %]
+        </tr>
+    </thead>
+   <tbody>
+    [% WHILE (zaak = zaken.next) %]
+        [% PROCESS widgets/beheer/vernietiging/row.tt %]
+    [% END %]
+    </tbody>
+</table>
+<!-- END zaaktype/widgets/table_categorie.tt -->
+

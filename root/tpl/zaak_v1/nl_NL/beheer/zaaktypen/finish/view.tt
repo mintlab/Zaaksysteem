@@ -1,0 +1,65 @@
+<!-- Begin Zaaktype -->
+<form method="POST" action="[% formaction %]">
+    <input type="hidden" name="commit" value="1">
+    <div class="block clearfix">
+        <p class="header">Controleer onderstaande gegevens</p>
+        <div class="blockcontent">
+            <table class="table_zaakinformatie marginbottom">
+                <thead>
+                    <tr>
+                        <th colspan="2">Kenmerken</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table_td_left_zaakinformatie">Zaaktypecode van het zaaktype</td>
+                        <td class="table_td_right_zaakinformatie">
+                            [% params.node.code %]
+                        </td>
+                    <tr>
+                    <tr>
+                        <td class="table_td_left_zaakinformatie">Trigger</td>
+                        <td class="table_td_right_zaakinformatie">
+                            [% params.node.trigger %]
+                        </td>
+                    <tr>
+                </tbody>
+            </table>
+
+            <table class="table_zaakinformatie marginbottom">
+                <thead>
+                    <tr>
+                        <th colspan="2">PDC Informatie</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="table_td_left_zaakinformatie">Omschrijving</td>
+                        <td class="table_td_right_zaakinformatie">
+                            [% params.definitie.pdc_description %]
+                        </td>
+                    <tr>
+                    <tr>
+                        <td class="table_td_left_zaakinformatie">Voorwaarden</td>
+                        <td class="table_td_right_zaakinformatie">
+                            [% params.definitie.pdc_voorwaarden %]
+                        </td>
+                    <tr>
+                    <tr>
+                        <td class="table_td_left_zaakinformatie">Tarief</td>
+                        <td class="table_td_right_zaakinformatie">
+                            [% params.definitie.pdt_tarief %]
+                        </td>
+                    <tr>
+                </tbody>
+            </table>
+
+            [% UNLESS zaaktype_view %]
+            <div class="nextprev clearfix">
+                <input type="submit" name="goback" value="Vorige" class="button140 btn">
+                <input type="submit" value="Publiceren" class="button140 right btn">
+            </div>
+            [% END %]
+        </div>
+    </div>
+</form>

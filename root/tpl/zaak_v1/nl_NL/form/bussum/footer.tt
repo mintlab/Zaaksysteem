@@ -1,0 +1,88 @@
+[% RETURN IF c.user_exists -%]
+
+<div id="dialog">
+    <div class="dialog-title"></div>
+    <div class="dialog-content"></div>
+</div>
+</body>
+</html>
+			
+			<div id="tools">
+    			<div class="browsealoud"><a href="http://www.browsealoud.nl/">Voorleeshulp</a></div>
+    			<div class="rss"><a href="http://bussum.nl/rss-feeds/">RSS</a></div>
+    			<div id="fontsize"><span>Tekstgrootte</span><div id="c44817" class="csc-default" >
+        			<ul>
+                    	<li><a href="?style=alt90" rel="alt90" class="styleswitch default" title="normale leestekens">a</a></li>
+                    	<li><a href="?style=alt91" rel="alt91" class="styleswitch large" title="grotere leestekens">a</a></li>
+                    	<li><a href="?style=alt92" rel="alt92" class="styleswitch largest" title="grootste leestekens">a</a></li>
+                    </ul>
+                </div>
+                </div>
+                <div id="search"><div class="search-left"><div class="tx-ncstsolrsearch-pi1">	
+    	
+    	
+    	
+    
+                	<form id="searchform" action="http://bussum.nl/zoeken/" accept-charset="utf-8" method="get">
+                	<fieldset>
+                	<label for="tx-solr-q" class="ncsolr-label-search">Zoeken door gehele site</label>
+                	<input id="tx-solr-q2" class="ac_input" type="text" value="Zoeken..." onfocus="this.value='';" name="tx_solr[q]" autocomplee="off" />
+                	<input class="submit" type="submit" value="ZOEK" name="submit_button" />
+                	<input class="hidden" type="hidden" value="1" name="search"/>
+                	</fieldset>
+                	</form>
+    
+    	       </div>
+    	       </div>
+    	       </div>
+    	      <!--  <div class="sitemap"><a href="http://www.bussum.nl/sitemap/">Sitemap</a></div> -->
+    	       <div id="language-tool">
+
+    	       </div>
+    	   </div>
+
+			<div id="navigation"><div id="nav-meta"><ul><li class="first"><a href="http://www.bussum.nl/politiek-en-bestuur/" title="Vind informatie over bestuur en organisatie."  class="m-511"><span>Politiek en bestuur</span></a></li><li><a href="http://www.bussum.nl/producten-en-diensten/" title="Ga direct naar Loket"  class="m-509"><span>Producten en diensten</span></a></li><li><a href="http://www.bussum.nl/plannen-en-projecten/" title="Plannen en projecten"  class="m-4106"><span>Plannen en projecten</span></a></li><li class="last"><a href="http://www.bussum.nl/vacatures/" title="Vacatures"  class="m-4098"><span>Vacatures</span></a></li></ul></div><div id="nav-top" class="nav-top-normal"><ul><li class="first"><a href="http://www.bussum.nl/" title="Home"  class="m-2559"><span>Home</span></a></li><li><a href="http://www.bussum.nl/wonen-en-leven/" title="Vind informatie over wonen en leven."  class="m-513"><span>Wonen en Leven</span></a></li><li><a href="http://www.bussum.nl/werk-en-inkomen/" title="Werk en inkomen"  class="m-4146"><span>Werk en inkomen</span></a></li><li><a href="http://www.bussum.nl/verkeer-en-milieu/" title="Vind informatie over werken en leren."  class="m-4004"><span>Verkeer en Milieu</span></a></li><li><a href="http://www.bussum.nl/ondernemen/" title="Vind informatie over ondernemen."  class="m-512"><span>Ondernemen</span></a></li><li class="last"><a href="http://www.bussum.nl/over-bussum/" title="Vind informatie over de stad bezoeken."  class="m-519"><span>Over Bussum</span></a></li></ul></div></div>
+		</div>
+		
+		
+		</div>
+<div id="footer-container"><div id="footer"><div class="csc-default" id="c44682"><div class="csc-default" id="c44821"><div class="tx-jpcarousel-pi1">
+		 
+
+<div class="carouselContainer">
+
+    <div class="carousel">
+        <div class="caroufredsel_wrapper" style="width: 860px; height: 122px; position: relative; overflow: hidden;"><ul id="jpcarousel" style="width: 2752px; position: absolute;">
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a href="http://www.bussum.nl/wonen-en-leven/">Omgevingsvergunning</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a href="http://www.bussum.nl/wonen-en-leven/"><img width="156" height="77" alt="De omgevingsvergunning: makkelijker en sneller uw vergunning aanvragen." src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_omgevingsvergunning.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Burgerpanel" href="http://www.burgerpanelbussum.nl/">Burgerpanel</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Burgerpanel" href="http://www.burgerpanelbussum.nl/"><img width="156" height="77" alt="Omdat we allemaal het beste willen voor Bussum." src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_burgerpanel.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Wijzer wijzer" href="http://www.wijzerwijzer.nl/">Wonen, welzijn, zorg</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="wijzerwijzer" href="http://www.wijzerwijzer.nl/"><img width="156" height="77" alt="Wijzer is dé plek voor advies, informatie en ondersteuning op het gebied van wonen, welzijn zorg." src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_wijzer.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a href="http://www.bussum.nl/doe-uzelf-niet-tekort/">Doe uzelf niet tekort</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a href="http://www.bussum.nl/doe-uzelf-niet-tekort/"><img width="156" height="77" alt="Doe uzelf niet tekort- uw recht op voorzieningen" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_doeuzelfniettekort.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Bussum promotie" href="http://www.bussumpromotie.nl/">Bussum promotie</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Bussum promoti" href="http://www.bussumpromotie.nl/"><img width="156" height="77" alt="Alle evenementen en activiteiten op een rij." src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_bussumpromotie.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Jong Bussum" href="http://www.jongbussum.nl">Jong Bussum</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Jong Bussum" href="http://www.jongbussum.nl"><img width="156" height="77" alt="Adviesraad van JongBussum" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_jongbussum.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Geen gedwongen fusie" href="http://www.geengedwongenfusie.nl/">Geen gedwongen fusie</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Geen gedwongen fusie" href="http://www.geengedwongenfusie.nl/"><img width="156" height="77" alt="Platform tegen gedwongen fusie van  Bussum, Naarden, Muiden en Weesp." src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_geengedwongenfusie.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+            <li><div class="frame-01"><div class="spacing"><h4><a title="Centrum voor Jeugd en Gezin" href="http://www.cjgnaardenbussum.nl">Centrum Jeugd en Gezin Naarden Bussum</a></h4><div class="csc-textpic csc-textpic-center csc-textpic-above"><div style="width: 156px;" class="csc-textpic-imagewrap csc-textpic-single-image"><a title="Centrum voor Jeugd en Gezin" href="http://www.cjgbussum.nl"><img width="156" height="77" alt="Het Centrum voor Jeugd en Gezin is dé vraagbaak voor (aanstaande) ouders, opvoeders en jongeren uit Naarden en Bussum." src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/bt_cjgbussum.png"></a></div></div><div class="csc-textpic-clear"><!-- --></div></div></div></li>
+            
+        </ul></div>
+    </div>
+ 
+    <div class="carouselbuttons">
+        <a title="" class="carouselprev" href="http://www.bussum.nl/direct-zaken-online-regelen/#"><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/clear.gif" alt="" title=""></a>
+        <a title="" class="carouselnext" href="http://www.bussum.nl/direct-zaken-online-regelen/#"><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/img/clear.gif" alt="" title=""></a>
+        
+    </div>
+     
+</div>
+
+	</div>
+	</div><div class="csc-default" id="c46586"><div class="dmailsub-footer">
+	<h5>Zorg dat u als eerste op de hoogte bent van alle ontwikkelingen in Bussum!</h5>
+	<a href="http://www.bussum.nl/over-bussum/aan-en-afmelden-nieuwsbrief/" title="button aanmelden nieuwsbrief" class="button">Aanmelden nieuwsbrief</a>
+</div></div><div class="frame-01"><div class="spacing"><h4>Wonen en leven</h4><ul> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Belastingen en heffingen</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Bouwen en wonen</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Leven, reizen, papieren</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Onderwijs</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Sport en recreatie</a></li> <li><a title="wonen en leven" href="http://www.bussum.nl/wonen-en-leven/">Zorg en welzijn</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Werk en inkomen</h4><ul> <li><a title="werk en inkomen" href="http://www.bussum.nl/werk-en-inkomen/">Bijstand en uitkering</a></li> <li><a title="werk en inkomen" href="http://www.bussum.nl/werk-en-inkomen/">Extra financiele ondersteuning</a></li> <li><a title="werk en inkomen" href="http://www.bussum.nl/werk-en-inkomen/">(Weer) aan het werk</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Verkeer en milieu</h4><ul> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Afval</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Milieu</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Natuur en groen</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Parkeren</a></li> <li><a title="Verkeer en milieu" href="http://www.bussum.nl/verkeer-en-milieu/">Verkeer</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Ondernemen</h4><ul> <li><a title="Ondernemen" href="http://www.bussum.nl/ondernemen/">Belastingen en heffingen</a></li> <li><a title="Ondernemen" href="http://www.bussum.nl/ondernemen/">Bedrijfsvoering algemeen</a></li> <li><a title="Ondernemen" href="http://www.bussum.nl/ondernemen/">Bedrijf beginnen</a></li> </ul></div></div><div class="frame-01"><div class="spacing"><h4>Over Bussum</h4><ul> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">In de media</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Uit in Bussum</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Recreeren</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Geschiedenis</a></li> <li><a title="Over Bussum" href="http://www.bussum.nl/over-bussum/">Overig</a></li> </ul></div></div></div><div id="copy">Copyright &copy;&nbsp;2011&nbsp;gemeente Bussum</div></div></div>

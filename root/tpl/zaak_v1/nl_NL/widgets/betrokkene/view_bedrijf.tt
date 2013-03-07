@@ -1,0 +1,76 @@
+[%
+    rechtsvormmap = ZCONSTANTS.kvk_rechtsvormen ;
+%]
+<table class="table_zaakinformatie">
+    [% UNLESS hide_bron_gegevens || pip %]
+    <tr>
+        <td class="table_td_left_zaakinformatie">Type:</td>
+        <td class="table_td_right_zaakinformatie">[% brontype.${betrokkene.btype} %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Bron:</td>
+        <td class="table_td_right_zaakinformatie">[% !betrokkene.authenticated ? 'Zaaksysteem' : broninfo.${betrokkene.btype} %]</td>
+    </tr>
+    [% END %]
+    <tr>
+        <td class="table_td_left_zaakinformatie">KvK-nummer:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.dossiernummer %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Handelsnaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.handelsnaam %]</td>
+
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Rechtsvorm:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% rechtsvormmap.${betrokkene.rechtsvorm} %]
+        </td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Vestiging straat:</td>
+
+        <td class="table_td_right_zaakinformatie">[% betrokkene.vestiging_straatnaam %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Vestiging huisnummer:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.vestiging_huisnummer %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Vestiging toevoeging:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.vestiging_huisnummertoevoeging %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Vestiging postcode:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.vestiging_postcode %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Vestiging woonplaats:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.vestiging_woonplaats %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Contactpersoon voorletters:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.contact_voorletters %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Contactpersoon tussenvoegsel:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.contact_voorvoegsel %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Contactpersoon achternaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.contact_geslachtsnaam %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="npc-telefoonnummer" class="input_medium" value="[% betrokkene.telefoonnummer %]"><span class="validator"></span></td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Mobielnummer:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="npc-mobiel" class="input_medium" value="[% betrokkene.mobiel %]"><span class="validator"></span></td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">E-mail:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" name="npc-email" class="input_medium" value="[% betrokkene.email %]"><span class="validator"></span></td>
+    </tr>
+    </tr>
+</table>

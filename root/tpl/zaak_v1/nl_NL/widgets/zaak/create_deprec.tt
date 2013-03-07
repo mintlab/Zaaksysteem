@@ -1,0 +1,323 @@
+<div class="block form" >
+    <p class="header">Een nieuwe zaak aanmaken</p>
+    <div class="blockcontent">
+        <form action="[% c.uri_for('/zaak/create/balie') %]" method="POST" class="zvalidate" name="aanvrager_form">
+            <input type="hidden" name="create" value="1" />
+        [%# Below create_entry defines that we won't validate when this
+        create_entry thingy does not exist %]
+            <input type="hidden" name="create_entry" value="1" />
+        [% IF c.req.params.actie %]
+            <input type="hidden" name="actie" value="[% c.req.params.actie %]" />
+            <input type="hidden" name="actie_value" value="[% c.req.params.actie_value %]" />
+            <input type="hidden" name="actie_description" value="[% c.req.params.actie_value %]" />
+        [% END %]
+            <table class="zaak_aanmaken">
+                <tbody>
+                    <tr>
+                        <td class="td200">
+                            <span>Soort zaak</span>
+                        </td>
+                        <td>
+                            <div class="ezra_trigger">
+                                <div class="radio-item">
+                                    <input
+                                        id="zaak_extern"
+                                        type="radio"
+                                        name="ztc_trigger"
+                                        value="extern"
+                                        checked="checked" />
+                                    <label for="zaak_extern">Externe zaak</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input
+                                        id="zaak_intern"
+                                        type="radio"
+                                        name="ztc_trigger"
+                                        value="intern" />
+                                    <label for="zaak_intern">Interne zaak</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="td260">
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Wie neemt het initiatief van deze zaak?
+                                    Is dit de burger, dan
+                                    is het een externe zaak. Is dit de
+                                    organisatie zelf, dan is het een
+                                    interne zaak.
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="ezra_id_bestemming">
+                        <td>
+                            <span>Bestemming</span>
+                        </td>
+                        <td>
+                            <div class="ezra_betrokkene_type">
+                                <div class="radio-item">
+                                    <input
+                                    type="radio"
+                                    name="bestemming"
+                                    value="intern"
+                                    checked="checked"
+                                    id="bestemming_intern"
+                                    />
+                                    <label for="bestemming_intern">Interne afhandeling</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input
+                                        type="radio"
+                                        name="bestemming"
+                                        value="extern"
+                                    /> 
+                                    <label for="bestemming_extern">Externe afhandeling</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Geef hier aan voor wie de zaak bestemd is,
+                                    voor interne afhandeling of extern afhandeling,
+                                    zoals een andere gemeente of ministerie.
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="ezra_id_aanvrager_type">
+                        <td>
+                            <span>Type aanvrager</span>
+                        </td>
+                        <td>
+                            <div class="ezra_betrokkene_type">
+                                <div class="radio-item">
+                                    <input
+                                    id="burger"
+                                    type="radio"
+                                    name="betrokkene_type"
+                                    value="natuurlijk_persoon"
+                                    [% IF !c.req.params.betrokkene_type %]
+                                    checked="checked"
+                                    [% ELSE %]
+                                        [%
+                                            c.req.params.betrokkene_type == 'natuurlijk_persoon'
+                                                ? ' checked="checked"'
+                                                : ''
+                                        %]
+                                    [% END %]
+                                    /> 
+                                    <label for="burger">Burger</label>
+                                </div>
+                                <div class="radio-item">
+                                    <input
+                                        id="organisatie""
+                                        type="radio"
+                                        name="betrokkene_type"
+                                        value="bedrijf"
+                                        [%
+                                            c.req.params.betrokkene_type == 'bedrijf'
+                                                ? ' checked="checked"'
+                                                : ''
+                                        %]
+                                    /> 
+                                    <label for="organisatie">Organisatie</label>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Geef hier aan voor wie de zaak bestemd is,
+                                    een natuurlijk persoon of bedrijf.
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="ezra_id_aanvrager">
+                        <td>
+                            <span>Aanvrager</span>
+                        </td>
+                        <td>
+                            <div class="ezra_select_betrokkene">
+                                <div class="betrokkene zoek_veld">
+                                    <input
+                                        type="hidden"
+                                        name="ztc_aanvrager_id"
+                                    />
+                                    <input type="text"
+                                        name="betrokkene_naam"
+                                        class="input_large"
+                                    />
+                                    <a href="#" title="Zoek een nieuwe aanvrager"
+                                        class="ezra_betrokkene_selector icon-magnifier knop medium no-icon"
+                                    rel="betrokkene_type: medewerker;
+                                    selector_identifier: .zaak_aanmaken .ezra_id_aanvrager .ezra_select_betrokkene input[name='ztc_aanvrager_id'];
+                                    selector_naam: .zaak_aanmaken .ezra_id_aanvrager .ezra_select_betrokkene input[name='betrokkene_naam'];"
+                                    ></a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Selecteer een aanvrager
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="ezra_id_ontvanger">
+                        <td>
+                            <span>Ontvanger</span>
+                        </td>
+                        <td>
+                            <div class="ezra_select_betrokkene">
+                                <div class="betrokkene zoek_veld">
+                                    <input
+                                        type="hidden"
+                                        name="ontvanger"
+                                    />
+                                    <input type="text"
+                                        name="ontvanger_naam"
+                                        class="input_large"
+                                    />
+                                    <a href="#" title="Zoek een nieuwe aanvrager"
+                                    class="ezra_betrokkene_selector icon-magnifier knop medium no-icon"
+                                    rel="betrokkene_type: bedrijf;
+                                    selector_identifier: .zaak_aanmaken .ezra_id_ontvanger .ezra_select_betrokkene input[name='ontvanger'];
+                                    selector_naam: .zaak_aanmaken .ezra_id_ontvanger .ezra_select_betrokkene input[name='ontvanger_naam'];"
+                                    ></a>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Selecteer een ontvanger
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Aangevraagd via</span>
+                        </td>
+                        <td>
+                            <select name="ztc_contactkanaal" class="replace-select">
+                                [% FOREACH contactkanaal IN ZCONSTANTS.contactkanalen %]
+                                    <option
+                                    value="[% contactkanaal %]"
+                                    > [% contactkanaal | ucfirst %]</option>
+                                [% END %]
+                            </select>
+                        </td>
+                        <td>
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Selecteer hier op welke manier deze
+                                    persoon of organisatie u heeft benaderd.
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span>Zaaktype</span>
+                        </td>
+                        <td>
+                            <div class="ezra_zaaktype_keuze clearfix zoek_veld">
+                                <input
+                                    type="hidden"
+                                    name="zaaktype_id"
+                                    value="[% c.session.remember_zaaktype.$trigger.id %]" />
+                                <input type="hidden" name="jstrigger" value="[% trigger %]" />
+                                
+                                <input
+                                    id="textbox-[% trigger %]"
+                                    type="text"
+                                    name="zaaktype_name"
+                                    class="ezra_zaaktype_keuze_textbox"
+                                    value="[% c.session.remember_zaaktype.$trigger.naam %]"
+                                    autocomplete="off"
+                                    />
+                                <a href="#" title="Zoek een nieuwe zaaktype" class="ezra_kies_zaaktype icon-magnifier knop no-icon medium"></a>
+                                
+                            </div>
+                            <div><input
+                                type="checkbox" name="remember" value="1"
+                                [% (c.session.remember_zaaktype.$trigger.id ? ' checked="checked"' : '') %]
+                                /> Zaaktype Onthouden
+                            </div>
+                        </td>
+                        <td>
+                            <div class="validator rounded">
+                                <div class="validate-tip"></div>
+                                <div class="validate-content rounded-right">
+                                    <span></span>
+                                </div>
+                            </div>
+                            <div style="display: none;" class="tooltip-test-wrap">
+                                <div class="tooltip-test rounded">
+                                    Selecteer het type zaak.
+                                    <a class="icon_close"></a>
+                                </div>
+                                <div class="tooltip-test-tip"></div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="clearfix nextprev"><a href="/noscript" class="button140 right doSubmit ahref">Volgende</a></div>
+        </form>
+    </div> <!-- end blockcontent -->
+</div> <!-- end left -->
+

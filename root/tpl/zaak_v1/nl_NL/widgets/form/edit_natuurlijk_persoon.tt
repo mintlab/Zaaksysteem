@@ -1,0 +1,393 @@
+<table class="table_webformulier form">
+    [% IF aanvrager_bsn %]
+    <tr class="table_webformulier_tr">
+        <td colspan="3" class="td310">
+            <p class="red">Wij kunnen uw Burger Servicenummer niet vinden binnen onze
+            gemeentelijke basis administratie. Dit betekent dat u momenteel
+            buiten [% c.config.gemeente.naam %] woont. Gelieve uw gegevens hieronder in te vullen
+            </p>
+        </td>
+    </tr>
+    [% END %]
+    
+    
+    <tr class="table_webformulier_tr">
+        <input type="hidden" name="betrokkene_type" value="natuurlijk_persoon">
+        <input type="hidden" name="create" value="1">
+        <td class="td300">Burgerservicenummer:</td>
+        <td class="td310">
+            [% IF aanvrager_bsn %]
+                <input
+                    type="hidden"
+                    name="np-burgerservicenummer"
+                    value="[% aanvrager_bsn %]"
+                />
+                [% aanvrager_bsn %]
+            [% ELSE %]
+            <input
+                type="text"
+                name="np-burgerservicenummer"
+                class="input_large"
+            />
+            [% END %]
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw burgerservicenummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Voorletters:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-voorletters"
+                class="input_mini"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw voorletters in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Voornamen:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-voornamen"
+                class="input_large"
+            />
+            
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw voornamen in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Tussenvoegsel:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-voorvoegsel"
+                class="input_medium"
+            />
+            
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw tussenvoegsel in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Achternaam:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-geslachtsnaam"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw achternaam in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Geslacht:</td>
+        <td class="td310">
+            <div class="clearfix">
+            <div><input type="radio" name="np-geslachtsaanduiding" value="M"> Man</div>
+            <div><input type="radio" name="np-geslachtsaanduiding" value="V"> Vrouw</div>
+            </div>
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Kies een geslacht.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Straatnaam:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-straatnaam"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul een straatnaam in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Huisnummer:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-huisnummer"
+                class="input_mini"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw huisnummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Huisnummer toevoeging:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-huisnummertoevoeging"
+                class="input_mini"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw huisnummer toevoeging in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Postcode:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-postcode"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw postcode in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Woonplaats:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="np-woonplaats"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw woonplaats in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Telefoon:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-telefoonnummer"
+                value="[% aanvrager.telefoonnummer %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw telefoonnummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Mobiel:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-mobiel"
+                value="[% aanvrager.mobiel %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw mobiele nummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">E-mail:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-email"
+                value="[% aanvrager.email %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw e-mailadres in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+</table>

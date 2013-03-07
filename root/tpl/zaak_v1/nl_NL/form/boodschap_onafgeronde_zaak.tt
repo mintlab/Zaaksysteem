@@ -1,0 +1,22 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+
+[% layout_type = 'simple' %]
+<div class="block">
+<p class="header">Zaak opgeslagen als onafgeronde zaak</p>
+<div class="blockcontent">
+
+    <p>
+    Uw zaak is opgeslagen, maar nog niet geregistreerd. U kunt op een later moment uw zaak afronden door in te loggen in de Persoonlijke Internetpagina (PIP). Hier is een overzicht opgenomen van zaken die nog niet zijn afgerond. Nog niet afgeronde zaken blijven maximaal 30 dagen bewaard.
+    </p>
+<div class="nextprev clearfix">
+    <a href="[% c.uri_for('/pip') %]" title="Annuleren"><input type="button" value="Ga naar uw PIP" class="button140 left" /></a>
+</div>
+</form>
+</div>
+</div>
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]
+

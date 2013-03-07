@@ -1,0 +1,20 @@
+<!-- widgets/beheer/import/gba/table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="tdvar">[% c.loc('burgerservicenummer') %]</td>
+            <td class="tdvar">[% c.loc('actie') %]</td>
+            <td class="tdvar">[% c.loc('kolom') %]</td>
+            <td class="tdvar">[% c.loc('oude data') %]</td>
+            <td class="tdvar">[% c.loc('nieuwe data') %]</td>
+        </tr>
+    </thead>
+    <tbody>
+        [% WHILE (entry = import_log.next) %]
+            [% PROCESS widgets/beheer/import/gba/table_row.tt %]
+        [% END %]
+        [% PROCESS widgets/pager.tt %]
+    </tbody>
+</table>
+<!-- END widgets/beheer/import/gba/table.tt -->

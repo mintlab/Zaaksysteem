@@ -1,0 +1,44 @@
+[% IF
+    veldoptie_type == 'bag_adres' ||
+    veldoptie_type == 'bag_adressen' ||
+    veldoptie_type == 'bag_straat_adres' ||
+    veldoptie_type == 'bag_straat_adressen' ||
+    veldoptie_type == 'bag_openbareruimte' ||
+    veldoptie_type == 'bag_openbareruimtes'
+%]
+    [% FOREACH value IN veldoptie_value %]
+        [%
+            c.model('Gegevens::Bag').bag_human_view_by_id(value)
+            %]
+        ([% value %])<br />
+    [% END %]
+[% ELSIF veldoptie_type == 'image_from_url' %]
+    <img src="[% veldoptie_value %]" />
+[% ELSE %]
+    [% IF veldoptie_value.0 %]
+        <ul>
+        [% FOREACH veldvalue IN veldoptie_value %]
+            [% IF
+                veldoptie_type == 'valuta' || veldoptie_type == 'valutain' ||
+                veldoptie_type == 'valutaex'
+            %]
+                [% veldvalue = veldvalue.replace(',','.') %]
+                [% veldvalue = veldvalue | format('%01.2f') %]
+                [% veldvalue = veldvalue.replace('\.',',') %]
+            [% END %]
+            <li>[% veldvalue %]</li>
+        [% END %]
+        </ul>
+    [% ELSE %]
+        [% IF
+            veldoptie_type == 'valuta' || veldoptie_type == 'valutain' ||
+            veldoptie_type == 'valutaex'
+        %]
+            [% veldoptie_value = veldoptie_value.replace(',','.') %]
+            [% veldoptie_value = veldoptie_value | format('%01.2f') %]
+            [% veldoptie_value = veldoptie_value.replace('\.',',') %]
+        [% END %]
+        [% veldoptie_value.join(', ') %]
+    [% END %]
+[% END %]
+

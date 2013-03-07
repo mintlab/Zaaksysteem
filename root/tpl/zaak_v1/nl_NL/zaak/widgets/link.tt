@@ -1,0 +1,36 @@
+<form method="POST" action="[% c.uri_for('/zaak/intake/link/' _ doc.id) %]"  class="hascallback">
+<input type="hidden" name="[% postprefix %]document_id" value="[% doc.id %]">
+<input type="hidden" name="callback" value="ezra_intake_link_details">
+<input type="hidden" name="link" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    [% IF link_error %]
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie" colspan="2">
+            <span style="color: red">[% link_error %]</span>
+        </td>
+    </tr>
+    [% END %]
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Zaaknummer:</td>
+        <td class="table_td_right_zaakinformatie">
+            <input type="text" value="" class="input_large" name="zaaknr"/>
+            <!-- <img src="/images/icon-magnifier.png" width="16" height="16" border="0"> -->
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Bestandsnaam:</td>
+        <td class="table_td_right_zaakinformatie">[% doc.filename %]
+        <!--input type="hidden" name="zaak_intake_old_filename_[% doc.id %]" value="[% doc.filename %]"/>
+        <input type="text" name="zaak_intake_edit_filename_[% doc.id %]" class="zaak_intake_edit_filename" rel="[% doc.id %]" value="[% doc.filename %]" /><span class="zaak_intake_error_change_filename" id="zaak_intake_edit_filename_error_[% doc.id %]"></span-->
+        </td>
+
+
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Toevoegen" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

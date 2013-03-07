@@ -1,0 +1,14 @@
+[%
+    page_scripts     = [];
+    #page_scripts.push('respond.min.js');
+-%]
+
+<!-- Javascripts -->   
+[% USE date %]
+[% BLOCK script_invocation -%]
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL/js/') %][% script_name %][% IF c.config.otap == 'dev' %]?[% date.now %][% END %]"></script>
+[%- END %]
+
+[% FOREACH script_name IN page_scripts %]
+    [%- PROCESS script_invocation %]
+[% END -%]

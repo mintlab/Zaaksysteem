@@ -1,0 +1,220 @@
+        <div id="accordion">
+            <h3><a href="#">Zoekcriteria</a></h3>
+            <div>
+               <div id="search_betrokkene" class="ui-accordion-table-bg clearfix">
+                   <form>
+                       [% IF jsversion == 3 %]
+                       <input
+                           type="hidden"
+                           name="ezra_client_info_selector_identifier"
+                           value="[% c.req.params.ezra_client_info_selector_identifier %]" />
+                       <input
+                           type="hidden"
+                           name="ezra_client_info_selector_naam"
+                           value="[% c.req.params.ezra_client_info_selector_naam %]" />
+                       <input
+                           type="hidden"
+                           name="ezra_client_info_selector_naam"
+                           value="[% c.req.params.ezra_client_info_selector_naam %]" />
+                       <input
+                           type="hidden"
+                           name="betrokkene_type"
+                           value="[% c.req.params.betrokkene_type %]" />
+                       <input
+                           type="hidden"
+                           name="search"
+                           value="1" />
+                       <input
+                           type="hidden"
+                           name="jsversion"
+                           value="[% c.req.params.jsversion %]" />
+                        [% END %]
+                        [% IF betrokkene_type == 'medewerker' %]
+                            [% INCLUDE widgets/betrokkene/medewerker_search.tt %]
+                        [% ELSIF betrokkene_type == 'natuurlijk_persoon' %]
+                            [% INCLUDE widgets/betrokkene/natuurlijk_persoon_search.tt %]
+                        [% ELSIF betrokkene_type == 'bedrijf' %]
+                            [% INCLUDE widgets/betrokkene/bedrijf_search.tt %]
+                        [% END %]
+                    <input type="submit" class="right button140 right last" name="submit" value="Zoeken" />
+                    <img id="betrokkene_loader" src="images/loader.gif" class="disabled" />
+                    </form>
+                </div>
+            </div>
+            
+            <h3><a href="#">Resultaten</a></h3>
+            
+            <div style="height:200px;">
+		      <div class="ui-accordion-table-bg">
+            <table class="table_zaken_title" id="search_betrokkene_results">
+			<tbody>
+			</tbody>
+            </table>
+            </div>
+            </div>
+        </div>
+
+
+    <script type="text/javascript">
+
+
+        $(document).ready(function(){
+		
+            tr_tpl = $("#search_betrokkene_tpl");
+			$('#accordion').accordion({
+			   autoHeight: false
+			});
+
+            $("#search_betrokkene form").submit(function(){
+                $('#betrokkene_loader').removeClass('disabled');
+                postdata = {
+                    search: 1,
+                    jsfill: "[% jsfill %]",
+                    jscontext: "[% jscontext %]",
+                    jstype: "[% jstype %]",
+                    jsversion: "[% jsversion %]",
+                    method: "[% method %]",
+                    url: "[% url %]",
+                    import_datum: "[% import_datum %]"
+                };
+
+                /* NEW STYLE */
+                if (postdata.jsversion == 3) {
+                    var serialized      = $(this).serialize();
+                    serialized.search   = 1;
+                    serialized.jsversion = 3;
+
+                    $('#search_betrokkene_results tbody').load(
+                        '/betrokkene/search?' + serialized,
+                        null,
+                        function() {
+                            $('#accordion').accordion('activate', 1);
+                            $('#betrokkene_loader').addClass('disabled');
+                        }
+                    );
+
+                } else {
+                    $("#search_betrokkene input").each(function(){
+                        if (
+                            $(this).attr('type') == 'checkbox' ||
+                            $(this).attr('type') == 'radio'
+                        ) {
+                            if ($(this).attr('checked') == true) {
+                                postdata[$(this).attr('name')] = $(this).attr('value');
+                            }
+                            return;
+                        }
+                        postdata[$(this).attr('name')] = $(this).attr('value');
+                    });
+                    $("#search_betrokkene select").each(function(){
+                        selectname = $(this).attr('name');
+                        $("#search_betrokkene select option:selected").each(function() {
+                            postdata[selectname] = $(this).attr('value');
+                        });
+                    });
+
+                    $('#search_betrokkene_results tbody').load(
+                        '/betrokkene/search',
+                        postdata,
+                        function() {
+                            $('#accordion').accordion('activate', 1);
+                            $('#betrokkene_loader').addClass('disabled');
+                        }
+                        );
+                }
+
+                return false;
+
+            });
+            
+			
+			
+			 $('#search_betrokkene_results').on('click', '.betrokkene_keuze', function() {
+                columns     = $(this).find('td');
+                description = '';
+                columns.each(function() {
+                    if (
+                        $(this).hasClass('result_voorletters') ||
+                        $(this).hasClass('result_geslachtsnaam')
+                    ) {
+                        if (description) {
+                            description = description + ' ';
+                        }
+                        description = description + $(this).html();
+                    }
+                });
+
+                if ($.method && $.method == 'reload') {
+                    window.location = '[% url %]?ztc_behandelaar_id='
+                        + $(this).attr('id');
+                    $.ztWaitStart();
+                } else if ($.method && $.method == 'post') {
+                    $.ztWaitStart();
+                    $.post(
+                        '[% url %]',
+                        { ztc_behandelaar_id: $(this).attr('id') },
+                        function() {
+                            window.location.reload();
+                        }
+                    );
+                } else if ($.jsversion == 3) {
+                	if($.search_filter_post) {
+             			var data = 'action=update_filter&filter_type='+$.search_filter_post+'&nowrapper=1&value=' + $(this).attr('id');
+						updateSearchFilters(data);
+                	}
+                    var formcontainer = $('#search_betrokkene').find('form');
+                    var form_ezra_client_info_selector_identifier = formcontainer.find('input[name="ezra_client_info_selector_identifier"]').val();
+                    var form_ezra_client_info_selector_naam = formcontainer.find('input[name="ezra_client_info_selector_naam"]').val();
+
+                    if ($(form_ezra_client_info_selector_identifier).attr('name')) {
+                        $(form_ezra_client_info_selector_identifier).val($(this).attr('id'));
+                    } else {
+                        $(form_ezra_client_info_selector_identifier).html($(this).attr('id'));
+                    }
+
+                    if ($(form_ezra_client_info_selector_naam).attr('name')) {
+                        $(form_ezra_client_info_selector_naam).val(description);
+                    } else {
+                        $(form_ezra_client_info_selector_naam).html(description);
+                    }
+
+                } else if ($.jsversion >=2) {
+                    Logger.log('blaaa' + $.containerid);
+                    $("#start_" + $.containerid + " .ezra_select_betrokkene input[type='hidden']").attr('value', $(this).attr('id'));
+                    $("#start_" + $.containerid + " .ezra_select_betrokkene input[type='text']").attr('value', description);
+                    $("#start_" + $.containerid + " .ezra_select_betrokkene .validate-ok").css('visibility', 'visible');
+                } else {
+                    $("#[% jscontext %] input[name='[% jsfill %]_id']").attr('value',
+                        $(this).attr('id')
+                    );
+
+                    $("#[% jscontext %] input[name='[% jsfill %]']").attr('value',
+                        description);
+                }
+                if ($.method && $.method == 'post') {
+                    /* Do nothing here, deprecated, we reload the window in
+                     * above post
+                     */
+                } else {
+                    $('#searchdialog').dialog('close');
+                }
+            });
+            
+        });
+
+
+    </script>
+	
+	    <script type="text/javascript">
+        $(document).ready(function(){
+            $.jsversion     = '[% jsversion %]';
+            $.containerid   = '[% jsfill %]';
+            $.method        = '[% method %]';
+            $.search_filter_post = '[% search_filter_post %]';
+
+
+           
+
+        });
+    </script>
+

@@ -1,0 +1,240 @@
+
+
+/* @group de bilt overrides */
+
+.zoekfunctie-img{
+	background: url(../images/debilt-zoekfunctie.jpg) no-repeat 1.5em 0;
+	width: 340px;
+	height: 33px;
+}
+
+/* @end */
+
+
+.webform .block .header {
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+}
+
+.webform .block .header div{
+	width: 680px;
+}
+
+
+
+
+/* @group knoppen */
+
+
+	/* @group nextprev */
+	
+	.webform{
+		margin: 0 -18px;
+	}
+	
+	.webform .nextprev{
+		border-radius: 0 0 5px 5px;
+		margin: 0 0 -18px;
+		border-bottom: none !important;
+	}
+	
+
+	
+	/* @end */
+	
+	/* @group Digi-D/bussum-ID */
+	
+	
+	.id-knop{height:50px !important;display: block;text-indent: -4000px;border:none !important;margin-bottom:30px;width:311px;}
+	.digid-aanvragen{background: url(../../../images/btn-aanvragendigid.jpg) no-repeat 0 0;}
+	.debiltid-aanvragen{background: #007E4;color: #fff;}
+	.id-knop:hover{background-position: 0 -50px;}
+	.id-knop:active{background-position: 0 -100px;}
+	
+	.digid{font-size:0.9167em;position: relative;margin-top:50px;padding-left:65px;position: relative;background: url(../../../images/dotted.gif) repeat-x 0 0;padding-top:20px;padding-bottom:20px;}
+	.digid h4{margin-bottom:5px;}
+	.digid-logo{position: absolute;left:0px;top:20px;width:50px;height:50px;}
+	.digid-tekst{}
+	
+	/* @end */
+	
+	/* @group Digi-D en Bussum-ID knoppen */
+	
+	.grote-id-knop a,.grote-id-knop .ideal-knop{
+	width:299px;
+	height:100px;
+	text-indent: -4000px;
+	display: block;
+	margin-bottom:15px;
+	}
+
+	.grote-id-knop a:hover, .ideal-knop:hover{background-position: 0 -100px;}
+	.grote-id-knop a:active, .ideal-knop:active{background-position: 0 -200px;}
+	
+	.ideal-knop{
+	background:url(../../../images/knop_ideal.jpg) no-repeat 0 0;
+	display: block;
+	height:100px !important;
+	border:none;
+	margin:25px 0 0;
+	}
+	
+	.ideal-knop:hover{cursor: pointer;}
+	.no_margin{margin-bottom:0;}
+	
+	.grote-id-knop a,.grote-id-knop .ideal-knop,.grote-id-knop input{
+	width:299px;
+	height:100px;
+	text-indent: -4000px;
+	display: block;
+	margin-bottom:15px;
+	}
+	
+	.digidknop input{
+	background: url(../../../images/digid-knop.jpg) no-repeat 0 0;
+	border:none;
+	cursor: pointer;
+	}
+	
+
+
+	.grote-id-knop a:hover, .ideal-knop:hover, .grote-id-knop input:hover{background-position: 0 -100px;}
+	.grote-id-knop a:active, .ideal-knop:active, .grote-id-knop input:active{background-position: 0 -200px;}
+	
+	
+	.debiltidknop a{
+		background-color: #007E4F;
+		border-radius: 5px 5px 5px 5px;
+		border-top: 1px solid #007E4F !important;
+		border-bottom: 1px solid #007E4F !important;
+		color: #FFFFFF;
+		font-size: 1.6em;
+		font-weight: bold;
+		height: auto !important;
+		line-height: 3;
+		padding: 14px 20px 15px;
+		text-decoration: none;
+		text-indent: 0;
+		text-align: center;
+	}
+	
+	.debiltidknop a:hover{
+		border-top: 1px solid #007E4F !important;
+		box-shadow: 0 1px 0 #CCCCCC inset, 0px 1px 2px #aaa;
+		background-image: linear-gradient(#169666, #007E4F);
+		background-color: #007248;
+		background-position: 0 0;
+	}
+	
+	.debiltidknop a:active{
+		background-color: #000;
+		box-shadow: none;
+		background-image: linear-gradient(#007E4F, #169666);
+		background-position: 0 0;
+	}
+	
+	
+	.no_margin{margin-bottom:0 !important;}
+	
+	/* @end */
+	
+	
+	
+	
+	/* @group button140 */
+	
+	.button140 {
+		/* margin-top: 6px;
+		margin-bottom: 6px; */
+		display: block;
+		line-height: 2.6;
+		overflow: hidden;
+		text-decoration: none;
+		width: 142px;
+		height: 32px !important;
+		background:#007E4F;
+		color: #ffffff;
+		border:none !important;
+		border-top: 1px solid #007E4F !important;
+		border-bottom: 1px solid #007E4F !important;
+		text-transform: uppercase;
+		overflow:hidden;
+		font-size:11px !important;
+		padding:0 !important;
+		font-weight: bold;
+		text-align: center;
+		outline-style:none;
+	    outline-width:0;
+	}
+	
+	.button140.margin{margin:10px 0;}
+		
+	.button140.ahref{text-decoration: none;line-height: 3.1;}
+	.voegtoe{background: #dddddd url(../../../images/button160.gif);width:130px !important;padding-left:30px !important;position: relative;}
+	.voegtoe span{background:url(../../../images/btn_icon-add.png) no-repeat 95% center;display: block;position: absolute;width:16px;height:14px;left:6px;top:7px;}
+		
+	.button140:hover{
+	cursor:pointer;
+	color:#fff;
+	background: #076441;
+	border-top: 1px solid #007E4F !important;
+	box-shadow: 0px 1px 1px #aaa;
+	background-image: linear-gradient(#169666, #007E4F);
+	background-color: #007248;
+	}
+	
+	.button140:active{
+	background-color: #000;
+	box-shadow: none;
+	background-image: linear-gradient(#007E4F, #169666);
+	background-position: 0 0;
+	}
+	
+	.input_large {width: 300px;}
+	.input_medium {width: 200px;}
+	
+	/* @end */
+	
+	
+	
+	
+/* @end */
+
+
+
+
+/* @group groepen */
+
+.step, .webform .nextprev{
+	border-left: none !important;
+	border-right: none !important;
+}
+
+/* @end */
+
+
+
+
+
+
+
+
+
+
+
+
+/* @group jquery ui overrides */
+table thead tr {
+    background:none;
+    color: #000;
+}
+
+.ui-selectmenu{
+	color: #222 !important;
+}
+
+/* @end */
+
+
+
+

@@ -1,0 +1,5 @@
+cpan
+install Catalyst::Controller::SOAP
+
+apt-get
+apt-get install libxml-tidy-perl

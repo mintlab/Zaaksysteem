@@ -1,0 +1,149 @@
+<table class="table_webformulier form aanvrager">
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">KvK-nummer:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.dossiernummer %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Handelsnaam:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.handelsnaam %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <!--
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Rechtsvorm:</td>
+        <td class="table_webformulier_tdvar">
+            <input type="radio" name="rechtsvorm" value="01"> Eenmanszaak <br>
+            <input type="radio" name="rechtsvorm" value="11"> Vennootschap onder firma <br>
+            <input type="radio" name="rechtsvorm" value="21"> Commanditaire vennootschap <br>
+            <input type="radio" name="rechtsvorm" value="07"> Maatschap <br>
+            <input type="radio" name="rechtsvorm" value="41"> Besloten Vennootschap <br>
+            <input type="radio" name="rechtsvorm" value="51"> Naamloze Vennootschap <br>
+            <input type="radio" name="rechtsvorm" value="70"> Vereniging <br>
+
+            <input type="radio" name="rechtsvorm" value="81"> Co&ouml;peratieve en onderlinge waarborgmaatschappij <br>
+            <input type="radio" name="rechtsvorm" value="74"> Stichting <br>
+            <span class="validator"></span>
+        </td>
+        <td class="tdvar"></td>
+    </tr>
+    -->
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging straat:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.vestiging_straatnaam %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging huisnummer:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.vestiging_huisnummer %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging toevoeging:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.vestiging_huisnummertoevoeging %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging postcode:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.vestiging_postcode %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Vestiging woonplaats:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.vestiging_woonplaats %]</td>
+        <td class="tdvar"></td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="td300">Telefoon:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-telefoonnummer"
+                value="[% aanvrager.telefoonnummer %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw telefoonnummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">Mobiel:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-mobiel"
+                value="[% aanvrager.mobiel %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw mobiele nummer in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    
+    
+    <tr class="table_webformulier_tr">
+        <td class="td300">E-mail:</td>
+        <td class="td310">
+            <input
+                type="text"
+                name="npc-email"
+                value="[% aanvrager.email %]"
+                class="input_large"
+            />
+        </td>
+        <td class="tdvar">
+            <div class="validator rounded">
+                <div class="validate-tip"></div>
+                <div class="validate-content rounded-right">
+                    <span></span> Dit veld is verplicht
+                </div>
+            </div>
+            <div class="tooltip-test-wrap">
+                <div class="tooltip-test rounded">
+                    Vul uw e-mailadres in.
+                </div>
+                <div class="tooltip-test-tip"></div>
+            </div>
+        </td>
+    </tr>
+    <!--
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Contactpersoon voorletters:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.contact_voorletters %]</td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Contactpersoon tussenvoegsel:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.contact_tussenvoegsel %]</td>
+    </tr>
+    <tr class="table_webformulier_tr">
+        <td class="table_webformulier_td200">Contactpersoon achternaam:</td>
+        <td class="table_webformulier_tdvar">[% aanvrager.contact_geslachtsnaam %]</td>
+    </tr>
+    -->
+</table>

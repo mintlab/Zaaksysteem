@@ -1,0 +1,73 @@
+<div id="zaaktype_definitie">
+<form>
+<input type="hidden" name="destination" value="[% c.req.params.destination %]">
+<input type="hidden" name="update" value="1">
+[% IF zaak.nr %]
+<input type="hidden" name="zaaknr" value="[% zaak.nr %]">
+[% END %]
+<table class="table_zaakinformatie">
+    <thead>
+    <tr>
+        <th colspan="2">Deel/Vervolgzaak kenmerken</td>
+    </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Aanvrager deel-/vervolgzaak</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="deelvervolg_eigenaar" id="antwoord_invoertype">
+                    [% FOR eigenaar IN constants.zaaktype.deelvervolg_eigenaar %]
+                        <option
+                            value="[% eigenaar.key %]"
+                            [% (history.eigenaar == eigenaar.key) ? ' selected' : '' %]
+                        >
+                            [% eigenaar.value.label %]
+                        </option>
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Kenmerken kopieren:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="deelvervolg_kopieren_kenmerken"[% (history.kopieren_kenmerken ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+        [% UNLESS nextstatus %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaak standaard aanvinken</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="deelvervolg_status"[% (history.status ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        <tr>
+        [% END %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toewijzing</td>
+            <td class="table_td_right_zaakinformatie">
+                [% PROCESS widgets/general/auth_select.tt
+                    AUTH_SELECT_OU_NAME   = 'deelvervolg_ou_id'
+                    AUTH_SELECT_OU_VALUE  = history.ou_id
+                    AUTH_SELECT_ROLE_NAME = 'deelvervolg_role_id'
+                    AUTH_SELECT_ROLE_VALUE = history.role_id
+                %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaak automatisch in behandeling nemen</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="deelvervolg_automatisch_behandelen"[% (history.automatisch_behandelen ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        <tr>
+    </tbody>
+<table>
+<div class="nextprev nextprev-dialog clearfix">
+    <input type="submit" value="Opslaan" class="button140">
+</div>
+</form>
+</div>

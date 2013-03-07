@@ -1,0 +1,28 @@
+[% veldoptietype = params.type -%]
+<div id="kenmerk_definitie">
+    <form action="[% c.uri_for('/' _ c.req.path) %]">
+        <input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]" />
+        <input type="hidden" name="update" value="1" />
+        <input type="hidden" name="rownumber" value="[% rownumber %]" />
+        <input type="hidden" name="kenmerken_is_group" value="1" />
+        <table class="table_zaakinformatie" id="kenmerk_template">
+            <tbody>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">Titel van groep</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <input type="text" name="kenmerken_label" value="[% params.label %]" class="input_large">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">Toelichting</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <textarea cols="60" rows="10" name="kenmerken_help">[% params.help %]</textarea>
+                    </td>
+                </tr>
+            </tbody>
+            <table>
+            <div class="nextprev clearfix nextprev-dialog">
+        <input type="submit" value="Opslaan" class="button140">
+        </div>
+    </form>
+</div>

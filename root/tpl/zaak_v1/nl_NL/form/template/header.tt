@@ -1,0 +1,32 @@
+[% RETURN IF c.user_exists -%]
+[% nowrapper=1 -%]
+
+
+
+<!-- head items -->
+
+
+[% PROCESS form/common_form_header_includes.tt %]
+[% PROCESS layouts/common_header_includes.tt %]
+
+
+</head>
+<body>
+
+<!-- zs spinner -->
+
+<div id="globalSpinner"><div><div>Een moment geduld a.u.b.</div></div></div>
+<div class="milestoneSpinner">
+    <div class="spinner_wrap">
+        <div class="spinner_header">Een ogenblik geduld a.u.b. ...</div>
+        <div class="spinner_content">
+        </div>
+    </div>
+</div>
+
+<!-- end zs spinner -->
+
+
+
+         
+<!-- header -->

@@ -1,0 +1,86 @@
+                <div class="next-status-block next-status-block-with-table">
+                <div class="notificatie_container">
+                    <table class="table_window">
+                        <tr class="table_window_title_tr">
+                            <td class="table_zaken_title_tdvar th_16px blue">[%
+                                component_counter = component_counter + 1;
+                                component_counter %]. Berichten voor deze fase</td>
+                        </tr>
+                    </table>
+                    <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                        <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="tdvar">Versturen</td>
+                                <td class="tdvar">Naam</td>
+                                <td class="td80 hor_center center">Bewerken</td>
+                                <td class="td80 hor_center center">Verwijderen</td>
+                            </tr>
+                            <tr class="table_ztb_tr ztAjaxTable_template">
+                                <td class="td30 center">
+                                    <input
+                                        type="checkbox"
+                                        size="40"
+                                        value="1"
+                                        checked="checked"
+                                        name="status_notificatie_run" />
+                                </td>
+                                <td class="tdvar">
+                                    <input
+                                        type="text"
+                                        size="40"
+                                        class="ztAjaxTable_uniquehidden"
+                                        value="[% snotificatie.label %]"
+                                        name="status_notificatie_id" />
+                                </td>
+                                <td class="td80 hor_center center">
+                                    <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next/notificatie_definitie'); %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                        <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                    </a>
+                                </td>
+                                <td class="td80 hor_center center">
+                                    <a href="#" class="ztAjaxTable_del del"></a>
+                                </td>
+                            </tr>
+                            [% notificatiecount = 0 %]
+                            [% notificaties = zaak.volgende_fase.scalar.zaaktype_notificaties.scalar.search %]
+                            [% WHILE (snotificatie = notificaties.next) %]
+                                [% notificatiecount = notificatiecount + 1 %]
+                            <tr class="table_ztb_tr ztAjaxTable_row ztAjaxTable_rownumber_[% notificatiecount %]">
+                                <td class="td30 center">
+                                    <input
+                                        type="checkbox"
+                                        size="40"
+                                        value="1"
+                                        checked="checked"
+                                        name="status_notificatie_run_[% notificatiecount %]" />
+                                </td>
+                                <td class="tdvar">
+                                    <input
+                                        type="text"
+                                        size="40"
+                                        class="ztAjaxTable_uniquehidden"
+                                        value="[% snotificatie.label %]"
+                                        name="status_notificatie_id_[% notificatiecount %]" />
+                                </td>
+                                <td class="td80 hor_center center">
+                                    <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next/notificatie_definitie'); %]" class="edit" title="Bewerk eigenschappen notificatie">
+                                        <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                    </a>
+                                </td>
+                                <td class="td80 hor_center center">
+                                    <a href="#" class="ztAjaxTable_del del">
+                                    </a>
+                                </td>
+                            </tr>
+                            [% END %]
+                        </tbody>
+                    </table>
+                    <a
+                        href="#"
+                        rel="status: [% c.req.params.status %]; initcallback: ezra_zaaktype_notificatie_edit; rowcallback: ezra_zaaktype_add_notificatie"
+                        title="Bericht toevoegen"
+                        class="knop voeg-toe margin-top ztAjaxTable_add "
+                        >Bericht toevoegen</a>
+                        <div class="ui-helper-clearfix"></div>
+                </div>
+                </div>

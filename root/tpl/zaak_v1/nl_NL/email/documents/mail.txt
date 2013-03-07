@@ -1,0 +1,8 @@
+
+Met vriendelijke groet,
+
+[% zaak.kenmerk.behandelaar.naam %]
+
+--
+Zaak nr: [% zaak.nr %]
+Zaak: [% c.uri_for('/zaak/' _ zaak.nr) %]

@@ -1,0 +1,132 @@
+/*
+***********************************************************
+Title: jcarousel.css
+Author: Jacco van der Post - www.TYPO3-webdesign.nl
+Date: june 2010
+***********************************************************
+*/
+
+#jpcarousel {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+#jpcarousel li {
+    display: block;
+    list-style: none;
+    margin: 0;
+    padding:10px 5px 0px 5px;
+    float: left;
+    overflow:hidden;
+}
+
+.carouselContainer {
+    /*padding: 0 5px;*/
+    /* width, height and background-color are determined in constant editor */
+    display:block;
+    height:167px;
+}
+
+
+.carouselContainer :focus {
+    outline: 0;  /* dont give ugly outline border arround images */
+}
+
+.carousel img {
+    border:0;
+}
+
+.carousel {
+    color:#f0f0f0;
+    margin-left:50px;
+    width:860px;
+}
+
+.carouselbuttons {
+    padding: 5px 0 0 0;
+}
+#footer .carouselbuttons a { 
+	float:none; 
+	padding:0;
+	width:auto; 
+}
+.carouselbuttons a img {
+    padding:0;
+    height:40px;
+    width:40px;
+    border:none;
+    cursor:pointer;
+}
+
+/* we give the dummy img clear.gif a background, to show nice buttons */    
+.carouselbuttons a.carouselprev img {
+    background:url(../img/button-glider.gif) no-repeat left top;
+    float:left;
+}
+.carouselbuttons a.carouselprev img:hover {
+    background:url(../img/button-glider.gif) no-repeat left bottom;
+}
+
+.carouselbuttons a.carouselnext img{
+    background:url(../img/button-glider.gif) no-repeat right top;
+    float:right;
+}
+.carouselbuttons a.carouselnext img:hover {
+    background:url(../img/button-glider.gif) no-repeat right bottom;
+}
+
+h3.carousel_title {
+    padding:0;
+    margin:0;
+    color:white;
+    font-family:arial, sans-serif;
+    font-size:11px;
+    line-height:20px; /* vertical center the title a bit */
+    font-style:italic;
+    font-weight:normal;
+    text-align:center;
+    display:block; /* needed for centering title */
+}
+/*Additional styling ////////////////////////////*/
+.carouselContainer {background:transparent;}
+#footer #jpcarousel div { float:none; }
+#footer #jpcarousel .frame-01 {
+	width:162px;
+	height:112px;
+	background: url(../img/frame-glider.gif) no-repeat left top;
+}
+#footer #jpcarousel .frame-01 h4 {
+	background:none;
+	margin:0;
+	padding:5px 0 0 10px;
+	width:152px;
+	font-size:1em;
+	font-weight:bold;
+}
+#footer #jpcarousel .frame-01 a { width:162px;text-decoration:none;}
+#footer #jpcarousel .frame-01 div.csc-textpic img {
+	border:0;
+	position:relative;
+	top:9px;
+	left:-3px;
+	margin-bottom:0;
+}
+.carouselbuttons {float:none;width:960px;}
+.carouselbuttons .carouselprev {
+	float:left;
+	margin-right:852px;
+	position:relative;
+	top:-73px;
+}
+.carouselbuttons .carouselnext {
+	float:right;
+	position:relative;
+	top:-73px;
+}
+/* Carousel in center ----------------------------*/
+#center .carousel, #center .carouselbuttons {width:auto;}
+#center .carouselbuttons .carouselprev {margin-right:auto;}
+#center .caroufredsel_wrapper {width:600px;}
+
+#jpcarousel li {width:162px; height:112px;}

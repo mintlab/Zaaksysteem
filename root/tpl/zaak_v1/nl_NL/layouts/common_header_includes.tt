@@ -1,0 +1,71 @@
+[% IF c.debug %]
+    <!-- Served Template: [% c.stash.template %] -->
+[% END %]
+
+
+[%
+    page_stylesheets = [];
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.ui.css?v=' _ c.config.SVN_VERSION _ '" type="text/css" media="screen" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.treeTable.css?v=' _ c.config.SVN_VERSION _ '" type="text/css" media="screen"/>');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.ui.selectmenu.css?v=' _ c.config.SVN_VERSION _ '" type="text/css" media="screen" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.uniform.default.css?v=' _ c.config.SVN_VERSION _ '" type="text/css" media="screen" />');
+    page_stylesheets.push('<link rel="stylesheet" href="' _ c.uri_for('/tpl/zaak_v1/nl_NL') _ '/css/jquery.ui.multiselect.css?v=' _ c.config.SVN_VERSION _ '" type="text/css" media="screen" />');
+	
+    page_scripts     = [];
+    page_scripts.push('jquery-1.7.1.min.js');
+#    page_scripts.push('jquery-1.7.1.min.js');
+    page_scripts.push('jquery-ui-1.8.16.custom.min.js');
+    page_scripts.push('OpenLayers-2.9.1/OpenLayers.js');
+    page_scripts.push('jquery.formwizard-3.0.5/js/jquery.form.wizard-min.js');
+    page_scripts.push('jquery.formwizard-3.0.5/js/bbq.js');
+    page_scripts.push('jquery.uniform.min.js');
+    page_scripts.push('jquery.cookie.js');
+    page_scripts.push('jquery.treeTable.js');
+    page_scripts.push('zaaksysteem.js');
+    page_scripts.push('jquery.ui.selectmenu.js');
+    page_scripts.push('jquery.hoverIntent.js');
+    page_scripts.push('easing.js');
+    page_scripts.push('multiselect/plugins/localisation/jquery.localisation-min.js');
+    page_scripts.push('ui.multiselect.js');
+    page_scripts.push('highcharts.js');
+    page_scripts.push('prefixfree.js');
+    page_scripts.push('jquery.ui.datepicker-nl.js');
+    page_scripts.push('regel_editor.js');
+    page_scripts.push('jquery.defaultvalue.js');
+    page_scripts.push('webform.js');
+    page_scripts.push('validate.js');
+#    page_scripts.push('jquery.fileUploader.js');
+    page_scripts.push('mintloader.js');
+
+-%]
+
+
+<!-- Stylesheets -->
+[% FOREACH page_stylesheet IN page_stylesheets -%]
+    [% page_stylesheet %]
+[% END %]
+
+<link rel="stylesheet" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/bussum/css/carousel.css?v=[% c.config.SVN_VERSION %]" type="text/css" media="screen" />
+<link rel="shortcut icon" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/favicon.ico" />
+    
+
+<!-- Javascripts -->   
+[% USE date %]
+[% BLOCK script_invocation -%]
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL/js/') %][% script_name %][% IF c.config.otap == 'dev' %]?[% date.now %][% END %]"></script>
+[%- END %]
+
+[% FOREACH script_name IN page_scripts %]
+    [%- PROCESS script_invocation %]
+[% END -%]
+<!--script src="https://www.openstreetmap.org/openlayers/OpenStreetMap.js"></script-->
+
+[% IF c.debug %]
+    <!-- 
+    <script type="text/javascript" src="https://getfirebug.com/firebug-lite.js"></script>
+    -->
+[% END %]
+
+
+
+

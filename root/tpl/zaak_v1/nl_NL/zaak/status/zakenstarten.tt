@@ -1,0 +1,135 @@
+               <div class="next-status-block next-status-block-with-table">
+                <div id="next_status_subzaak">
+                    <table class="table_window">
+                        <tr class="table_window_title_tr">
+                            <td class="table_zaken_title_tdvar th_16px blue">
+                                [% component_counter = component_counter + 1; component_counter %].
+                                [% vervolgsubzakenstring %] starten</td>
+                        </tr>
+                    </table>
+                    <table class="table_zaakinformatie margin5px subzaken" cellspacing="0" id="next_status_subzaak">
+                        <tr class="table_ztb_title_tr">
+                            <td class="table_ztb_title_td30">Starten?</td>
+            [% IF zaak.is_volgende_afhandel_fase %]
+                            <td class="td80 hor_center">Direct openen</td>
+            [% END %]
+                            <td class="table_ztb_title_td200">Zaaktype</td>
+                            <td class="table_ztb_title_td100">Vorm</td>
+                            <td class="table_ztb_title_td100">Starten na</td>
+                            <td class="table_ztb_title_td30">Bewerken</td>
+                            <td class="table_ztb_title_td30">Verwijderen</td>
+                        </tr>
+                        <tr class="table_ztb_tr row_template">
+                            <td class="table_ztb_td_30">
+                                <input type="checkbox" name="status_zaaktype_run" value="1">
+                            </td>
+                            [% IF zaak.is_volgende_afhandel_fase %]
+                            <td class="table_ztb_td_30">
+                                <input type="radio" name="status_zaaktype_open" value="" />
+                            </td>
+                            [% END %]
+                            <td class="table_ztb_td_200">
+                                <input type="hidden" name="status_zaaktype_id" value="">
+                                <p class="description"></p>
+                            </td>
+                            <td class="table_ztb_td_100">
+                                <select name="status_zaaktype_deelrelatie" class="ezra_milestone_zaak_type">
+                                    [% IF zaak.is_volgende_afhandel_fase %]
+                                        <option
+                                        value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+                                        class="has_start_delay">
+                                            Vervolgzaak (periode)
+                                        </option>
+                                        <option
+                                        value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+                                        class="vervolgzaak_datum has_start_delay">
+                                            Vervolgzaak (datum)
+                                        </option>
+                                    [% ELSE %]
+                                    <option
+                                    value="[% ZCONSTANTS.subzaken_deelzaak %]">
+                                        Deelzaak
+                                    </option>
+                                    [% END %]
+                                    <option
+                                    value="[% ZCONSTANTS.subzaken_gerelateerd %]">
+                                        Gerelateerde zaak
+                                    </option>
+                                </select>
+                            </td>
+                            <td class="table_ztb_title_td100 ezra_milestone_zaak_type_starten">
+                                <input type="text" name="status_zaaktype_start" value="0" size=4>
+                                <span class="label_dagen">dagen</label>
+                            </td>
+                            <td class="td30 hor_center" align="center" class="center"><a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next/zaaktype_kenmerken'); %]" title="Deel-/vervolgzaak bewerken" class="document_row_del edit"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a></td>
+                            <td class="td30 hor_center" align="center" class="center"><a href="#" class="document_row_del del"></a></td>
+                        </tr>
+                    [% relatiecounter = 0 %]
+                    [% FOREACH relatie IN zaak.volgende_fase.zaaktype_relaties %]
+                        <tr id="next_status_subzaak_subzaken_[% relatiecounter = relatiecounter+1; relatiecounter %]" class="table_ztb_tr">
+                            <td class="table_ztb_td_30">
+                                <input type="checkbox" name="status_zaaktype_run_[% relatiecounter %]" value="1"[% (relatie.status ? ' checked="checked"' : '') %]>
+                            </td>
+                            [% IF zaak.is_volgende_afhandel_fase %]
+                            <td class="table_ztb_td_30">
+                                <input type="radio" name="status_zaaktype_open" value="[% relatie.relatie_zaaktype_id.id %]"[% (relatiecounter < 2 ? ' checked="checked"' : '') %] />
+                            </td>
+                            [% END %]
+                            <td class="table_ztb_td_200">
+                                <input type="hidden" name="status_zaaktype_id_[% relatiecounter %]" value="[% relatie.relatie_zaaktype_id.id %]">
+                                [% relatie.relatie_naam %]
+                            </td>
+                            <td class="table_ztb_td_100">
+                                <select name="status_zaaktype_deelrelatie_[% relatiecounter %]" class="ezra_milestone_zaak_type">
+                                    [% IF zaak.is_volgende_afhandel_fase %]
+                                        <option
+                                        [% ( (
+                                            relatie.relatie_type == ZCONSTANTS.subzaken_vervolgzaak &&
+                                            (!relatie.delay_type || relatie.delay_type == 'dagen')
+                                            ) ? 'selected="selected"' : '' )
+                                        %]
+                                        value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+                                        class="has_start_delay">
+                                            Vervolgzaak (periode)
+                                        </option>
+                                        <option
+                                        [% ( (
+                                            relatie.relatie_type == ZCONSTANTS.subzaken_vervolgzaak &&
+                                            relatie.delay_type == 'datum'
+                                            ) ? 'selected="selected"' : '' )
+                                        %]
+                                        value="[% ZCONSTANTS.subzaken_vervolgzaak %]"
+                                        class="vervolgzaak_datum has_start_delay">
+                                            Vervolgzaak (datum)
+                                        </option>
+                                    [% ELSE %]
+                                        <option
+                                        [% (
+                                            relatie.relatie_type == ZCONSTANTS.subzaken_deelzaak
+                                                ? 'selected="selected"' : ''
+                                        ) %]
+                                        value="[% ZCONSTANTS.subzaken_deelzaak %]">
+                                            Deelzaak
+                                        </option>
+                                    [% END %]
+                                    <option
+                                    [% (
+                                        relatie.relatie_type == ZCONSTANTS.subzaken_gerelateerd
+                                            ? 'selected="selected"' : ''
+                                    ) %]
+                                    value="[% ZCONSTANTS.subzaken_gerelateerd %]">
+                                        Gerelateerde zaak
+                                    </option>
+                                </select>
+                            </td>
+                            <td class="table_ztb_title_td100 ezra_milestone_zaak_type_starten">
+                                <input type="text" name="status_zaaktype_start_[% relatiecounter %]" value="[% (relatie.start_delay ? relatie.start_delay : '0') %]" size=4><span class="label_dagen">dagen</label>
+                            </td>
+                            <td class="td30 hor_center" align="center"><a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next/zaaktype_kenmerken'); %]" title="Deel-/vervolgzaak bewerken" class="document_row_del edit"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a></td>
+                            <td class="td30 hor_center" align="center"><a href="#" class="document_row_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                        </tr>
+                    [% END %]
+                    </table>
+                    <a href="#" rel="status: [% c.req.params.status %]" class="knop voeg-toe margin-top status_definition_add_subzaak">Een [% vervolgsubzakenstringe %] toevoegen</a>
+                </div>
+                </div>

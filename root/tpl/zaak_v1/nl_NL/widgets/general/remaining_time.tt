@@ -1,0 +1,7 @@
+[% IF percentage && (percentage > 90 || percentage < 0) %]
+    <span class="urgentie_high">[% days %]</span>
+[% ELSIF percentage && percentage > 80 %]
+    <span class="urgentie_medium">[% days %]</span>
+[% ELSE %]
+    <span class="urgentie_low">[% days %]</span>
+[% END %]

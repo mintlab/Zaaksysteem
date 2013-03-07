@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<!--[if IE 7 ]>    <html class="ie ie7 oldie" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie ie8 oldie" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml""> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie ie9" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html class="" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"> <!--<![endif]-->
+
+    <head>
+    <title>Zaaksysteem.nl[% (page_title ? ' :: ' _ page_title : '') %]</title>
+
+    <link rel="shortcut icon" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/favicon.ico" />
+
+    [% IF c.engine.env.HasCachPrefix;
+        PREFIX_MD5 = '_cp_' _ c.config.SVN_VERSION.replace('\.','_');
+    END -%]
+
+    [% PROCESS layouts/common_header_includes_css.tt %]
+    
+    <!--[if IE 7]>
+    <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css[% PREFIX_MD5 %]/ie7.css" />
+    <![endif]-->
+    
+    <!--[if IE 8]>
+      <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css[% PREFIX_MD5 %]/ie8.css" />
+    <![endif]-->
+    
+    <!--[if IE 9]>
+      <link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/css[% PREFIX_MD5 %]/ie9.css" />
+    <![endif]--> 
+    
+    [%# PROCESS layouts/private_header_includes.tt %]
+    [% PROCESS layouts/common_header_includes_js.tt %]
+    
+
+    [% IF layout_type == 'simple' %]
+        <!-- Refresh na DIGID SESSIE VERLOOP -->
+        <meta http-equiv="refresh" content="9000">
+    [% END %]
+
+        <base href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/" />
+    </head>
+    
+    [%# TODO haal die damn debilt hieronder weg %]
+    <body[% (bodyid ? ' id="' _ bodyid _ '"' : '') %] class="otap_[% (c.config.gemeente_id == 'debilt' ? 'prod' : c.config.otap) %] gemeente_[% c.config.gemeente_id | lower %]">
+
+
+
+<!-- END header -->

@@ -1,0 +1,56 @@
+                <form>
+
+                                        <table class="table_zoeken">
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">KvK:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Handelsnaam:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Rechtsvorm:</td>
+                                                <td class="table_zoeken_tdvar">
+                                                <select />
+                                                        <option>Eenmanszaak</option>
+                                                        <option>Besloten Vennootschap</option>
+
+                                                        <option>Vennootschap onder firma</option>
+                                                        <option>Vereniging</option> 
+                                                        <option>Stichting</option>  
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Eigenaar:</td>
+
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Postcode:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_mini"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Straat:</td>
+
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Huisnummer:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_mini"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">E-mail:</td>
+
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr_bottom">
+                                                <td class="table_zoeken_td100_2"></td>
+                                                <td class="table_zoeken_tdvar"><input type="button" value="Zoeken" class="button140"></td>
+                                            </tr>
+                                        </table>
+                                        </form>
+
+

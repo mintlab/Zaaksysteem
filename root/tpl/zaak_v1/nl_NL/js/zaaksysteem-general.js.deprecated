@@ -1,0 +1,2351 @@
+function openDialog(title, width, height) {
+    if (!width) {
+        width   = 960;
+        height  = 'auto';
+    }
+
+    $('#dialog').dialog('option', 'width', width);
+    $('#dialog').dialog('option', 'height', height);
+    $('#dialog').dialog('option', 'maxHeight', 500);
+    $('#dialog').dialog('option', 'resizable', false);
+
+    $('#dialog').data('title.dialog', title);
+    $('#dialog').addClass('smoothness').dialog('open')/*.parent().css({position:"fixed"})*/;
+
+    
+    $('#accordion').accordion({
+        autoHeight: false
+    });
+
+    var d = $("#dialog").offset();
+    window.scrollTo( d.left , (d.top - 80));
+
+    ezra_tooltip_handling();
+}
+
+function openSearchDialog(title, width, height) {
+    if (!width) {
+        width   = 790;
+        height  = 'auto';
+    }
+    $('#searchdialog').dialog('option', 'width', width);
+    $('#searchdialog').dialog('option', 'height', height);
+    $('#searchdialog').dialog('option', 'resizable', false);
+    $('#searchdialog').dialog('option', 'maxHeight', 500);
+
+    $('#searchdialog').data('title.dialog', title);
+    $('#searchdialog').addClass('smoothness').dialog('open');
+    
+    $('#accordion').accordion({
+       autoHeight: false
+    });
+
+    var d = $("#searchdialog").offset();
+    window.scrollTo( d.left , (d.top - 80));
+
+}
+
+function getOptions(options) {
+    var rv = {};
+
+    if (!options) { return {}; }
+
+    /* Get sets */
+    sets = options.split(/;/);
+
+    for(i = 0; i < sets.length; i++) {
+        set     = sets[i];
+        keyval  = set.split(/:/);
+        key     = keyval[0];
+        key     = key.replace(/^\s+/g, '');
+        key     = key.replace(/\s+$/g, '');
+        value   = keyval[1];
+        if (!value) { continue; }
+        value   = value.replace(/^\s+/g, '');
+        value   = value.replace(/\s+$/g, '');
+        rv[key] = value;
+    }
+
+    return rv;
+}
+
+function fireDialog(elem, callback) {
+	
+	$.ztWaitStart();
+	
+    /* Load options */
+    rel     = elem.attr('rel');
+    options = getOptions(rel);
+
+    title = elem.attr('title');
+    url   = elem.attr('href');
+
+    if (!callback) {
+        if (options['callback']) {
+            callback = options['callback'] + '();';
+        }
+    }
+
+    /* Options ok, load popup */
+    $('#dialog .dialog-content').load(
+        url,
+        options,
+        function() {
+            if (callback) {
+                eval(callback);
+            }
+            $.ztWaitStop();
+            ezra_basic_functions();
+
+            openDialog(title, options['width'], options['height']);
+
+            /*
+                $('form.zvalidate').submit(function() {
+                    return zvalidate($(this));
+                });
+            */
+        }
+    );
+}
+
+function searchBetrokkene(elem) {
+    id      = elem.parent('div').attr('id');
+    rel     = elem.attr('rel');
+    dtitle  = elem.attr('title');
+
+    if (!rel) {
+        return false;
+    }
+
+    options = rel.split(/;/);
+
+    /* Load options */
+    container_id = id;
+    btype        = options[0];
+
+
+    /* $('#searchdialog').dialog('option', 'position', ['left','bottom']); */
+
+    $('#searchdialog .dialog-content').load(
+        '/betrokkene/search',
+        {
+            jsfill: container_id,
+            jstype: btype,
+            jsversion: 2
+        },
+        function() {
+            title = 'Zoek  (' + btype + ')';
+            openSearchDialog(dtitle);
+        }
+    );
+}
+
+function searchZaak(elem) {
+    id      = elem.parent('div').attr('id');
+    rel     = elem.attr('rel');
+    dtitle  = elem.attr('title');
+
+    options = getOptions(rel);
+
+    /* Load options */
+    container_id = id;
+
+    $('#searchdialog .dialog-content').load(
+        '/search',
+        {
+            jsfill: container_id,
+            jsversion: 2
+        },
+        function() {
+            openSearchDialog(dtitle);
+        }
+    );
+}
+
+$(document).ready(function(){
+
+    initializeSpinners();
+
+   $("input:file").uniform({
+        fileDefaultText:'Geen bestand geselecteerd',
+        fileBtnText:'Kies bestand'
+    });
+
+    
+    
+    $(".wizard").formwizard({ 
+	 	formPluginEnabled: false,
+	 	validationEnabled: false,
+	 	focusFirstInput : true,
+	 	disableUIStyles : true,
+	 	historyEnabled : true
+	 }
+	);
+
+
+    var remoteAjax = {};
+
+    $('.formwizard-next').click(function() {
+        var container   = $('.wizard');
+        var serialized  = validate_serialize_items(container);
+
+        var action      = container.attr('action');
+
+        var formstate = $(this).closest('form.wizard').formwizard('state');
+
+        /*
+        if (!$(this).hasClass('submittime') && formstate.isLastStep) {
+            $('.formwizard-next').val('Versturen');
+            $('.formwizard-next').addClass('submittime');
+        }
+        */
+
+        $('.formwizard-stappen').removeClass('active');
+        $('#stap-' + formstate.currentStep).addClass('active');
+
+        if (!$('.formwizard-next').hasClass('submittime')) {
+            $.ztWaitStart();
+        }
+
+        $.getJSON(
+            action + '?do_validation=1&' + serialized,
+            function(rawdata) {
+                var data = rawdata.json;
+                if (data.success && $('.wizard .formwizard-next').hasClass('.submittime')) {
+                    $('.wizard').find(':disabled').each(function() {
+                        $(this).attr('disabled',null);
+                    });
+                    if (container.hasClass('ezra_spiffy_spinner')) {
+                        ezra_spiffy_spinner_submit(container);
+                    } else {
+                        $('.wizard').unbind().submit();
+                    }
+                    return false;
+                    //$('.wizard').formwizard("next");
+                }
+
+                /* Compare data from this current step in data hash,
+                 * remove others
+                 */
+                var formstate              = $('.wizard').formwizard('state');
+                var current_input_fields   = $('span#' + formstate.currentStep)
+                    .find('input[name="stepfields-' + formstate.currentStep + '"]').val();
+
+                if (current_input_fields) {
+                    splitted_input_fields = current_input_fields.split(',');
+
+                    if (splitted_input_fields) {
+                        var newmissing = [];
+                        var newinvalid = [];
+
+                        var success    = 1;
+                        for (var i in splitted_input_fields) {
+                            var value = splitted_input_fields[i];
+
+                            if (data.missing && data.missing.length) {
+                                $.grep(data.missing, function(dvalue) {
+                                    if (value == dvalue) {
+                                        newmissing.push(value);
+                                        success = 0;
+                                    }
+                                });
+                            }
+                            if (data.invalid && data.invalid.length) {
+                                $.grep(data.invalid, function(dvalue) {
+                                    if (value == dvalue) {
+                                        newinvalid.push(value);
+                                        success = 0;
+                                    }
+                                });
+                            }
+                        }
+
+                        data.missing = newmissing;
+                        data.invalid = newinvalid;
+                    }
+                }
+
+                validate_form_items(container, data);
+
+                if ($('.formwizard-next').hasClass('submittime')) {
+                    //$('span.step').show();
+                    $('.wizard').find(':disabled').each(function() {
+                        $(this).attr('disabled',null);
+                    });
+                    $('.formwizard-next').unbind();
+                    if (container.hasClass('ezra_spiffy_spinner')) {
+                        ezra_spiffy_spinner_submit(container);
+                    } else {
+                        $('.wizard').unbind().submit();
+                    }
+                    //$('.wizard').zvalidate();
+                    return false;
+                }
+
+                if (success) {
+                    $('.wizard').formwizard("next");
+                }
+
+
+                $.ztWaitStop();
+                container.removeClass('invalidation');
+                return false;
+            }
+        );
+
+    });
+
+    function wizard_event_step_shown(form) {
+        var formstate = form.formwizard('state');
+
+        if (formstate.isFirstStep) {
+            $('.formwizard-annuleren').val('Annuleren');
+        } else {
+            $('.formwizard-annuleren').val('Vorige');
+        }
+
+        if (formstate.isLastStep) {
+            $('.formwizard-next').val('Versturen');
+            $('.formwizard-next').addClass('submittime');
+        } else {
+            $('.formwizard-next').val('Volgende');
+            $('.formwizard-next').removeClass('submittime');
+        }
+
+        $('.formwizard-stappen').removeClass('active');
+        $('#stap-' + formstate.currentStep).addClass('active');
+        $('.wizard .step').hide();
+        $('.wizard .step#' + formstate.currentStep).show();
+    }
+
+    $(this).bind('step_shown', function() {
+        wizard_event_step_shown($('.wizard'));
+    });
+
+    $('.wizard').each(function() {
+        wizard_event_step_shown($(this));
+    });
+    
+    /* ztb auth multiselectbox */
+    
+    $('.show').click(function() {
+      $(this).next().toggle();
+      $(this).toggleClass('ui-corner-all');
+      $(this).toggleClass('ui-state-active');
+    });
+    
+    $('.hide-checkbokses').click(function() {
+        $(this).parent().hide();
+        $(this).parent().prev().removeClass('ui-state-active');
+        $(this).parent().prev().addClass('ui-corner-all');
+    });
+    
+    $('.show').hover(
+        function () {
+          $(this).addClass('ui-state-hover');
+        }, 
+        function () {
+          $(this).removeClass('ui-state-hover');
+        }
+      );
+    
+    
+    /* sortable visual feedback */
+
+    $('.ezra_table tr').hover(
+      function () {
+        $('.drag',this).addClass("hover");
+      },
+      function () {
+        $('.drag',this).removeClass("hover");
+      }
+    );
+    
+    
+    
+    /* kenmerken groepen toggle */
+    
+    $('.ezra_table_row_heading').click(function() {
+      $('.groep1').toggle();
+      $(this).toggleClass('close')
+    });
+
+    /* if($(".form tr").height() < 50){
+        $(".form tr").addClass('middle');
+    } */
+
+    $('#accordion-taken').each(function() {
+        var active  = 0;
+        if ($('#accordion-taken .ui-accordion-content.ui-accordion-taken-kenmerken').length) {
+            active = $('#accordion-taken .ui-accordion-content')
+                .index('.ui-accordion-taken-kenmerken');
+        }
+
+        $(this).accordion({
+            autoHeight: false,
+            collapsible: true,
+            active: active
+        });
+    });
+    
+//alert('step5');
+    // animatie voortgang zaakdossier
+    //
+     $(".progress-value").each(function() {
+         $(this).width( $(this).find('.perc').html() + "%");
+	/*
+         $(this).animate(
+	    {
+              width: $(this).find('.perc').html() + "%"
+            }, {
+              duration: 2000,
+              easing: "easeInOutExpo"
+            }
+	);
+	*/
+    });
+
+    
+            //left: $(this).parents('#progress-time').find('.perc').html() + "%",
+    $(".progress-time .current").each(function() {
+        $(this).css('left', $(this).parents('.progress-time').find('.perc').html() +"%");
+    });
+
+    // end animatie voortgang zaakdossier
+    
+    
+    
+    $('.doSubmit').click(function() {
+        container = $(this).closest('form');
+
+        container.trigger('submit');
+        return false;
+    });
+
+    if ($('#map').length) {
+        html_googlemaps_initialize();
+    }
+
+
+    $('select#keuzes').selectmenu({
+        transferClasses: true,
+        width: 130,
+        style: 'dropdown',
+        maxHeight: 120
+    });
+    
+    load_selectmenu();
+/*    $('select.replace-select').selectmenu({
+        style:'dropdown',
+        width:150,
+        maxHeight: '150'
+    });
+  */  
+    /*
+$('.nav-title').click(function() {
+		$(this).next().toggle('fast');
+		return false;
+	}).next().show();
+*/
+
+	   $('.nav-title').click(function() {
+          var menuContentDiv = $(this).next();
+          if (menuContentDiv.is(":hidden")) {
+              menuContentDiv.slideDown("fast");
+              //$(this).children(".menuImgClose").removeClass("menuIconOpen");
+              $.cookie(menuContentDiv.attr('id'), 'expanded');
+          }
+          else {
+              menuContentDiv.slideUp("fast");
+              //$(this).children(".menuImgClose").addClass("menuIconOpen");
+              $.cookie(menuContentDiv.attr('id'), 'collapsed');
+          }
+      });
+    $('.vert-one').each(function() {
+          var menuContent = $.cookie($(this).attr('id'));
+          if (menuContent == "collapsed") {
+              $("#" + $(this).attr('id')).hide();
+              //$("#" + $(this).attr('id')).prev().children(".menuImgClose").addClass("menuIconOpen");
+          }
+      });
+
+    
+    /* $("td:empty").html("&nbsp;"); */
+
+    
+    $('.form select.replace-select-small').selectmenu({style:'dropdown',width:100});  
+    $('.form select.replace-select-small-popup').selectmenu({style:'popup',width:100});  
+	$('.form td:first-child').addClass('eerste');
+
+    ezra_tooltip_handling();
+	
+
+    $.zaaknr = $('#zaak_id').attr('class');
+
+	initialize_tabinterface();
+
+    $('.chk-swapper').change(function() {
+        match = $(this).attr('id').match(/\d+/g);
+        $('.depper').attr('style', 'display: none;');
+        $('.dependend-' + match[0]).attr('style', false);
+    });
+
+
+
+    /*
+    if ($('#gmap')) {
+        html_googlemaps_initialize()
+    }
+    */
+
+    //$('#accordion').accordion();
+
+    /** General dialog */
+    $('#dialog').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: true,
+        draggable: true,
+        width: 790,
+        height: 430,
+        beforeclose: function() {
+        }
+    });
+
+    /** Search dialog */
+    $('#searchdialog').dialog({
+        autoOpen: false,
+        modal: true,
+        resizable: true,
+        draggable: true,
+        width: 790,
+        height: 430,
+        beforeclose: function() {
+        }
+    });
+
+    /** :s Version 6.0 of popup handling */
+    $('.dialog-post').click(function() {
+        fireDialog($(this));
+        return false;
+    });
+
+
+    /** Javascript for documents
+     *
+     * C::Zaak::Documents
+     */
+    $('.add-dialog').click(function(){
+        $('.option-documenttype').each(function() {
+            if ($(this).attr('checked')) {
+                documenttype = $(this).attr('value');
+            }
+        });
+        documentdepth = $('#option-documentdepth').attr('value');
+
+        $('#dialog .dialog-content').load('/zaak/'
+            + $.zaaknr
+            + '/documents/' + documentdepth + '/add/' + documenttype,
+            null,
+            function() {
+                openDialog('Een bestand toevoegen aan het zaakdossier', 690, 500);
+
+                ezra_document_functions();
+            }
+        );
+
+        return false;
+    });
+
+    $('input[name="afdeling-eigenaar"]').change(function() {
+        parent_elem = $(this).parent('div');
+        if ($(this).attr('checked') && $(this).attr('value') == 'afdeling') {
+            $('#' + parent_elem.attr('id') + ' input[name="zaakeigenaar"]').css('display', 'none');
+            $('#' + parent_elem.attr('id') + ' select[name="ztc_org_eenheid_id"]').css('display', 'inline');
+            $('#' + parent_elem.attr('id') + ' a').css('display', 'none');
+        } else {
+            $('#' + parent_elem.attr('id') + ' select[name="ztc_org_eenheid_id"]').css('display', 'none');
+            $('#' + parent_elem.attr('id') + ' input[name="zaakeigenaar"]').css('display', 'inline');
+            $('#' + parent_elem.attr('id') + ' a').css('display', 'inline');
+        }
+
+    });
+
+    /*
+    $('select[name="ztc_afdeling_id"]').change(function() {
+        parent = $(this).parent('div');
+        $('#' + parent.attr('id') + ' input[name="ztc_eigenaar_id"]').attr(
+            'value',
+            $(this).attr('value')
+        )
+    });
+    */
+
+
+    $('.dialog-help-button').click(function() {
+        elements = $(this).parent('div .dialog-help');
+        elements.find('.dialog-help-text').each(function() {
+            $('#dialog .dialog-content').html($(this).html());
+        });
+        openDialog($(this).attr('title'), 790, 350);
+
+        return false;
+    });
+
+    /** Javascript for Checklist
+     *
+     * C::Zaak::Checklist
+     */
+
+    /*** yes/no selections functioning as radio buttons
+     *
+     */
+    $("input[class^='yesno_']").change(function(){
+        question        = $(this).attr('class');
+        questionname    = $(this).attr('name');
+
+        /* Now retrieve every other options, and turn them off when we
+         * turned this option on */
+        others = $("input[class='" + question + "']");
+
+        /* Do nothing, we did not turn this selection on */
+        if (!$(this).attr('checked')) { return; }
+
+        others.each(function() {
+            /* Make sure we do not uncheck ourself */
+            if ($(this).attr('name') == questionname) { return; }
+
+            /* Uncheck other options within this question/vraag */
+            if ($(this).attr('checked')) { 
+                $(this).attr('checked', false);
+            }
+        });
+    });
+
+    /** Javascript for Case
+     *
+     * C::Zaak
+     */
+/*
+    $("#spec_kenmerk .update_dialog").parent('a').click(function() {
+        alert('clicked');
+        return false;
+    });
+*/
+
+    $("#spec_kenmerk .update_dialog").click(function() {
+        if (!$(this).attr('id')) {
+            return false;
+        }
+
+        kenmerk = $(this).attr('id');
+        $('#dialog .dialog-content').load(
+            '/zaak/' + $.zaaknr + '/update',
+            {
+                kenmerk: $(this).attr('id')
+            },
+            function() {
+                title = 'Specifieke zaakinformatie bijwerken (' + kenmerk + ')';
+                openDialog(title);
+            }
+        );
+     });
+
+    /** Javascript for creation
+     *
+     * C::Zaak
+     */
+    $('#dialog').dialog({
+        position: 'center',
+        //show: 'fade',
+        //hide: 'puff',
+        autoOpen: false,
+        modal: true,
+        resizable: false,
+        draggable: false,
+        width: 590,
+        height: 'auto',
+        maxHeight: 450,
+        beforeclose: function() {
+        }
+    });
+
+    $("#create_intern input[name='betrokkene_type']").change(function() {
+        /* NOT DONE
+        if ($(this).attr('checked')) {
+            context     = $(this).closest('div').attr('id');
+            if ($(this).attr('value')) {
+                $("#" + context + " input[name='ztc_aanvrager']").css('visibility', 'visible');
+            } else {
+                $("#" + context + " input[name='ztc_aanvrager']").css('visibility', 'hidden');
+            }
+        }
+        */
+    });
+
+    $(".ztc_search_popup").click(function() {
+        context     = $(this).closest('div').attr('id');
+        if ($(this).attr('name') == 'ztc_aanvrager') {
+            jstype      = $("#" + context + " input[name='betrokkene_type']:checked").attr('value');
+            if (!jstype) {
+                return;
+            }
+        } else {
+            jstype      = 'medewerker';
+        }
+
+        $('#dialog .dialog-content').load(
+            '/betrokkene/search',
+            {
+                jsfill: $(this).attr('name'),
+                jscontext: context,
+                jstype: jstype
+            },
+            function() {
+                title = 'Zoek betrokkene (' + jstype + ')';
+                openDialog(title);
+            }
+        );
+    });
+
+    /*
+		Actie container
+	*/
+    $(".select_actie").click(function() {
+
+	   var container  = $(this).closest('div.select_actie_container');
+	  // var elem    = container.find('option:selected');
+		var elem    = $('select option:selected',container);
+
+		if (!elem.val()) {
+            return false;
+        }
+
+		// URL in dialog openen?
+        if (elem.hasClass('popup')) {
+            title   = 'Actie';
+			
+			if (elem.text()) {
+				title = elem.text();	
+			}
+            url  = elem.val();
+
+            $('#dialog .dialog-content').load(
+                url,
+                null,
+                function() {
+                    $('form.zvalidate').submit(function() {
+                        return zvalidate($(this));
+                    });
+
+
+                    ezra_basic_functions();
+                    /* ARGH DIRTY!!! */
+                    if (url.match(/update\/deelzaak/)) {
+                        next_subzaak();
+                    }
+
+                    if ($('#dialog .dialog-content form').hasClass('hascallback')) {
+                        var callbackfunction = $('#dialog .dialog-content form input[name="callback"]').val();
+                        window[callbackfunction]($('#dialog .dialog-content form'));
+                    }
+
+                    openDialog(title);
+                }
+            );
+
+            return false;
+        }
+		
+		// Anders gewoon naar de url
+        window.location = elem.val();
+
+        return false;
+    });
+
+
+
+    /* New style betrokkene search */
+    $('.search_betrokkene').click(function() {
+        searchBetrokkene($(this));
+
+        return false;
+    });
+
+    /* Make sure we empty values on load when field is disabled */
+    /* TODO */
+    /*
+    $("input[type='text']").each(function() {
+        if (!$(this).hasClass('no_empty')) {
+            if ($(this).attr('disabled')) {
+                $(this).val('');
+            }
+        }
+    });
+    */
+
+    function reload_aanvrager_wgts() {
+        /* Onload, disable every aanvrager */
+        $("#tab-wgt-aanvrager .wgt-betrokkene-natuurlijk_persoon_search").attr('style', 'display: none;');
+        $("#tab-wgt-aanvrager .wgt-betrokkene-bedrijf_search").attr('style', 'display: none;');
+        $("#tab-wgt-aanvrager .wgt-betrokkene-medewerker_search").attr('style', 'display: none;');
+
+        $("input[name='betrokkene_type']").each(function() {
+            if ($(this).attr('checked')) {
+                $(".wgt-betrokkene-" + $(this).attr('value') + "_search").attr('style', 'display: inline;');
+            }
+        });
+    }
+    reload_aanvrager_wgts();
+
+    $("input[name='betrokkene_type']").click(function() {
+        reload_aanvrager_wgts();
+    });
+
+    function loadBetrokkene(rel) {
+        if (!rel) {
+            return false;
+        }
+
+        options = rel.split(/;/);
+
+        /* Load options */
+        id          = options[0];
+        btype       = options[1];
+        inputname   = options[2];
+        context     = options[3];
+
+        if (!id) {
+            return false;
+        }
+
+        $('#dialog .dialog-content').load(
+            '/betrokkene/search',
+            {
+                jsfill: $(this).attr('name'),
+                jscontext: context,
+                jstype: jstype
+            },
+            function() {
+                title = 'Zoek betrokkene (' + jstype + ')';
+                openDialog(title);
+            }
+        );
+
+    }
+
+    reload_interne_aanvrager();
+    $('#start_intern input[name="betrokkene_type"]').change(function() {
+        reload_interne_aanvrager();
+    });
+
+    function reload_interne_aanvrager() {
+        $('#intern_betrokkene_type').children('div').hide();
+
+        $('#start_intern input[name="betrokkene_type"]:checked').each(function() {
+            $('#new_interne_' + $(this).attr('value')).show();
+        });
+    }
+
+    /* Graph */
+    $('#graph-img-line').each(function() {
+        $('#graph-img-line .error').hide();
+        graph   = $(this);
+        href    = $(this).children('a:first');
+
+        img     = new Image();
+        $(img).load(function() {
+            $(this).hide();
+            $('#graph-img-line').removeClass('ajaxloader');
+            $('#graph-img-line').append(this);
+            $(this).fadeIn();
+        }).error(function() {
+            $('#graph-img-line').removeClass('ajaxloader');
+            $('#graph-img-line .error').show();
+        }).attr('src',href.attr('rel'));
+    });
+
+    $('#graph-img-pie').each(function() {
+        $('#graph-img-pie .error').hide();
+        graph   = $(this);
+        href    = $(this).children('a:first');
+
+        img     = new Image();
+        $(img).load(function() {
+            $(this).hide();
+            $('#graph-img-pie').removeClass('ajaxloader');
+            $('#graph-img-pie').append(this);
+            $(this).fadeIn();
+        }).error(function() {
+            $('#graph-img-pie').removeClass('ajaxloader');
+            $('#graph-img-pie .error').show();
+        }).attr('src',href.attr('rel'));
+    });
+
+    trigger = $("#change_aanvragers").val();
+    if (trigger) {
+        show_aanvragers(trigger);
+    }
+
+    function show_aanvragers(trigger) {
+        if (trigger == 'intern') {
+            $('.aanvragers_extern').hide();
+            $('.aanvragers_intern').show();
+        } else {
+            $('.aanvragers_intern').hide();
+            $('.aanvragers_extern').show();
+        }
+    }
+
+    $('#change_aanvragers').change(function() {
+        trigger = $("#change_aanvragers").val();
+        show_aanvragers(trigger);
+    });
+
+/*
+    document_count = 0;
+    function clone_document_row() {
+        doc = $('#document_row_template').clone();
+        doc.addClass('document_row');
+
+        if (!document_count) {
+            count = ($('.document_row').size() + 1);
+            document_count = count;
+        } else {
+            count = (document_count + 1);
+            document_count = count;
+        }
+
+        doc.attr('id', 'document_row_' + count);
+
+        doc.find('input').each(function() {
+            $(this).attr('name', $(this).attr('name') + '_' + count);
+        });
+        doc.find('select').each(function() {
+            $(this).attr('name', $(this).attr('name') + '_' + count);
+        });
+
+        doc.find('.document_row_del').attr('id', 'document_row_del_' + count);
+        doc.show();
+
+        $('#document_rows').append(doc);
+
+        oldstyle_document_row_init();
+    }
+
+    if ($('#document_rows').length) {
+        oldstyle_document_row_init();
+    }
+*/
+
+
+    //if ($('#document_row_template').size()) {
+        //$('#document_row_template').hide();
+        /*
+        clone_document_row();
+
+        $('.add_kenmerken').click(function() {
+            var thisrow = $(this).closest('tr');
+
+            var questionname = thisrow.find('input[name^="document_description"]')
+            $(this).attr('rel', 'destination: ' + questionname.attr('name'));
+
+            fireDialog($(this), 'load_document_kenmerken();');
+            return false;
+        });
+
+        */
+    //}
+
+    //$('#document_row_add').click(function() {
+    //    clone_document_row();
+    //    return false;
+    //});
+
+    kenmerk_count = 0;
+    function clone_kenmerk() {
+        kenmerk = $('#kenmerk_template').clone();
+        kenmerk.addClass('kenmerk_row');
+
+        if (!kenmerk_count) {
+            count = ($('.kenmerk_row').size() + 1);
+            kenmerk_count = count;
+        } else {
+            count = (kenmerk_count + 1);
+            kenmerk_count = count;
+        }
+
+        kenmerk.attr('id', 'kenmerk_row_' + count);
+
+        kenmerk.find('input').each(function() {
+            $(this).attr('name', $(this).attr('name') + '_' + count);
+        });
+        kenmerk.find('select').each(function() {
+            $(this).attr('name', $(this).attr('name') + '_' + count);
+        });
+        kenmerk.find('textarea').each(function() {
+            $(this).attr('name', $(this).attr('name') + '_' + count);
+        });
+        kenmerk.find('.kenmerk_title').html('Kenmerk ' + count);
+
+        kenmerk.find('.kenmerk_del').attr('id', 'kenmerk_del_' + count);
+        kenmerk.show();
+
+        $('#zaaktype_kenmerk_add').before(kenmerk);
+
+        $('.kenmerk_del').click(function() {
+            /* Get count */
+            currentid = $(this).attr('id');
+            currentcount = currentid.replace(/^kenmerk_del_/g, '');
+
+            $('#kenmerk_row_' + currentcount).remove();
+            return false;
+        });
+
+    }
+
+    $('#kenmerk_template').hide();
+    if ($('#kenmerk_template').size()) {
+        clone_kenmerk();
+    }
+
+    $('#zaaktype_kenmerk_add').click(function() {
+        clone_kenmerk();
+        return false;
+    });
+
+    $('#kenmerk_invoertype').change(function() {
+        if ($(this).find(':selected').hasClass('has_options')) {
+            $('#kenmerk_invoertype_options').show();
+        } else {
+            $('#kenmerk_invoertype_options').hide();
+
+        }
+    });
+
+
+
+    /*** Zaaktype Events
+     *
+     * Functies voor zaaktype beheer, maar ook voor informatie van zaaktypes
+     * (buiten zaaktype beheer)
+     */
+
+    /*
+    $('.search_zaaktype').click(function() {
+        fireDialog($(this), 'load_zaaktype');
+
+        return false;
+    });
+    */
+
+    /* zaaktype/status hide everything */
+    $('#status_row_template').hide();
+    $('#status_row_definitions_template').hide();
+    $('.status_row_definitions').hide();
+
+    /* Help out by giving the first status */
+
+    if ($('#status_row_template').size()) {
+        /* Magic, check for by De Don generated rows, and use this as a start */
+        /* Count rows, and substract row_template + header + 1(so substract 1) */
+        if ($('#status_rows').find('.status_name_row').size() < 2) {
+            add_status_row();
+            add_status_row('afgehandeld');
+        }
+
+        /* Do not show status_row_add in first instance */
+        /* $('#status_row_add').hide(); */
+
+        $('#status_row_add').click(function() {
+            add_status_row();
+
+            return false;
+        });
+
+        $('.validate-ok').hide();
+
+        /*
+        $('input[name^="status_naam_"]').change(function() {
+            closest = $(this).closest('tr');
+            if ($(this).val()) {
+                closest.find('.status_define').show();
+            } else {
+                closest.find('.status_define').hide();
+            }
+        });
+        */
+
+        init_status_actions();
+    }
+
+    $(".kies_zaaktype").click(function() {
+        /* Get container */
+        var container = $(this).closest('div');
+
+        var zt_row_id = container.attr('id');
+
+        var zt_trigger = container.find('input[name="jstrigger"]').val();
+
+        /* Form container */
+        var form_container = $(this).closest('form');
+        var zt_betrokkene_type = form_container.find('input[name="betrokkene_type"]:checked').val();
+
+        var eoptions = new Array();
+
+        eoptions['zt_trigger'] = zt_trigger;
+
+        eoptions['zt_betrokkene_type'] = zt_betrokkene_type;
+
+        select_zaaktype('#' + zt_row_id + ' input[name="zaaktype"]', '#' + zt_row_id + ' .zaaktype_keuze_description', null, eoptions);
+
+        return false;
+    });
+
+    /*** Hoofd- en deelzaken
+     *
+     * Functies voor hoofd/deelzaken
+     */
+
+    if ($('#hoofddeelzaken_table').length) {
+        $('#hoofddeelzaken_table').treeTable(
+            {
+                // initialState: "collapsed"
+                initialState: "expanded"
+            }
+        );
+    }
+
+    if ($('#spec_zaakinformatie_container').size()) {
+        dynamic_rows('#spec_zaakinformatie_container', 'spec_zaakinfo', 'input[name^="kenmerk_naam"]', 'load_zaakinformatie_kenmerken();');
+    }
+
+    if ($('#rol_kenmerken_container').length) {
+        dynamic_rows('#rol_kenmerken_container', 'auth_roles', 'input[name^="role_group_id"]',null,'ezra_basic_zaaktype_functions();');
+    }
+
+    /*** Validation
+     *
+     */
+    $('form.zvalidate').submit(function() {
+        return zvalidate($(this));
+    });
+
+    $('.change_betrokkene_type').change(function() {
+        currentform = $(this).closest('form');
+
+        currentform.find('a.search_betrokkene').attr('rel', $(this).val());
+        currentform.find('#new_externe_aanvrager input[type="hidden"]').val(null);
+        currentform.find('#new_externe_aanvrager input[type="text"]').val(null);
+
+        currentform.find('#zaaktype_keuze_container_extern input[type="hidden"]').val(null);
+        currentform.find('#zaaktype_keuze_container_extern .zaaktype_keuze_description').html(null);
+    });
+
+    $('table tbody tr:last-child').addClass('lastrow');
+	
+
+    /* SUBZAKEN */
+    if ($('#next_status_subzaak').length) {
+        next_subzaak();
+    }
+
+});
+
+
+
+function initialize_tabinterface() {
+    $('#tabinterface').tabs({
+        cookie: { expires: 30 },
+        show: function(event, ui) {
+            if (ui.panel.id == "zaak-elements-case") {
+            }
+
+            if (
+                $("#" + ui.panel.id).hasClass('ezra_load_zaak_element') &&
+                !$("#" + ui.panel.id).hasClass('ezra_load_zaak_element_loaded')
+            ) {
+                $("#" + ui.panel.id + ' .tab-loader').css('display', 'block');
+
+                var match = $("#" + ui.panel.id).attr('class').match(/zaak_nr_(\d+)/);
+                var zaaknr = match[1];
+
+                var element_url = '/zaak/' + zaaknr + '/view_element/' + ui.panel.id;
+
+                if ($("#" + ui.panel.id).hasClass('pip')) {
+                    element_url = '/pip' + element_url;
+                }
+
+                $("#" + ui.panel.id).load(
+                    element_url,
+                    function(response,status,xhr) {
+                        if (status!="error") {
+                            $("#" + ui.panel.id + ' .tab-loader').css('display', null);
+                        }
+                        ezra_basic_functions();
+                    }
+                );
+
+                $("#" + ui.panel.id).addClass('ezra_load_zaak_element_loaded');
+            }
+        }
+    });
+    $('#tabinterface-1').tabs({spinner:''});
+    $('#tabinterface-2').tabs();
+}
+
+
+
+function ezra_tooltip_handling() {
+	$(".tooltip-test-wrap").hide();
+	$('.form td:nth-child(1),.form td:nth-child(2)').addClass('guideline-hover');
+	
+	$(".form tr").children(".guideline-hover").hover(
+      function () {
+        $(this).parent('tr').find('td').children(".tooltip-test-wrap").show();
+      }, 
+      function () {
+        $(this).parent('tr').find('td').children(".tooltip-test-wrap").hide();
+    });
+}
+
+function oldstyle_document_row_init() {
+    $('#document_rows .document_row').each(function() {
+        $(this).find('.document_row_del').click(function() {
+            var thisrow = $(this).closest('tr');
+            thisrow.remove();
+            return false;
+        });
+
+        $(this).find('.add_kenmerken').click(function() {
+            var thisrow = $(this).closest('tr');
+
+            var questionname = thisrow.find('input[name^="document_description"]');
+            $(this).attr('rel', 'destination: ' + questionname.attr('name'));
+
+            fireDialog($(this), 'load_document_kenmerken();');
+            return false;
+        });
+    });
+}
+
+function zvalidate(container, extraopt) {
+	//alert(container);
+    var action = container.attr('action');
+
+    /* Loop prevention */
+    if (container.hasClass('validated')) {
+        if (container.hasClass('ezra_spiffy_spinner')) {
+            ezra_spiffy_spinner_submit(container);
+        }
+
+        return true;
+    }
+    if (container.hasClass('invalidation')) {
+        return false;
+    }
+
+    container.addClass('invalidation');
+
+    /* Make sure we disable the button, time being */
+    container.find('input[type="submit"]').attr('disabled','disabled');
+
+    /* Remove invalids */
+    container.find('span.invalid').removeClass('invalid');
+    container.find('span.valid').removeClass('valid');
+
+
+    var serialized = validate_serialize_items(container, extraopt);
+ 
+    if (!container.hasClass('ezra_spiffy_spinner')) {
+        $.ztWaitStart();
+    }
+
+    $.getJSON(
+        action + '?do_validation=1&' + serialized,
+        function(rawdata) {
+            var data = rawdata.json;
+            if (data.success) {
+                if (container.hasClass('ezra_spiffy_spinner')) {
+                    $.ztWaitStop();
+                }
+
+                container.unbind('submit').submit();
+                return true;
+            }
+
+            validate_form_items(container, data);
+
+            $.ztWaitStop();
+            container.removeClass('invalidation');
+            return false;
+        }
+    );
+
+    return false;
+}
+
+function validate_serialize_items(container, extraopt) {
+    var serialized = container.serialize();
+
+    /* Make sure we disable the button, time being */
+    container.find('input[type="submit"]').attr('disabled','disabled');
+    if (container.attr('class').match(/use_submit/) == 'use_submit' && extraopt) {
+        if (serialized) {
+            serialized += '&';
+        }
+
+        serialized += extraopt;
+    }
+
+    /* Ok, check file data */
+    container.find('input[type="file"]').each(function() {
+        serialized += '&' + $(this).attr('name')
+            + '=' + $(this).val();
+    });
+
+    return serialized;
+}
+
+function validate_form_items(container, data) {
+    container.find('input[type="submit"]').attr('disabled',null);
+    container.find('span.validator').hide();
+
+    for (var i in data.missing) {
+        var containingtd = container.find('[name="' + data.missing[i] + '"]').closest('td');
+        var constraint_key = data.missing[i];
+        if (data.msgs[constraint_key]) {
+            if (containingtd.parents('tr').find('.validator').length) {
+                containingtd.parents('tr').find('.validator').show().addClass('invalid').find('.validate-content').html('<span></span>' + data.msgs[constraint_key]);
+            } else {
+                containingtd.find('span').addClass('invalid').html(data.msgs[constraint_key]);
+            }
+        }
+        containingtd.find('span.validator').show();
+    }
+
+    for (var i in data.invalid) {
+        var containingtd = container.find('[name="' + data.invalid[i] + '"]').closest('td');
+        var constraint_key = data.invalid[i];
+        if (data.msgs[constraint_key]) {
+            if (containingtd.parents('tr').find('.validator').length) {
+                containingtd.parents('tr').find('.validator').show().addClass('invalid').find('.validate-content').html('<span></span>' + data.msgs[constraint_key]);
+            } else {
+                containingtd.find('span').addClass('invalid').html(data.msgs[constraint_key]);
+            }
+        }
+        containingtd.find('span.validator').show();
+    }
+
+    for (var i in data.valid) {
+        var constraint_key = data.valid[i];
+        var containingtd = container.find('[name="' + data.valid[i] + '"]').closest('td');
+        if (!containingtd.parents('tr').hasClass('ignore-field-' + constraint_key)) {
+            if (containingtd.parents('tr').find('.validator').length) {
+                containingtd.parents('tr').find('.validator').hide().addClass('valid').find('.validate-content').html('<span></span>');
+            } else {
+                containingtd.find('span').addClass('valid');
+            }
+            containingtd.find('span.validator').show();
+        }
+    }
+}
+
+
+
+
+function next_subzaak() {
+	
+	
+    /* Subzaken */
+    $('#next_status_subzaak .subzaken .row_template').hide();
+
+    /* Clone */
+    /* var vraagid    = clone_row2('#' + defid + ' .document', defid + '_document'); */
+
+    /* A nice click function, here it comes */
+    $('#next_status_subzaak .edit').click(function() {
+        /* Make up some destination options */
+        var thisrow = $(this).closest('tr');
+
+        var questionname = thisrow.find('input[name^="status_zaaktype_id"]');
+        $(this).attr('rel',
+            (
+             $(this).attr('rel') ?
+             $(this).attr('rel') + '; ' : ''
+             ) + 'destination: ' + questionname.attr('name')
+        );
+
+        fireDialog($(this), 'load_subzaken_kenmerken();');
+        return false;
+    });
+
+	
+    $('#next_status_subzaak .subzaken .del').click(function() {
+        /* Get count */
+        var parentrow = $(this).closest('tr');
+
+        parentrow.remove();
+
+        return false;
+    });
+	
+
+    /* Make 'add' button work */
+
+    $('#next_status_subzaak .status_definition_add_subzaak').click(function()
+    {
+        /* Clone row */
+        var zt_row_id = clone_row2('#next_status_subzaak .subzaken', 'next_status_subzaak_subzaken');
+
+        /* Launch our zaaktype selection window */
+        select_zaaktype('#' + zt_row_id + ' input[name^="status_zaaktype_id"],#' + zt_row_id + ' input[name^="status_zaaktype_open"]', '#' + zt_row_id + ' .description', '#' + zt_row_id);
+
+        /* Make sure this one gets a 'vink' ;) */
+        $('#' + zt_row_id + ' input[name^="status_zaaktype_run"]').attr('checked', 'checked');
+
+        /* Make sure this option does not get an id appended */
+        $('#' + zt_row_id + ' input[name^="status_zaaktype_open"]').attr('name', 'status_zaaktype_open');
+
+        /* A nice click function, here it comes */
+        $('#next_status_subzaak .edit').click(function() {
+            /* Make up some destination options */
+            var thisrow = $(this).closest('tr');
+
+            var questionname = thisrow.find('input[name^="status_zaaktype_id"]');
+            $(this).attr('rel',
+                (
+                 $(this).attr('rel') ?
+                 $(this).attr('rel') + '; ' : ''
+                 ) + 'destination: ' + questionname.attr('name')
+            );
+
+            fireDialog($(this), 'load_subzaken_kenmerken();');
+            return false;
+        });
+
+        return false;
+    });
+
+}
+
+function load_zaakinformatie_kenmerken() {
+
+    $('#kenmerk_definitie select[name="kenmerk_type"]').change(function() {
+        if ($(this).find(':selected').hasClass('has_options')) {
+            $('#kenmerk_definitie .multiple-options').show();
+        } else {
+            $('#kenmerk_definitie .multiple-options').hide();
+        }
+
+        if ($(this).find(':selected').hasClass('file')) {
+            $('#kenmerk_definitie .file-options').show();
+        } else {
+            $('#kenmerk_definitie .file-options').hide();
+        }
+    });
+
+    $('#kenmerk_definitie select[name="kenmerk_type"]').change();
+
+    $('#kenmerk_definitie select[name="kenmerk_document_key"]').change(function() {
+        $('#kenmerk_definitie .file-options-unknown').show();
+        $('#kenmerk_definitie .file-options-known').hide();
+        if ($(this).find(':selected').val()) {
+            $('#kenmerk_definitie .file-options-unknown').hide();
+            $('#kenmerk_definitie .file-options-known').show();
+            $('#kenmerk_definitie .mandatory_document').hide();
+            $('#kenmerk_definitie .no_mandatory_document').hide();
+
+            if ($(this).find(':selected').hasClass('mandatory')) {
+                $('#kenmerk_definitie .mandatory_document').show();
+            } else {
+                $('#kenmerk_definitie .no_mandatory_document').show();
+            }
+        }
+    });
+    $('#kenmerk_definitie select[name="kenmerk_document_key"]').change();
+
+    $('#kenmerk_definitie input[type="button"]').click(function() {
+        /* Harvest results */
+        var postdata = {};
+        $('#kenmerk_definitie select').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#kenmerk_definitie input').each(function() {
+            if (
+                $(this).attr('type') == 'checkbox' ||
+                $(this).attr('type') == 'radio'
+            ) {
+                if ($(this).attr('checked') == true) {
+                    postdata[$(this).attr('name')] = $(this).attr('value');
+                }
+                return;
+            }
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#kenmerk_definitie textarea').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+
+        $.post(
+            '/zaaktype/specifiek/kenmerk_definitie',
+            postdata,
+            function() {
+                $('#dialog').dialog('close');
+            }
+        );
+    });
+}
+
+function init_dynamic_row_functions(container_id,edit,editcallback) {
+    if (edit) {
+        $(container_id + ' .edit').click(function() {
+            var thisrow = $(this).closest('tr');
+
+            var questionname = thisrow.find(edit);
+
+            $(this).attr('rel', 'destination: ' + questionname.attr('name'));
+
+            fireDialog($(this), editcallback);
+            return false;
+        });
+    }
+
+    $(container_id + ' .del').click(function() {
+        var thisrow = $(this).closest('tr');
+        thisrow.remove();
+        return false;
+    });
+}
+
+function dynamic_rows(container_id, name, edit, editcallback,rowcallback) {
+    /* Hide */
+    $(container_id + ' .dynamic_rows .row_template').hide();
+
+    /* Make 'add' button work */
+    $(container_id + ' .add_row').each(function() {
+        if ($(this).data('events')) { return; }
+
+        $(this).click(function() {
+            var dynrowid = clone_row2(container_id + ' .dynamic_rows', name);
+
+            init_dynamic_row_functions(container_id,edit, editcallback);
+
+            if (rowcallback) {
+                eval(rowcallback);
+            }
+            return false;
+        });
+    });
+
+    init_dynamic_row_functions(container_id,edit, editcallback);
+}
+
+
+function load_subzaken_kenmerken() {
+    $('#zaaktype_definitie input[type="button"]').click(function() {
+        /* Harvest results */
+        var postdata = {};
+        $('#zaaktype_definitie select').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#zaaktype_definitie input').each(function() {
+            if (
+                $(this).attr('type') == 'checkbox' ||
+                $(this).attr('type') == 'radio'
+            ) {
+                if ($(this).attr('checked') == true) {
+                    postdata[$(this).attr('name')] = $(this).attr('value');
+                }
+                return;
+            }
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#zaaktype_definitie textarea').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+
+        var formuri = $('input[name="zaaknr"]').val();
+
+        $.post(
+            '/zaak/' + formuri + '/status/next/zaaktype_kenmerken',
+            postdata,
+            function() {
+                $('#dialog').dialog('close');
+            }
+        );
+    });
+}
+
+function load_document_kenmerken() {
+    $('#document_definitie input[type="button"]').click(function() {
+        /* Harvest results */
+        var postdata = {};
+        $('#document_definitie select').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#document_definitie input').each(function() {
+            if (
+                $(this).attr('type') == 'checkbox' ||
+                $(this).attr('type') == 'radio'
+            ) {
+                if ($(this).attr('checked') == true) {
+                    postdata[$(this).attr('name')] = $(this).attr('value');
+                }
+                return;
+            }
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#document_definitie textarea').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+
+        $.post(
+            '/zaaktype/algemeen/doc_definitie',
+            postdata,
+            function() {
+                $('#dialog').dialog('close');
+            }
+        );
+    });
+}
+
+function init_status_actions() {
+    /* Make edit button work */
+    $('.status_define').each(function() {
+        if ($(this).data('events')) { return ; }
+
+        $(this).click(function() {
+            /* Get id */
+            var closestid = $(this).closest('tr').attr('id');
+            var rownr     = closestid.replace(/status_row_/g, '');
+
+            $('#status_row_definitions_' + rownr).toggle();
+
+            return false;
+        });
+    });
+
+    /* Make edit button work */
+    $('.status_name_row .del').each(function() {
+        if ($(this).data('events')) { return ; }
+
+        $(this).click(function() {
+            /* Get id */
+            var closesttr = $(this).closest('tr');
+            var closestid = closesttr.attr('id');
+            var rownr     = closestid.replace(/status_row_/g, '');
+
+            $('#status_row_definitions_' + rownr).remove();
+            closesttr.remove();
+
+            return false;
+        });
+    });
+
+    /* Reshake statusses */
+    var num_statusses = 0;
+    $('#status_rows').find('.status_count').each(function() {
+        var closestid = $(this).closest('tr').attr('id');
+        var rownr     = closestid.replace(/status_row_/g, '');
+        $(this).html('<input type="hidden" name="status_nr_' + rownr + '" value="' + num_statusses + '" /><p>' + num_statusses + '</p>');
+        num_statusses = num_statusses + 1;
+    });
+
+    /* Make sure we can save this definition */
+    $('.status_row_definitions input[type="button"]').each(function() {
+        if ($(this).data('events')) { return ; }
+
+        $(this).click(function() {
+            /* Do some saving here */
+            $(this).closest('tr').hide();
+
+            /* Validate row */
+            /* $(this).closest('tr').find('.validate-ok').show(); */
+            var defrowid = $(this).closest('tr').attr('id');
+            var parentrowid     = defrowid.replace(/_definition/g, '');
+            parentrowid     = parentrowid.replace(/rows/g, 'row');
+
+            $('#' + parentrowid).find('.validate-ok').show();
+
+            /* add_status_row(); */
+
+            return false;
+        });
+    });
+
+    $('.status_row_definitions').each(function() {
+        var defid = $(this).closest('tr').attr('id');
+        var currentrowid = $(this);
+        /* defid     = defid.replace(/status_row_definitions_/g, ''); */
+
+        dynamic_rows(
+            '#' + defid + ' .checklist_container',
+            'checklist',
+            'input[name^="status_checklist_vraag"]',
+            'load_checklist_antwoorden();'
+        );
+
+        /* Make 'antwoorden' work */
+        /* Docs */
+/*
+        dynamic_rows(
+            '#' + defid + ' .document_container',
+            'document'
+        );
+*/
+
+        dynamic_rows('#' + defid + ' .document_container','documenten', 'input[name^="status_document_name"]', 'load_document_kenmerken();');
+
+        /* Subzaken */
+        $('#' + defid + ' .subzaken .row_template').hide();
+
+        /* Clone */
+        /* var vraagid    = clone_row2('#' + defid + ' .document', defid + '_document'); */
+
+        /* Make 'add' button work */
+        if (!$('#' + defid + ' .status_definition_add_subzaak').data('events')) {
+         
+		   
+		    $('#' + defid + ' .status_definition_add_subzaak').unbind().click(function() {
+               
+				/* Clone row */
+                var zt_row_id = clone_row2('#' + defid + ' .subzaken', defid + '_subzaken');
+
+                /* Launch our zaaktype selection window */
+                select_zaaktype('#' + zt_row_id + ' input[name^="status_zaaktype_id"]', '#' + zt_row_id + ' .description', '#' + zt_row_id);
+
+                init_status_actions();
+               
+			    return false;
+
+            });
+        }
+
+        $('#' + defid + ' .subzaken .edit').click(function() {
+            var thisrow = $(this).closest('tr');
+
+            var questionname = thisrow.find('input[name^="status_zaaktype_id"]');
+
+            $(this).attr('rel', 'destination: ' + questionname.attr('name'));
+
+            fireDialog($(this), 'load_zaaktype_kenmerken();');
+            return false;
+        });
+
+        $('#' + defid + ' .subzaken .del').click(function() {
+            /* Get count */
+            var parentrow = $(this).closest('tr');
+
+            parentrow.remove();
+
+            return false;
+        });
+
+
+        dynamic_rows('#' + defid + ' .resultaatmogelijkheden_container','resultaten');
+
+        /* Make sure we do not show afhandelstatus ;) */
+        if ($('#' + defid  + ' [name^="status_type"]').length) {
+            var statustype = $('#' + defid  + ' input[name^="status_type"]');
+            if (statustype.val() == 'afhandelen') {
+                /* Disable status_afhandel_block */
+                $('#' + defid + ' .status_behandel_block').hide();
+                $('#' + defid + ' .status_afhandel_block').show();
+                $('#' + defid + ' .deelofsubs').html('vervolgzaken');
+                $('#' + defid + ' .deelofsub').html('vervolgzaak');
+            } else {
+                $('#' + defid + ' .status_afhandel_block').hide();
+                $('#' + defid + ' .status_behandel_block').show();
+            }
+        }
+
+
+    });
+
+    if ($('.status_count').length && ! cloned_rows['status_row']) {
+        var numtrrows = $('.status_name_row').size();
+        cloned_rows['status_row'] = numtrrows;
+        numtrrows = $('.status_row_definitions').size();
+        cloned_rows['status_row_definitions'] = numtrrows;
+    }
+
+    /* Make sure we define firststatus class */
+    $('input[name="status_nr_1"]').each(function() {
+        // Find container row
+        var row_container   = $(this).closest('tr');
+
+        // Get id from container
+        var container_id    = row_container.attr('id');
+
+        container_id        = container_id.replace(/.*(\d+)/, '$1');
+
+        // Get row_definitie
+        table_container     = row_container.closest('table');
+
+        definitie           = table_container.find('#status_row_definitions_' + container_id);
+
+        definitie.find('.firststatus').css('display', 'inline');
+        definitie.find('.nextstatus').css('display', 'none');
+    });
+
+    $('.ztAjaxTable').ztAjaxTable();
+
+}
+
+var status_count = 1;
+function add_status_row(type) {
+    /* Clone template row */
+    var newid    = clone_row('status_row');
+    var newdefid = clone_row('status_row_definitions');
+
+    $('#' + newdefid).hide();
+
+    status_count = status_count + 1;
+    /* Now make sure everything works in this definition */
+    load_definition(newdefid);
+
+    /* Make this status 'afgehandeld' */
+    if (type == 'afgehandeld') {
+        var oldinput = $('#' + newid).find('input[name^="status_naam"]');
+
+        /* Some decorations */
+        $('#' + newid).find('.input-naam').append('<p>Afgehandeld</p>');
+        $('#' + newid).find('.input-naam')
+            .append('<input type="hidden" name="' + oldinput.attr('name')
+                        + '" value="Afgehandeld" />');
+
+        /* Some class working */
+        $('#' + newid).addClass('afgehandeld');
+
+        /* And for future reference, drop the select box for choosing
+         * type, and create a hidden containing this type */
+        $('#' + newdefid).find('input[name^="status_type"]').val('afhandelen');
+
+        oldinput.remove();
+    }
+
+    init_status_actions();
+}
+
+var cloned_rows2 = [];
+
+function clone_row2(elemname, name, append) {
+
+    /* Clone */
+    clone  = $(elemname + ' .row_template').clone();
+    parent_elem =  $(elemname + ' .row_template').parent();
+
+    if (cloned_rows2[name]) {
+        cloned_rows2[name] = cloned_rows2[name] + 1;
+    } else {
+        /* Magic, check for by De Don generated rows, and use this as a start */
+        /* Count rows, and substract row_template + header + 1(so substract 1) */
+        var numtrrows = parent_elem.find('tr').size();
+        cloned_rows2[name] = (numtrrows - 1);
+    }
+
+    count = cloned_rows2[name];
+
+    /* Change every input/select/textarea and append number */
+    formelements = Array('input','select','textarea','checkbox');
+    for (var i in formelements) {
+        clone.find(formelements[i]).each(function() {
+            $(this).attr('name',
+                $(this).attr('name') + '_' + count
+            );
+        });
+    }
+
+    /* Change this id */
+    var newid     = name + '_' + count;
+
+    clone.attr('id', newid);
+
+    /* Remove template class from clone */
+    clone.removeClass('row_template');
+
+    /* Make sure the delete button is gonna work */
+    clone.find('.del').click(function() {
+        /* Get count */
+        var parentrow = $(this).closest('tr');
+
+        parentrow.remove();
+
+        return false;
+    });
+
+    /* Append the clone */
+    parent_elem.append(clone);
+
+    /* Show the clone */
+    clone.show();
+
+    return newid;
+}
+
+function load_definition(defid) {
+
+    return;
+    /* Checklist */
+
+    /* Hide */
+    $('#' + defid + ' .checklist .row_template').hide();
+
+    /* Make 'add' button work */
+    $('#' + defid + ' .status_definition_add_vraag').click(function() {
+        var vraagid = clone_row2('#' + defid + ' .checklist', defid + '_checklist');
+
+        $('#' + vraagid + ' .add_antwoorden').click(function() {
+            var thisrow = $(this).closest('tr');
+
+            var questionname = thisrow.find('input[name^="status_checklist_vraag"]');
+            $(this).attr('rel', 'destination: ' + questionname.attr('name'));
+            $(this).attr('title',
+                thisrow.find('input[name^="checklist_vraag"]').val()
+            );
+
+            fireDialog($(this), 'load_checklist_antwoorden();');
+            return false;
+        });
+
+        return false;
+    });
+
+/*
+    var amatch = $('#' + defid).attr('id').match(/_1$/g);
+    if (amatch) {
+        $('#' + defid + ' .checklist_status_block').hide();
+    }
+*/
+
+    /* Make 'antwoorden' work */
+    /* Docs */
+
+    /* Hidei OLD */
+    //$('#' + defid + ' .document .row_template').hide();
+
+    /* Clone */
+    // var vraagid    = clone_row2('#' + defid + ' .document', defid + '_document');
+
+    /* Make 'add' button work */
+    // $('#' + defid + ' .status_definition_add_document').click(function() {
+    //     clone_row2('#' + defid + ' .document', defid + '_document');
+    //     return false;
+    // });
+
+
+    /* Subzaken */
+    $('#' + defid + ' .subzaken .row_template').hide();
+
+    /* Clone */
+    /* var vraagid    = clone_row2('#' + defid + ' .document', defid + '_document'); */
+
+    /* Make 'add' button work */
+    $('#' + defid + ' .status_definition_add_subzaak').click(function() {
+        /* Clone row */
+        var zt_row_id = clone_row2('#' + defid + ' .subzaken', defid + '_subzaken');
+
+        /* Launch our zaaktype selection window */
+        select_zaaktype('#' + zt_row_id + ' input[name^="status_zaaktype_id"]', '#' + zt_row_id + ' .description', '#' + zt_row_id);
+
+        return false;
+    });
+
+
+    //dynamic_rows('#' + defid + ' .document_container','documenten', 'input[name^="document_description"]', 'load_statusinformatie_documenten();');
+    dynamic_rows('#' + defid + ' .resultaatmogelijkheden_container','resultaten');
+}
+
+function select_zaaktype(dest_id, dest_descr, dest_row, eoptions) {
+    if (dest_row && dest_id) {
+        $('#searchdialog').dialog(
+            'option',
+            'beforeclose',
+            function() {
+                if (! $(dest_id).val()) {
+                    $(dest_row).remove();
+                }
+
+                $('#searchdialog').dialog(
+                    'option',
+                    'beforeclose',
+                    function() { }
+                );
+            }
+        );
+    }
+
+    if (!eoptions) {
+        eoptions = new Array;
+    }
+
+    $('#searchdialog .dialog-content').load(
+        '/zaaktype/search',
+        {
+            jsfillid: dest_id,
+            jsfilldescr: dest_descr,
+            jstrigger: eoptions['zt_trigger'],
+            jsbetrokkene_type: eoptions['zt_betrokkene_type']
+        },
+        function() {
+            title = 'Zoek zaaktype';
+
+          
+            $('#searchdialog').data('title.dialog', title);
+            $('#searchdialog').addClass('smoothness').dialog('open');
+
+            $('#accordion').accordion({
+                autoHeight: false
+            });
+
+            load_zaaktype();
+        }
+    );
+}
+
+function load_checklist_antwoorden() {
+    $('#antwoord_invoertype').change(function() {
+        if ($(this).find(':selected').hasClass('has_options')) {
+            $('#antwoord_mogelijkheden').show();
+        } else {
+            $('#antwoord_mogelijkheden').hide();
+        }
+    });
+
+
+    if ($('#antwoord_invoertype').find(':selected').hasClass('has_options')) {
+        $('#antwoord_mogelijkheden').show();
+    } else {
+        $('#antwoord_mogelijkheden').hide();
+    }
+
+    $('#antwoord_definitie input[type="button"]').click(function() {
+        /* Harvest results */
+        var postdata = {};
+        $('#antwoord_definitie select').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#antwoord_definitie input').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+        $('#antwoord_definitie textarea').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+
+        $.post(
+            '/zaaktype/status/antwoorden',
+            postdata,
+            function() {
+                $('#dialog').dialog('close');
+            }
+        );
+    });
+}
+
+function load_zaaktype_kenmerken() {
+    $('#zaaktype_definitie input[type="button"]').click(function() {
+        /* Harvest results */
+        var postdata = {};
+        $('#zaaktype_definitie select').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+
+        $('#zaaktype_definitie input').each(function() {
+            if (
+                $(this).attr('type') == 'checkbox' ||
+                $(this).attr('type') == 'radio'
+            ) {
+                if ($(this).attr('checked') == true) {
+                    postdata[$(this).attr('name')] = $(this).attr('value');
+                }
+                return;
+            }
+            postdata[$(this).attr('name')] = $(this).attr('value');
+        });
+        $('#zaaktype_definitie textarea').each(function() {
+            postdata[$(this).attr('name')] = $(this).val();
+        });
+
+        $.post(
+            '/zaaktype/status/zaaktype',
+            postdata,
+            function() {
+                $('#dialog').dialog('close');
+            }
+        );
+    });
+}
+
+/*** Zaaktype Static Functions
+ *
+ * Functies voor zaaktype beheer, maar ook voor informatie van zaaktypes
+ * (buiten zaaktype beheer)
+ */
+
+function load_zaaktype() {
+    $("#zoek_zaaktype form").submit(function(){
+        $('#betrokkene_loader').removeClass('disabled');
+        /*
+        postdata = {
+            search: 1,
+            jsfill: "[% jsfill %]",
+            jscontext: "[% jscontext %]",
+            jstype: "[% jstype %]",
+            jsversion: "[% jsversion %]",
+            method: "[% method %]",
+            url: "[% url %]"
+        };
+        */
+        postdata = {};
+        $("#zoek_zaaktype input").each(function(){
+            if (
+                $(this).attr('type') == 'checkbox' ||
+                $(this).attr('type') == 'radio'
+            ) {
+                if ($(this).attr('checked') == true) {
+                    postdata[$(this).attr('name')] = $(this).attr('value');
+                }
+                return;
+            }
+            postdata[$(this).attr('name')] = $(this).attr('value');
+        });
+        $("#zoek_zaaktype select").each(function(){
+            chosenoption = $(this).find(':selected');
+            postdata[$(this).attr('name')] = chosenoption.val();
+        });
+
+        $('#search_zaaktype_results').load(
+            '/zaaktype/search',
+            postdata,
+            function() {
+                $('#accordion').accordion('activate', 1);
+                $('#betrokkene_loader').addClass('disabled');
+
+                refresh_zaaktype_search_rows();
+            }
+        );
+
+        return false;
+
+    });
+}
+
+function refresh_zaaktype_search_rows() {
+
+	$("#search_zaaktype_results .zaaktype_keuze").click(function() {
+
+        var jsfillid    = $("#zoek_zaaktype input[name='jsfillid']").val();
+        var jsfilldescr = $("#zoek_zaaktype input[name='jsfilldescr']").val();
+
+        var result_id    = $(this).find("input[name='zaaktype_id']").val();
+        var result_name    = $(this).find("input[name='zaaktype_name']").val();
+        var result_descr = $(this).find("input[name='zaaktype_descr']").val();
+
+// if the purpose of this dialog is to add a zaaktype filter to uitgebreid zoeken
+// do
+		var search_filter_post = $("#zoek_zaaktype input[name='search_filter_post']").val();
+		
+       	if(search_filter_post) {
+       		// zaaktype_id is really zaak_type node id. hence 'real'. sorry, we apologize.
+       		var real_zaak_type_id = $(this).find("input[name='real_zaaktype_id']").val();
+			var data = 'action=update_filter&filter_type=zaaktype&nowrapper=1&value=' + real_zaak_type_id;
+			updateSearchFilters(data);
+            $('#dialog').dialog('close');
+		}
+
+        if (jsfillid && jsfilldescr) {
+            $(jsfillid).val(result_id);
+            if ($(jsfilldescr)[0].tagName == 'INPUT') {
+                $(jsfilldescr).val(result_descr);
+            } else {
+                $(jsfilldescr).html(result_descr);
+            }
+        }
+
+        /* Close window */
+        $('#searchdialog').dialog('close');
+    });
+}
+
+
+/*** clone rows
+ *
+ * This function should work as a sharm, make sure you place one row in this
+ * table, with an id like: [name]_template, and hide this one.
+ *
+ * Create a delete row button somewhere, with the class:
+ * [name]_del
+ *
+ * And everyhting should do what you think it should do
+ */
+var cloned_rows = Array();
+function clone_row(name, append) {
+    /* Clone */
+    clone  = $('#' + name + '_template').clone();
+    parent_elem =  $('#' + name + '_template').parent();
+
+    if (cloned_rows[name]) {
+        cloned_rows[name] = cloned_rows[name] + 1;
+    } else {
+        /* Magic, check for by De Don generated rows, and use this as a start */
+        /* Count rows, and substract row_template + header + 1(so substract 1) */
+        if (name == 'status_row') {
+            var numtrrows = parent_elem.find('.status_name_row').size();
+        } else {
+            var numtrrows = parent_elem.find('.status_row_definitions').size();
+        }
+        cloned_rows[name] = numtrrows;
+    }
+
+    count = cloned_rows[name];
+
+    /* Change every input/select/textarea and append number */
+    formelements = Array('input','select','textarea','checkbox');
+    for (var i in formelements) {
+        clone.find(formelements[i]).each(function() {
+            $(this).attr('name',
+                $(this).attr('name') + '_' + count
+            );
+        });
+    }
+
+    /* Change this id */
+    var currentid = clone.attr('id');
+    var newid     = currentid.replace(/template$/g, count);
+
+    clone.attr('id', newid);
+
+    /* Check for a delete button */
+    $(clone).find('.' + name + '_del').each(function() {
+        $(this).attr('id', name + '_del_' + count);
+    });
+
+    /* Make sure the delete button is gonna work */
+    clone.find('.' + name + '_del').click(function() {
+        /* Get count */
+        currentid = $(this).attr('id');
+        currentcount = currentid.replace(/.*(\d+)$/g, '$1');
+
+        $('#' + name + '_' + currentcount).remove();
+
+        return false;
+    });
+
+    /* Append the clone */
+    var afhandelrow = parent_elem.find('.afgehandeld');
+    if (afhandelrow.size()) {
+        afhandelrow.before(clone);
+    } else {
+        parent_elem.append(clone);
+    }
+
+    /* Show the clone */
+    clone.show();
+
+    return newid;
+}
+
+/*
+function load_status_definitions() {
+    $('#document_row_template').hide();
+    $('#status_def_document_add').click(function() {
+        clone_row('document_row');
+        return false;
+    });
+    $('#checklist_template').hide();
+    $('#status_def_checklist_add').click(function() {
+        clone_row('checklist');
+        return false;
+    });
+}
+*/
+
+/** Search basics
+ *
+ * Loads all basic search functions:
+ * - validation
+ * - betrokkene
+ * - zaaktype
+ * - zaak
+ */
+
+function load_search_basics() {
+    $('.search_betrokkene').click(function() {
+        searchBetrokkene($(this));
+
+        return false;
+    });
+
+    $('.search_zaak').click(function() {
+        searchZaak($(this));
+
+        return false;
+    });
+
+    $('form.zvalidate').submit(function() {
+        return zvalidate($(this));
+    });
+}
+
+function ezra_intake_link_details(formelem) {
+    formelem.submit(function() {
+        var serialized = formelem.serialize();
+        $('#dialog .dialog-content').load(
+            formelem.attr('action'),
+            serialized,
+            function() {
+                ezra_document_functions();
+
+                if ($('#dialog .dialog-content form').hasClass('hascallback')) {
+                    ezra_intake_link_details($('#dialog .dialog-content form'));
+                }
+            }
+        );
+
+
+        return false;
+    });
+}
+
+
+function load_selectmenu() {
+    $('select.replace-select').selectmenu({
+        style:'dropdown',
+        width:130
+        //maxHeight: '150'
+    });
+    
+}
+
+function initializeSpinners() {
+    // kleine spinner
+    var opts = {
+      lines: 9, // The number of lines to draw
+      length: 3, // The length of each line
+      width: 2, // The line thickness
+      radius:3, // The radius of the inner circle
+      color: '#000', // #rbg or #rrggbb
+      speed: 1, // Rounds per second
+      trail: 100, // Afterglow percentage
+      shadow: false // Whether to render a shadow
+    };
+    var target = document.getElementById('spinner');
+    var spinner = new Spinner(opts).spin(target);
+    
+    // grote spinner
+    var opts2 = {
+      lines: 12, // The number of lines to draw
+      length: 7, // The length of each line
+      width: 4, // The line thickness
+      radius:10, // The radius of the inner circle
+      color: '#000', // #rbg or #rrggbb
+      speed: 1, // Rounds per second
+      trail: 60, // Afterglow percentage
+      shadow: false // Whether to render a shadow
+    };
+    var target2 = document.getElementById('spinner-groot');
+    var spinner2 = new Spinner(opts2).spin(target2);
+}
+
+

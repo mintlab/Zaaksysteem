@@ -1,0 +1,326 @@
+[%
+    broninfo = {
+        'bedrijf'               => 'KvK',
+        'natuurlijk_persoon'    => 'GBA',
+        'medewerker'            => 'LDAP',
+    };
+    brontype = {
+        'bedrijf'               => 'Niet-natuurlijk persoon (Organisatie)',
+        'natuurlijk_persoon'    => 'Natuurlijk persoon',
+        'medewerker'            => 'Behandelaar',
+    }
+%]
+
+                <div class="tabber" id="tabinterface">
+                    <div class="header tabbed">
+                    [% betrokkene.naam %]
+                    
+                    
+                    <!-- contact acties -->
+                    <div class="button_holder clearfix">
+                    [% UNLESS betrokkene_edit %]
+                            <a
+                            class="knop right with-span-icon ezra_nieuwe_zaak_tooltip-show"
+                            href="[% c.uri_for(
+                                '/zaak/create',
+                                    {
+                                        'betrokkene_type'   => betrokkene.btype,
+                                        'betrokkene_id'     => 'betrokkene-'
+                                            _ betrokkene.btype
+                                            _ '-' _ betrokkene.ex_id,
+                                        'betrokkene_naam'   => betrokkene.naam,
+                                        'aanvraag_trigger'  => (
+                                            betrokkene.btype == 'medewerker'
+                                                ? 'intern'
+                                                : 'extern'
+                                        )
+                                    }
+                                )
+                            %]"
+                            id="voegtoe"
+                        ><span></span>
+                        Nieuwe Zaak</a>
+                    [% END %]
+                        
+                    [% UNLESS betrokkene.authenticated %]
+                        [% IF c.check_any_user_permission('contact_nieuw') %]
+                            [% IF can_betrokkene_edit %]
+                                [% UNLESS betrokkene_edit %]
+                                    <a
+                                        class="edit knop bewerken right with-span-icon"
+                                        href="[% c.req.uri_with(
+                                            { edit => 1 }
+                                            )
+                                        %]"
+                                        id="bewerken"
+                                        >
+                                        <span></span>
+                                        Bewerken</a>
+                                    
+                                    <a
+                                        class="verwijder dialog-post knop right with-span-icon"
+                                        href="[% c.uri_for(
+                                            '/betrokkene/verwijder/'
+                                            _ betrokkene.btype _ '/'
+                                            _ betrokkene.ex_id
+                                            )
+                                        %]"
+                                        id="verwijderen"
+                                    ><span></span>
+                                    Verwijderen</a>
+                                [% END %]
+                            [% END %]
+                        [% END %]
+                    [% END %]
+                    </div>
+                    <!-- einde contact acties -->
+                    
+                    
+                    </div>
+                    <ul class="ui-rounded-corners-off">
+                        <li><a href="#tab-wgt-contact">Contactinformatie</a></li>
+                        <li><a href="#tab-wgt-zaken">Zaken</a></li>
+                        <li><a href="#tab-wgt-notes">Notities</a></li>
+                    </ul>
+
+                    <div class="tabbertab" id="tab-wgt-contact">
+                        [% IF can_betrokkene_edit %]
+                            [% IF betrokkene.btype == 'bedrijf' %]
+                                <form
+                                    method="POST"
+                                    action="[% c.uri_for('/betrokkene/info/update/' _ requested_bid) %]"
+                                    class="submitWaiter zvalidate" >
+                                        <input type="hidden" name="referer" value="[% c.req.uri %]" />
+                                        <input type="hidden" name="betrokkene_type" value="[% betrokkene.btype %]" />
+                                    [% IF betrokkene_edit %]
+                                        <input type="hidden" name="betrokkene_edit" value="1" />
+                                    [% END %]
+                            [% ELSIF betrokkene.btype == 'natuurlijk_persoon' %]
+                                <form
+                                    method="POST"
+                                    action="[% c.uri_for('/betrokkene/info/update/' _ requested_bid) %]"
+                                    class="submitWaiter zvalidate">
+                                        <input type="hidden" name="referer" value="[% c.req.uri %]" />
+                                        <input type="hidden" name="betrokkene_type" value="[% betrokkene.btype %]" />
+                                    [% IF betrokkene_edit %]
+                                        <input type="hidden" name="betrokkene_edit" value="1" />
+                                    [% END %]
+                            [% END %]
+                        [% END %]
+                        <table class="table_zaakinformatie_title with-buttons no_margin">
+                            <tr>
+                                <th class="blue th_16px">Contactinformatie</th>
+                            </tr>
+                        </table>
+                        
+                        <div class="clearfix">
+                        [% IF betrokkene.btype == 'bedrijf' %]
+                            [% IF betrokkene_edit %]
+                                [% PROCESS widgets/betrokkene/bedrijf_create.tt %]
+                            [% ELSE %]
+                                [% PROCESS widgets/betrokkene/view_bedrijf.tt %]
+                            [% END %]
+                        [% ELSIF betrokkene.btype == 'natuurlijk_persoon' %]
+                            [% IF betrokkene_edit %]
+                                [% PROCESS widgets/betrokkene/natuurlijk_persoon_create.tt %]
+                            [% ELSE %]
+                                [% PROCESS widgets/betrokkene/view_natuurlijk_persoon.tt %]
+                            [% END %]
+                        [% ELSIF betrokkene.btype == 'medewerker' %]
+                            [% PROCESS widgets/betrokkene/view_medewerker.tt %]
+                        [% END %]
+                        </table>
+                        
+                      <!--   <div class="button-holder">
+                        
+                    [% UNLESS betrokkene_edit %]
+                        <a
+                            class="element width-auto small right"
+                            href="[% c.uri_for(
+                                '/zaak/create',
+                                    {
+                                        'betrokkene_type'   => betrokkene.btype,
+                                        'betrokkene_id'     => 'betrokkene-'
+                                            _ betrokkene.btype
+                                            _ '-' _ betrokkene.ex_id,
+                                        'betrokkene_naam'   => betrokkene.naam
+                                    }
+                                )
+                            %]"
+                            id="voegtoe"
+                        ><span></span>
+                        Nieuwe Zaak</a>
+                    [% END %]
+                        
+                [% UNLESS betrokkene.authenticated %]
+                    [% IF c.check_any_user_permission('contact_nieuw') %]
+                        [% IF can_betrokkene_edit %]
+                            [% UNLESS betrokkene_edit %]
+                                <a
+                                    class="edit element width-auto small right"
+                                    href="[% c.req.uri_with(
+                                        { edit => 1 }
+                                        )
+                                    %]"
+                                    id="bewerken"
+                                    >
+                                    <span></span>
+                                    Bewerken</a>
+                                [% END %]
+                                <a
+                                    class="verwijder dialog-post element width-auto small right"
+                                    href="[% c.uri_for(
+                                        '/betrokkene/verwijder/'
+                                        _ betrokkene.btype _ '/'
+                                        _ betrokkene.ex_id
+                                        )
+                                    %]"
+                                    id="verwijderen"
+                                ><span></span>
+                                Verwijderen</a>
+                               
+                        [% END %]
+                    [% END %]
+                [% END %] -->
+                [% IF can_betrokkene_edit %]
+                    <input type="submit" value="Opslaan" class="button140 btn submit right">
+                [% END %]
+                <!-- </div> -->
+                    </form>
+                </div>
+                
+                    </div>
+
+                    <div class="tabbertab min-height no-padding" id="tab-wgt-zaken">
+
+
+                        <div id="search_results_accordion">
+                            <h3>
+                                <a href="#">Lopende zaken</a>
+                                <img src="images/zaakinfo-loader.gif" alt="bezig met laden" style="display: none; ">
+                            </h3>
+                            <div>
+                                <div class="ui-accordion-table-bg">
+                                    <form name="zaken">
+                                        <input type="hidden" name="gm" value="1">
+                                        <input type="hidden" name="type" value="[% betrokkene.btype %]">
+                                        <div class="zaken_filter_wrapper">
+                                            <div class="zaken_filter_inner">
+                                                [% results = zaken %]
+                                                [% PROCESS zaak/widgets/result.tt %]
+                                                [% PROCESS widgets/pager2.tt %]
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <h3>
+                                <a href="#">Afgehandelde zaken</a>
+                                <img src="images/zaakinfo-loader.gif" alt="bezig met laden" style="display: none; ">
+                            </h3>
+                            <div>
+                                <div class="ui-accordion-table-bg">
+                                    <form name="resolved_zaken">
+                                        <input type="hidden" name="gm" value="1">
+                                        <input type="hidden" name="type" value="[% betrokkene.btype %]">
+                                        <div class="zaken_filter_wrapper">
+                                            <div class="zaken_filter_inner">
+                                                [% results = resolved_zaken %]
+                                                [% PROCESS zaak/widgets/result.tt %]
+                                                [% PROCESS widgets/pager2.tt %]
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <h3>
+                                <a href="#">Alle zaken op dit adres (BAG nummeraanduiding)</a>
+                                <img src="images/zaakinfo-loader.gif" alt="bezig met laden" style="display: none; ">
+                            </h3>
+                            <div>
+                                <div class="ui-accordion-table-bg">
+                                    <form name="adres_zaken">
+                                        <input type="hidden" name="gm" value="1">
+                                        <input type="hidden" name="type" value="[% betrokkene.btype %]">
+                                        <div class="zaken_filter_wrapper">
+                                            <div class="zaken_filter_inner">
+                                                [% results = adres_zaken %]
+                                                [% PROCESS zaak/widgets/result.tt %]
+                                                [% PROCESS widgets/pager2.tt %]
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+<!--
+                            <h3><a href="#">Lopende zaken</a></h3>
+                            <div style="padding:0;">
+                                <div class="ui-accordion-table-bg" style="padding:10px 15px;">
+                                    [% results = zaken %]
+                                    [% PROCESS zaak/widgets/result.tt %]
+                                </div>
+                            </div>
+
+                            <h3><a href="#">Afgehandelde zaken</a></h3>
+                            <div style="padding:0;">
+                                <div class="ui-accordion-table-bg" style="padding:10px 15px;">
+                                    [% results = resolved_zaken %]
+                                    [% PROCESS zaak/widgets/result.tt %]
+                                </div>
+                            </div>
+                        
+                            [% IF adres_zaken %]
+                            <h3><a href="#">Alle zaken op dit adres (BAG nummeraanduiding)</a></h3>
+                            <div style="padding:0;">
+                                <div class="ui-accordion-table-bg" style="padding:10px 15px;">
+                                    [% results = adres_zaken %]
+                                    [% PROCESS zaak/widgets/result.tt %]
+                                </div>
+                            </div>
+                            [% END %]
+-->
+                        
+                    </div>
+                    
+
+                    <div class="tabbertab ztAjaxUpdate" id="tab-wgt-notes">
+                        <div class="ztAjaxUpdate_loader"></div>
+                        <div class="ztAjaxUpdate_dest">
+                            [% PROCESS widgets/betrokkene/notes.tt %]
+                        </div>
+    [% IF c.check_any_user_permission('contact_nieuw','contact_search') %]
+                        <form method="POST" action="[%
+                                c.uri_for(
+                                    '/betrokkene/' _
+                                    betrokkene.ex_id _
+                                    '/notes/add'
+                                );
+                            %]" class="ztAjaxUpdate_update">
+                            <input type="hidden" name="gm" value="1" />
+                            <input type="hidden" name="type" value="[% betrokkene.btype %]" />
+                            <div id="opmerking">
+                                <p>
+                                U kunt hier een interne opmerking plaatsen:</p>
+                                <textarea name="message" cols="60" rows="10"></textarea>
+
+                                <table width="100%">
+                                    <tr>
+                                        <td>
+                                            <input
+                                                type="submit"
+                                                class="button140"
+                                                name="submit"
+                                                value="Toevoegen"
+                                            />
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                    [% IF can_betrokkene_edit %]
+                        </form>
+                    [% END %]
+    [% END %]
+                </div>
+            </div>

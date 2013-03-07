@@ -1,0 +1,16 @@
+<div class="block">
+	<form name="zaken_intake">
+	<p class="header">Zaken van mijn afdeling (<span class="total_entries">[% results.pager.total_entries %]</span>)</p>
+	<div class="blockcontent">
+        [% query_status_type = 'new' %]
+        [% ZAKEN_FILTER_STATUS_DROPDOWN = 1 %]
+		[% PROCESS widgets/general/zaken_filter.tt%]
+		<div class="zaken_filter_wrapper">
+			<div class="zaken_filter_inner">				
+				[% PROCESS zaak/widgets/result.tt %]
+				[% PROCESS widgets/pager2.tt %]
+			</div>
+		</div>
+	</div>
+	</form>
+</div>

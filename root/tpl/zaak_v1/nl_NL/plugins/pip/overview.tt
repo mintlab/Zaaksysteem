@@ -1,0 +1,28 @@
+<!-- VIEW: zaak/view -->
+<div class="tabber ui-tabs view_zaak" id="tabinterface">
+    <div class="header tabbed">
+    Zaak: [% zaak.id %] ([% zaak.zaaktype_definitie.handelingsinitiator | ucfirst %]
+             [% zaak.zaaktype_node_id.titel %] voor [% zaak.aanvrager.naam %])
+    </div>
+    <ul class="ui-rounded-corners-off">
+        <li><a href="#zaak-elements-case" title="zaakinformatie">Zaakinformatie</a></li>
+        <li><a href="#zaak-elements-documents" title="documents">Documenten</a></li>
+    </ul>
+
+    <div class="tabbertab ui-tabs-hide no-padding" id="zaak-elements-case">
+<!-- START elements/case -->
+        [% PROCESS zaak/elements/case.tt %]
+<!-- STOP elements/case -->
+    </div>
+
+
+    <div class="tabbertab[% ((current_element == 'documents') ? ' tabbertabdefault' : '') %] ui-tabs-hide" id="zaak-elements-documents">
+        <div class="tab-loader">
+            <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/global_spinner.gif" alt="bezig met laden" />
+        </div>
+<!-- START elements/documents -->
+        [% PROCESS zaak/elements/documents.tt %]
+<!-- STOP elements/documents -->
+    </div>
+</div>
+<!-- END VIEW: zaak/view -->

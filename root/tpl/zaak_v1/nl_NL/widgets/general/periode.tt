@@ -1,0 +1,64 @@
+[%
+    maanden = {
+        '1'   => 'januari',
+        '2'   => 'februari',
+        '3'   => 'maart',
+        '4'   => 'april',
+        '5'   => 'mei',
+        '6'   => 'juni',
+        '7'   => 'juli',
+        '8'   => 'augustus',
+        '9'   => 'september',
+        '10'  => 'oktober',
+        '11'  => 'november',
+        '12'  => 'december'
+    };
+%]
+[%
+    USE date;
+    RETURN UNLESS (input_dag && input_maand && input_jaar);
+    value_dag   = value_dag || helpers.date.day;
+    value_maand = value_maand || helpers.date.month;
+    value_jaar  = value_jaar || helpers.date.year;
+    start_jaar  = start_jaar || 2000
+%]
+[% IF start_empty %]
+[%
+value_dag = '';
+value_maand = '';
+value_jaar = '';
+%]
+[% END %]
+<div class="col">
+    <select name="[% input_dag %]" class="dag">
+        [% IF start_empty %]
+        <option value=""></option>
+        [% END %]
+        [% day=0; WHILE day < 31 %]
+        [% day = day+1 %]
+        <option value="[% day %]"[% (value_dag == day ? ' selected' : '') %]>[% day %]</option>
+        [% END %]
+    </select>
+</div>
+<div class="col">
+<select name="[% input_maand %]" class="maand">
+    [% IF start_empty %]
+    <option value=""></option>
+    [% END %]
+    [% maand=0; WHILE maand < 12 %]
+    [% maand = maand+1 %]
+    <option value="[% maand %]"[% (value_maand == maand ? ' selected' : '') %]>[% maanden.${maand} %]</option>
+    [% END %]
+</select>
+</div>
+<div class="col">
+<select name="[% input_jaar %]" class="jaar">
+    [% IF start_empty %]
+    <option value=""></option>
+    [% END %]
+    [% jaar=start_jaar; WHILE jaar < 2032 %]
+    [% jaar = jaar+1 %]
+    <option value="[% jaar %]"[% (value_jaar == jaar ? ' selected' : '') %]>[% jaar %]</option>
+    [% END %]
+</select>
+</div>

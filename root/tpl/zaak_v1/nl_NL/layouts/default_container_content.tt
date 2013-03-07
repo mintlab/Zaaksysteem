@@ -1,0 +1,79 @@
+<!-- Default container content -->
+
+[% IF trail && layout_type != 'simple' %]
+<div id="breadcrumb-wrap" class="ui-corner-all">
+    <div id="breadcrumb">
+    [% count = 0; %]
+    [% FOR trailitem IN trail %]
+        [% count = (count + 1) %]
+        [% IF count == 1 %]
+            <a href="[% trailitem.uri %]" class="prev home">[% trailitem.label %]</a>
+            [% NEXT %]
+        [% END %]
+        [% prevcount = (count - 1) %]
+        [% IF prevcount == trail.max %]
+            <span class="next pijl"></span>
+            <!-- <a href="[% trailitem.uri %]" class="last">[% trailitem.label %]</a> -->
+            <span class="last">[% trailitem.label %]</span>
+        [% ELSE %]
+            <span class="grey pijl"></span>
+            <a href="[% trailitem.uri %]" class="prev">[% trailitem.label %]</a>
+        [% END %]
+    [% END %]
+    </div>
+</div>
+[% END %]
+
+<!-- TODO Michiel: Deze navigatiebalk alleen zichtbaar maken in ZTB
+<div id="breadcrumb-wrap" class="ui-corner-all voortgang">
+    <div id="breadcrumb">
+        <a href="#">Aanmaken</a>
+        <span class="prev-pijl pijl"></span>
+        <a href="#" class="prev">Relaties</a>
+        <span class="next pijl"></span>
+        <a href="#">Zaakacties</a>
+        <span class="divider pijl"></span>
+        <a href="#">Mijlpalen</a>
+        <span class="divider pijl"></span>
+        <a href="#">Fases Configureren</a>
+        <span class="divider pijl"></span>
+        <a href="#">Rechten</a>
+        <span class="divider pijl"></span>
+        <a href="#">Afronden</a>
+        <span class="divider pijl"></span>
+    </div>
+</div> -->
+
+[% IF c.flash.result && c.user_exists %]
+<div class="sysmessage">
+    [% IF c.flash.result.size %]
+        <ul>
+        [% FOREACH message IN c.flash.result %]
+            <li>[% message %]</li>
+        [% END %]
+        </ul>
+    [% ELSE %]
+        <p>[% c.flash.result %]</p>
+    [% END %]
+    <a class="close">x</a>
+</div>
+[% END %]
+
+[% IF flash %]
+<div class="sysmessage">
+    [% IF flash.size %]
+        <ul>
+        [% FOREACH message IN flash %]
+            <li>[% message %]</li>
+        [% END %]
+        </ul>
+    [% ELSE %]
+        <p>[% flash %]</p>
+    [% END %]
+    <a class="close">x</a>
+</div>
+[% END %]
+
+[% content %]
+
+<!-- END default container content -->

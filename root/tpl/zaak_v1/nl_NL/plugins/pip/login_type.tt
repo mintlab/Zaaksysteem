@@ -1,0 +1,63 @@
+[% layout_type = 'simple' %]
+
+<div class="pip_inlog_wrapper">
+    <div class="pip_inlog">
+        <h1 style="">Persoonlijke internet pagina (PIP)</h1>
+        <div class="left flex50 block" id="burger">
+            <p class="header">Inloggen Burger</p>
+            <div class="blockcontent">
+                                <p  >Om als burger gebruik te maken van uw persoonlijke internetpagina (PIP), 
+                                dient u in te loggen met uw DigiD inlogcode.</p>
+                                <a href="[%
+                                    c.uri_for('/pip/login/natuurlijk_persoon')
+                                %]" class="link digid-inloggen id-knop"></a>
+                                
+                                <div class="digid">
+                                
+                                <p class="digid-tekst no_margin">
+                                <strong>Wat is DigiD?</strong><br/>
+                                Met uw persoonlijke DigiD kunt u inloggen op
+                                de website van de gemeente [% c.config.gemeente.naam %] om zaken te
+                                regelen.
+                                Bijvoorbeeld een vergunning of uittreksel. Uw
+                                DigiD bestaat uit een gebruikersnaam en een
+                                wachtwoord. Klik op het DigiD-logo voor meer
+                                informatie of ga naar <a href="http://www.digid.nl">http://www.digid.nl</a> </p>
+        
+                                <a href="http://www.digid.nl/" class="digid-logo">
+                                    <img width="50" height="50"
+                                    src="images/digid_eo_rgb_50.gif" alt="digid
+                                    logo"/>
+                                </a>
+                                </div>
+            </div>
+        </div>
+        
+        <div class="right flex50 block" id="bedrijf">
+            <p class="header">Inloggen Organisatie</p>
+            <div class="blockcontent">
+                                <p>Om als organisatie gebruik te maken van uw persoonlijke internetpagina (PIP), dient u in te loggen met uw [% c.config.gemeente.naam %]ID inlogcode.</p>
+                                <a href="[%
+                                    c.uri_for('/pip/login/bedrijf')
+                                %]" class="link [% c.config.gemeente_id %]id-aanvragen id-knop">Inloggen met [% c.config.gemeente.naam %]ID</a>
+                                <div class="digid">
+                                
+                                <p class="digid-tekst no_margin">
+                                <strong>Wat is een [% c.config.gemeente.naam %]ID?</strong><br/>
+                                [% c.config.gemeente.naam %]ID is een authenticatiemiddel voor
+                                organisaties om zaken te regelen bij de gemeente
+                                [% c.config.gemeente.naam %]. Het [% c.config.gemeente.naam %]ID bestaat uit een
+                                gebruikersnaam en een wachtwoord. Bent u een
+                                onderneming of instelling en heeft u nog geen
+                                [% c.config.gemeente.naam %]ID?  Vraag deze dan gratis aan door op het
+                                logo te klikken.</p>
+                                <a href="[% c.config.gemeente.gemeente_id_url %]" class="digid-logo">
+                                <img width="50" height="50"
+                                src="images/[% c.config.gemeente_id %]id.jpg" alt="[% c.config.gemeente_id %]id logo"  />
+                                </a>
+                                </div>
+                            
+            </div>
+        </div>
+    </div>
+</div>

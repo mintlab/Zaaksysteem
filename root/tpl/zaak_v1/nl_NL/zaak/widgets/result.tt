@@ -1,0 +1,100 @@
+[% UNLESS results && results.pager %]
+
+Geen resultaten. <!-- debughere -->
+
+	[% RETURN %]
+[% END %]
+
+<div class="spinner-groot"><div></div></div>
+
+
+<input type="hidden" name="sort_field" value="[% sort_field | html %]"/>
+<input type="hidden" name="sort_direction" value="[% sort_direction | html %]"/>
+<input type="hidden" name="page" value="[% page | html %]"/>
+<input type="hidden" name="pager_request" value="" />
+<input type="hidden" name="total_entries" value="[% results.pager.total_entries %]"/>
+
+[% IF results.pager.total_entries > 0 %]
+<table class="table_zaken_title v-align-center" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            [% IF checkbox %]
+            <td class="td20">&nbsp;</td>
+            [% END %]
+			[% FOREACH my_display_field = display_fields %]
+			    [% IF my_display_field.sortable %]
+                    <td class="set_sort_order" id="[% my_display_field.fieldname %]">
+                        [% IF my_display_field.fieldname == 'status' %]
+                            <img src="/images/icon-down.png" width="16" height="16">
+                        [% ELSE %]
+                            <a href="#" [% (sort_field == my_display_field.fieldname ? ' class="' _ sort_direction _ ' sort"' : '') %]>[% my_display_field.label %]</a>
+                        [% END %]				
+                    </td>
+                [% ELSE %]
+                    <td id="[% my_display_field.fieldname %]">
+                        [% IF my_display_field.fieldname == 'status' %]
+                            <img src="/images/icon-down.png" width="16" height="16">
+                        [% ELSE %]
+                           [% my_display_field.label %]
+                        [% END %]				
+                    </td>
+                [% END %]
+			[% END %]
+			[% UNLESS pip || checkbox %]<td>Acties:</td>[% END %]
+			<td class="td20">&nbsp;</td>
+		</tr>
+	</thead>
+
+	<tbody>
+	[% WHILE (zaak = results.next) %]
+		[% IF(display_fields) %]	
+			<tr class="table_zaken_tr">
+            [% IF checkbox %]
+                <td class="td20">
+                    <input type="checkbox" name="[% checkbox %]"
+                    value="[% zaak.id %]"
+                    >
+                </td>
+            [% END %]
+				[% FOREACH my_display_field = display_fields %]
+					<td>
+					[% PROCESS widgets/general/zaak_veld.tt 
+					display_field = my_display_field.fieldname
+					display_class = my_display_field.class
+					%]
+					</td>
+					
+				[% END %]
+                    <td>
+                    [% UNLESS pip || checkbox %]
+                        [% PROCESS widgets/general/zaak_veld.tt 
+                        display_field = 'Acties'
+                        display_class = 'actie'
+                        %]
+                    [% END %]
+                    </td>
+                    <td class="td20">
+                        [% IF zaak.scalar.documents.is_alert %]
+                        <!-- TODO LET OP: Dit is tijdelijk, attachment icon -->
+                        <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '#zaak-elements-documents') %]">
+                             <img
+                             src="/images/icon_attachment.png"
+                             width="16"
+                             height="16"
+                             alt="Er staan documenten in de wachtrij voor deze zaak"
+                             border="0" />
+                         </a>
+                         [% END %]
+                     </td>
+			</tr>
+		[% ELSE %]
+			<tr><td>NEED display_fields array!</td></tr>
+		[% END %]
+	[% END %]
+	</tbody>
+</table>
+[% ELSE %]
+
+Geen resultaten.
+
+[% END %]

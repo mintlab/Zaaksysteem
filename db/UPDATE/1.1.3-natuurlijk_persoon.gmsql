@@ -1,0 +1,3 @@
+ALTER TABLE natuurlijk_persoon ADD COLUMN deleted_on timestamp(6) without time zone;
+ALTER TABLE adres ADD COLUMN deleted_on timestamp(6) without time zone;
+ALTER TABLE bedrijf ADD COLUMN deleted_on timestamp(6) without time zone;

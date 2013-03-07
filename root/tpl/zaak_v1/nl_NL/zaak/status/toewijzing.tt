@@ -1,0 +1,76 @@
+        <div class="next-status-block next-status-block-with-table">
+                <table class="table_window">
+                    <tr class="table_window_title_tr">
+                        <td class="table_zaken_title_tdvar th_16px blue">
+                            [% component_counter = component_counter + 1; component_counter %].
+                            Toewijzing</td>
+                    </tr>
+                </table>
+                <table class="table_window bottom">
+                    <tr class="table_window_tr">
+                        <td class="table_window_tdvar">
+                            <table class="vertical-align-top">
+                                <tr>
+                                    <td class="td15">
+                                        <input type="radio"
+                                        name="toewijzing_type"
+                                        value="" [% route_change ? '' : ' checked="checked"' %] />
+                                    </td>
+                                    <td>Geen toewijzing (zaak blijft in
+                                        behandeling bij huidige behandelaar)</td>
+                                </tr>
+                                <tr>
+                                    <td class="td15">
+                                        <input type="radio" name="toewijzing_type" value="behandelaar" />
+                                    </td>
+                                    <td>
+                                        <p style="margin-bottom:8px;line-height:1.5;">Selecteer een behandelaar:</p>
+                                        <div class="ezra_select_betrokkene status_next_behandelaar">
+                                            <div class="medewerker">
+                                                <input
+                                                    type="hidden"
+                                                    name="ztc_behandelaar_id"
+                                                    value="[%
+                                                        c.req.params.betrokkene_id || ''
+                                                    %]"
+                                                />
+                                                <input type="text"
+                                                    value="[%
+                                                        c.req.params.betrokkene_type == 'medewerker'
+                                                            ?  c.req.params.betrokkene_naam
+                                                            : ''
+                                                    %]"
+                                                    name="ztc_behandelaar_naam"
+                                                    class="input_large"
+                                                />
+                                                <a href="#" title="Zoek een nieuwe aanvrager" class="ezra_betrokkene_selector" rel="betrokkene_type: medewerker; selector_identifier: .status_next_behandelaar input[name='ztc_behandelaar_id']; selector_naam: .status_next_behandelaar input[name='ztc_behandelaar_naam']">
+                                                    <img src="/images/icon-magnifier.png" width="16" height="16" border="0" />
+                                                </a><span class="validator"></span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="td15">
+                                        <input type="radio" name="toewijzing_type"
+                                        value="route"
+                                        value="" [% route_change ? ' checked="checked"' : '' %] />
+                                    </td>
+                                    <td>
+                                        <p style="margin-bottom:8px;line-height:1.5;">Selecteer een rol:</p>
+                                        <div class="auth_edit_box" style="width:350px;padding:6px">
+                                        [% PROCESS widgets/general/auth_select.tt
+                                            AUTH_SELECT_OU_NAME   = 'ou_id'
+                                            AUTH_SELECT_OU_VALUE  = zaak.volgende_fase.ou_id
+                                            AUTH_SELECT_ROLE_NAME = 'role_id'
+                                            AUTH_SELECT_ROLE_VALUE = zaak.volgende_fase.role_id
+                                            AUTH_SELECT_NO_GLOBAL = 1
+                                        %]
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </div>

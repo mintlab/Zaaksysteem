@@ -1,0 +1,18 @@
+
+<form method="POST" name="zaken_results" action="/search/[% SearchQuery_search_query_id ? SearchQuery_search_query_id _ '/' : '' %]results">
+
+[% current_search_page = 'results' %]
+[% PROCESS search/navigation.tt %]
+ 
+    <input type="hidden" name="action" value="update_results" />
+    <div class="blockcontent no-padding ui-widget-content">    
+        <div id="search_results_accordion_all_results">
+            <h3><a href="#">Alle zoekresultaten ([% results.pager.total_entries %])</a></h3>
+            <div>
+                [% PROCESS search/results_list.tt %]
+            </div>
+        </div>
+    </div>
+</form>
+
+

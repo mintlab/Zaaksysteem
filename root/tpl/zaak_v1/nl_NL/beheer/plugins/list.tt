@@ -1,0 +1,10 @@
+<!-- Begin GBA Import List -->
+<div class="block">
+    <p class="header">Pluginbeheer</p>
+    <div class="blockcontent">
+        [% PROCESS widgets/beheer/plugins/table.tt %]
+    </div>
+</div>
+<!-- End GBA Import List -->
+
+

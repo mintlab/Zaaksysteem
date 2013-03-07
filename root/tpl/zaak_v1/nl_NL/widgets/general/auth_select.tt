@@ -1,0 +1,55 @@
+[% # -- VARS --
+   # AUTH_SELECT_OU_NAME
+   # AUTH_SELECT_OU_VALUE
+   # AUTH_SELECT_ROLE_NAME
+   # AUTH_SELECT_ROLE_VALUE
+   # AUTH_SELECT_NO_GLOBAL
+   # AUTH_SELECT_COMPLETE_AFDELING
+%]
+[% USE Scalar %]
+<div class="widget_auth_select clearfix">
+    [% ous = c.model('Groups').scalar.search_ou %]
+    <div class="fieldset-col col">
+    <label>Scope:</label>
+    <select class="auth_select_ou select100" name="[% AUTH_SELECT_OU_NAME %]">
+        [% UNLESS AUTH_SELECT_NO_GLOBAL %]
+        <option value="0">[% c.config.gemeente.naam %]</option>
+        [% END %]
+    [% OUMAP = {} %]
+    [% FOREACH ou IN ous %]
+        [% OUMAP.${ou.id} = ou.ou %]
+        <option
+            value="[% ou.id %]"
+            [% (AUTH_SELECT_OU_VALUE == ou.id ? ' selected="selected"' : '') %]
+        > [% (AUTH_SELECT_NO_GLOBAL ? '' : ' &nbsp;&nbsp;') %][% ou.ou %]</option>
+    [% END %]
+    </select>
+    </div>
+
+    [% UNLESS AUTH_SELECT_NO_ROLE %]
+		[% USE Scalar %]
+		[% rollen= c.model('Groups').scalar.search %]
+		
+		<div class="col">
+		<label>Rol:</label>
+        <select class="auth_select_role select150" name="[% AUTH_SELECT_ROLE_NAME %]">
+        [% IF AUTH_SELECT_COMPLETE_AFDELING %]
+            <option
+                value=""
+                [% (!AUTH_SELECT_ROLE_VALUE ? ' selected="selected"' : '') %]
+            >Gehele afdeling</option>
+        [% END %]
+		[% FOREACH rol IN rollen %]
+		[% IF rol.ou && rol.ou != OUMAP.${AUTH_SELECT_OU_VALUE} %]
+			[% NEXT %]
+		[% END %]
+		[% IF AUTH_SELECT_OU_VALUE && rol.short_name == 'Admin' %][% NEXT %][% END %]
+			<option
+				value="[% rol.id %]"
+				[% (AUTH_SELECT_ROLE_VALUE == rol.id ? ' selected="selected"' : '') %]
+			>[% (rol.ou ? ' &nbsp; &nbsp;' _ rol.short_name : rol.short_name) %]</option>
+		[% END %]
+		</select>
+		</div>
+    [% END %]
+</div>

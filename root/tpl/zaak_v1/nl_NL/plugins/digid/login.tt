@@ -1,0 +1,61 @@
+[% nowrapper=1 %]
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+[% layout_type = 'simple' %]
+
+<div id="loginwrap">
+    <div class="left flex50 block">
+        <p class="header">U bent nog niet ingelogd met DigiD</p>
+        <div class="blockcontent">
+            [% IF digid_error %]
+                <strong>[% digid_error %]</strong><br /><br />
+            [% END %]
+            [% IF c.user_exists %]
+                <p>U bent al ingelogd</p>
+            [% ELSE %]
+                [% IF logged_out %]
+                <p>U bent uitgelogd. Klik op
+                onderstaande knop om naar de
+                website van [% c.config.gemeente.naam_lang %] te gaan.
+                </p><br />
+                <div>
+                    <a href="[% c.config.main_site %]">
+                        <input type="submit" value="Hoofdsite" class="link button140 inloggen">
+                    </a>
+                </div>
+                [% ELSE %]
+                <p>Voor het door u gekozen onderdeel is verificatie van uw identiteit vereist. Bij [% c.config.gemeente.naam_lang %] kunt u inloggen met DigiD. Voortaan kunt u met DigiD naar steeds meer overheidsinstellingen op internet. Wanneer u op het logo van DigiD klikt, wordt u
+doorgestuurd naar de omgeving van DigiD. Nadat u bent ingelogd, wordt u automatisch teruggestuurd naar het door u gekozen onderdeel.</p>
+
+                <form action="[% c.uri_for('/auth/digid/1') %]" method="POST">
+					<div id="digidknop" class="digidknop grote-id-knop">
+                        <input
+                         type="hidden"
+                         name="verified_url"
+                         value="[% c.req.query_params.verified_url %]" />
+                        <input type="submit" value="Inloggen met DigiD" />
+                    </div>
+                </form>
+                
+                <div class="digid">
+                    <div class="digid-tekst">
+				        <strong>Wat is DigiD?</strong>
+
+                        <p>DigiD staat voor Digitale Identiteit; het is een gemeenschappelijk systeem waarmee de overheid op internet uw identiteit kan verifi&euml;ren. U kunt zelf uw DigiD aanvragen op <a href="http://www.digid.nl" target="_blank">www.digid.nl</a>. Met uw DigiD kunt u bij steeds meer overheidsinstellingen terecht.</p>
+                        <strong>Nog geen DigiD inlogcode?</strong>
+                        <p class="no_margin">Ga naar <a href="https://www.digid.nl/aanvragen" target="_blank">https://www.digid.nl/aanvragen</a> om direct een DigiD inlogcode aan te vragen.</p>
+                    </div>
+
+                    <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/digid_eo_rgb_50.gif" alt="DigiD Logo" class="digid-logo"/>
+                </div>
+
+                [% END %]
+            [% END %]
+        </div>
+    </div>
+</div> 
+
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]

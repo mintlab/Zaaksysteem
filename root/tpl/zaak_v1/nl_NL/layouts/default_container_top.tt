@@ -1,0 +1,41 @@
+<!-- Container top -->
+[% IF layout_type != 'simple' %]
+<div id="topsection">
+    <div class="logo_holder">
+        <h1 class="div_logo"><a href="/">Zaaksysteem</a></h1>
+    </div>
+    [% IF c.user_exists %]
+    <div class="div_search">
+        <div id="home_inloggen" class="clearfix">    
+            [% menuhtml = [] %]
+            [% FOREACH menuitem IN menu.quick %]
+                [% menuhtml.push('<a href="' _ menuitem.href _'">' _ menuitem.name _ '</a>') %]
+            [% END %]
+            [% menuhtml.push('<a class="fire-dialog" href="' _ c.uri_for('/page/about') _ '">About</a>') %]
+            [% menuhtml.join('<span>|</span>') %]
+        </div>
+
+        <div id="search" class="clearfix">
+            <form method="POST" action="[% c.uri_for('/search/get'); %]">
+                <fieldset>
+                <input type="submit" class="button_search" name="submit" value="Zoek" />
+                </fieldset>
+
+                <fieldset>
+                <input type="text" name="searchstring" value="" class="input_normal" /> 
+                </fieldset>
+                <fieldset>
+                <select name="component" id="keuzes" class="ui-selectmenu-home">
+                    <option value="zaak">Een zaak</option>
+                    <option value="natuurlijk_persoon">Een persoon</option>
+                    <option value="bedrijf">Een organisatie</option>
+                </select>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    [% END %]
+</div>
+[% END %]
+
+<!-- END Container top -->

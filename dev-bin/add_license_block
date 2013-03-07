@@ -1,0 +1,96 @@
+#!/usr/bin/perl -w
+
+use strict;
+use warnings;
+
+use FindBin;
+use Pod::Strip;
+
+my $license_dir     = "$FindBin::Bin/../drafts/";
+
+if (@ARGV < 2) {
+    die(
+        "USAGE: $0 [type] [filename]\n\n"
+        . " type        css/pod"
+        . " filename    filename to add licenseblock to"
+    );
+}
+
+my $type            = $ARGV[0];
+my $filename        = $ARGV[1];
+
+my $license         = $license_dir . 'license_block.' . $type;
+
+if (! -f $license) {
+    die('type not found, see USAGE');
+}
+
+if (-f "$filename.changing") {
+    die("We need to be able to write to $filename.changing");
+}
+
+if ($type eq 'pod') {
+    use Pod::Strip;
+
+    my $p=Pod::Strip->new;              # create parser
+
+    my $outfile = $filename . '.changing';
+    open TXTOUT, ">$outfile" or die "Can't write to $outfile: $!";
+    $p->output_fh(*TXTOUT);
+
+    $p->parse_file($filename);
+
+#    `cat $filename > $filename.changing`;
+    `echo >> $filename.changing`;
+    `cat $license >> $filename.changing`;
+    `mv $filename.changing $filename`;
+} else {
+    `cat $license > $filename.changing`;
+    `echo >> $filename.changing`;
+    `cat $filename >> $filename.changing`;
+    `mv $filename.changing $filename`;
+}
+
+=head1 PROJECT FOUNDER
+
+Mintlab B.V. <info@mintlab.nl>
+
+=head1 CONTRIBUTORS
+
+Arne de Boer
+
+Nicolette Koedam
+
+Marjolein Bryant
+
+Peter Moen
+
+Michiel Ootjers
+
+Jonas Paarlberg
+
+Jan-Willem Buitenhuis
+
+Martin Kip
+
+Gemeente Bussum
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the above named PROJECT FOUNDER and CONTRIBUTORS.
+
+=head1 LICENSE
+
+The contents of this file and the complete zaaksysteem.nl distribution
+are subject to the EUPL, Version 1.1 or - as soon they will be approved by the
+European Commission - subsequent versions of the EUPL (the "Licence"); you may
+not use this file except in compliance with the License. You may obtain a copy
+of the License at
+L<http://joinup.ec.europa.eu/software/page/eupl>
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+=cut
+

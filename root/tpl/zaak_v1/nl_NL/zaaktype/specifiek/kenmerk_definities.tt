@@ -1,0 +1,90 @@
+<div id="kenmerk_definitie">
+<input type="hidden" name="destination" value="[% c.req.params.destination %]">
+<input type="hidden" name="update" value="1">
+<table class="table_zaakinformatie" id="kenmerk_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Wordt gevraagd aan</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerk_betrokkene_trigger" id="kenmerk_authorisation">
+                    <option value="all"[% (history.betrokkene_trigger == 'all') ? ' selected' : '' %]>Aanvrager</option>
+                    <option value="behandelaar"[% (history.betrokkene_trigger == 'behandelaar') ? ' selected' : '' %]>Behandelaar</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vraag</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="text" name="kenmerk_vraag" value="[% history.vraag %]" class="input_large">
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Invoertype</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerk_type" id="kenmerk_invoertype">
+                    [% FOR invoertype IN constants.veld_opties %]
+                        <option
+                            value="[% invoertype.key %]"
+                            [% (history.type == invoertype.key) ? ' selected' : '' %]
+                            class="[% (invoertype.value.multiple ? ' has_options' : '') %][% (invoertype.key == 'file' ? ' file' : '') %]"
+                        >[% invoertype.value.label %]</option>
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr class="file-options">
+            <td class="table_td_left_zaakinformatie">Status "1" document</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="kenmerk_document_key">
+                    [% FOR document IN params.status.1.documenten %]
+                        [% doc_value = document.value %]
+                        [% doc_key   = document.key %]
+                        <option
+                            value="[% doc_value.name %]"
+                            [% ((doc_value.kenmerken.mandatory == "registratie") ? ' class="mandatory"' : '') %]
+                            [% (history.document_key == doc_value.name) ? ' selected' : '' %]
+                        >[% doc_value.name %]</option>
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr class="multiple-options">
+            <td class="table_td_left_zaakinformatie">Mogelijkheden</td>
+            <td class="table_td_right_zaakinformatie">
+                [% kenmerk_options = '' %]
+                [% IF history.options %]
+                    [% kenmerk_options = history.options.join("\n") %]
+                [% END %]
+                <textarea cols="60" rows="5" name="kenmerk_options">[% kenmerk_options %]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toelichting</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea cols="60" rows="10" name="kenmerk_help">[% history.help %]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Verplicht:</td>
+            <td class="table_td_right_zaakinformatie file-options-known">
+                <div class="mandatory_document">
+                    Ja
+                </div>
+                <div class="no_mandatory_document">Nee</div>
+            </td>
+            <td class="table_td_right_zaakinformatie file-options-unknown">
+                <div>
+                    <input type="radio" value="" name="kenmerk_verplicht"[% (!history.verplicht ? ' checked="checked"' : '') %]> Nee
+                </div>
+                <div>
+                    <input type="radio" value="registratie" name="kenmerk_verplicht"[% (history.verplicht == "registratie" ? ' checked="checked"' : '') %] class="verplicht-default"> Bij registratie
+                </div>
+                <div class="file-options-unknown">
+                    <input type="radio" value="afhandelen" name="kenmerk_verplicht"[% (history.verplicht == "afhandelen" ? ' checked="checked"' : '') %]> Bij afhandeling
+                </div>
+            </td>
+        </tr>
+    </tbody>
+<table>
+<input type="button" value="Opslaan" class="button140">
+</div>

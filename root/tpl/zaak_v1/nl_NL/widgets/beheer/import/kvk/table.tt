@@ -1,0 +1,29 @@
+<!-- widgets/beheer/import/kvk/table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="td100">[% c.loc('dossiernummer') %]</td>
+            <td class="td100">[% c.loc('kolom') %]</td>
+            <td class="tdvar">[% c.loc('oude data') %]</td>
+            <td class="tdvar">[% c.loc('nieuwe data') %]</td>
+        </tr>
+    </thead>
+    <tbody>
+        [% USE Scalar %]
+        [% import_logs = import_data.scalar.beheer_import_logs.scalar.search(
+            {},
+            {
+                page => (pager_page || 1)
+                rows => (pager_rows || 50)
+            },
+        ); %]
+        [% WHILE (entry = import_logs.next) %]
+            [% PROCESS widgets/beheer/import/kvk/table_row.tt %]
+        [% END %]
+    </tbody>
+</table>
+<div class="div_result">
+    [% PROCESS widgets/pager.tt %]
+</div>
+<!-- END widgets/beheer/import/kvk/table.tt -->

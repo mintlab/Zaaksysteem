@@ -1,0 +1,35 @@
+
+                            <!-- Begin Tabber -->
+                                <div class="tabber" id="tabinterface">
+                                    <div class="header tabbed">Nieuw Contact</div>
+                                    <ul class="ui-rounded-corners-off">
+                                        <li><a href="#tab-wgt-personen">Personen</a></li>
+                                        <li><a href="#tab-wgt-bedrijven">Organisaties</a></li>
+                                    </ul>
+
+                                    <div class="tabbertab" id="tab-wgt-personen">
+                                        <form method="POST" class="zvalidate" action="[% c.uri_for('/betrokkene/create') %]">
+                                        <input type="hidden" name="create" value="1">
+                                        <input type="hidden" name="betrokkene_type" value="natuurlijk_persoon">
+                                        [% INCLUDE widgets/betrokkene/natuurlijk_persoon_create.tt %]
+                                        <div class="clearfix">
+                                        <input type="submit" value="Opslaan" class="button140 right" />
+                                        </div>
+
+                                        </form>
+
+                                    </div>
+
+                                    <div class="tabbertab" id="tab-wgt-bedrijven">
+                                        <form method="POST" class="zvalidate" action="[% c.uri_for('/betrokkene/bedrijf/create') %]">
+                                        <input type="hidden" name="create" value="1">
+                                        [% INCLUDE widgets/betrokkene/bedrijf_create.tt %]
+
+                                        <div class="clearfix">
+                                        <input type="submit" value="Aanmaken" class="button140 right">
+                                        </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            <!-- End Tabber --> 

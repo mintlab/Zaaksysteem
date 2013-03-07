@@ -1,0 +1,28 @@
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/relatie') %]">
+<input type="hidden" name="update" value="1">
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Zaaknummer:</td>
+        <td class="table_td_right_zaakinformatie">
+            <div id="zaak-search-dialog-relatie">
+                <input type="text" value="" class="input_mini" name="zaaknr"/>
+                <!--
+                <a href="#" title="Zoek een zaak" class="search_zaak" rel="">
+                    <img src="/images/icon-magnifier.png" width="16" height="16" border="0">
+                </a>
+                -->
+            </div>
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Omschrijving relatie:</td>
+        <td class="table_td_right_zaakinformatie"><input type="text" value="" class="input_large" name="relatie"/></td>
+    </tr>
+</tbody></table>
+<table class="table_ztbmenu">
+    <tbody><tr class="table_ztbmenu_tr">
+        <td class="table_ztbmenu_tdright"><input type="submit" value="Opslaan" class="button140" id="dialog-submit"/></td>
+    </tr>
+</tbody></table>
+</form>

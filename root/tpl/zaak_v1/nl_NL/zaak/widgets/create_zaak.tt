@@ -1,0 +1,75 @@
+                                        <form>
+
+                                        <table class="table_zoeken"  cellspacing="1">
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Type aanvrager:*</td>
+                                                <td class="table_zoeken_tdvar">
+                                                    <select />
+                                                        <option>Persoon</option>
+                                                        <option>Organisatie</option>
+
+                                                        <option>Interne aanvrager</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Aanvrager:*</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"> <a href="popup_aanvragerzoeken.html?height=400&width=700" title="Een aanvrager zoeken" class="thickbox"><img src="/images/icon-magnifier.png" width="16" height="16" border="0"></a></td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Binnen via:*</td>
+                                                <td class="table_zoeken_tdvar">
+                                                    <select />
+                                                        <option>Balie</option>
+                                                        <option>Telefoon</option>
+
+                                                        <option>Webformulier</option>
+                                                        <option>E-mail</option>
+                                                        <option>Post-mail</option>      
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Generiek proces:*</td>
+
+                                                <td class="table_zoeken_tdvar">
+                                                    <select />
+                                                        <option>Adviezen</option>
+                                                        <option>Besluiten</option>
+                                                        <option>Beroep en bezwaren</option>
+                                                        <option>Subsidie</option>   
+                                                        <option>Uitkering</option>  
+                                                    </select>
+
+                                                </td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Zaaktype:*</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"> <a href="search_persoon.html?height=400&width=700" title="Een zaaktype zoeken" class="thickbox"><img src="/images/icon-magnifier.png" width="16" height="16" border="0"></a></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Org-eenheid:*</td>
+
+                                                <td class="table_zoeken_tdvar">
+                                                    <select />
+                                                        <option>Geen idee</option>
+                                                        <option>Burgerzaken</option>
+                                                        <option>Vergunningen en handhaving</option>
+                                                        <option>E-mail</option> 
+                                                    </select>
+
+                                                </td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Zaakcoordinator:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"> <a href="search_persoon.html?height=400&width=700" title="Een Zaakcoordinator zoeken" class="thickbox"><img src="/images/icon-magnifier.png" width="16" height="16" border="0"></a></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr_bottom">
+                                                <td class="table_zoeken_td100_2"></td>
+
+                                                <td class="table_zoeken_tdvar"><input type="button" value="Aanmaken" class="button140"></td>
+                                            </tr>
+                                        </table>
+                                        </form>
+

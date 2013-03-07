@@ -1,0 +1,28 @@
+[% USE wrap %]
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Naam:</td>
+        <td class="table_td_right_zaakinformatie">[% document.filename %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Documenttype:</td>
+        <td class="table_td_right_zaakinformatie">[% document.category %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Gewijzigd op:</td>
+        <td class="table_td_right_zaakinformatie">[% document.last_modified.dmy %] [% document.last_modified.hms %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Gewijzigd door:</td>
+        <td class="table_td_right_zaakinformatie">[% c.model('Betrokkene').get({}, document.betrokkene_id).naam %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Onderwerp:</td>
+        <td class="table_td_right_zaakinformatie">[% mail.subject %]</td>
+    </tr>
+   </tbody>
+</table>
+<div id="email_message">
+<pre>[% mail.message | wrap(80) %]</pre>
+</div>

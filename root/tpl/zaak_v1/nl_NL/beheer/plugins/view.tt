@@ -1,0 +1,43 @@
+<!-- Begin GBA Changes List -->
+<div class="block">
+    <p class="header">
+        Plugin [% entry.naam %]
+    </p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie marginbottom">
+            <thead>
+                <tr>
+                    <th colspan="2">Plugin gegevens</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Naam</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% entry.label %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Actief</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% (entry.actief ? 'Ja' : 'Nee') %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Versie</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% entry.versie %]
+                </td>
+            <tr>
+            <tr>
+                <td class="table_td_left_zaakinformatie">Omschrijving</td>
+                <td class="table_td_right_zaakinformatie">
+                    [% entry.help %]
+                </td>
+            <tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- End GBA Import List -->
+

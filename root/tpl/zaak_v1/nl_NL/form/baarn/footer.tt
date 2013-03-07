@@ -1,0 +1,96 @@
+[% RETURN IF c.user_exists -%]
+
+                                    
+<!-- footer -->
+
+                </div>
+            </div>
+            
+            <div id="navigatie_wrapper">
+                <ul id="portalnavigation"><li class="portalmedium" id="medium1"><a id="navtitel1" class="navtitels titel_active" href="http://www.baarn.nl/diensten-en-producten">Diensten en Producten</a></li><li class="portalmedium" id="medium2"><a id="navtitel2" class="navtitels" href="http://www.baarn.nl/woonomgeving">Woonomgeving</a></li><li class="portalmedium" id="medium3"><a id="navtitel3" class="navtitels" href="http://www.baarn.nl/verkeer-en-bereikbaarheid">Verkeer en bereikbaarheid</a></li><li class="portalmedium" id="medium4"><a id="navtitel4" class="navtitels" href="http://www.baarn.nl/zorg-welzijn-onderwijs-en-sport">Zorg, Welzijn, Onderwijs en Sport</a></li><li class="portalmedium" id="medium5"><a id="navtitel5" class="navtitels" href="http://www.baarn.nl/ondernemen-werk-en-sociale-zekerheid">Ondernemen, Werk en Sociale Zekerheid</a></li><li class="portalmedium" id="medium6"><a id="navtitel6" class="navtitels" href="http://www.baarn.nl/veiligheid">Veiligheid</a></li><li class="portalmedium" id="medium7"><a id="navtitel7" class="navtitels" href="http://www.baarn.nl/bestuur-en-organisatie">Bestuur en Organisatie</a></li>
+                </ul>            
+                <div id="navigatie_overlay"></div>
+            </div>
+            
+            
+            <div id="header">
+            
+            
+                <div id="logo">
+                    <a href="http://www.baarn.nl/">
+                       <img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/images/logo.png" alt="Gemeente Baarn Diensten en Producten" title="Gemeente Baarn Diensten en Producten" />
+                    </a>
+                </div>
+                
+                
+                <div id="snelmenu_wrapper">
+                    <div class="contrast">
+                        <a>Hoog contrast</a>
+                    </div>
+                    <div id="snelmenu">
+                        <ul>
+                            <li class="first odd">
+                                <a href="http://www.baarn.nl/portal">Home</a>
+                            </li>
+                            <li class="even">
+                                <a href="http://www.baarn.nl/portal/sitemap_41753/">Sitemap</a>
+                            </li>
+                            <li class="odd">
+                                <a>Aa</a>
+                            </li>
+                            <li class="last even">
+                                <a style="display: inline;" href="#print" class="btn_print">Print deze pagina</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div> 
+                
+                   
+                <div id="search_wrapper"><div id="search">
+                    <form name="gsa_searchbox_form" method="get" action="http://www.baarn.nl/portal/zoeken_41733/">
+                        <div class="hidden">
+                            <input name="onlycollection" value="" type="hidden">
+                        </div>
+                        <fieldset>
+                            <legend></legend>
+                            <label for="search_trefwoord"></label>
+                            <input id="search_trefwoord" name="trefwoord" value="Zoek op trefwoord" class="searchbox_trefwoord searchbox" type="text">
+                            <input value="ZOEK" class="searchbox_submit" type="submit">
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="ppp"></div>
+        <div id="ppp_overlay"></div> 
+              
+        <div id="footer_wrapper">
+            <div id="footer">
+                <div class="wysiwyg">
+                    <table cellpadding="0" cellspacing="0" width="560">	<tbody>		<tr>			<th scope="col" style="border:none">				&nbsp;</th>			<th scope="col" style="border:none">				&nbsp;</th>		</tr>		<tr>			<td valign="top">				<p>					<strong>Gemeentehuis</strong><br>					Stationsweg 18<br>					Postbus 1003<br>					3740 BA Baarn<br>					t (035) 548 16 11<br>					f (035) 548 17 94<br>					e <a href="mailto:gemeente@baarn.nl">gemeente@baarn.nl</a><br>					<br>					<strong>Openingstijden loket Burgerzaken</strong><br>					ma t/m vr: 08.00-12.00 uur<br>					wo.middag: 13.30-16.00 uur<br>					wo.avond: 18.00-19.30 uur<br>					<em>(avondopenstelling alleen<br>					in de even weken)</em><br>					<br>					<strong>Openingstijden Gemeentehuis</strong><br>					ma t/m do: 08.00-17.00 uur<br>					vr: 08.00-16.00 uur</p>			</td>			<td valign="top">				<p>					<strong>Gemeentelijk afvalscheidingsstation</strong><br>					Drakenburgerweg 21, Baarn<br>					t. (035) 548 16 69<br>					<br>					<strong>Openingstijden afvalscheidingsstation</strong><br>					di t/m vr 09.00 -11.45 uur &amp; 13.00 -16.00 uur<br>					za:&nbsp;08.30 -13.30 uur</p>				<p>					<strong>Telefonische meldingen</strong><br>					t (035) 548 16 69<br>					e <a href="mailto:meldingen@baarn.nl">meldingen@baarn.nl</a><br>					ma t/m do: 08.30 - 11.30<br>					en 13.30 - 15.30 uur<br>					vr: 08.30 - 11.00 uur</p>			</td>			<td>				<p>					<br>					<br>					<br>					<br>					<br>					<br>					<br>					&nbsp;</p>			</td>		</tr>	</tbody>
+                    </table>
+                    <p>	&nbsp;</p>
+                </div>
+                <div class="koppel">
+                    <div id="koppelbox_footer">
+                        <ul>
+                            <li class="first odd">
+                                <a href="http://www.baarn.nl/bestuur-en-organisatie/invloed-uitoefenen_41895/">Invloed uitoefenen</a>
+                            </li>
+                            <li class="last even">
+                                <a href="http://www.baarn.nl/bestuur-en-organisatie/vacatures_41851/">Vacatures</a>
+                            </li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+        <div class="disclaimer">
+            <div id="koppelbox_disclaimer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+<!-- einde footer -->

@@ -1,0 +1,26 @@
+[% USE Scalar; %]
+[% WHILE (note = betrokkene.notes.list.scalar.next) %]
+<table class="table_zaken_title notes">
+    <tbody>
+        <tr class="table_zaken_title_tr">
+            <td width="400">
+                <!-- [% note.created.dmy %]-->
+                [% note_cdate = note.created.set_time_zone('UTC') %]
+                [% note_cdate =
+                note.created.set_time_zone('Europe/Amsterdam') %]
+                [% note_cdate = note_cdate.set_locale('nl_NL') %]
+                [% note_cdate.strftime("%a %d %B %Y") %]
+                om
+                [% note_cdate.hms(':') %]
+                door
+                [% c.model('Betrokkene').get({}, note.betrokkene_from).naam %]
+            </td>
+        </tr>
+        <tr>
+            <td width="400">
+                <p> [% note.message %] </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+[% END %]

@@ -1,0 +1,129 @@
+/* @group knoppen */
+
+
+
+.block{
+	margin-top: 30px;
+}
+
+.block .header{
+	font-size: 2em;
+}
+
+.knop.in-header {
+    margin-top: 10px !important;
+}
+
+/* Digi-D/bussum-ID */
+
+
+.id-knop{height:50px !important;display: block;text-indent: -4000px;border:none !important;margin-bottom:30px;width:311px;}
+.digid-aanvragen{background: url(../../../images/btn-aanvragendigid.jpg) no-repeat 0 0;}
+.bussumid-aanvragen{background: url(../../../images/btn-aanvragenbussumid.jpg) no-repeat 0 0;}
+.id-knop:hover{background-position: 0 -50px;}
+.id-knop:active{background-position: 0 -100px;}
+
+.digid{font-size:0.9167em;position: relative;margin-top:50px;padding-left:65px;position: relative;background: url(../../../images/dotted.gif) repeat-x 0 0;padding-top:20px;padding-bottom:20px;}
+.digid h4{margin-bottom:5px;}
+.digid-logo{position: absolute;left:0px;top:20px;width:50px;height:50px;}
+
+
+
+.grote-id-knop a,.grote-id-knop .ideal-knop{width:299px;height:100px;text-indent: -4000px;display: block;margin-bottom:15px;}
+.digidknop a{background: url(../../../images/digid-knop.jpg) no-repeat 0 0;}
+.bussumidknop a{background: url(../../../images/bussumid_knop.jpg) no-repeat 0 0;}
+.grote-id-knop a:hover, .ideal-knop:hover{background-position: 0 -100px;}
+.grote-id-knop a:active, .ideal-knop:active{background-position: 0 -200px;}
+.ideal-knop{background:url(../../../images/knop_ideal.jpg) no-repeat 0 0;display: block;height:100px !important;border:none;margin:25px 0 0;}
+.ideal-knop:hover{cursor: pointer;}
+.no_margin{margin-bottom:0;}
+
+
+
+.grote-id-knop a,.grote-id-knop .ideal-knop,.grote-id-knop input{width:299px;height:100px;text-indent: -4000px;display: block;margin-bottom:15px;}
+.digidknop input{background: url(../../../images/digid-knop.jpg) no-repeat 0 0;border:none;cursor: pointer;}
+.bussumidknop a{background: url(../../../images/bussumid_knop.jpg) no-repeat 0 0;}
+.grote-id-knop a:hover, .ideal-knop:hover, .grote-id-knop input:hover{background-position: 0 -100px;}
+.grote-id-knop a:active, .ideal-knop:active, .grote-id-knop input:active{background-position: 0 -200px;}
+.no_margin{margin-bottom:0 !important;}
+
+
+.button140 {
+	display: block;
+	line-height: 2.6;
+	overflow: hidden;
+	text-decoration: none;
+	width: 142px;
+	height: 32px !important;
+	background: url(../../../images/button140-fresh.png);
+	color: #ffffff;
+	border:none;
+	text-transform: uppercase;
+	overflow:hidden;
+	font-size:11px !important;
+	padding:0 !important;
+	font-weight: bold;
+	text-align: center;
+	outline-style:none;
+    outline-width:0;
+}
+
+.button140.margin{margin:10px 0;}
+.button140.ahref{text-decoration: none;line-height: 3.1;}
+.button140:hover{background-position: 0 -32px;cursor:pointer;color:#fff;}
+.button140:active{background-position: 0 -64px;color:#fff;}
+
+.voegtoe{background: #dddddd url(../../../images/button160.gif);width:130px !important;padding-left:30px !important;position: relative;}
+.voegtoe span{background:url(../../../images/btn_icon-add.png) no-repeat 95% center;display: block;position: absolute;width:16px;height:14px;left:6px;top:7px;}
+
+/* @end */
+
+
+
+
+
+
+/* @group Groepen */
+
+.stap{font-size:20px;display: inline-block;float:left;font-weight: bold;padding-left:40px;color:#bbb;}
+.stap.active{color:#083e80 !important;}
+
+/* @end */
+
+
+
+
+
+/* @group Bussum overrides */
+
+#jpcarousel li {width:162px; height:112px;}
+#bread {width: 99%;}
+
+#language-tool{
+    background: url(../../../form/bussum/img/language-switcher.jpg) no-repeat scroll 0 0 transparent;
+    height: 24px;
+    left: 845px;
+    position: absolute;
+    top: 4px;
+    width: 110px;
+}
+
+#fontsizer .tx-fontsizer-pi1 {
+    left: 1px;
+    position: relative;
+    top: -2px;
+}
+
+#main{background:url(../../../images/bg-container-kut.gif) no-repeat center bottom;padding-bottom:35px;}
+
+#header-bottom{background: none !important;}
+
+#wrap{padding:20px;}
+a{outline:none;}
+
+#loginwrap label{
+	float: none;
+}
+
+/* @end */
+

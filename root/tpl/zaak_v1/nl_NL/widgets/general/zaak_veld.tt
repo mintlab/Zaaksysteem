@@ -1,0 +1,185 @@
+[%
+# Display a 'zaak veld' based on a few parameters
+# This template expects output from the DB::Zaak finder
+#
+# input:
+# - display_field.class: a string describing the type of formatting that is needed for this data item
+# - display_field.fieldname: a string for fieldname
+# - zaak: the complete zaak object. this template can pick and choose from this 
+#
+%]
+
+
+
+[% USE Scalar %]
+[% USE date %]
+
+[% BLOCK status_display %]
+[% zaak_status_icon = 'images/zaak-unrd.gif';
+   IF (zaak.status == 'open'); zaak_status_icon = 'images/zaak-rd.gif'; END;
+   IF (zaak.status == 'resolved'); zaak_status_icon = 'images/zaak-closed.png'; END;
+   IF (zaak.status == 'stalled'); zaak_status_icon = 'images/zaak-stalled.png'; END;
+%]
+<a href="[% c.uri_for(( pip ? '/pip' : '') _ '/zaak/' _ zaak.nr) %]"><img src="/[% zaak_status_icon %]" width="16" height="16" border="0" /></a>
+[% END %]
+
+[% BLOCK zaaknummer_display %]
+<a href="[% c.uri_for(( pip ? '/pip' : '')_ '/zaak/' _ zaak.nr) %]">[% zaak.nr %]</a>
+[% END %]
+
+
+[% BLOCK voortgang_display %]
+    [% total_statussen = zaak.scalar.zaaktype_node_id.scalar.zaaktype_statussen.count %]
+    [% IF total_statussen %]
+        [% status_perc = ((zaak.milestone / total_statussen) * 100) %]
+    [% END %]
+    [% status_perc = status_perc | format('%.0f') %]
+    [% IF status_perc > 100; status_perc=100; END %]
+    <div class="progress">
+<div class="progress-bar holder rounded shadow">
+	<div class="progress-value value rounded">
+        <div class="perc">[% status_perc | format('%.0f') %]</div>
+	</div>
+</div>
+</div>
+[% END %]
+
+[% BLOCK zaaktype_display %]
+[% zaak.zaaktype_node_id.titel %]
+[% END %]
+
+[% BLOCK subject_display %]
+[% zaak.onderwerp %]
+[% END %]
+
+
+[% BLOCK route_ou_display %]
+    [% UNLESS pip %]
+        [% zaak.ou_object.omschrijving %]
+    [% END %]
+[% END %]
+
+
+[% BLOCK aanvrager_display %]
+    [% UNLESS pip %]
+	<a href="#" class="betrokkene-get" rel="zaak: [% zaak.id %]; id: [% zaak.scalar.aanvrager.scalar.betrokkene_identifier %]" title="Informatie over eigenaar">[% zaak.aanvrager.naam %]</a>
+	[% END %]
+[% END %]
+
+
+[% BLOCK remainingtime_display %]
+    [% UNLESS pip %]
+        [% PROCESS widgets/general/remaining_time.tt
+            percentage   = zaak.days_perc
+            days         = zaak.days_left
+        %]
+    [% END %]
+[% END %]
+
+
+[% BLOCK actie_display %]
+	[% UNLESS pip %]
+<div class="select_actie_container">
+	<div class="col col1">
+		<select name="">
+			[% IF zaak.zaakstatus.is_afgehandeld %]
+			<option value="[% c.uri_for('/zaak/' _ zaak.nr) %]">Openen</option>
+			
+			<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _
+			'/update/aanvrager') %]">Aanvrager wijzigen</option>
+			
+			<option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak
+			kopieren</option>
+
+			[% ELSE %]
+
+			[% IF zaak.status == 'new' && !force_result_finish %]
+			<option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/open') %]">In behandeling nemen</option>
+			<option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/actie/weiger') %]" class="popup">Weigeren</option>
+			<option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/behandelaar') %]" class="popup">Verplaats</option>
+			<!--<option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/actie/verplaats', { betrokkene_type => 'org_eenheid' }) %]" class="popup">Verplaats (eenheid)</option> -->
+			<option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak kopieren</option>
+			[% ELSE %]
+			<option value="[% c.uri_for('/zaak/' _ zaak.nr) %]">Openen</option>
+
+			<option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next') %]">Volgende fase</option>
+			<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/behandelaar') %]">Behandelaar wijzigen</option>
+			<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/aanvrager') %]">Aanvrager wijzigen</option>
+			<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/verlengen') %]">Verlengen</option>
+			<option class="popup" value="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/opschorten') %]">Opschorten/activeren</option>
+			<option value="[% c.uri_for('/zaak/duplicate/' _ zaak.nr) %]" class="popup">Zaak kopieren</option>
+			[% END %]
+			[% END %]
+		</select>
+	</div>
+	<div class="col col2">
+		<a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+	</div>
+</div>
+	[% END %]
+[% END %]
+
+[% BLOCK attachments_display %]
+   [% IF zaak.bericht.is_alert %]
+   <!-- TODO LET OP: Dit is tijdelijk, attachment icon -->
+   <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '#zaak-elements-documents') %]">
+		<img
+		src="images/icon_attachment.png"
+		width="16"
+		height="16"
+		alt="Er staan documenten in de wachtrij voor deze zaak"
+		border="0" />
+	</a>
+	[% END %]
+[% END %]
+
+
+[% BLOCK kenmerk_display %]
+    [% kenmerk = zaak.scalar.zaak_kenmerken.get(bibliotheek_kenmerken_id => display_field.replace('\D', '')) %]
+    [% IF (kenmerk.value && kenmerk.bibliotheek_kenmerken_id.value_type == 'file') %]
+        [% kenmerkdoc = zaak.scalar.documents.scalar.documenten({
+            zaaktype_kenmerken_id => kenmerk.id,
+        }); %]
+        [% IF kenmerkdoc.count %]
+            [% kenmerkdoc = kenmerkdoc.first %]
+            <a href="[% c.uri_for(
+                '/zaak/' _ zaak.nr _ '/documents/'
+                _ (kenmerkdoc.pid.id || 0) _ '/get/'
+                _ kenmerkdoc.id _ '/' _ kenmerkdoc.filename
+                ) _ '?filetype=pdf'
+            %]">[% kenmerkdoc.filename %]</a>
+        [% END %]
+    [% ELSE %]
+        [% PROCESS widgets/general/veldoptie_view.tt veldoptie_value=kenmerk.value %]
+    [% END %]
+[% END %]
+
+
+[% # Default display %]
+[% BLOCK text_display %]
+    [% zaak.systeemkenmerk(display_field) %]
+[% END %]
+
+
+
+
+[% IF (display_class && display_field && zaak) %]
+
+
+[% 
+
+#
+# This is the code choosing a display block 
+#
+%]
+
+[%	display_block = display_class _ '_display' %]
+[%	INCLUDE $display_block %]
+[% ELSE %]
+<pre>
+Missing info: 
+- display class: [% display_class %]
+- display field: [% display_field %]
+- zaak object:   [% zaak %]
+</pre>
+[% END %]

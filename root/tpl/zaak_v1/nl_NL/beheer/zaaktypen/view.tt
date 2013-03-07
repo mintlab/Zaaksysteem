@@ -1,0 +1,12 @@
+<div class="block clearfix">
+    <p class="header">Overzicht zaaktype</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie">
+            <tbody>
+                [% PROCESS widgets/zaak/ztc.tt
+                %]
+            </tbody>
+        </table>
+    </div>
+</div>
+

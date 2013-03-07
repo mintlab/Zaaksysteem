@@ -1,0 +1,46 @@
+[% USE Scalar %]
+[% USE date %]
+[% zaak_status_icon = 'images/zaak-unrd.gif';
+   IF (zaak.status == 'open'); zaak_status_icon = 'images/zaak-rd.gif'; END;
+   IF (zaak.status == 'resolved'); zaak_status_icon = 'images/zaak-closed.png'; END;
+%]
+<!-- zaak/widgets/result_row.tt -->
+        <tr class="table_zaken_tr">
+            <td class="table_zaken_td30"><a href="[% c.uri_for(( pip ? '/pip' : '') _ '/zaak/' _ zaak.nr) %]"><img src="[% zaak_status_icon %]" width="16" height="16" border="0" /></a></td>
+            <td class="table_zaken_td60"><a href="[% c.uri_for(( pip ? '/pip' : '')_ '/zaak/' _ zaak.nr) %]">[% zaak.nr %]</a></td>
+            <td class="table_zaken_td60">
+                [% zaak.kenmerk.vernietigingsdatum.dmy %]
+            </td>
+            <td class="table_zaken_td200">[% zaak.kenmerk.zaaktype_naam %]</td>
+            <td class="table_zaken_td200">[% zaak.subject %]</td>
+
+        [% UNLESS pip %]
+            <td class="table_zaken_td150"><a href="#" class="betrokkene-get" rel="zaak: [% zaak.nr %]; id: [% zaak.kenmerk.aanvrager.id %]" title="Informatie over eigenaar">[% zaak.kenmerk.aanvrager.naam %]</a></td>
+        [% END %]
+        [% UNLESS pip %]
+            <td class="table_zaken_title_td60"> [% PROCESS widgets/general/remaining_time.tt
+                    remaining   = zaak.zaakstatus.remaining_streefafhandeltijd
+                    totaal      = zaak.zaakstatus.total_streefafhandeltijd
+                %]</td>
+            <td class="td150">
+                <input type="checkbox" name="zaaknr" value="[% zaak.nr %]" />
+           </td>
+           <td class="table_zaken_title_td30">
+               [% IF zaak.bericht.is_alert %]
+               <!-- TODO LET OP: Dit is tijdelijk, attachment icon -->
+               <a href="[% c.uri_for('/zaak/' _ zaak.nr) %]">
+                    <img
+                    src="images/icon_attachment.png"
+                    width="16"
+                    height="16"
+                    alt="Er staan documenten in de wachtrij voor deze zaak"
+                    border="0" />
+                </a>
+            [% ELSE %]
+                &nbsp;
+            [% END %]
+            </td>
+        [% END %]
+        </tr>
+
+<!-- END zaak/widgets/result_row.tt -->

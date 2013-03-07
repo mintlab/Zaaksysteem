@@ -1,0 +1,46 @@
+[% USE Scalar %]
+[% zaakniveaumap = ['', 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']; %]
+[% zaakdata = startzaak %]
+[% global.nodecount = (global.nodecount + 1) %]
+<tr class="table_zaken_tr[% (prevnode ? ' child-of-node-' _ prevnode : '') %][% (zaak.nr == zaakdata.nr ? ' expanded' : '') %]" id="node-[% global.nodecount %]">
+    <td class="table_zaken_td100">[% zaakniveaumap.$niveau %]</td>
+    <td class="td50"><a href="[% c.uri_for('/zaak/' _ zaakdata.nr) %]">[% zaakdata.nr %]</a></td>
+    <td class="table_zaken_td100"><!-- <a href="[% c.uri_for('/zaak/' _ zaakdata.nr) %]">[% zaakdata.kenmerk.status %] van [% zaakdata.zaakstatusinfo.count %]</a> -->
+    
+    <div class="progress">
+                            <div class="progress-bar holder rounded shadow">
+                                <div class="progress-value value rounded">
+                                    <div class="perc">[% zaak.status_perc %]</div>
+                                </div>
+                            </div>
+                            </div>
+    </td>
+    <td class="table_zaken_td200"><a href="[% (pip ? '/pip' : '') %]/zaak/[% zaakdata.nr %]/zaaktypeinfo" class="fire-dialog" title="Informatie over dit zaaktype" rel="zaak: [% zaakdata.nr %]">[% zaakdata.zaaktype_node_id.titel %]</a></td>
+
+    <td class="table_zaken_td150"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel='zaakdata: [% zaak.nr %]; id: [% zaakdata.kenmerk.zaakeigenaar.id %]'>[% zaakdata.coordinator.naam %]</a></td>
+    <td class="table_zaken_td150"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel='zaak: [% zaakdata.nr %]; id: [% zaakdata.kenmerk.behandelaar.id %]'>[% zaakdata.behandelaar.naam %]</a></td>
+    <td class="table_zaken_td200">
+        [% IF zaakdata.besluit %]
+            [% zaakdata.besluit %]
+        [% ELSE %]
+            Onbekend
+        [% END %]</td>
+    <td class="table_zaken_td100">
+[% PROCESS widgets/general/remaining_time.tt
+    remaining   = zaakdata.zaakstatus.remaining_streefafhandeltijd
+    totaal      = zaakdata.zaakstatus.total_streefafhandeltijd
+%]</td>
+    <td class="table_zaken_td50 td_i td_i_img"><a href="[% c.uri_for('/zaak/get_meta/' _ zaakdata.nr) %]" class="fire-dialog" title="Informatie over zaak"><img border="0" src="/images/icon-info.png"></a></td>
+</tr>
+[% IF zaakdata.scalar.zaak_children.count %]
+    [% localprevnode = global.nodecount %]
+    [% zaak_children = zaakdata.scalar.zaak_children.scalar.search %]
+    [% WHILE (startupzaak = zaak_children.next) %]
+        [% INCLUDE zaak/elements/relation/child.tt
+            prevnode  = localprevnode
+            startzaak = startupzaak
+            niveau    = niveau + 1;
+        %]
+    [% END %]
+[% END %]
+[% prevnode = global.nodecount %]

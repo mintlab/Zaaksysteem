@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns:StUF="http://www.egem.nl/StUF/StUF0204" xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.egem.nl/StUF/StUF0204" elementFormDefault="qualified" attributeFormDefault="unqualified" version="bgstuf020402">
+	<annotation>
+		<documentation xml:lang="nl">
+		Verschil met versie 'bgstuf020401': Het element "extraElementKerngegeven" en het complexType "ExtraElementKerngegeven" zijn verwijderd omdat besloten is dat extra elementen geen kerngegevens mogen zijn.
+		</documentation>
+	</annotation>
+	<include schemaLocation="../0204/stuf0204.xsd"/>
+	<complexType name="DatumMetIndicatorKerngegeven">
+		<simpleContent>
+			<extension base="StUF:DatumMetIndicator">
+				<attribute name="kerngegeven" type="boolean" fixed="true"/>
+			</extension>
+		</simpleContent>
+	</complexType>
+</schema>

@@ -1,0 +1,17 @@
+[% statussen = zaaktype.statussen.keys.nsort %]
+[% FOREACH key IN statussen %]
+    [% classes = [] %]
+    [% value = zaaktype.statussen.$key.definitie %]
+    [% IF value.status == milestone_number; classes.push('current'); %]
+    [% ELSIF value.status < milestone_number; classes.push('done');%]
+    [% ELSIF !value.id; classes.push('empty'); END %]
+    <p class="mijlpaal [% classes.join(' ') %]">
+        [% IF value.status == milestone_number %]
+            [% value.status %]. [% value.fase %]
+        [% ELSE %]
+        <a href="[% milestoneurl _ '/' _ value.status %]">
+            [% value.status %]. [% value.fase %]
+        </a>
+        [% END %]
+    </p>
+[% END %]

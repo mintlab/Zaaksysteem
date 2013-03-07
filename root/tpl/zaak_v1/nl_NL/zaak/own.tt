@@ -1,0 +1,20 @@
+
+<!-- Begin Zaken top10 -->
+<div class="block">
+	<form name="zaken_results">
+
+	<div class="header clearfix">
+	<div class="col">Zaken waar ik behandelaar van ben (<span class="total_entries">[% results.pager.total_entries %]</span>) </div>
+	[% PROCESS widgets/general/zaken_filter.tt
+   	ZAKEN_FILTER_STATUS_DROPDOWN = 1
+	%]
+	</div>
+		
+	<div class="blockcontent zaken_filter_wrapper">
+		<div class="zaken_filter_inner">
+		[% PROCESS zaak/widgets/result.tt %]
+		[% PROCESS widgets/pager2.tt %]
+		</div>
+	</div>
+	</form>
+</div>

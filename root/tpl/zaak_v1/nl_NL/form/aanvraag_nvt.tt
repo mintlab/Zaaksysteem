@@ -1,0 +1,22 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+
+[% layout_type = 'simple' %]
+<div class="block">
+    <p class="header">Aanvraag niet van toepassing</p>
+    <div class="blockcontent">
+        <p>
+        U bent
+        [% (aanvrager.authenticated ? '' : ' geen ') %]
+        [% (aanvrager_type == 'natuurlijk_persoon' ? 'inwoner van' : 'organisatie binnen') %]
+        [% c.config.gemeente.naam %]. De aanvraag is daarom niet op u van
+            toepassing. Klik op de volgende link om terug te keren naar de website
+            van uw gemeente: <a href="[% ('/form/cancel') %]" title="Annuleren">[% c.config.gemeente.website %]</a>
+        </p>
+    </div>
+</div>
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]
+

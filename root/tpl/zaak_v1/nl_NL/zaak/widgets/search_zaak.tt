@@ -1,0 +1,86 @@
+                                        <form method="POST" action="[% c.uri_for('/search') %]">
+
+                                        <table class="table_zoeken" cellspacing="1">
+                                        
+                                            <!--<tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Zaaknummer:</td>
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"></td>
+                                            </tr>-->
+                                        
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Initiatie:</td>
+                                                <td class="table_zoeken_tdvar">
+                <div class="clearfix">
+                    <div class="col checkbox"><input type="checkbox" name="zk-trigger" value="intern"> Intern</div>
+                    <div class="col checkbox"><input type="checkbox" name="zk-trigger" value="extern"> Extern</div>
+                </div>
+                                                </td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Generiek proces:</td>
+                                                <td class="table_zoeken_tdvar">
+                                                [% cats = c.model('DB::ZaaktypeCategorie').search({}) %]
+                                                <select multiple size=6 name="zk-proces" style="width:230px;">
+                                                [% FOREACH cat IN cats %]
+                                               <option value="[% cat.categorie %]"[% (generiek_proces == cat.categorie ? ' selected="selected"' : '') %]> [% cat.categorie %] </option>
+                                                [% END %]
+                                                </select>
+                                                </td>
+                                            </tr>
+            
+                                            <!-- <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Zaaktype:</td>
+                                                <td class="table_zoeken_tdvar">
+                <select multiple size=4 name="zaaktype" style="width:230px;">
+                    <option value="">Geen keuze</option>
+                    [% zts = c.model('Zaaktype').list %]
+                    [% WHILE (zt = zts.next) %]
+                        <option value="[% zt.zaaktype_node_id.id %]">[% zt.zaaktype_node_id.titel %]</option>
+                    [% END %]
+                </select>
+                                                
+                                                </td>
+                                            </tr>
+                                        
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Aanvrager:</td>
+
+                                                <td class="table_zoeken_tdvar"><input type="text" class="input_medium"> <a href="popup_aanvragerzoeken3a.html?height=400&width=700" title="Een aanvrager zoeken" class="thickbox"><img src="/images/icon-magnifier.png" width="16" height="16" border="0"></a></td>
+                                            </tr> -->
+            
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Org-eenheid:</td>
+                                                <td class="table_zoeken_tdvar">
+                                                    [% IF org_eenheden %]
+                                                    <select name="zks-org_eenheid" multiple size=4 style="width:230px;">
+                                                        <option value="">Geen keuze</option>
+                                                        [% FOREACH org_eenheid IN org_eenheden %]
+                                                            <option value="[% org_eenheid.ex_id %]">[% org_eenheid.naam %]</option>
+                                                        [% END %]
+                                                    </select>
+                                                    [% END %]
+                                                </td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="table_zoeken_td100">Zaakcoordinator:</td>
+                                                <td class="table_zoeken_tdvar">
+                                                <div id="new_interne_zaakcoordinator">
+                                                    <input type="hidden" name="ztc_coordinator_id" value="" />
+                                                    <input type="text" name="zaakcoordinator" value="" class="input_medium" disabled>
+                                                    <a href="#" title="Zoek een zaakcoordinator" class="search_betrokkene" rel="medewerker">
+                                                        <img src="/images/icon-magnifier.png" width="16" height="16" border="0">
+                                                    </a>
+                                                    <img src="/images/empty.gif" width="24" height="16">
+                                                    <img src="/images/icon-tick.png" style="visibility: hidden;" class="validate-ok" title="Veld is correct ingevuld" width="16" height="16">
+                                                </div></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr_bottom">
+                                                <td class="table_zoeken_td100_2"></td>
+                                                <td
+                                                class="table_zoeken_tdvar"><input type="submit" value="Zoeken" class="button140 right"></td>
+
+                                            </tr>
+                                        </table>
+                                        </form>
+

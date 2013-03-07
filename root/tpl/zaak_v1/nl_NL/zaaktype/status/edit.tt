@@ -1,0 +1,1004 @@
+<!-- Begin Zaaktype -->
+<form method="POST" action="[% c.uri_for('/zaaktype/status/edit') %]">
+<div class="block clearfix">
+    <p class="header">Stap 2/5: Statusconfiguratie</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie marginbottom" id="status_rows" cellspacing="0">
+            <thead>
+                <tr>
+                    <th colspan="5">Statussen binnen dit zaaktype</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table_ztb_title_tr">
+                    <td class="td40">Status</td>
+                    <td class="tdvar">Naam</td>
+                    <td class="td80" align="center">Bewerken</td>
+                    <td class="td80" align="center">Verwijderen</td>
+                </tr>
+                <tr class="table_ztb_tr status_name_row" id="status_row_template">
+                    <td class="status_count td40"></td>
+                    <td class="tdvar input-naam"><input name="status_naam" type="text"><span class="validator"></span></td>
+                    <td class="td80" align="center">
+                        <a href="#" class="status_define"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a>
+                    </td>
+                    <td class="td80" align="center">
+                        <a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a>
+                    </td>
+                </tr>
+                <tr class="status_row_definitions" id="status_row_definitions_template">
+                    <td colspan="8" class="td_toggle">
+                    <input type="hidden" name="status_type" value="behandelen" />
+                    <div class="status_behandel_block">
+                        <table class="table_zaakinformatie" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" >Definitie van status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!--
+                            <tr>
+                                <td class="table_td_left_zaakinformatie">Afhandeltermijn</td>
+                                <td class="table_td_right_zaakinformatie">
+                                    <input type="text" size=2 name="status_afhandeltermijn"> dagen
+                                </td>
+                            </tr>
+                            -->
+                            <tr class="status_behandel_block">
+                                <td class="table_td_left_zaakinformatie">Naar organisatorische rol</td>
+                                <td class="table_td_right_zaakinformatie">
+                        [% PROCESS widgets/general/auth_select.tt
+                            AUTH_SELECT_OU_NAME   = 'status_ou_id'
+                            AUTH_SELECT_ROLE_NAME = 'status_role_id'
+                            AUTH_SELECT_NO_GLOBAL = 1
+                        %]
+                                </td>
+                            </tr>
+                            <tr class="nextstatus">
+                                <td
+                                    class="table_td_left_zaakinformatie">Checklist verplicht</td>
+                                <td class="table_td_right_zaakinformatie">
+                                    <input type="checkbox" name="status_has_checklist" value="1">
+                                </td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td class="table_td_left_zaakinformatie">Betrokkene rol</td>
+                                <td class="table_td_right_zaakinformatie">
+                                    <select name="status_betrokkene_rol">
+                                        <option value="">Maak uw keuze</option>
+                                            [% FOREACH rol IN constants.authorisation.roles %]
+                                            <option value="rol.key">[% rol.value %]</option>
+                                            [% END %]
+                                    </select>
+                                </td>
+                            </tr
+                            -->
+                        </table>
+                    </div>
+					
+				
+                    <div class="kenmerken_container">
+				
+                        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        colspan="5"
+                                        
+                                        >Kenmerken / Documenten voor deze status
+                                        <span
+                                            class="firststatus"
+                                            style="display: none;"
+                                            >(Webformulier)
+                                        </span>
+                                        <span
+                                            class="nextstatus"
+                                            >(Behandelaar)
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="tdvar">Naam</td>
+                                <!-- <td class="td80 center">Verplicht</td> -->
+                                <!--        <td class="td80 center">Bewerken</td> -->
+                                <td class="td80 center">Bewerken</td>
+                                <td class="td80 center">Verwijderen</td>
+                            </tr>
+                            <tr class="table_ztb_tr ztAjaxTable_template">
+                                <td class="tdvar">
+                                    <input type="hidden" size="40" class="ztAjaxTable_uniquehidden" name="status_kenmerk_id">
+                                    <span class="description"></span>
+                                </td>
+                                <td class="td80 center"><a href="[% c.uri_for('/zaaktype/status/kenmerken_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                    <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                </a>
+                                </td>
+                                <!--
+                                <td class="td80 center">
+                                    <a href="[% c.uri_for('/zaaktype/status/document_kenmerken') %]" class="edit" title="Documentkenmerken bijwerken"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-edit.png"/></a>
+                                </td>
+                                -->
+                                <td class="td80 center"><a href="#" class="ztAjaxTable_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <a
+                            href="[% c.uri_for('/beheer/bibliotheek/kenmerken/search'); %]"
+                            rel="status: [% c.req.params.status %]; rowcallback: ezra_zaaktype_select_kenmerk; initcallback: ezra_zaaktype_kenmerk_edit"
+                            title="Kenmerk zoeken in de Kenmerkenbibliotheek"
+                            class="add ztAjaxTable_add float"
+                            >Kenmerk zoeken</a>
+                        <a
+                            href="[% c.uri_for('/beheer/bibliotheek/kenmerken/skip/0/bewerken'); %]"
+                            rel="status: [% c.req.params.status %]; rowcallback: ezra_zaaktype_add_kenmerk; initcallback: ezra_zaaktype_kenmerk_edit"
+                            title="Kenmerk toevoegen"
+                            class="add ztAjaxTable_add float"
+                            >Nieuw kenmerk</a><br /><br />
+                        </div>
+                    </div>
+                    <div class="sjablonen_container">
+                        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        colspan="5"
+                                        
+                                        >Sjablonen voor deze status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_ztb_title_tr">
+                                    <td class="tdvar">Naam</td>
+                                    <td class="td80 center">Bewerken</td>
+                                    <td class="td80 center">Verwijderen</td>
+                                </tr>
+                                <tr class="table_ztb_tr ztAjaxTable_template">
+                                    <td class="tdvar">
+                                        <input
+                                            type="hidden"
+                                            size="40"
+                                            class="ztAjaxTable_uniquehidden"
+                                            name="status_sjabloon_id" />
+                                        <span class="description"></span>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="[% c.uri_for('/zaaktype/status/sjablonen_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="#" class="ztAjaxTable_del del">
+                                            <img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a
+                            href="[% c.uri_for('/beheer/bibliotheek/sjablonen/search'); %]"
+                            rel="status: [% c.req.params.status %]; rowcallback: ezra_zaaktype_select_sjabloon; initcallback: ezra_zaaktype_sjabloon_edit"
+                            title="Sjabloon toevoegen"
+                            class="add ztAjaxTable_add float"
+                            >Sjabloon toevoegen</a>
+                        <div class="ui-helper-clearfix"></div>
+                    </div>
+				
+                    <div class="nextstatus checklist_container">
+                        <table class="table_zaakinformatie zaaktype_checklist" id="checklist" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" >Checklist voor deze status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!--
+                                <tr>
+                                    <td class="table_td_left_zaakinformatie border2px">Checklisttype</td>
+                                    <td class="table_td_right_zaakinformatie border2px">
+                                        <select name="status_checklist_type">
+                                            <option value="single">Enkelvoudige checklist</option>
+                                            <option value="multiple">Meervoudige checklist</option>
+                                        </select>
+                                    </td>
+                                <tr>
+                                -->
+                             </tbody>
+                        </table>
+                        <table class="table_zaakinformatie margin5px dynamic_rows" cellspacing="0">
+                            </tbody>
+                                <tr class="table_ztb_title_tr">
+                                    <td class="tdvar">Vraag</td>
+                                   <!-- <td class="td100 center">Bewerken</td> -->
+                                    <td class="td80">Verwijderen</td>
+                                </tr>
+                                <tr class="table_ztb_tr row_template">
+                                    <td class="tdvar">
+                                        <input type="text" size="40" name="status_checklist_vraag">
+                                    </td>
+                                    <!--
+                                    <td class="td80 center"><a href="[% c.uri_for('/zaaktype/status/antwoorden') %]" class="add_antwoorden edit" title="Antwoorden voor vraag">
+                                        <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                    </a>
+                                    </td>
+                                    -->
+                                    <td class="td80"><a href="#" class="checklist_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="#" rel="status: [% c.req.params.status %]" class="add status_definition_add_vraag add_row">Controlevraag toevoegen</a><br /><br />
+                    </div>
+
+                        <table class="table_zaakinformatie margin5px subzaken" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="5" ><span class="deelofsubs">Zaken</span> voor volgende status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="table_ztb_title_td200">Zaaktype</td>
+                                <td class="table_ztb_title_td100 status_behandel_block">Deelzaak</td>
+                                <td class="table_ztb_title_td100 status_behandel_block">Gerel. zaak</td>
+                                <td class="table_ztb_title_td100 status_afhandel_block">Startdatum</td>
+                                <td class="table_ztb_title_td100">Actie</td>
+                            </tr>
+                            <tr class="table_ztb_tr row_template">
+                                <td class="table_ztb_td_200">
+                                    <input type="hidden" name="status_zaaktype_id" value="">
+                                    <span class="description"></span>
+                                </td>
+                                <td class="table_ztb_td_200 status_behandel_block center">
+                                    <input type="radio" name="status_zaaktype_deelgerelateerd" value="deel">
+                                </td>
+                                <td class="table_ztb_td_200 status_behandel_block center">
+                                    <input type="radio" name="status_zaaktype_deelgerelateerd" value="gerelateerd">
+                                </td>
+                                <td class="table_ztb_td_200 status_afhandel_block center">
+                                    Over <input type="text" name="status_zaaktype_start" value="4" size=4> dagen
+                                </td>
+                                <td class="table_ztb_td_100 center"><a href="#" class="document_row_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <a href="#" rel="status: [% c.req.params.status %]" class="add status_definition_add_subzaak"><span class="deelofsub">Deelzaak</span> toevoegen</a><br /><br />
+
+                    <div class="status_afhandel_block">
+                        <div class="resultaatmogelijkheden_container">
+                        <table class="table_zaakinformatie no_margin dynamic_rows">
+                            <thead>
+                                <tr>
+                                    <th colspan="5">Resultaatmogelijkheden</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="table_ztb_title_td200">Resultaat</td>
+                                <td class="table_ztb_title_td100">Bewaartermijn</td>
+                                <td class="table_ztb_title_td100">Dossiertype</td>
+                                <td class="table_ztb_title_td100">Ingang</td>
+                                <td class="table_ztb_title_td100" align="center">Verwijderen</td>
+                            </tr>
+                            <tr class="table_ztb_tr row_template">
+                                <td class="table_ztb_td_td200">
+                                    <select name="status_bewaren_resultaat">
+                        [% FOREACH resultaattype IN ZOPTIONS.RESULTAATTYPEN.sort %]
+                            <option
+                                value="[% resultaattype %]"
+                                [% (
+                                    params.algemeen.ztc_besluittype
+                                        == besluittype
+                                            ? 'selected="selected"'
+                                            : '')
+                                %]
+                            > [% resultaattype | ucfirst %]</option>
+                        [% END %]
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_bewaartermijn">
+                                        <option value="0.3">3 maanden</option>
+                                        <option value="1">1 jaar</option>
+                                        <option value="1.5">1.5 jaar</option>
+                                        <option value="2">2 jaar</option>
+                                        <option value="3">3 jaar</option>
+                                        <option value="4">4 jaar</option>
+                                        <option value="5">5 jaar</option>
+                                        <option value="6">6 jaar</option>
+                                        <option value="7">7 jaar</option>
+                                        <option value="8">8 jaar</option>
+                                        <option value="9">9 jaar</option>
+                                        <option value="10">10 jaar</option>
+                                        <option value="11">11 jaar</option>
+                                        <option value="12">12 jaar</option>
+                                        <option value="15">15 jaar</option>
+                                        <option value="20">20 jaar</option>
+                                        <option value="30">30 jaar</option>
+                                        <option value="40">40 jaar</option>
+                                        <option value="110">110 jaar</option>
+                                        <option value="999">Bewaren</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_dossiertype">
+                                        <option value="digitaal">Digitaal</option>
+                                        <option value="fysiek">Digitaal en fysiek</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_ingang">
+                                        <option value="vervallen">Vervallen (vv)</option>
+                                        <option value="onherroepelijk">Onherroepelijk (oh)</option>
+                                        <option value="afhandeling">Afhandeling (af)</option>
+                                        <option value="verwerking">Verwerking (vw)</option>
+                                        <option value="geweigerd">Geweigerd (gw)</option>
+                                        <option value="verleend">Verleend (v)</option>
+                                        <option value="geboorte">Geboorte (gb)</option>
+                                        <option value="einde-dienstverband">Einde dienstverband (ed)</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_60" align="center"><a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                        <a href="#" class="add add_row">Resultaatmogelijkheid toevoegen</a><br /><br />
+                        </div>
+                    </div>
+                    <div class="notificatie_container">
+                        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        colspan="5"
+                                        >Notificaties voor deze status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_ztb_title_tr">
+                                    <td class="tdvar">Naam</td>
+                                    <td class="td80 center">Bewerken</td>
+                                    <td class="td80 center">Verwijderen</td>
+                                </tr>
+                                <tr class="table_ztb_tr ztAjaxTable_template">
+                                    <td class="tdvar">
+                                        <input
+                                            type="text"
+                                            size="40"
+                                            class="ztAjaxTable_uniquehidden"
+                                            value="[% snotificatie.label %]"
+                                            name="status_notificatie_id" />
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="[% c.uri_for('/zaaktype/status/notificatie_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="#" class="ztAjaxTable_del del">
+                                            <img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a
+                            href="#"
+                            rel="status: [% c.req.params.status %]; initcallback: ezra_zaaktype_notificatie_edit; rowcallback: ezra_zaaktype_add_notificatie"
+                            title="Notificatie toevoegen"
+                            class="add ztAjaxTable_add "
+                            >Notificatie toevoegen</a>
+							<div class="ui-helper-clearfix"></div>
+                    </div>
+
+                        <input type="button" value="Opslaan" class="button140 button_right">
+                    </td>
+                </tr>
+            [% statuscount = 0 %]
+            [% FOREACH statusi IN params.status.keys.nsort %]
+            [% status = params.status.$statusi %]
+                [% statuscount = statuscount + 1 %]
+                <tr class="table_ztb_tr status_name_row[% (status.type == 'afhandelen' ? ' afgehandeld' : '') %]" id="status_row_[% statuscount %]">
+                    <td class="table_ztb_td_60 status_count td60"></td>
+                    <td class="table_ztb_tdvar input-naam">
+                    [% IF statuscount == params.status.size %]
+                        <input name="status_naam_[% statuscount %]" type="hidden" value="[% status.naam %]">Afgehandeld
+                    [% ELSE %]
+                        <input name="status_naam_[% statuscount %]" type="text" value="[% status.naam %]">
+                    [% END %]
+                    <span class="validator"></span>
+                    </td>
+                    <td class="table_ztb_td_60" align="center">
+                        <a href="#" class="status_define"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a>
+                    </td>
+                    <td class="table_ztb_td_60" align="center">
+                        <a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a>
+                    </td>
+                </tr>
+                <tr class="status_row_definitions" id="status_row_definitions_[% statuscount %]">
+                    <td colspan="8" class="td_toggle">
+                        <input type="hidden" name="status_type_[% statuscount %]" value="[% status.type %]" />
+                    <div class="status_behandel_block">
+                        <table class="table_zaakinformatie" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" >Definitie van status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!--
+                            <tr>
+                                <td class="table_td_left_zaakinformatie">Afhandeltermijn</td>
+                                <td class="table_td_right_zaakinformatie">
+                                    <input type="text" size=2 name="status_afhandeltijd_[% statuscount %]" value="[% status.afhandeltijd %]"> dagen
+                                </td>
+                            </tr>
+                            -->
+                            <tr class="status_behandel_block">
+                                <td class="table_td_left_zaakinformatie">Naar organisatorische rol</td>
+                                <td class="table_td_right_zaakinformatie">
+                        [% PROCESS widgets/general/auth_select.tt
+                            AUTH_SELECT_OU_NAME   = 'status_ou_id_' _ statuscount
+                            AUTH_SELECT_OU_VALUE  = status.ou_id
+                            AUTH_SELECT_ROLE_NAME = 'status_role_id_' _ statuscount
+                            AUTH_SELECT_ROLE_VALUE = status.role_id
+                            AUTH_SELECT_NO_GLOBAL = 1
+                        %]
+                                <!--
+                                        <select name="status_betrokkene_[% statuscount %]">
+                                            <option value="">Maak uw keuze</option>
+                                                [% org_eenheden.reset() %]
+                                                [% WHILE (org_eenheid = org_eenheden.next) %]
+                                                <option value="betrokkene-org_eenheid-[% org_eenheid.ex_id %]"[% (status.betrokkene == 'betrokkene-org_eenheid-' _ org_eenheid.ex_id ? ' selected' : '') %]>[% org_eenheid.naam %]</option>
+                                                [% END %]
+                                            </select>
+                                -->
+                                </td>
+                            </tr>
+                            <tr class="nextstatus">
+                                <td class="table_td_left_zaakinformatie">Checklist verplicht</td>
+                                <td class="table_td_right_zaakinformatie">
+                                    <input
+                                        type="checkbox"
+                                        name="status_has_checklist_[% statuscount %]"
+                                        value="1"
+                                        [% (status.has_checklist ? 'checked="checked"' : '') %]
+                                        />
+                                </td>
+                            </tr>
+                            <!--
+                            <tr>
+                                <td class="table_td_left_zaakinformatie">Betrokkene rol</td>
+                                <td class="table_td_right_zaakinformatie">
+                                    <select name="status_betrokkene_rol_[% statuscount %]">
+                                        <option value="">Maak uw keuze</option>
+                                            [% FOREACH rol IN constants.authorisation.roles %]
+                                            <option value="rol.key">[% rol.value %]</option>
+                                            [% END %]
+                                    </select>
+                                </td>
+                            </tr>
+                            -->
+                        </table>
+                    </div>
+                    <div class="kenmerken_container">
+                        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        colspan="5"
+                                        
+                                        >Kenmerken / Documenten voor deze status
+                                        <span
+                                            class="firststatus"
+                                            style="display: none;"
+                                            >(Webformulier)
+                                        </span>
+                                        <span
+                                            class="nextstatus"
+                                            >(Behandelaar)
+                                        </span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="tdvar">Naam</td>
+                                <!--        <td class="td80 center">Bewerken</td> -->
+                                <td class="td80 center">Bewerken</td>
+                                <td class="td80 center">Verwijderen</td>
+                            </tr>
+                            <tr class="table_ztb_tr ztAjaxTable_template">
+                                <td class="tdvar">
+                                    <input
+                                        type="hidden"
+                                        size="40"
+                                        class="ztAjaxTable_uniquehidden"
+                                        name="status_kenmerk_id_[% statuscount %]">
+                                    <span class="description"></span>
+                                </td>
+                                <td class="td80 center"><a href="[% c.uri_for('/zaaktype/status/kenmerken_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                    <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                </a>
+                                </td>
+                                <!--
+                                <td class="td80 center">
+                                    <a href="[% c.uri_for('/zaaktype/status/document_kenmerken') %]" class="edit" title="Documentkenmerken bijwerken"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-edit.png"/></a>
+                                </td>
+                                -->
+                                <td class="td80 center"><a href="#" class="ztAjaxTable_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                                [% kenmerkcount = 0 %]
+                                [% FOREACH skenmerki IN status.kenmerken.keys.nsort %]
+                                [% skenmerk = status.kenmerken.$skenmerki %]
+                                    [% kenmerkcount = kenmerkcount + 1 %]
+                                    <tr class="table_ztb_tr ztAjaxTable_row ztAjaxTable_rownumber_[% kenmerkcount %]">
+                                        <td class="tdvar">
+                                            <input
+                                                type="hidden"
+                                                size="40"
+                                                class="ztAjaxTable_uniquehidden"
+                                                name="status_kenmerk_id_[% statuscount %]_[% kenmerkcount %]"
+                                                value="[% skenmerk.bibliotheek_id %]"
+                                                />
+                                                <span class="description">
+                                                    [% skenmerk.naam %]
+                                                </span>
+                                        </td>
+                                        <td class="td80 center"><a href="[% c.uri_for('/zaaktype/status/kenmerken_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                        <!--
+                                        <td class="td80 center">
+                                            <a href="[% c.uri_for('/zaaktype/status/document_kenmerken') %]" class="edit" title="Documentkenmerken bijwerken"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-edit.png"/></a>
+                                        </td>
+                                        -->
+                                        <td class="td80 center"><a href="#" class="ztAjaxTable_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                                    </tr>
+                                [% END %]
+                            </tbody>
+                        </table>
+                        <a
+                            href="[% c.uri_for('/beheer/bibliotheek/kenmerken/search'); %]"
+                            rel="status: [% c.req.params.status %]; rowcallback: ezra_zaaktype_select_kenmerk; initcallback: ezra_zaaktype_kenmerk_edit"
+                            title="Kenmerk selecteren uit de Kenmerkenbibliotheek"
+                            class="add ztAjaxTable_add float"
+                            >Kenmerk zoeken</a>
+                        <a
+                            href="[% c.uri_for('/beheer/bibliotheek/kenmerken/skip/0/bewerken'); %]"
+                            rel="status: [% c.req.params.status %]; rowcallback: ezra_zaaktype_add_kenmerk; initcallback: ezra_zaaktype_kenmerk_edit"
+                            title="Kenmerk toevoegen"
+                            class="add ztAjaxTable_add float"
+                            >Nieuw kenmerk</a><br /><br />
+                        </div>
+                    </div>
+                    <div class="sjablonen_container">
+                        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        colspan="5"
+                                        
+                                        >Sjablonen voor deze status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_ztb_title_tr">
+                                    <td class="tdvar">Naam</td>
+                                    <td class="td80 center">Bewerken</td>
+                                    <td class="td80 center">Verwijderen</td>
+                                </tr>
+                                <tr class="table_ztb_tr ztAjaxTable_template">
+                                    <td class="tdvar">
+                                        <input
+                                            type="hidden"
+                                            size="40"
+                                            class="ztAjaxTable_uniquehidden"
+                                            name="status_sjabloon_id_[% statuscount %]" />
+                                        <span class="description"></span>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="[% c.uri_for('/zaaktype/status/sjablonen_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="#" class="ztAjaxTable_del del">
+                                            <img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                                [% sjablooncount = 0 %]
+                                [% FOREACH ssjablooni IN status.sjablonen.keys.nsort %]
+                                [% ssjabloon = status.sjablonen.$ssjablooni %]
+                                    [% sjablooncount = sjablooncount + 1 %]
+                                <tr class="table_ztb_tr ztAjaxTable_row ztAjaxTable_rownumber_[% sjablooncount %]">
+                                    <td class="tdvar">
+                                        <input
+                                            type="hidden"
+                                            size="40"
+                                            class="ztAjaxTable_uniquehidden"
+                                            value="[% ssjabloon.bibliotheek_id %]"
+                                            name="status_sjabloon_id_[% statuscount %]_[% sjablooncount %]" />
+                                        <span class="description">[% ssjabloon.naam %]</span>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="[% c.uri_for('/zaaktype/status/sjablonen_definitie') %]" class="edit" title="Bewerk eigenschappen sjabloon">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="#" class="ztAjaxTable_del del">
+                                            <img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                                [% END %]
+                            </tbody>
+                        </table>
+                        <a
+                            href="[% c.uri_for('/beheer/bibliotheek/sjablonen/search'); %]"
+                            rel="status: [% c.req.params.status %]; rowcallback: ezra_zaaktype_select_sjabloon; initcallback: ezra_zaaktype_sjabloon_edit"
+                            title="Sjabloon toevoegen"
+                            class="add ztAjaxTable_add "
+                            >Sjabloon toevoegen</a>
+							<div class="ui-helper-clearfix"></div>
+                    </div>
+                    <div class="nextstatus checklist_container">
+                        <table class="table_zaakinformatie zaaktype_checklist" id="checklist" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="4" >Checklist voor deze status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <!--
+                                <tr>
+                                    <td class="table_td_left_zaakinformatie border2px">Checklisttype</td>
+                                    <td class="table_td_right_zaakinformatie border2px">
+                                        <select name="status_checklist_type_[% statuscount %]">
+                                            <option value="single">Enkelvoudige checklist</option>
+                                            <option value="multiple">Meervoudige checklist</option>
+                                        </select>
+                                    </td>
+                                <tr>
+                                -->
+                             </tbody>
+                        </table>
+                        <table class="table_zaakinformatie margin5px dynamic_rows" cellspacing="0">
+                            </tbody>
+                                <tr class="table_ztb_title_tr">
+                                    <td class="tdvar">Vraag</td>
+                                   <!-- <td class="td100 center">Bewerken</td> -->
+                                    <td class="td80">Verwijderen</td>
+                                </tr>
+                                <tr class="table_ztb_tr row_template">
+                                    <td class="tdvar">
+                                        <input type="text" size="40" name="status_checklist_vraag_[% statuscount %]" value="">
+                                    </td>
+                                    <!--
+                                    <td class="td100 center"><a href="[% c.uri_for('/zaaktype/status/antwoorden') %]" class="add_antwoorden edit" title="Antwoorden voor vraag"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a>
+                                    </td> -->
+                                    <td class="td80 center"><a href="#" class="checklist_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a>
+                                    </td>
+                                </tr>
+                            [% questioncount = 0 %]
+                            [% FOREACH questioni IN status.checklist.keys.nsort %]
+                            [% question = status.checklist.$questioni %]
+                                [% questioncount = questioncount + 1 %]
+                                <tr class="table_ztb_tr">
+                                    <td class="tdvar">
+                                        <input type="text" size="40" name="status_checklist_vraag_[% statuscount %]_[% questioncount %]" value="[% question.vraag %]">
+                                    </td>
+                                    <!--
+                                    <td class="td100 center"><a href="[% c.uri_for('/zaaktype/status/antwoorden') %]" class="add_antwoorden edit" title="Antwoorden voor vraag"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a>
+                                    </td> -->
+                                    <td class="td80 center"><a href="#" class="checklist_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a>
+                                    </td>
+                                </tr>
+                            [% END %]
+                            </tbody>
+                        </table>
+                            <a href="#" rel="status: [% c.req.params.status %]" class="add add_row">Controlevraag toevoegen</a><br /><br />
+                    </div>
+
+
+
+                        <table class="table_zaakinformatie margin5px subzaken" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="6"><span class="deelofsubs">Zaken</span> voor deze status</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="table_ztb_title_td200">Zaaktype</td>
+                                <td class="table_ztb_title_td100 status_behandel_block center">Deelzaak</td>
+                                <td class="table_ztb_title_td100 status_behandel_block center">Gerel. zaak</td>
+                                <td class="table_ztb_title_td100 status_afhandel_block center">Startdatum</td>
+                                <td class="table_ztb_title_td100" align="center">Bewerken</td>
+                                <td class="table_ztb_title_td100" align="center">Verwijderen</td>
+                            </tr>
+                            <tr class="table_ztb_tr row_template">
+                                <td class="table_ztb_td_200">
+                                    <input type="hidden" name="status_zaaktype_id_[% statuscount %]" value="">
+                                    <span class="description"></span>
+                                </td>
+                                <td class="table_ztb_td_200 status_behandel_block center">
+                                    <input type="radio" name="status_zaaktype_deelgerelateerd_[% statuscount %]" value="deel">
+                                </td>
+                                <td class="table_ztb_td_200 status_behandel_block center">
+                                    <input type="radio" name="status_zaaktype_deelgerelateerd_[% statuscount %]" value="gerelateerd">
+                                </td>
+                                <td class="table_ztb_td_200 status_afhandel_block center">
+                                    Over <input type="text" name="status_zaaktype_start_[% statuscount %]" value="4" size=4> dagen
+                                </td>
+                                <td class="table_ztb_td_100 center"><a href="[% c.uri_for('/zaaktype/status/zaaktype'); %]" title="Deel-/vervolgzaak bewerken" class="edit"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a></td>
+                                <td class="table_ztb_td_100 center"><a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        [% subzakencount = 0 %]
+                        [% FOREACH subzaak IN status.subzaken.values %]
+                            [% subzakencount = subzakencount + 1 %]
+                            <tr id="status_row_definitions_[% statuscount %]_subzaken_[% subzakencount %]" class="table_ztb_tr">
+                                <td class="table_ztb_td_200">
+                                    <input type="hidden" name="status_zaaktype_id_[% statuscount %]_[% subzakencount %]" value="[% subzaak.zaaktype_id %]">
+                                    <span class="description">[% subzaak.description %]</span>
+                                </td>
+                                <td class="table_ztb_td_200 status_behandel_block center">
+                                    <input type="radio" name="status_zaaktype_deelgerelateerd_[% statuscount %]_[% subzakencount %]" value="deel"[% (subzaak.deelzaak ? ' checked' : '') %]>
+                                </td>
+                                <td class="table_ztb_td_200 status_behandel_block center">
+                                    <input type="radio" name="status_zaaktype_deelgerelateerd_[% statuscount %]_[% subzakencount %]" value="gerelateerd"[% (subzaak.gerelateerd ? ' checked' : '') %]>
+                                </td>
+                                <td class="table_ztb_td_200 status_afhandel_block center">
+                                    Over <input type="text" name="status_zaaktype_start_[% statuscount %]_[% subzakencount %]" value="[% subzaak.start_delay %]" size=4> dagen
+                                </td>
+                                <td class="table_ztb_td_100 center" align="center"><a href="[% c.uri_for('/zaaktype/status/zaaktype'); %]" title="Deel-/vervolgzaak bewerken" class="document_row_del edit"><img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/></a></td>
+                                <td class="table_ztb_td_100 center" align="center"><a href="#" class="document_row_del del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        [% END %]
+                        </tbody>
+                        </table>
+                        <a href="#" rel="status: [% c.req.params.status %]" class="add status_definition_add_subzaak"><span class="deelofsub">Deelzaak</span> toevoegen</a><br /><br />
+                        <div class="ui-helper-clearfix"></div>
+
+                    <div class="status_afhandel_block">
+                        <div class="resultaatmogelijkheden_container">
+                        <table class="table_zaakinformatie no_margin dynamic_rows">
+                            <thead>
+                                <tr>
+                                    <th colspan="5">Resultaatmogelijkheden</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="table_ztb_title_tr">
+                                <td class="table_ztb_title_td200">Resultaat</td>
+                                <td class="table_ztb_title_td100">Bewaartermijn</td>
+                                <td class="table_ztb_title_td100">Dossiertype</td>
+                                <td class="table_ztb_title_td100">Ingang</td>
+                                <td class="table_ztb_title_td100" align="center">Verwijderen</td>
+                            </tr>
+                            <tr class="table_ztb_tr row_template">
+                                <td class="table_ztb_td_td200">
+                                    <select name="status_bewaren_resultaat_[% statuscount %]">
+                                        [% FOREACH resultaattype IN ZOPTIONS.RESULTAATTYPEN.sort %]
+                                            <option
+                                                value="[% resultaattype %]"
+                                            > [% resultaattype | ucfirst %]</option>
+                                        [% END %]
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_bewaartermijn_[% statuscount %]">
+                                        <option value="0.3">3 maanden</option>
+                                        <option value="1">1 jaar</option>
+                                        <option value="1.5">1.5 jaar</option>
+                                        <option value="2">2 jaar</option>
+                                        <option value="3">3 jaar</option>
+                                        <option value="4">4 jaar</option>
+                                        <option value="5">5 jaar</option>
+                                        <option value="6">6 jaar</option>
+                                        <option value="7">7 jaar</option>
+                                        <option value="8">8 jaar</option>
+                                        <option value="9">9 jaar</option>
+                                        <option value="10">10 jaar</option>
+                                        <option value="11">11 jaar</option>
+                                        <option value="12">12 jaar</option>
+                                        <option value="15">15 jaar</option>
+                                        <option value="20">20 jaar</option>
+                                        <option value="30">30 jaar</option>
+                                        <option value="40">40 jaar</option>
+                                        <option value="110">110 jaar</option>
+                                        <option value="999">Bewaren</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_dossiertype_[% statuscount %]">
+                                        <option value="digitaal">Digitaal</option>
+                                        <option value="fysiek">Digitaal en fysiek</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_ingang_[% statuscount %]">
+                                        <option value="vervallen">Vervallen (vv)</option>
+                                        <option value="onherroepelijk">Onherroepelijk (oh)</option>
+                                        <option value="afhandeling">Afhandeling (af)</option>
+                                        <option value="verwerking">Verwerking (vw)</option>
+                                        <option value="geweigerd">Geweigerd (gw)</option>
+                                        <option value="verleend">Verleend (v)</option>
+                                        <option value="geboorte">Geboorte (gb)</option>
+                                        <option value="einde-dienstverband">Einde dienstverband (ed)</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_60" align="center"><a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        [% resultatencount = 0 %]
+                        [% FOREACH resultaat IN status.resultaten.values %]
+                            [% resultatencount = resultatencount + 1 %]
+                            <tr class="table_ztb_tr">
+                                <td class="table_ztb_td_td200">
+                                    <select name="status_bewaren_resultaat_[% statuscount %]_[% resultatencount %]">
+                                        [% FOREACH resultaattype IN ZOPTIONS.RESULTAATTYPEN.sort %]
+                                            <option
+                                                value="[% resultaattype %]"
+                                                [% (
+                                                    resultaat.resultaat
+                                                        == resultaattype
+                                                            ? 'selected="selected"'
+                                                            : '')
+                                                %]
+                                            > [% resultaattype | ucfirst %]</option>
+                                        [% END %]
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_bewaartermijn_[% statuscount %]_[% resultatencount %]">
+                                        <option value="0.3"[% (resultaat.bewaartermijn == '0.3' ? ' selected' : '') %]>3 maanden</option>
+                                        <option value="1"[% (resultaat.bewaartermijn == '1' ? ' selected' : '') %]>1 jaar</option>
+                                        <option value="1.5"[% (resultaat.bewaartermijn == '1.5' ? ' selected' : '') %]>1.5 jaar</option>
+                                        <option value="2"[% (resultaat.bewaartermijn == '2' ? ' selected' : '') %]>2 jaar</option>
+                                        <option value="3"[% (resultaat.bewaartermijn == '3' ? ' selected' : '') %]>3 jaar</option>
+                                        <option value="4"[% (resultaat.bewaartermijn == '4' ? ' selected' : '') %]>4 jaar</option>
+                                        <option value="5"[% (resultaat.bewaartermijn == '5' ? ' selected' : '') %]>5 jaar</option>
+                                        <option value="6"[% (resultaat.bewaartermijn == '6' ? ' selected' : '') %]>6 jaar</option>
+                                        <option value="7"[% (resultaat.bewaartermijn == '7' ? ' selected' : '') %]>7 jaar</option>
+                                        <option value="8"[% (resultaat.bewaartermijn == '8' ? ' selected' : '') %]>8 jaar</option>
+                                        <option value="9"[% (resultaat.bewaartermijn == '9' ? ' selected' : '') %]>9 jaar</option>
+                                        <option value="10"[% (resultaat.bewaartermijn == '10' ? ' selected' : '') %]>10 jaar</option>
+                                        <option value="11"[% (resultaat.bewaartermijn == '11' ? ' selected' : '') %]>11 jaar</option>
+                                        <option value="12"[% (resultaat.bewaartermijn == '12' ? ' selected' : '') %]>12 jaar</option>
+                                        <option value="15"[% (resultaat.bewaartermijn == '15' ? ' selected' : '') %]>15 jaar</option>
+                                        <option value="20"[% (resultaat.bewaartermijn == '20' ? ' selected' : '') %]>20 jaar</option>
+                                        <option value="30"[% (resultaat.bewaartermijn == '30' ? ' selected' : '') %]>30 jaar</option>
+                                        <option value="40"[% (resultaat.bewaartermijn == '40' ? ' selected' : '') %]>40 jaar</option>
+                                        <option value="110"[% (resultaat.bewaartermijn == '110' ? ' selected' : '') %]>110 jaar</option>
+                                        <option value="999"[% (resultaat.bewaartermijn == '999' ? ' selected' : '') %]>Bewaren</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_dossiertype_[% statuscount %]_[% resultatencount %]">
+                                        <option value="digitaal"[% (resultaat.dossiertype == 'digitaal' ? ' selected' : '') %]>Digitaal</option>
+                                        <option value="fysiek"[% (resultaat.dossiertype == 'fysiek' ? ' selected' : '') %]>Digitaal en fysiek</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_td100">
+                                    <select name="status_bewaren_ingang_[% statuscount %]_[% resultatencount %]">
+                                        <option value="vervallen"[% (resultaat.ingang == 'vervallen' ? ' selected' : '') %]>Vervallen (vv)</option>
+                                        <option value="onherroepelijk"[% (resultaat.ingang == 'onherroepelijk' ? ' selected' : '') %]>Onherroepelijk (oh)</option>
+                                        <option value="afhandeling"[% (resultaat.ingang == 'afhandeling' ? ' selected' : '') %]>Afhandeling (af)</option>
+                                        <option value="verwerking"[% (resultaat.ingang == 'verwerking' ? ' selected' : '') %]>Verwerking (vw)</option>
+                                        <option value="geweigerd"[% (resultaat.ingang == 'geweigerd' ? ' selected' : '') %]>Geweigerd (gw)</option>
+                                        <option value="verleend"[% (resultaat.ingang == 'verleend' ? ' selected' : '') %]>Verleend (v)</option>
+                                        <option value="geboorte"[% (resultaat.ingang == 'geboorte' ? ' selected' : '') %]>Geboorte (gb)</option>
+                                        <option value="einde-dienstverband"[% (resultaat.ingang == 'einde-dienstverband' ? ' selected' : '') %]>Einde dienstverband (ed)</option>
+                                    </select>
+                                </td>
+                                <td class="table_ztb_td_60" align="center"><a href="#" class="del"><img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/></a></td>
+                            </tr>
+                        [% END %]
+                        </tbody>
+                        </table>
+                        <a href="#" class="add add_row">Resultaatmogelijkheid toevoegen</a><br /><br />
+                        <div class="ui-helper-clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="notificatie_container">
+                        <table class="table_zaakinformatie margin5px ztAjaxTable" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th
+                                        colspan="5"
+                                        >Notificaties voor deze status
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_ztb_title_tr">
+                                    <td class="tdvar">Naam</td>
+                                    <td class="td80 center">Bewerken</td>
+                                    <td class="td80 center">Verwijderen</td>
+                                </tr>
+                                <tr class="table_ztb_tr ztAjaxTable_template">
+                                    <td class="tdvar">
+                                        <input
+                                            type="text"
+                                            size="40"
+                                            class="ztAjaxTable_uniquehidden"
+                                            value=""
+                                            name="status_notificatie_id_[% statuscount %]" />
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="[% c.uri_for('/zaaktype/status/notificatie_definitie') %]" class="edit" title="Bewerk eigenschappen kenmerk">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="#" class="ztAjaxTable_del del">
+                                            <img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                                [% notificatiecount = 0 %]
+                                [% FOREACH snotificatiei IN status.notificaties.keys.nsort %]
+                                [% snotificatie = status.notificaties.$snotificatiei %]
+                                    [% notificatiecount = notificatiecount + 1 %]
+                                <tr class="table_ztb_tr ztAjaxTable_row ztAjaxTable_rownumber_[% notificatiecount %]">
+                                    <td class="tdvar">
+                                        <input
+                                            type="text"
+                                            size="40"
+                                            class="ztAjaxTable_uniquehidden"
+                                            value="[% snotificatie.label %]"
+                                            name="status_notificatie_id_[% statuscount %]_[% notificatiecount %]" />
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="[% c.uri_for('/zaaktype/status/notificatie_definitie') %]" class="edit" title="Bewerk eigenschappen notificatie">
+                                            <img border="0" width="16" height="16" alt="Bewerken" src="/images/icon-edit.png"/>
+                                        </a>
+                                    </td>
+                                    <td class="td80 center">
+                                        <a href="#" class="ztAjaxTable_del del">
+                                            <img border="0" width="16" height="16" alt="Verwijderen" src="/images/icon-delete.png"/>
+                                        </a>
+                                    </td>
+                                </tr>
+                                [% END %]
+                            </tbody>
+                        </table>
+                        <a
+                            href="#"
+                            rel="status: [% c.req.params.status %]; initcallback: ezra_zaaktype_notificatie_edit; rowcallback: ezra_zaaktype_add_notificatie"
+                            title="Notificatie toevoegen"
+                            class="add ztAjaxTable_add "
+                            >Notificatie toevoegen</a>
+							<div class="ui-helper-clearfix"></div>
+                    </div>
+
+                        <input type="button" value="Opslaan" class="button140 button_right">
+                    </td>
+                </tr>
+            [% END %]
+            <tr>
+            	<td colspan="4"><a href="#" id="status_row_add" class="add in_table">Status toevoegen</a></td>
+            </tr>
+            </tbody>
+        </table>
+        
+        <!-- <a href="#" id="status_row_add">Status toevoegen</a>-->
+        <!-- Afhandelstatus -->
+        <table class="table_zaakinformatie">
+            <tr class="table_ztbmenu_tr">
+
+            <td class="table_ztbmenu_tdleft"><a href="[% c.uri_for('/zaaktype/algemeen/edit') %]" title="Annuleren"><input type="button" value="Vorige" class="button140"></a></td>
+            <td class="table_ztbmenu_tdright"><input type="submit" value="Volgende" class="button140 right"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+</form>

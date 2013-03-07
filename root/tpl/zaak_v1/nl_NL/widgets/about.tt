@@ -1,0 +1,23 @@
+<div id="about_dialog" class="form">
+    <table>
+        <tbody>
+            [% FOREACH aboutkey IN ZCONSTANTS.zaaksysteem_about %]
+            <tr>
+                <td class="td200">[% aboutkey | ucfirst %]:</td>
+                <td>[% c.about.$aboutkey %]</td>
+                <td class="td260"></td>
+            </tr>
+            [% END %]
+            <tr>
+                <td class="td200">Einddatum:</td>
+                <td>N.v.t.</td>
+                <td class="td260"></td>
+            </tr>
+            <tr>
+                <td class="td200">Documentatie:</td>
+                <td><a target="_blank" href="http://wiki.zaaksysteem.nl/">Zaaksysteem Wiki</a></td>
+                <td class="td260"></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

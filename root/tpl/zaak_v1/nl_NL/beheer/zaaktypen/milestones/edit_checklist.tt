@@ -1,0 +1,42 @@
+<div id="checklist_definitie">
+<form>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<input type="hidden" name="rownumber" value="[% rownumber %]">
+<table class="table_zaakinformatie" id="checklist_template">
+    <thead>
+        <tr>
+            <th colspan="2">Antwoorden</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Invoertype</td>
+            <td class="table_td_right_zaakinformatie">
+                <select name="checklist_antwoord_type" id="antwoord_invoertype">
+                    [% FOR invoertype IN constants.veld_opties %]
+                        [% NEXT UNLESS invoertype.key == 'checkbox' || invoertype.key == 'select' %]
+                        <option
+                            value="[% invoertype.key %]"
+                            [% (history.type == invoertype.key) ? ' selected' : '' %]
+                            [% (invoertype.value.multiple ? ' class="has_options"' : '') %]
+                        >
+                            [% invoertype.value.label %]
+                        </option>
+                    [% END %]
+                    <option value="yesno"[% (history.type == 'yesno') ? ' selected' : '' %]>Ja/Nee</option>
+                </select>
+            </td>
+        <tr>
+        <tr id="antwoord_mogelijkheden">
+            <td class="table_td_left_zaakinformatie">Mogelijkheden</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea cols="60" rows="5" name="checklist.antwoord_mogelijkheden">[% history.mogelijkheden %]</textarea>
+            </td>
+        <tr>
+    </tbody>
+<table>
+<input type="submit" value="Opslaan" class="button140">
+</form>
+</div>
+

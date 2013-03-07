@@ -1,0 +1,74 @@
+[% nowrapper = 1 %]
+<table class="marginbottom">
+    <tr>
+        <td class="td150 label">Zaaknummer:</td>
+        <td class="td200">[% zaak.nr %]</td>
+    </tr>
+    <tr>
+
+        <td class="td150 label">Zaaktype:</td>
+        <td class="td200">[% zaak.zaaktype_node_id.titel %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Generieke categorie:</td>
+        <td class="td200">[% zaak.zaaktype_node_id.zaaktype_categorie_id.categorie %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Zaakniveau:</td>
+        <td class="td200">[% (zaak.pid ? 'B (Subzaak)' : 'A (Hoofdzaak)') %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Fase:</td>
+        <td class="td200">[%
+            zaak.volgende_fase.fase %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Trigger:</td>
+        <td class="td200">
+            [% zaak.aanvraag_trigger | ucfirst %]
+        </td>
+    </tr>
+    <tr>
+        <td class="td150 label">Aanvrager:</td>
+        <td class="td200">[% zaak.aanvrager.naam %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Toelichting:</td>
+        <td class="td200">[% zaak.onderwerp %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Zaakcoordinator:</td>
+        <td class="td200">[% zaak.coordinator.naam %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Behandelaar:</td>
+        <td class="td200">[% zaak.behandelaar.naam %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Startdatum:</td>
+
+        <td class="td200">[% zaak.registratiedatum.dmy %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Afhandelen voor:</td>
+
+        <td class="td200">[% zaak.streefafhandeldatum.dmy %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Besluittype:</td>
+        <td class="td200">
+            [% zaak.zaaktype_definitie_id.besluittype | ucfirst %]
+        </td>
+    </tr>
+    <tr>
+
+        <td class="td150 label">Besluit:</td>
+        <td class="td200">[% zaak.besluit %]</td>
+    </tr>
+    <tr>
+        <td class="td150 label">Resultaat:</td>
+        <td class="td200">[% zaak.resultaat %]</td>
+    </tr>
+
+</table>
+

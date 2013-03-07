@@ -1,0 +1,40 @@
+<div class="widget_term">
+    <input class="widget_term_content mini80 left" type="text" name="[% terms_name %]" size="2" value="[% terms_value %]">
+    <!-- Not autobuild, because of jquery conditions on selects, just
+        to make sure we do not break things -->
+    <select class="widget_term_select [% UNLESS dont_make_widget %]replace-select[% END %]" name="[% terms_name_type %]">
+        <option value="[% ZNAMING.TERMS_TYPE_KALENDERDAGEN %]"
+            [% (
+                ZNAMING.TERMS_TYPE_KALENDERDAGEN == terms_name_type_value
+                ? 'selected="selected"' : ''
+            ) %]
+        >
+            [% c.loc(ZNAMING.TERMS_TYPE_KALENDERDAGEN) %]
+        </option>
+            <option value="[% ZNAMING.TERMS_TYPE_WERKDAGEN %]"
+            [% (
+                ZNAMING.TERMS_TYPE_WERKDAGEN == terms_name_type_value
+                ? 'selected="selected"' : ''
+            ) %]
+        >
+            [% c.loc(ZNAMING.TERMS_TYPE_WERKDAGEN) %]
+        </option>
+        <option value="[% ZNAMING.TERMS_TYPE_WEKEN %]"
+            [% (
+                ZNAMING.TERMS_TYPE_WEKEN == terms_name_type_value
+                ? 'selected="selected"' : ''
+            ) %]
+        >
+            [% c.loc(ZNAMING.TERMS_TYPE_WEKEN) %]
+        </option>
+        <option value="[% ZNAMING.TERMS_TYPE_EINDDATUM %]"
+            [% (
+                ZNAMING.TERMS_TYPE_EINDDATUM == terms_name_type_value
+                ? 'selected="selected"' : ''
+            ) %]
+        >
+            [% c.loc(ZNAMING.TERMS_TYPE_EINDDATUM) %]
+        </option>
+    </select> 
+</div>
+

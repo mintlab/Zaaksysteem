@@ -1,0 +1,395 @@
+[% USE Scalar %]
+[% IF !locatie %]
+    [% locatie = 'Netherlands, ' _ c.config.gemeente.woonplaats _ ', '
+        _ zaak.kenmerk.aanvrager.woonplaats
+        _ ', ' _  zaak.kenmerk.aanvrager.straatnaam
+        _ ' ' _ zaak.kenmerk.aanvrager.huisnummer
+    %]
+[% END %]
+
+<div id="zaak_zaakinformatie_accordion">
+    <h3 class="ezra_load_zaak_element zaak_nr_[% zaak.id %][% (pip ? ' pip' : '') %]" id="load_algemene_zaakinformatie"><a href="#">Algemene zaakinformatie</a><img src="/images/zaakinfo-loader.gif" alt="bezig met laden" style="display:none" /></h3>
+    <div>
+        <!-- algemene_zaakinformatie.tt -->
+    </div>
+
+[% UNLESS pip %]
+    <h3>
+        <a href="#">Relaties met personen, organisaties en adressen</a>
+    </h3>
+    <div>
+        <div class="ui-accordion-table-bg">
+            <table class="table_ztb marginbottom">
+                <thead>
+                    <th colspan="5" class="th_16px blue">Personen en organisaties</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th class="td300">Type</th>
+                        <th class="td250">Naam</th>
+                        <th>Rol</th>
+                        <th class="td30"></th>
+                    </tr>
+
+                    
+                    <tr class="table_ztb_tr">
+                        <td class="td300">[% c.loc(zaak.aanvrager.betrokkene_type) %]</td>
+                        <td class="td250"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.id %]; id: [% zaak.aanvrager_object.betrokkene_identifier %]">[% zaak.aanvrager.naam %]</a></td>
+                        <td>Aanvrager (bij aanmaken zaak)</td>
+                        <td class="td30">
+                            <div class="dropdown-wrap dropdown-wrap-right">
+                                <div class="dropdown-init dropdown-init-in-td icon-toelichting icon icon-hover">
+                                    <div class="dropdown dropdown-left dropdown-tooltip">
+                                        <div class="dropdown-pijl"></div>
+                                        <div class="dropdown-content dropdown-content-overflow">
+                                        <strong>Magic Strings:</strong><br/>
+                                            [[aanvrager_naam]],<br />
+                                            [[aanvrager_straatnaam]],<br />
+                                            etc
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="table_ztb_tr">
+                        <td class="td300">[% c.loc(zaak.aanvrager.betrokkene_type) %]</td>
+                        <td class="td250"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.id %]; id: [% zaak.aanvrager_object.betrokkene_identifier %]; actueel: 1">[% zaak.aanvrager.naam %]</a></td>
+                        <td>Aanvrager (actueel)</td>
+                        <td class="td30"><a href="" class="betrokkene-get" title="Informatie over aanvrager" rel="zaak: [% zaak.id %]; id: [% zaak.aanvrager_object.betrokkene_identifier %]; actueel: 1"></td>
+                    </tr>
+                [% IF zaak.coordinator %]
+                    <tr class="table_ztb_tr">
+                        <td class="td300">Behandelaar</td>
+                        <td class="td250"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.id %]; id: [% zaak.coordinator_object.betrokkene_identifier %]">[% zaak.coordinator.naam %]</a></td>
+                        <td>Zaakcoordinator</td>
+                        <td class="td30">
+                            <div class="dropdown-wrap dropdown-wrap-right">
+                                <div class="dropdown-init dropdown-init-in-td icon-toelichting icon icon-hover">
+                                    <div class="dropdown dropdown-left dropdown-tooltip">
+                                        <div class="dropdown-pijl"></div>
+                                        <div class="dropdown-content dropdown-content-overflow">
+                                        <strong>Magic Strings:</strong><br/>
+                                            [[coordinator]],<br />
+                                            [[coordinator_tel]],<br />
+                                            etc
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                [% END %]
+                [% IF zaak.behandelaar %]
+                    <tr class="table_ztb_tr">
+                        <td class="td300">Behandelaar</td>
+                        <td class="td250"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.id %]; id: [% zaak.behandelaar_object.betrokkene_identifier %]">[% zaak.behandelaar.naam %]</a></td>
+                        <td>Behandelaar</td>
+                        <td class="td30">
+                            <div class="dropdown-wrap dropdown-wrap-right">
+                                <div class="dropdown-init dropdown-init-in-td icon-toelichting icon icon-hover">
+                                    <div class="dropdown dropdown-left dropdown-tooltip">
+                                        <div class="dropdown-pijl"></div>
+                                        <div class="dropdown-content dropdown-content-overflow">
+                                        <strong>Magic Strings:</strong><br/>
+                                            [[behandelaar]],<br />
+                                            [[behandelaar_tel]],<br />
+                                            etc
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- <td class="td30"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.id %]; id: [% zaak.behandelaar_object.betrokkene_identifier %]"><img src="/images/icon-info.png" border="0" width="16" height="16" alt="Verwijderen" title="Meer informatie over deze betrokkene"></a></td> -->
+                    </tr>
+                [% END %]
+                [% betrokkenen = zaak.scalar.zaak_betrokkenen.scalar.search_gerelateerd %]
+                [% WHILE (betrokkene = betrokkenen.next) %]
+                    <tr class="table_ztb_tr">
+                        <td class="td300">[% c.loc(betrokkene.betrokkene_type) %]</td>
+                        <td class="td250"><a href="" class="betrokkene-get" title="Informatie over behandelaar" rel="zaak: [% zaak.id %]; id: [% zaak.behandelaar_object.betrokkene_identifier %]">[% betrokkene.naam %]</a></td>
+                        <td>[% betrokkene.rol %]</td>
+                        <td class="td30">
+                            <div class="dropdown-wrap dropdown-wrap-right">
+                                <div class="dropdown-init dropdown-init-in-td icon-toelichting icon icon-hover">
+                                    <div class="dropdown dropdown-left dropdown-tooltip">
+                                        <div class="dropdown-pijl"></div>
+                                        <div class="dropdown-content dropdown-content-overflow">
+                                        <strong>Magic Strings:</strong><br/>
+                            [[[% betrokkene.magic_string_prefix %]_naam]],<br />
+                            [[[% betrokkene.magic_string_prefix %]_voorvoegsel]],<br />
+                                            etc
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                [% END %]
+
+
+
+                [% IF zaak.kenmerk.org_eenheid %]
+                    <tr class="table_ztb_tr">
+                        <td class="td300">Afdeling</td>
+                        <td class="td250">[% zaak.kenmerk.org_eenheid.naam %]</a></td>
+                        <td>-</td>
+                        <td class="td30">&nbsp;</td>
+                    </tr>
+                [% END %]
+                </tbody>
+            </table>
+        
+        
+        <table class="table_ztb marginbottom">
+        <thead>
+            <th colspan="4" class="th_16px blue">Adressen en gebouwen</th>
+        </thead>
+        <tbody>
+            <tr>
+                <th class="td300">Type</th>
+                <th class="td250">Naam</th>
+                <th>Soort relatie</th>
+                <th class="td30"></th>
+            </tr>
+            [% locatie_zaak = zaak.scalar.locatie_zaak.columns_bag.hash %]
+            [% FOREACH typerow IN locatie_zaak.keys %]
+                [% NEXT UNLESS locatie_zaak.$typerow %]
+                [% NEXT IF typerow == 'id' %]
+                [% NEXT IF typerow == 'type' %]
+                <tr class="table_ztb_tr">
+                    <td class="td300">[% typerow | ucfirst %]</td>
+                    <td class="td250">
+                        [% c.model('Gegevens::Bag').bag_human_view_by_id(typerow _ '-' _ locatie_zaak.$typerow) %]
+                    </td>
+                    <td>Zaakobject</td>
+                    <td class="td30">
+                        <a href="/gegevens/bag/[% typerow %]-[% locatie_zaak.$typerow %]/info/[% typerow %]" class="dialog-post" title="Informatie over adres of gebrouw">
+                            <img src="/images/icon-info.png" border="0" width="16" height="16" alt="Meer info" title="Meer informatie over dit object">
+                        </a>
+                    </td>
+                </tr>
+            [% END %]
+
+            [% IF zaak.aanvrager.verblijfsobject && zaak.zaaktype_node_id.adres_aanvrager %]
+                <tr class="table_ztb_tr">
+                    <td class="td300">Adres</td>
+                    <td class="td250">
+                        [% zaak.aanvrager.verblijfsobject.hoofdadres.openbareruimte.naam %]
+                        [% zaak.aanvrager.verblijfsobject.hoofdadres.nummeraanduiding %]
+                    </td>
+                    <td>Correspondentie</td>
+                    <td class="td30">
+                        <a href="/gegevens/bag/verblijfsobject-[% zaak.kenmerk.aanvrager.verblijfsobject.identificatie %]/info/verblijfsobject" class="dialog-post" title="Informatie over adres of gebrouw">
+                            <img src="/images/icon-info.png" border="0" width="16" height="16" alt="Meer info" title="Meer informatie over dit object">
+                        </a>
+                    </td>
+                </tr>
+            [% END %]
+            </tbody>
+        </table>
+    </div>
+</div>
+    
+[% END %]
+
+[% IF pip %]
+    [% IF zaak.zaaktype_node_id.zaaktype_kenmerken.scalar.search({
+        pip => 1
+    }).count %]
+        [% PROCESS zaak/elements/view_kenmerken.tt %]
+    [% END %]
+[% END %]
+
+[% UNLESS pip %]
+    <h3><a href="#">Relaties met andere zaken</a></h3>
+    <div>
+    <div class="ui-accordion-table-bg">
+     <table class="table_zaken_title marginbottom" id="hoofddeelzaken_table" cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="9">Hoofd- en deelzaken</th>
+            </tr>
+        </thead>
+        <tbody>
+        
+            <tr class="table_zaken_title_tr">
+                <td class="table_zaken_title_td100">Zaakniveau</td>
+                <td class="td50">Nr</td>
+                <td class="table_zaken_title_td100">Voortgang</td>
+                <td class="table_zaken_title_td200">Zaaktype</td>
+                <td class="table_zaken_title_td150">Zaakcoordinator</td>
+                <td class="table_zaken_title_td150">Behandelaar</td>
+                <td class="table_zaken_title_td200">Besluit</td>
+                <td class="table_zaken_title_td100">Dagen</td>
+                <td class="table_zaken_title_td50 td_i" class="center">I</td>
+            </tr>
+           
+            [% prevnode = 1 %]
+            [% parenthtml = 'A' %]
+            [% childhtml = 'B' %]
+            [% startzaak = zaak %]
+            [% IF startzaak.pid %]
+                [% startzaak = startzaak.pid %]
+            [% END %]
+            [% global.nodecount = 0 %]
+            [% INCLUDE zaak/elements/relation/child.tt
+                prevnode  = 0
+                startzaak = startzaak
+                niveau    = 1
+            %]
+            </tbody>
+        </table>
+    
+    [% BLOCK block_vervolgzaak %]
+        <tr class="table_zaken_tr">
+            <td class="table_zaken_td60">
+                <a href="[% c.uri_for('/zaak/' _ relatie.id) %]">[% relatie.nr %]</a>
+            </td>
+            <td class="table_zaken_td100">
+                <a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">
+                    [% relatie.milestone %] van [% relatie.afhandel_fase.status %]
+                </a>
+            </td>
+            <td class="table_zaken_tdvar"><a href="[% (pip ? '/pip' : '') %]/zaak/[% relatie.nr %]/zaaktypeinfo" class="fire-dialog" title="Informatie over dit zaaktype" rel="zaak: [% relatie.id %]">[% relatie.zaaktype_node_id.titel %]</a></td>
+            
+            <td class="table_zaken_td100">[% relatie.registratiedatum.dmy %]</td>
+            <td class="table_zaken_td50 td_i td_i_img"><a href="[% c.uri_for('/zaak/get_meta/' _ relatie.nr) %]" class="fire-dialog" title="Informatie over zaak"><img border="0" src="/images/icon-info.png"></a></td>
+        </tr>
+    [% END %]
+    [% relaties = zaak.scalar.zaak_vervolgers.scalar.search %]
+    [% IF relaties.count || zaak.vervolg_van %]
+        <table class="table_zaken_title marginbottom" cellspacing="0">
+            <thead>
+                <tr>
+                    <th colspan="6">Vervolgzaken</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="table_zaken_title_tr">
+                    <td class="table_zaken_title_td60">Zaaknr</td>
+                    <td class="table_zaken_title_td100">Fase</td>
+                    <td class="table_zaken_title_tdvar">Zaaktype</td>
+                    <td class="table_zaken_title_td100">Startmoment</td>
+                    <td class="table_zaken_title_td50 td_i" class="center">I</td>
+                </tr>
+            [% WHILE (relatie = relaties.next) %]
+                [% PROCESS block_vervolgzaak %]
+            [% END %]
+            [% IF zaak.vervolg_van %]
+                [% relatie = zaak.vervolg_van %]
+                [% PROCESS block_vervolgzaak %]
+            [% END %]
+            </tbody>
+        </table>
+        [% END %]
+    
+    [% BLOCK block_relatie %]
+    <tr class="table_zaken_tr">
+        <td class="table_zaken_td60">
+            <a href="[% c.uri_for('/zaak/' _ relatie.id) %]">[% relatie.nr %]</a>
+        </td>
+        <td class="table_zaken_td100">
+            <a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">
+                [% relatie.milestone %] van [% relatie.afhandel_fase.status %]
+            </a>
+        </td>
+        <td class="table_zaken_tdvar">
+            <a href="[% (pip ? '/pip' : '') %]/zaak/[% relatie.nr %]/zaaktypeinfo" class="fire-dialog" title="Informatie over dit zaaktype" rel="zaak: [% relatie.id %]">[% relatie.zaaktype_node_id.titel %]</a></td>
+        <td class="table_zaken_td150"><a href="[% c.uri_for('/zaak/' _ relatie.nr) %]">[% relatie.behandelaar.naam %]</a></td>
+        <td class="table_zaken_td150"><a href="[% c.uri_for('/zaak/' _ relatie.nr) %]">[% relatie.coordinator.naam %]</a></td>
+        <td class="table_zaken_td50 td_i td_i_img"><a href="[% c.uri_for('/zaak/get_meta/' _ relatie.nr) %]" class="fire-dialog" title="Informatie over zaak"><img border="0" src="/images/icon-info.png"></a></td>
+    </tr>
+    [% END %]
+
+    [% relaties = zaak.scalar.zaak_relaties.scalar.search %]
+    [% IF relaties.count || zaak.relates_to %]
+        <table class="table_zaken_title marginbottom" cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="6">Overige relaties met zaken</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table_zaken_title_tr">
+    
+                <td class="table_zaken_title_td60">Zaaknr</td>
+                <td class="table_zaken_title_td100">Fase</td>
+                <td class="table_zaken_title_tdvar">Zaaktype</td>
+                <td class="table_zaken_title_td150">Zaakcoordinator</td>
+                <td class="table_zaken_title_td150">Behandelaar</td>
+                <td class="table_zaken_title_td50 td_i" class="center">I</td>
+            </tr>
+        [% WHILE (relatie = relaties.next) %]
+            [% PROCESS block_relatie %]
+        [% END %]
+        [% IF zaak.relates_to %]
+            [% relatie = zaak.relates_to %]
+            [% PROCESS block_relatie %]
+        [% END %]
+        </tbody>
+        </table>
+    [% END %]
+        </div>
+    </div>
+[% END %]
+
+
+
+
+
+    <h3>
+        <a href="#">Voortgang</a>
+    </h3>
+    <div class="ui-accordion-content-padding">
+        <div class="padding-voortgang clearfix ui-accordion-table-bg">
+            <div class="left flex50 block progress">
+                <div class="inner">
+                    <p class="header">Vooruitgang zaak [% zaak.nr %]</p>
+                    <div class="flexible progress-wrap clearfix">
+                        <div class="progress-bar holder rounded shadow">
+                            <div class="progress-value value rounded">
+                                <div class="perc">[% zaak.status_perc %]</div>
+                            </div>
+                        </div>
+                        <div class="start-end">
+                            <span class="progress-start">Geregistreerd</span><span class="progress-end">Afgehandeld</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="right flex50 block progress">
+                <div class="inner">
+                    [% total_days = ((zaak.streefafhandeldatum.epoch - zaak.registratiedatum.epoch) / 86400) %]
+                    <p class="header">Dag [% zaak.days_running %] van [% total_days | format('%0d') %]</p>
+                    <div class="flexible progress-wrap clearfix">
+                        <div class="progress-bar holder rounded shadow">
+                            <div class="progress-time value rounded">
+                                <div class="green color rounded-left"></div>
+                                <div class="orange color"></div>
+                                <div class="red color rounded-right"></div>
+                                <div class="current"></div>
+                                <div class="perc">[% ( (zaak.days_perc < 0 ?  0 : zaak.days_perc) > 100 ? 100 : (zaak.days_perc < 0 ?  0 : zaak.days_perc) ) %]</div>
+                            </div>
+                        </div>
+                        <div class="start-end">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <h3
+    class="ui-last-panel ezra_load_zaak_element zaak_nr_[% zaak.nr %] element_maps[% (pip ? ' pip' : '') %]"
+    id="load_element_maps">
+        <a href="#">Geo-locatie</a>
+        <img src="/images/zaakinfo-loader.gif" alt="bezig met laden" style="display:none" />
+    </h3>
+    <div>
+    </div>
+</div>
+

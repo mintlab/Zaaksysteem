@@ -1,0 +1,142 @@
+# rename this file to Zaaksysteem.yml and put a ':' in front of 'name' if
+# you want to use YAML like in old versions of Catalyst
+name Zaaksysteem
+
+main_site               = http://www.zaaksysteem.nl
+otap_ip                 = 85.255.208.150
+invoke_assets_minified  = 1
+libreoffice_version = 3
+
+<gemeente></gemeente>
+
+<authentication>
+    default_realm = zaaksysteem
+    <realms>
+        <zaaksysteem>
+            <credential>
+                class           = "Password"
+                password_field  = "password"
+                password_type   = "self_check"
+            </credential>
+            <store>
+                binddn              = "anonymous"
+                bindpw              = "dontcarehow"
+                class               = "LDAP"
+                ldap_server         = "localhost"
+                <ldap_server_options>
+                    timeout             = 30
+                </ldap_server_options>
+                use_roles           = 1
+                role_basedn         = "dc=example,dc=com"
+                role_field          = "cn"
+                role_filter         = "(&(objectClass=posixGroup)(memberUid=%s))"
+                role_value          = "dn"
+                entry_class         = "Zaaksysteem::LDAP::Entry"
+                user_class          = "Zaaksysteem::LDAP::User"
+                user_basedn         = "dc=example,dc=com"
+                user_field          = "cn"
+                user_filter         = "(&(objectClass=posixAccount)(cn=%s))"
+            </store>
+        </zaaksysteem>
+    </realms>
+</authentication>
+
+<LDAP>
+    admin       = "dc=example,dc=com"
+    password    = "password"
+</LDAP>
+
+google_api_key = "L0ngApiKey123"
+
+### Overig
+<Z::Plugins::Parkeergebied>
+    kenteken_algemeen_tekst = "ALGEMEEN"
+    <kenmerk>
+        parkeergebied_id   = "Parkeergebied"
+        geldigheid_id      = "Geldigheid"
+        vergunningtype_id  = "Vergunningtype"
+        prijs              = "Prijs parkeervergunning"
+        betaalwijze_id     = "Betalingswijze"
+        startdatum_id       = "Begindatum"
+        einddatum_id        = "Einddatum"
+        geldigheidsdagen_id = "Geldigheidsdagen"
+        vergunninghouder_id = "Vergunninghouder"
+        kenteken_id         = "Kenteken"
+        aantal_vergunningen = "Aantal bezoekersvergunningen"
+    </kenmerk>
+</Z::Plugins::Parkeergebied>
+
+<Plugin::Session>
+    cookie_expires          = 0
+</Plugin::Session>
+
+<customers>
+    <example.zaaksysteem.nl>
+        customer_id             = zaaksysteem
+        files                   = /home/zaaksysteem/files
+        dropdir                 = /home/zaaksysteem/dev/drops
+        template                = zaak_v1
+        <APIKEYS>
+            ad                  = "Snalwelkrlkjlkjkljlkj"
+        </APIKEYS>
+        <Plugin::Import>
+            <GBA>
+                import_class    = BussumCsv
+            </GBA>
+            <BAG>
+                import_class    = ImportCentric
+                filename        = "/tmp/bag.csv"
+            </BAG>
+        </Plugin::Import>
+        <LDAP>
+            basedn              = "o=zaaksysteem,dc=example,dc=com"
+        </LDAP>
+        <Model::DBG>
+            <connect_info>
+                dsn             = "dbi:Pg:dbname=zaaksysteem_gegevens"
+                pg_enable_utf8  = 1
+            </connect_info>
+        </Model::DBG>
+        <Model::DB>
+            <connect_info>
+                dsn             = "dbi:Pg:dbname=zaaksysteem_beheer"
+                pg_enable_utf8  = 1
+            </connect_info>
+        </Model::DB>
+        <customer_info>
+            naam            = Zaaksysteem
+            naam_lang       = Zaaksysteem.nl
+            naam_kort       = Zaaksysteem
+            woonplaats      = Zaaksysteem
+            adres           = Examplelaan 123
+            straatnaam      = Examplelaan
+            huisnummer      = 123
+            postcode        = 1234 AZ
+            postbus         = ""
+            postbus_postcode = ""
+            website         = http://www.zaaksysteem.nl/
+            email           = info@zaaksysteem.nl
+            telefoonnummer  = 020 - 737 000 5
+            faxnummer       = ""
+            zaak_email      = info@zaaksysteem.nl
+            latitude        = 52.278
+            longitude       = 5.163
+            gemeente_id_url = http://www.zaaksysteem.nl/
+            gemeente_portal = http://www.zaaksysteem.nl/
+        </customer_info>
+        <Z::Plugins::Yucat>
+            zaaktype_id                         = 45
+            buitenbeter_bedrijf_betrokkene_id   = 4
+        </Z::Plugins::Parkeergebied>
+        <Model::Plugins::Ogone>
+            shapass         = "DitIsEenWachtwoord"
+        </Model::Plugins::Ogone>
+        <Model::Plugins::Digid>
+            select_server   = "digidasdemo1"
+            app_id          = ""
+            app_url         = "http://example.zaaksysteem.nl/auth/digid"
+            shared_secret   = ""
+        </Model::Plugins::Digid>
+    </example.zaaksysteem.nl>
+</customers>
+

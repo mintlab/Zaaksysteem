@@ -1,0 +1,11 @@
+            <thead>
+                <tr class="table_zaken_title_tr">
+                    <td class="td30 center"><div class="icon icon-down"/></td>
+                    <td class="tdvar">zaaktype</th>
+                    <td class="tdvar"></td>
+                    <td class="td200">[% c.loc('versie') %]</th>
+                    [% IF ! categorie.system %]
+                    <td class="td150">[% c.loc('acties') %]</th>
+                    [% END %]
+                </tr>
+            </thead>

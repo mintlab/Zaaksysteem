@@ -1,0 +1,92 @@
+<!-- Begin Zaaktype -->
+<form method="POST" action="[% c.uri_for('/zaaktype/specifiek/edit') %]" class="zvalidate">
+<div class="block clearfix">
+    <p class="header">Stap 3/5: Specifieke zaakinformatie invullen</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie no_margin ztAjaxTable">
+            <thead>
+                <tr>
+                    <th colspan="4">Zaakinformatie binnen dit zaaktype</td>
+                </tr>
+                <tr class="table_ztb_title_tr">
+                    <td class="tdvar">Naam</td>
+                    <td class="td80" align="center">Bewerken</td>
+                    <td class="td80" align="center">Verwijderen</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="ztAjaxTable_template" id="kenmerk_row">
+                    <td class="td_bundle" colspan="3">
+                        <table class="table_zaakinformatie">
+                            <tr class="table_ztb_tr">
+                                <td class="tdvar">
+                                    <input type="text" name="kenmerk_naam">
+                                    <span class="validator"></span>
+                                </td>
+                                <td class="td80" align="center">
+                                    <a
+                                        href=""
+                                        class="ajaxTemplate"
+                                        title="Bewerken"
+                                        rel=""
+                                    >
+                                        <img
+                                            border="0" width="16" height="16" alt="Verwijderen"
+                                            src="/images/icon-edit.png"
+                                        />
+                                    </a>
+                                </td>
+                                <td class="td80" align="center">
+                                    <a href="#" class="ztAjaxTable_del">
+                                        <img
+                                            border="0" width="16" height="16" alt="Verwijderen"
+                                            src="/images/icon-delete.png"
+                                        />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr class="table_ztb_tr">
+                                <td colspan="3" class="td_toggle">
+                                    <table class="table_zaakinformatie" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="2" class="th14px">Definitie van status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="table_td_left_zaakinformatie">Statustype</td>
+                                            <td class="table_td_right_zaakinformatie">
+                                                <select name="status_type">
+                                                    <option value="behandelen">Behandelstatus</option>
+                                                    <option value="behandelen">Besluitvorming</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <a href="#" class="add ztAjaxTable_add">Zaakinformatie toevoegen</a><br /><br />
+        <table class="table_zaakinformatie">
+            <tr class="table_ztbmenu_tr">
+                <td class="table_ztbmenu_tdleft">
+                    <a
+                        href="[% c.uri_for('/zaaktype/status/edit') %]"
+                        title="Annuleren"
+                    >
+                        <input type="button" value="Vorige" class="button140">
+                    </a>
+                </td>
+                <td class="table_ztbmenu_tdright">
+                    <input type="submit" value="Volgende" class="button140 right">
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+</form>

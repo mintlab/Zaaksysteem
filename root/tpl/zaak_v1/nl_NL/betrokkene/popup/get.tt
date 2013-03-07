@@ -1,0 +1,165 @@
+[%
+    BMAP.medewerker = 'Behandelaar';
+    BMAP.natuurlijk_persoon = 'Persoon';
+
+    brontype = {
+        'bedrijf'               => 'Niet-natuurlijk persoon (Organisatie)',
+        'natuurlijk_persoon'    => 'Natuurlijk persoon',
+        'medewerker'            => 'Behandelaar',
+    };
+%]
+[% IF betrokkene.btype == 'natuurlijk_persoon' %]
+<form method="POST" action="[% c.uri_for('/betrokkene/info/update/' _ betrokkene.gmid ) %]">
+<input type="hidden" name="betrokkene_type" value="[% betrokkene.btype %]">
+[% END %]
+<input type="hidden" name="zaak" value="[% zaak.nr %]">
+[% IF betrokkene.btype == 'bedrijf' %]
+    [% INCLUDE widgets/betrokkene/view_bedrijf.tt %]
+
+[% ELSE %]
+                        <table>
+                            <tr>
+                                <td class="td175 label">Type:</td>
+                                <td class="td225">[% BMAP.${betrokkene.btype} %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Authentiek:</td>
+                                <td class="td225">
+                                    [% IF betrokkene.authenticated %]
+                                        <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+                                    [% ELSE %]
+                                        <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+                                    [% END %]
+                                </td>
+                            </tr>
+[% IF betrokkene.btype == 'natuurlijk_persoon' %]
+                            <tr>
+                                <td class="td175 label">Bron:</td>
+                                <td class="td225">
+                                    [% IF betrokkene.authenticated %]
+                                        GBA
+                                    [% ELSE %]
+                                        [% betrokkene.authenticatedby %]
+                                    [% END %]
+                                </td>
+                            </tr>
+[% ELSE %]
+                            <tr>
+                                <td class="td175 label">Bron:</td>
+                                <td class="td225">[% (betrokkene.btype == 'medewerker' ? 'LDAP' : 'GBA (Gegevensmagazijn)') %]</td>
+                            </tr>
+[% END %]
+[% IF betrokkene.btype == 'natuurlijk_persoon' %]
+                            <tr>
+
+                                <td class="td175 label">BSN:</td>
+                                <td class="td225">[% betrokkene.burgerservicenummer %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Voornamen:</td>
+                                <td class="td225">[% betrokkene.voornamen %]</td>
+                            </tr>
+
+                            <tr>
+                                <td class="td175 label">Tussenvoegsels:</td>
+                                <td class="td225">[% betrokkene.voorvoegsel %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Achternaam:</td>
+                                <td class="td225">[% betrokkene.geslachtsnaam %]</td>
+
+                            </tr>
+[% END %]
+[% IF betrokkene.btype == 'medewerker' %]
+                            <tr>
+                                <td class="td175 label">Naam:</td>
+                                <td class="td225">[% betrokkene.display_name %]</td>
+
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Telefoon:</td>
+                                <td class="td225">[% betrokkene.telefoonnummer %]</td>
+
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Functie:</td>
+                                <td class="td225"></td>
+
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Afdeling:</td>
+                                <td class="td225">[% betrokkene.org_eenheid.naam %]</td>
+
+                            </tr>
+                            <tr>
+                                <td class="td175 label">E-mailadres:</td>
+                                <td class="td225">[% betrokkene.email %]</td>
+
+                            </tr>
+[% END %]
+[% IF betrokkene.btype == 'natuurlijk_persoon' %]
+                            <tr>
+                                <td class="td175 label">Geboortedatum:</td>
+                                <td class="td225">[% betrokkene.geboortedatum.dmy %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Overlijdensdatum:</td>
+                                <td class="td225">[%
+                                    betrokkene.datum_overlijden.dmy %]</td>
+                            </tr>
+
+                            <tr>
+                                <td class="td175 label">Geslacht:</td>
+
+                                <td class="td225">[% (betrokkene.geslachtsaanduiding == 'M' ? 'Man' : 'Vrouw') %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Straatnaam:</td>
+                                <td class="td225">[% betrokkene.straatnaam %]</td>
+                            </tr>
+                            <tr>
+
+                                <td class="td175 label">Huisnummer:</td>
+                                <td class="td225">[% betrokkene.huisnummer %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Huisletter:</td>
+                                <td class="td225">[% betrokkene.huisletter %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Toevoeginghuisnr:</td>
+                                <td class="td225">[% betrokkene.huisnummertoevoeging %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Postcode:</td>
+                                <td class="td225">[% betrokkene.postcode %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Plaats:</td>
+                                <td class="td225">[% betrokkene.woonplaats %]</td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Telefoonnummer:</td>
+                                <td
+                                    class="table_td_right_zaakinformatie"><input type="text" class="input_large" value="[% betrokkene.telefoonnummer %]" name="npc-telefoonnummer"></td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">Mobiel:</td>
+                                <td class="td225"><input type="text" class="input_large" value="[% betrokkene.mobiel  %]" name="npc-mobiel"></td>
+                            </tr>
+                            <tr>
+                                <td class="td175 label">E-mailadres:</td>
+                                <td class="td225"><input type="text" class="input_large" value="[% betrokkene.email %]" name="npc-email"></td>
+                            </tr>
+[% END %]
+                        </table>
+                        <br />
+[% IF betrokkene.btype == 'natuurlijk_persoon' %]
+
+<div class="nextprev nextprev-dialog clearfix">
+<input type="submit" value="Opslaan" class="button140" id="dialog-submit"/>
+</div>
+
+</form>
+[% END %]
+[% END %] 

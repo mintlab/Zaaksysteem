@@ -1,0 +1,56 @@
+[% IF table_config.options.init %]
+<div class="ezra_simple_table">
+    <div class="ezra_simple_table-table_container">
+[% END %]
+        <table class="ezra_simple_table-table marginbottom">
+            <thead>
+                <tr>
+                [% FOREACH table_header IN table_config.header %]
+                    <th>[% table_header.label %]</th>
+                [% END %]
+                [% IF table_config.options.has_delete_button %]
+                    <th>&nbsp;</th>
+                [% END %]
+                </tr>
+            </thead>
+
+            <tbody>
+                [% FOREACH row IN table_config.rows %]
+                    [% row_identifier = table_config.options.row_identifier %]
+                    <tr>
+                    [% FOREACH table_header IN table_config.header %]
+                        [% column = table_header.mapping %]
+
+                        <td>
+                            [% IF row_identifier %]
+                            <input
+                            type="hidden"
+                            name="row_identifier"
+                            value="[% row.$row_identifier %]" />
+                                [% row_identifier = 0; %]
+                            [% END %]
+
+                            [% row.$column %]
+                        </td>
+                    [% END %]
+                    [% IF table_config.options.has_delete_button %]
+                        <td>
+                            <a
+                            class="ezra_simple_table-remove icon-delete"
+                            href="[% c.uri_for(table_config.options.action) %]">
+                        </a>
+                    </td>
+                    [% END %]
+                [% END %]
+                </tr>
+            </tbody>
+        </table>
+[% IF table_config.options.init %]
+    </div>
+    <a
+    class="knop voeg-toe ezra_simple_table-add"
+    href="[% c.uri_for(table_config.options.action) %]"><span></span>
+        [% table_config.options.add.label %]
+    </a>
+</div>
+[% END %]

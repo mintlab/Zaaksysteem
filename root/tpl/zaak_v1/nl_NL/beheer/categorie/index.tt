@@ -1,0 +1,9 @@
+<div class="block">
+    <p class="header">Categorie</p>
+    <div class="blockcontent">
+        [% PROCESS widgets/beheer/categorie/table.tt %]
+    </div>
+</div>
+<a rel="" href="[% c.uri_for('/beheer/bibliotheek/categorie/0/bewerken/' _ bib_type ) %]" class="add dialog-post" title="Categorie bewerken of aanmaken">Nieuwe categorie</a>
+
+

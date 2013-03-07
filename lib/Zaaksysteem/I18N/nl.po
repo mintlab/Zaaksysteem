@@ -1,0 +1,169 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+
+msgid "intern"
+msgstr "Intern"
+
+msgid "extern"
+msgstr "Extern"
+
+msgid "natuurlijk_persoon"
+msgstr "Natuurlijk Persoon (Burger uit GBA)"
+
+msgid "natuurlijk_persoon_na"
+msgstr "Natuurlijk Persoon (Burger anders dan GBA)"
+
+msgid "niet_natuurlijk_persoon"
+msgstr "Niet natuurlijk persoon (organisatie uit KvK)"
+
+msgid "niet_natuurlijk_persoon_na"
+msgstr "Niet natuurlijk persoon (organisatie niet uit KvK)"
+
+msgid "medewerker"
+msgstr "Behandelaar"
+
+msgid "aanvrager_adres"
+msgstr "Adres aanvrager"
+
+msgid "anders"
+msgstr "Andere locatie"
+
+msgid "aangeven"
+msgstr "Aangeven"
+
+msgid "aanmelden"
+msgstr "Aanmelden"
+
+msgid "aanvragen"
+msgstr "Aanvragen"
+
+msgid "afkopen"
+msgstr "Afkopen"
+
+msgid "afmelden"
+msgstr "Afmelden"
+
+msgid "indienen"
+msgstr "Indienen"
+
+msgid "inschrijven"
+msgstr "Inschrijven"
+
+msgid "ontvangen"
+msgstr "Ontvangen"
+
+msgid "aanschrijven"
+msgstr "Aanschrijven"
+
+msgid "vaststellen"
+msgstr "Vaststellen"
+
+msgid "uitvoeren"
+msgstr "Uitvoeren"
+
+msgid "opstellen"
+msgstr "Opstellen"
+
+msgid "melden"
+msgstr "Melden"
+
+msgid "reserveren"
+msgstr "Reserveren"
+
+msgid "stellen"
+msgstr "Stellen"
+
+msgid "voordragen"
+msgstr "Voordragen"
+
+msgid "vragen"
+msgstr "Vragen"
+
+msgid "starten"
+msgstr "Starten"
+
+msgid "vaststellen"
+msgstr "Vaststellen"
+
+msgid "opzeggen"
+msgstr "Opzeggen"
+
+msgid "aangaan"
+msgstr "Aangaan"
+
+msgid "registreren"
+msgstr "Registreren"
+
+msgid "versturen"
+msgstr "Versturen"
+
+msgid "collegebesluit"
+msgstr "Collegebesluit"
+
+msgid "raadsbesluit"
+msgstr "Raadsbesluit"
+
+msgid "mandaatbesluit"
+msgstr "Mandaatbesluit"
+
+msgid "openbaar"
+msgstr "Openbaar"
+
+msgid "gesloten"
+msgstr "Niet openbaar"
+
+msgid "kalenderdagen"
+msgstr "Kalenderdagen"
+
+msgid "weken"
+msgstr "Weken"
+
+msgid "werkdagen"
+msgstr "Werkdagen"
+
+msgid "einddatum"
+msgstr "Vaste einddatum"
+
+msgid "authenticatie"
+msgstr "Altijd authenticatie"
+
+msgid "optie"
+msgstr "Authenticatie wanneer beschikbaar"
+
+msgid "kenmerken"
+msgstr "Kenmerken"
+
+msgid "kenmerken1"
+msgstr "Kenmerk"
+
+msgid "sjablonen"
+msgstr "Sjablonen"
+
+msgid "sjablonen1"
+msgstr "Sjabloon"
+
+msgid "besluit"
+msgstr "Besluit"
+
+msgid "resultaat"
+msgstr "Resultaat"
+
+msgid "status_new"
+msgstr "Nieuw"
+
+msgid "status_open"
+msgstr "Open"
+
+msgid "status_resolved"
+msgstr "Afgehandeld"
+
+msgid "status_deleted"
+msgstr "Verwijderd"
+
+msgid "status_stalled"
+msgstr "Opgeschort"
+

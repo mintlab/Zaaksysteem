@@ -1,0 +1,173 @@
+[% USE String %]
+[%
+rechtsvormmap = ZCONSTANTS.kvk_rechtsvormen;
+rechtsvormenabled = ZCONSTANTS.kvk_rechtsvormen_enabled;
+%]
+<!-- WIDGET: betrokkene/bedrijf_create -->
+<div class="wgt-betrokkene-bedrijf_create">
+    <table class="table_zaakinformatie">
+        [% IF betrokkene_edit %]
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Authentiek:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% IF betrokkene.authenticated %]
+                    <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+                [% ELSE %]
+                    <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+                [% END %]
+            </td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Bron:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% IF betrokkene.authenticated %]
+                    KVK
+                [% ELSE %]
+                    [% betrokkene.authenticatedby %]
+                [% END %]
+            </td>
+        </tr>
+        [% END %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">KvK-nummer:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="dossiernummer"
+                        class="input_medium"
+                        value="[% betrokkene.dossiernummer %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Handelsnaam:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="handelsnaam"
+                        class="input_medium"
+                        value="[% betrokkene.handelsnaam %]">
+                <span class="validator"></span>
+            </td>
+
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Rechtsvorm:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% currentrechtsvormid = betrokkene.rechtsvorm | format('%02d') %]
+                [% FOREACH rechtsvormid IN rechtsvormenabled %]
+                    <input
+                        type="radio"
+                        name="rechtsvorm"
+                        value="[% rechtsvormid %]"
+                        [% (rechtsvormid == currentrechtsvormid ?
+                        'checked="checked"' : ''
+                        ) %]
+                        >
+                        [% rechtsvormmap.$rechtsvormid %] <br>
+                [% END %]
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vestiging straat:</td>
+
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="vestiging_straatnaam"
+                        class="input_medium"
+                        value="[% betrokkene.vestiging_straatnaam %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vestiging huisnummer:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="vestiging_huisnummer"
+                        class="input_mini"
+                        value="[% betrokkene.vestiging_huisnummer %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vestiging toevoeging:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="vestiging_huisnummertoevoeging"
+                        class="input_mini"
+                        value="[% betrokkene.vestiging_huisnummertoevoeging %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vestiging postcode:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="vestiging_postcode"
+                        class="input_mini"
+                        value="[% betrokkene.vestiging_postcode %]"> 1234AZ
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Vestiging woonplaats:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="vestiging_woonplaats"
+                        class="input_medium"
+                        value="[% betrokkene.vestiging_woonplaats %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="telefoonnummer"
+                        class="input_medium"
+                        value="[% betrokkene.telefoonnummer %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">E-mailadres:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="email"
+                        class="input_medium"
+                        value="[% betrokkene.email %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Contactpersoon voorletters:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="contact_voorletters"
+                        class="input_mini"
+                        value="[% betrokkene.contact_voorletters %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Contactpersoon tussenvoegsel:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="contact_voorvoegsel"
+                        class="input_medium"
+                        value="[% betrokkene.contact_voorvoegsel %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Contactpersoon achternaam:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="contact_geslachtsnaam"
+                        class="input_medium"
+                        value="[% betrokkene.contact_geslachtsnaam %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- END WIDGET: betrokkene/bedrijf_create -->

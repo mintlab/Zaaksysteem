@@ -1,0 +1,56 @@
+<!-- Helper Diffs -->
+<div class="custom_overlay">
+    <div class="custom_overlay_loader"><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/apple-spinner.gif" /></div>
+</div>
+
+<div class="otap_warning">[% c.config.otap %]</div>
+
+<div id="globalSpinner">
+    <div>
+        <div>Een moment geduld a.u.b.</div>
+    </div>
+</div>
+<div class="milestoneSpinner">
+    <div class="spinner_wrap">
+        <div class="spinner_header">Een ogenblik geduld a.u.b. ...</div>
+        <div class="spinner_content">
+            <!--
+            <span class="element" id="kenmerk">Kenmerk<span class="ajax checking"></span></span>
+            <span class="element" id="sjabloon">Sjabloon<span class="ajax valid"></span></span>
+            <span class="element" id="checklist">Checklist<span class="ajax invalid"></span></span>
+            <span class="element" id="statusteller">Statusteller</span>
+            <span class="element" id="vervolgzaak">Vervolgzaak</span>
+            <span class="element" id="notificatie">Notificatie</span>
+            <span class="element" id="resultaat">Resultaatmogelijkheid</span>
+            -->
+        </div>
+        <div class="spinner_buttons">
+        <!--<input type="submit" value="Corrigeer" class="button140 btn right rounded"> -->
+        </div>
+    </div>
+</div>
+
+<div id="searchdialog" class="no-padding">
+    <div class="dialog-title"></div>
+    <div class="dialog-content"></div>
+</div>
+<div id="dialog">
+    <div class="dialog-title"></div>
+    <div class="dialog-content"></div>
+</div>
+
+<div class="nieuwe_zaak_starten" id="ezra_nieuwe_zaak_tooltip">
+    <div class="nieuwe_zaak_starten_tip"></div>
+    <div class="ezra_nieuwe_zaak_tooltip-content">
+    </div>
+    <div class="ezra_nieuwe_zaak_tooltip-hide"></div>
+</div>
+
+[% IF zaak.nr %]
+<div id="zaak_id" class="[% zaak.nr %]"></div>
+[% END %]
+
+<iframe name="miframe" id="miframe"></iframe> 
+
+<!--object style="border: medium none; overflow: hidden;" name="miframe" id="miframe"></object-->
+<!-- END Helper Diffs -->

@@ -1,0 +1,12 @@
+<!-- Begin Zaaktypen -->
+<div class="block">
+    <p class="header">Zaaktypebeheer</p>
+    <div class="blockcontent">
+        [% PROCESS zaaktype/widgets/table_zaaktype.tt %]
+    </div>
+</div>
+<a rel="" href="[% c.uri_for('/zaaktype/categorie/edit', { parent_id => mastercategorie.id } ) %]" class="add dialog-post" title="Categorie bewerken of aanmaken">Nieuwe categorie</a>
+<a rel="" href="[% c.uri_for('/zaaktype/add/' _ categorie.id) %]" class="add">Nieuw Zaaktype</a>
+
+<!-- End Zaaktypen -->
+

@@ -1,0 +1,31 @@
+[% IF zaak.locatie_zaak %]
+    [% locatie = zaak.locatie_zaak.maps_adres %]
+[% END %]
+
+[% lockenmerken = zaak.scalar.zaak_kenmerken.scalar.search(
+    {
+        'bibliotheek_kenmerken_id.value_type'   => 'googlemaps',
+    },
+    {
+        join    => 'bibliotheek_kenmerken_id'
+    }
+); %]
+[% WHILE (lockenmerk = lockenmerken.next) %]
+    [% locatie = lockenmerk.value %]
+[% END %]
+<input type="hidden" name="latitude" value="[% c.config.gemeente.latitude %]"/>
+<input type="hidden" name="longitude" value="[% c.config.gemeente.longitude %]"/>
+<div class="ui-accordion-table-bg">
+<table class="table_zaakinformatie">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Adres:</td>
+            <td class="table_td_right_zaakinformatie">[% locatie %]</td>
+        </tr>
+    </tbody>
+</table>
+<div class="ezramap_container">
+    <div id="ezramap"></div>
+    <input type="hidden" value="[% locatie %]">
+</div>
+</div>

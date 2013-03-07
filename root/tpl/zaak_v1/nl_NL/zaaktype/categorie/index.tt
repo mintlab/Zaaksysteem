@@ -1,0 +1,11 @@
+<!-- Begin Generieke Categorien -->
+<div class="block">
+    <p class="header">Zaaktypebeheer</p>
+    <div class="blockcontent">
+        [% PROCESS zaaktype/widgets/table_categorie.tt %]
+    </div>
+</div>
+<a rel="" href="[% c.uri_for('/zaaktype/categorie/edit') %]" class="add dialog-post" title="Categorie bewerken of aanmaken">Nieuwe categorie</a>
+
+<!-- End Generieke Categorien -->
+

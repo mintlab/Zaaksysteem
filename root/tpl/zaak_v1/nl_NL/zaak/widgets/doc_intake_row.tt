@@ -1,0 +1,63 @@
+[%
+
+    USE Scalar;
+    icons = {
+        'default'                           => 'icon-file.png',
+        'dir'                               => 'icon-folder.gif',
+        'application/msword'                => 'icon-word.gif',
+        'application/pdf'                   => 'icon-pdf.gif',
+        'application/vnd.ms-excel'          => 'icon-page_excel.png',
+        'application/vnd.ms-powerpoint'     => 'icon-ppt.gif',
+        'text/plain'                        => 'icon-txt.gif',
+        'image/jpeg'                        => 'icon-jpg.gif',
+    }
+%]
+<tr class="table_zaken_tr doc_intake_row" id="[% doc.id %]">
+    <td class="td30 center">    
+
+            <a href="[% c.uri_for('/zaak/intake/document/get/' _ doc.id _ '/' _ doc.filename) %]" target="_blank" title="Bestand inzien" class="doc-show"><img src="/images/[% (icons.${doc.mimetype} ? icons.${doc.mimetype} : icons.default ) %]" width="16" height="16" border="0" /></a>
+                <!--
+                <div class="doc_preview_wrap" style="display:inline;position:relative;">
+                    <div class="doc_preview_pijl"></div>
+                    <div class="doc_preview"><img src="/images/zaakinfo-loader.gif" class="loader" alt="bezig met laden" style="display: none; "/></div>
+                </div>-->
+
+    </td>
+    <td class="">
+        <div class="doc-titel">
+            <input type="hidden" name="zaak_intake_old_filename_[% doc.id %]" value="[% doc.filename %]"/>
+            <input type="text" name="zaak_intake_edit_filename_[% doc.id %]" class="input_large zaak_intake_edit_filename" rel="[% doc.id %]" value="[% doc.filename %]" /><span class="zaak_intake_error_change_filename" id="zaak_intake_edit_filename_error_[% doc.id %]"></span>
+             <div class="doc-preview-init">
+                <div class="doc_preview"><img src="/images/zaakinfo-loader.gif" class="loader" alt="bezig met laden" style="display: none; "/></div>
+            </div>
+        </div>
+        <!-- <div class="doc_preview"><img src="/images/zaakinfo-loader.gif" class="loader" alt="bezig met laden" style="display: none; "/></div> -->
+    </td>
+    <td class="td120">[% doc.load_time.dmy %]</td>
+    <td class="td200">
+        <div class="select_actie_container">
+            <div class="col col1">
+                <select name="" class="max-width">
+                    <option value="[% c.uri_for('/zaak/intake/link', {'document_id' => doc.id}) %]" class="popup">Toevoegen aan zaak</option>
+                    <option value="[%
+                            c.uri_for('/zaak/create', {
+                                'actie'             => 'doc_intake',
+                                'actie_description' => 'Document aan zaak toevoegen',
+                                'actie_value'       => doc.id,
+                            })
+                        %]"
+                    class="ezra_nieuwe_zaak_tooltip-popup">Nieuwe zaak registreren</option>
+                    <option value="[% c.uri_for('/zaak/intake/delete', {'document_id' => doc.id}) %]" class="popup">Verwijderen</option>
+                </select>
+            </div>
+            <div class="col col2">
+                <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+            </div>
+        </div>
+    </td>
+    <td class="td30">
+        [% PROCESS widgets/general/alert.tt
+            alerttable = doc.scalar.logging
+        %]
+    </td>
+</tr>

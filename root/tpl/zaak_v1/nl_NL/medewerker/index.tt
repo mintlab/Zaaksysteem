@@ -1,0 +1,68 @@
+<form method="POST" action="[% c.uri_for('/medewerker/update_rol') %]">
+<div class="block">
+	<p class="header">Medewerkers</p>
+    <div class="blockcontent">
+        <div class="medewerkers">
+            <table class="table_zaken_title v-align-center" cellspacing="0">
+                <thead>
+                    <tr class="table_zaken_title_tr">
+                        <td>
+                            <img src="/images/icon-down.png" width="16" height="16">
+                        </td>
+                        <td>
+                            Medewerker
+                        </td>
+                        <td>
+                            OU
+                        </td>
+                        <td>
+                            Rollen
+                        </td>
+                        <td>
+                            Wijzig Rollen
+                        </td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    [% FOREACH medewerker IN medewerkers %]
+                    <tr class="table_zaken_tr">
+                        <td class="td20">
+                        </td>
+                        <td class="td150">
+                            [% medewerker.displayName %]
+                        </td>
+                        <td class="td150">
+                            [% medewerker.ou %]
+                        </td>
+                        <td class="td150">
+                            <ul>
+                                [% FOREACH mwrol IN medewerker.roles.keys %]
+                                <li>[% mwrol %] </li>
+                                [% END %]
+                            </ul>
+                        </td>
+                        <td class="td150">
+                            <select name="zsmw_[% medewerker.uid %]"
+                                multiple="multiple"
+                                size="5"
+                                style="width: 300px"
+                                >
+                            [% FOREACH role IN all_roles %]
+                                [% roledn = role.dn %]
+                                <option
+                                value="[% role.dn %]"
+                                [% (medewerker.roles.$roledn ?  ' selected="selected"' : '') %]
+                                >[% (role.ou ? role.ou _ ': ' : '') %][% role.cn %]</option>
+                            [% END %]
+                            </select>
+                        </td>
+                    </tr>
+                    [% END %]
+                </tbody>
+            </table>
+        </div>
+	</div>
+</div>
+<input type="submit" class="button140 btn right" value="Opslaan"/>
+</form>

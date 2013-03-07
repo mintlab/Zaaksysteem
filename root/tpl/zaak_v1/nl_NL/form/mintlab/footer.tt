@@ -1,0 +1,8 @@
+[% RETURN IF c.user_exists -%]
+
+<div id="dialog">
+    <div class="dialog-title"></div>
+    <div class="dialog-content"></div>
+</div>
+</body>
+</html>

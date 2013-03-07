@@ -1,0 +1,107 @@
+/************************************************************
+Title:     Forms | Emile Blume - Netcreators.com
+************************************************************/
+form { margin-bottom: 1.3em;}
+
+/*input, select, textarea {
+	background:#FFF;
+	border:1px solid #cbcbcb;
+	color: #4a4a4a;
+	font-size:1em;
+	padding:0.1em;
+	line-height:1em;
+}*/
+
+textarea { overflow: auto;}
+fieldset { border: none;}
+form label { cursor: pointer; float:left; padding:0.1em; vertical-align:top; width:150px; }
+form p { margin:0; }
+small { clear:left; display:block;}
+form ul, form li {margin:0; padding:0; list-style:none; clear:both;}
+
+legend{display:none; }
+
+.mf-radio {clear:both;}
+.mf-radio label {float:none;}
+.mf-radio input {float:left;border:0;clear:both;}
+.mf-radio legend {display:none;}
+
+#right form label {width:100%;}
+
+/* powermail properties ///////////////////////////////////////////////////////////////*/
+.tx_powermail_pi1_fieldwrap_html {
+	clear: both;
+	display: block;
+	margin-bottom: 0.3em;
+	width: 100%;
+}
+
+.tx-powermail-pi1 input, .tx-powermail-pi1 select, .tx-powermail-pi1 textarea { width: 200px;}
+
+.tx-powermail-pi1 label {
+	float: left;
+	padding-right: 0.6em;
+	width: 160px;
+	text-align: right;
+}
+#right .tx-powermail-pi1 label, #left .tx-powermail-pi1 label {
+	text-align:left;
+}
+
+.tx_powermail_pi1_fieldwrap_html_radio label,
+.tx_powermail_pi1_fieldwrap_html_check label { padding-right:0; }
+.powermail_radio_inner, .powermail_check_inner { margin-left:150px; padding-left:0.3em;}
+.powermail_radio_inner label, .powermail_check_inner label { float:none; }
+
+
+/* button properties //////////////////////////////////////////////////////////////////////////////*/
+button, input.button, input.submit, input.mf-submit, 
+.tx-newloginbox-pi1-submit, input.powermail_submit,
+#tx_comments_pi1_submit, #tx_comments_pi1_reset {
+	clear: both;
+	border:0;
+	background:#001f2b url(../img/btn-powermail-submit.gif) no-repeat left top;
+	color: #FFFFFF;
+	height: 27px;
+	line-height: 1.5em;
+	margin: 5px 0 0 156px;
+	text-align: center;
+	text-transform: uppercase;
+	width: 80px;
+}
+#right input.button, #right input.submit, #right input.mf-submit, 
+#right .tx-newloginbox-pi1-submit, #right input.powermail_submit,
+#right #tx_comments_pi1_submit, #right #tx_comments_pi1_reset {
+	margin: 5px 0 0 0;
+}
+
+input.powermail_submit { 
+	margin-left: 168px;
+	background: url(../img/btn-powermail-submit.gif) no-repeat left top;
+	color:#fff;
+	text-align:center;
+	width:80px;
+	height:27px;
+	text-transform:uppercase;
+	line-height: 1.5em;
+	border:0;
+}
+
+#left input.powermail_submit, #right input.powermail_submit {
+	margin-left:0;
+}
+#right .mf-input {width:200px;}
+
+/* warning properties /////////////////////////////////////////////////////////////////////////////*/
+#mailform .warning input { border:1px solid #D52709;}
+#mailform .warning label, .powermail_mandatory { color:#D52709;}
+
+/* Captcha //////////////////////////*/
+img.tx-srfreecap-pi2-image, .tx-srfreecap-pi2-cant-read {
+	float:left;
+	clear:both;
+	padding:10px 0 0 170px;
+	margin:0;
+}
+.tx-srfreecap-pi2-cant-read {color:#333;padding-bottom:10px;font-size:1em;}
+.captcha-desc {margin-left:170px;}

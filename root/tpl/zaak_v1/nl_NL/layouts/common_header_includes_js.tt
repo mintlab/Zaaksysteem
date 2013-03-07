@@ -1,0 +1,62 @@
+[% IF c.debug && !invoke_assets_minified_request %]
+    <!-- Served Template: [% c.stash.template %] -->
+[% END %]
+
+
+[%
+    page_scripts     = [];
+    page_scripts.push('jquery-1.7.1.min.js');
+    page_scripts.push('jquery-ui-1.8.16.custom.min.js');
+#    page_scripts.push('jQuery.cssParentSelector.js'); 
+    page_scripts.push('OpenLayers-2.11/OpenLayers.js'); # DAMN, deze moet eruit..
+# DISABLED, NOT USED ANYMORE    page_scripts.push('jquery.formwizard-3.0.5/js/jquery.form.wizard-min.js');
+# DISABLED, NOT USED ANYMORE   page_scripts.push('jquery.formwizard-3.0.5/js/bbq.js');
+    page_scripts.push('jquery.uniform.min.js');
+    page_scripts.push('jquery.cookie.js');
+    page_scripts.push('jquery.treeTable.js');
+    page_scripts.push('zaaksysteem.js');
+    page_scripts.push('jquery.ui.selectmenu.js');
+    page_scripts.push('jquery.hoverIntent.js');
+    page_scripts.push('easing.js');
+    page_scripts.push('multiselect/plugins/localisation/jquery.localisation-min.js');
+    page_scripts.push('ui.multiselect.js');
+    page_scripts.push('highcharts_2.2.0.js');
+    page_scripts.push('exporting.js');
+#    page_scripts.push('prefixfree.js');
+    page_scripts.push('jquery.ui.datepicker-nl.js');
+    page_scripts.push('regel_editor.js');
+    page_scripts.push('jquery.defaultvalue.js');
+    page_scripts.push('webform.js');
+    page_scripts.push('validate.js');
+    page_scripts.push('jquery.fileUploader.js');
+    page_scripts.push('jquery.qtip.js');
+    page_scripts.push('mintloader.js');
+    page_scripts.push('zaaktype_import.js');    
+-%]
+
+
+
+[% IF c.debug && !invoke_assets_minified_request %]
+    <!-- Javascripts -->
+[% END %]
+
+[% USE date %]
+[% BLOCK script_invocation -%]
+    [% IF !invoke_assets_minified -%]
+        <script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL/js' _ (script_name.match('/') ? '/' : PREFIX_MD5 _ '/')) %][% script_name %][% IF c.config.otap == 'odev' %]?[% date.now %][% END %]"></script>
+
+    [%- ELSIF invoke_assets_minified_request %]
+        [% minified_script_name = 'js/' _ script_name %]
+        [% minified_script_name = minified_script_name _ (PREFIX_MD5 ? '/' _ PREFIX_MD5 : '') %]
+        [% INSERT $minified_script_name %]
+
+    [%- END %]
+[%- END %]
+
+[% IF !invoke_assets_minified || invoke_assets_minified_request -%]
+    [% FOREACH script_name IN page_scripts %]
+        [%- PROCESS script_invocation %]
+    [%- END %]
+[%- ELSE %]
+        <script type="text/javascript" src="[% c.uri_for('/page/minified/common/js' _(PREFIX_MD5 ? '/' _ PREFIX_MD5 : '') _ '/javascript.js') %]"></script>
+[% END -%]

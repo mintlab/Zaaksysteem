@@ -1,0 +1,25 @@
+<div id="sjabloon_definitie">
+<form>
+<input type="hidden" name="uniqueidr" value="[% c.req.params.uniqueidr %]">
+<input type="hidden" name="update" value="1">
+<table class="table_zaakinformatie" id="sjabloon_template">
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Toelichting</td>
+            <td class="table_td_right_zaakinformatie">
+                <textarea cols="60" rows="10" name="sjabloon_help">[% history.help %]</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Automatisch genereren:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div>
+                    <input type="checkbox" value="1" name="sjabloon_automatisch_genereren"[% (history.automatisch_genereren ? ' checked="checked"' : '') %]> Ja
+                </div>
+            </td>
+        </tr>
+    </tbody>
+<table>
+<input type="submit" value="Opslaan" class="button140">
+</form>
+</div>

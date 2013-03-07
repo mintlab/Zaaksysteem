@@ -1,0 +1,199 @@
+<!-- WIDGET: betrokkene/natuurlijk_persoon_create -->
+[% IF wgt_config.post_button %]
+<form
+    method="POST"
+    action="[% c.uri_for('/betrokkene/info/update/' _ requested_bid) %]"
+    class="submitWaiter zvalidate"
+    >
+    <input type="hidden" name="referer" value="[% c.req.uri %]" />
+    [% IF betrokkene_edit %]
+    <input type="hidden" name="betrokkene_edit" value="1" />
+    <input type="hidden" name="betrokkene_type" value="[% betrokkene.btype %]" />
+    [% END %]
+[% END %]
+<div class="wgt-betrokkene-natuurlijk_persoon_create">
+    <table class="table_zaakinformatie">
+        [% IF betrokkene_edit %]
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Authentiek:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% IF betrokkene.authenticated %]
+                    <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+                [% ELSE %]
+                    <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+                [% END %]
+            </td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Bron:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% IF betrokkene.authenticated %]
+                    GBA
+                [% ELSE %]
+                    [% betrokkene.authenticatedby %]
+                [% END %]
+            </td>
+        </tr>
+        [% END %]
+        <tr>
+            <td class="table_td_left_zaakinformatie">BSN:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input
+                    type="text"
+                    name="np-burgerservicenummer"
+                    class="input_medium"
+                    value="[% betrokkene.burgerservicenummer %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Voornamen:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input
+                    type="text"
+                    name="np-voornamen"
+                    class="input_medium"
+                    value="[% betrokkene.voornamen %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Tussenvoegsel:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input
+                    type="text"
+                    name="np-voorvoegsel"
+                    class="input_mini"
+                    value="[% betrokkene.voorvoegsel %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Achternaam:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input
+                    type="text"
+                    name="np-geslachtsnaam"
+                    class="input_medium"
+                    value="[% betrokkene.geslachtsnaam %]">
+                <span class="validator"></span></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Geslacht:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div class="col">
+                        <input
+                            type="radio"
+                            name="np-geslachtsaanduiding"
+                            value="M"
+                            [% (betrokkene.geslachtsaanduiding == 'M'
+                                ? 'checked="checked"'
+                                : ''
+                                )
+                            %]> Man
+                    </div>
+                    <div class="col">
+                        <input
+                            type="radio"
+                            name="np-geslachtsaanduiding"
+                            value="V"
+                            [% (betrokkene.geslachtsaanduiding == 'V'
+                                ? 'checked="checked"'
+                                : ''
+                                )
+                            %]> Vrouw
+                    </div>
+                    <span class="validator"></span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Straat:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input
+                    type="text"
+                    name="np-straatnaam"
+                    class="input_medium"
+                    value="[% betrokkene.straatnaam %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Huisnummer:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="np-huisnummer"
+                        class="input_medium"
+                        value="[% betrokkene.huisnummer %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Huisnummer toevoeging:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="np-huisnummertoevoeging"
+                        class="input_mini"
+                        value="[% betrokkene.huisnummertoevoeging %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Postcode:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="np-postcode"
+                        class="input_mini"
+                        value="[% betrokkene.postcode %]"> 1234AZ
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Woonplaats:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input  type="text"
+                        name="np-woonplaats"
+                        class="input_medium"
+                        value="[% betrokkene.woonplaats %]">
+                <span class="validator"></span>
+            </td>
+        </tr>
+        <!--
+        <tr>
+            <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="npc-telefoonnummer" class="input_medium"><span class="validator"></span></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">E-mail:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="npc-email" class="input_medium"><span class="validator"></span></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Mobiel:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="npc-mobiel" class="input_medium"><span class="validator"></span></td>
+        </tr>
+        -->
+        <tr>
+            <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="npc-telefoonnummer" class="input_medium" value="[% betrokkene.telefoonnummer %]"><span class="validator"></span></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Mobielnummer:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="npc-mobiel" class="input_medium" value="[% betrokkene.mobiel %]"><span class="validator"></span></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">E-mail:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="npc-email" class="input_medium" value="[% betrokkene.email %]"><span class="validator"></span></td>
+        </tr>
+        [% IF wgt_config.post_button %]
+        <tr class="table_zoeken_tr_bottom">
+            <td class="table_zoeken_td100_2"></td>
+            <td class="table_zoeken_tdvar"><input type="submit" value="Bijwerken" class="button140"></td>
+        </tr>
+        [% END %]
+    </table>
+</div>
+[% IF wgt_config.post_button %]
+</form>
+[% END %]
+<!-- END WIDGET: betrokkene/natuurlijk_persoon_create -->

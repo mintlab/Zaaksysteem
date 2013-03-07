@@ -1,0 +1,30 @@
+<table class="table_zaakinformatie">
+    <tr>
+        <td class="table_td_left_zaakinformatie">Type:</td>
+        <td class="table_td_right_zaakinformatie">[% brontype.${betrokkene.btype} %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Bron:</td>
+        <td class="table_td_right_zaakinformatie">[% !betrokkene.authenticated ? 'Zaaksysteem' : broninfo.${betrokkene.btype} %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Voornaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.voornamen %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Achternaam:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.geslachtsnaam %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.telefoonnummer %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">Organisatorische eenheid:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.org_eenheid.naam %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie">E-mail:</td>
+        <td class="table_td_right_zaakinformatie">[% betrokkene.email %]</td>
+    </tr>
+</table>

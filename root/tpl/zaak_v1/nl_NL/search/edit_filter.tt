@@ -1,0 +1,153 @@
+[% BLOCK checkbox_filter %]
+	[% FOREACH filter_option = filter_data.options %]
+	<input type="checkbox" name="[% filter_option.name %]" [% filter_option.checked %]/> [% filter_option.description %]
+	<br/>
+	[% END %]
+[% END %]
+
+[% BLOCK text_filter %]
+	<input type="text" name="value" value="[% filter_data.value %]"/>
+[% END %]
+
+[% BLOCK period_filter %]
+	<table>
+		<thead>
+		    <tr>
+    			<th>Selectie</th>
+    			<th>Begindatum</th>
+    			<th>Einddatum</th>
+			</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<td class="table_td_left_zaakinformatie"><input type="radio" name="period_type" [% IF filter_data.period_type == 'specific' %]checked[% END %] value="specific"/> Specifieke periode</td>
+			<td><input type="text" name="start_date" id="start_date" readonly="true" value="[% filter_data.start_date %]"/></td>
+			<td><input type="text" name="end_date" id="end_date" readonly="true" value="[% filter_data.end_date %]"/></td>
+		</tr>
+		<tr>
+			<td class="table_td_left_zaakinformatie"><input type="radio" name="period_type" [% IF filter_data.period_type == 'last_month' %]checked[% END %] value="last_month"/> Afgelopen maand</td>
+			<td>wordt automatisch bepaald</td>
+			<td>wordt automatisch bepaald</td>
+		</tr>
+		<tr>
+			<td class="table_td_left_zaakinformatie"><input type="radio" name="period_type" [% IF filter_data.period_type == 'this_month' %]checked[% END %] value="this_month"/> Deze maand</td>
+			<td>wordt automatisch bepaald</td>
+			<td>wordt automatisch bepaald</td>
+		</tr>
+		<tr>
+			<td class="table_td_left_zaakinformatie"><input type="radio" name="period_type" [% IF filter_data.period_type == 'last_week' %]checked[% END %] value="last_week"/> Afgelopen week</td>
+			<td>wordt automatisch bepaald</td>
+			<td>wordt automatisch bepaald</td>
+		</tr>
+		<tr>
+			<td class="table_td_left_zaakinformatie"><input type="radio" name="period_type" [% IF filter_data.period_type == 'this_week' %]checked[% END %] value="this_week"/> Deze week</td>
+			<td>wordt automatisch bepaald</td>
+			<td>wordt automatisch bepaald</td>
+		</tr>
+		</tbody>
+	</table>
+[% END %]
+
+
+[% BLOCK zaaktype_filter %]
+	<select name="value">
+		[% zaaktype_list = c.model('Zaaktype').list %]
+		[% WHILE (zaaktype = zaaktype_list.next) %]
+			[% IF filter_data.value == zaaktype.id %]selected[% END %]
+			<option value="[% zaaktype.id %]"
+			[%- IF filter_data.value == zaaktype.id %] selected[% END -%]
+			>[% zaaktype.zaaktype_node_id.titel %]</option>
+		[% END %]
+	</select>
+[% END %]
+
+
+[% BLOCK address_filter %]
+[% PROCESS widgets/general/veldoptie.tt 
+	veldoptie_type   = 'bag_straat_adres'
+	veldoptie_name   = 'bag_value'
+	veldoptie_value  = filter_data.value
+%]
+[% END %]
+
+
+[% BLOCK aanvrager_filter %]
+<div id="start_intern">
+<input type="hidden" name="ztc_trigger" value="intern">
+<span>Type aanvrager:</span> 
+<div class="ezra_type_aanvrager"> 
+    
+    <input type="radio" name="betrokkene_type" [% IF filter_data.betrokkene_type == 'medewerker' %]checked="checked"[% END %] value="medewerker"/> Medewerker<br /> 
+    <input type="radio" name="betrokkene_type" [% IF filter_data.betrokkene_type == 'org_eenheid' %]checked="checked"[% END %] value="org_eenheid" /> Organisatorische eenheid<br/>
+    <input type="radio" name="betrokkene_type" [% IF filter_data.betrokkene_type == 'natuurlijk_persoon' %]checked="checked"[% END %] value="natuurlijk_persoon"/> Burger<br /> 
+    <input type="radio" name="betrokkene_type" [% IF filter_data.betrokkene_type == 'bedrijf' %]checked="checked"[% END %] value="bedrijf" /> Organisatie
+</div>
+    
+<div class="ezra_select_betrokkene" style="margin-top:20px;"> 
+    <label>Kies een betrokkene:</label>                            
+    <div class="medewerker natuurlijk_persoon bedrijf" [% IF filter_data.betrokkene_type == 'org_eenheid' %]style="display: none;"[% END %]> 
+        <input type="hidden" name="ztc_aanvrager_id" value=""/> 
+        <input type="text" value="" class="input_large" name="naam_betrokkene" id="ezra_input_search_betrokkene_intern"/> 
+        <a href="#" title="Zoek een nieuwe aanvrager" class="ezra_search_betrokkene" rel="medewerker"> 
+        <img src="/images/icon-magnifier.png" width="16" height="16" border="0" /> 
+        </a><span class="validator"></span> 
+    </div> 
+    <div class="org_eenheid" [% IF filter_data.betrokkene_type != 'org_eenheid' %]style="display: none;"[% END %]> 
+        <select name="ztc_org_eenheid_id" class="ezra_org_eenheid"> 
+            [% WHILE (org_eenheid = org_eenheden.next) %]
+            <option value="betrokkene-org_eenheid-[% org_eenheid.ex_id %]">[% org_eenheid.naam %]</option>
+            [% END %]
+        </select> 
+    </div> 
+</div> 
+</div>
+[% END %]
+
+
+[% BLOCK select_filter %]
+	[% FOREACH filter_option = filter_data.options %]
+	<input type="radio" name="value" value="[% filter_option.value %]"/> [% filter_option.description %]<br/>
+	[% END %]
+[% END %]
+
+
+
+[% BLOCK afdeling_filter %]
+    [% PROCESS widgets/general/auth_select.tt
+        AUTH_SELECT_COMPLETE_AFDELING = 1
+		AUTH_SELECT_NO_GLOBAL = 1
+		AUTH_SELECT_NO_ROLE = 0
+		AUTH_SELECT_OU_NAME   = 'ou_id'
+		AUTH_SELECT_OU_VALUE  = filter_data.ou_id
+		AUTH_SELECT_ROLE_NAME = 'role_id'
+		AUTH_SELECT_ROLE_VALUE  = filter_data.role_id
+	%]
+[% END %]
+
+
+<div class="edit_filter_non_accordion">
+
+    <div class="filter_title">
+        <h2>[% (filter_data.type == 'afdeling' ? 'Rol' : filter_data.type) FILTER ucfirst %] bewerken</h2>
+    </div>
+
+    <form id="update_search_filter" action="[% c.uri_for('/search') %][% SearchQuery_search_query_id ? '/' _ SearchQuery_search_query_id : '' %]" method="POST">
+    
+        <input type="hidden" name="action" value="update_filter"/>
+        <input type="hidden" name="filter_type" value="[% filter_data.type %]"/>
+        <input type="hidden" name="filter_class" value="[% filter_data.class %]"/>
+        <input type="hidden" name="previous_value" value="[% IF filter_data %][% filter_data.value %][% END %]"/>
+        <input type="hidden" name="SearchQuery_search_query_id" value="[% SearchQuery_search_query_id %]"/>
+        <div class="filter_content">
+            [% filter_settings = filter_data.class _ '_filter' %]
+            [% INCLUDE $filter_settings %]
+        </div>
+        <div style="color: red;" id="error_message"></div>
+        <div class="dialog-buttons">
+            <input type="submit" class="btn-dialog" name="submit" value="Opslaan" />
+        </div>
+    </form>
+	
+</div>
+
+

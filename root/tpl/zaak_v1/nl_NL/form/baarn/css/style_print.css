@@ -1,0 +1,35 @@
+
+body {
+    font-size: 12pt;
+}
+
+/* Hieronder zijn de ID's en classes optioneel. Dit moet je wijzigen naar je eigen div-structuur. */
+#header,
+#footer_wrapper,
+#content_img,
+#mainmenu,
+#content_left,
+#content_right,
+#content div#print_back_wrap ul.print_back,
+#content a.archief,
+#content a.naar_boven,
+.crumbtrailkruimelspoor,
+#kruimelspoor_wrapper,
+.skiplinks,
+#navigatie_wrapper,
+#snelmenu,
+.button_back,
+.button_print,
+.contrast,
+#but_naarboven {
+    display:none;
+}
+
+#content {
+    float: none;
+    margin: 0;
+    padding: 0;
+    page-break-inside: avoid;
+    overflow: visible;
+    width: 100%;
+}

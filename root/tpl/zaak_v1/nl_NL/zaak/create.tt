@@ -1,0 +1,25 @@
+[% IF (c.user_exists && c.req.params.actie == 'doc_intake') %]
+[% dropdocument = c.model('DB::DroppedDocuments').find(c.req.params.actie_value) %]
+<div class="block">
+    <p class="header">Toevoegen document</p>
+    <div class="blockcontent">
+        <table class="table_zaakinformatie no_margin">
+            <tbody>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Document:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <a
+                        href="[% c.uri_for('/zaak/intake/document/get/' _
+                        dropdocument.id _ '/' _ dropdocument.filename) %]"
+                        target="_blank"
+                        >[% dropdocument.filename %]</a>
+                 </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+[% END %]
+[% PROCESS widgets/zaak/create.tt %]
+<!-- End Zaakintake -->
+

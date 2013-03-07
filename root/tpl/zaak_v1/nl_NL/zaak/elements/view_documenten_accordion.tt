@@ -1,0 +1,45 @@
+<h3><a href="#">Documenten</a></h3>
+<div class="ui-accordion-content">
+    <div class="ui-accordion-table-bg clearfix">
+        <table class="table_zaakinformatie marginbottom"
+            cellspacing="0">
+            <tbody>
+                <tr class="table_ztb_title_tr">
+                    <td class="td350">Naam</td>
+                    <!-- <td
+                        class="table_ztb_title_td200">Omschrijving</td>
+                    -->
+                    <td class="td100">Verplicht</td>
+                    <td class="td100">In dossier?</td>
+                    <td class="td40">Info</td>
+                </tr>
+                [% WHILE (document = documenten.next) %]
+                [% mandatory_string = (document.value_mandatory ? 'Ja' : 'Nee') %]
+                <tr class="table_ztb_tr">
+                    <td class="td350">[% document.naam %]</td>
+                    <!-- <td
+                        class="table_ztb_td_td200">[%
+                        document.description
+                        %]</td>
+                    -->
+                    <td class="td100">[% mandatory_string %]</td>
+                    <td class="td100">[% 
+                        (zaak.documents.from_catalogus(document.id) ? 'Ja' : 'Nee')
+                        %]</td>
+                    <td class="td40">
+                        <div class="dialog-help">
+                            <a href="#" class="dialog-help-button" title="Toelichting">
+                                <img src="/images/icon-help.png" width="16" height="16" border="0">
+                            </a>
+                            <div class="dialog-help-text" style="display: none;">
+                                [% document.help %]
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                [% END %]
+            </tbody>
+        </table>
+    </div>
+</div>
+

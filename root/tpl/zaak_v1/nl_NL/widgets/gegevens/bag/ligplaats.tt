@@ -1,0 +1,39 @@
+<table class="table_zaakinformatie" id="checklist_template">
+    <thead>
+        <tr>
+            <th colspan="2">BAG Ligplaats</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Ligplaats ID</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.identificatie %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Status</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.status %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Documentnummer / Documentdatum</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.documentnummer %] / [% bag.documentdatum %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">In onderzoek</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.inonderzoek %]
+            </td>
+        <tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Officieel</td>
+            <td class="table_td_right_zaakinformatie">
+                [% bag.officieel %]
+            </td>
+        <tr>
+    </tbody>
+<table>

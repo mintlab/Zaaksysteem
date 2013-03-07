@@ -1,0 +1,64 @@
+
+<form>
+<div class="search_filters_dashboard_wrap">
+	<div class="search_filters_dashboard_inner">
+		<div class="block blockvar left my_search_queries" id="">
+			<div class="header">
+                Mijn zoekopdrachten
+    			<a class="knop in-header voeg-toe"
+    			href="
+    			[% IF c.check_any_user_permission('search'); %]
+    			[% c.uri_for('/search/reset') %]"
+                [% END %]
+                >Nieuwe zoekopdracht</a>
+            </div>
+		
+		
+			<div class="no-padding-left blockcontent ezra_kenmerk_grouping">
+			
+				
+				<table class="table_zaken_title ezra_table v-align-center search_query_table sortable" cellspacing="0">
+
+
+                <tbody>
+[% #USE Math %]
+                [% betrokkene_cache = {} %]
+				[% WHILE (search_query = search_queries.next) %]
+                    [% UNLESS betrokkene_cache.${search_query.ldap_id} %]
+                        [% betrokkene = c.model('Betrokkene').get({intern => 0, type="medewerker"}, search_query.ldap_id).naam %]
+                        [% #betrokkene = c.model('DB::Betrokkene').search({medewerker_id => search_query.ldap_id}) %]
+                        [% betrokken_cache.${search_query.ldap_id} = betrokkene %]
+                        [% #USE Dumper %][% #Dumper.dump(betrokkene) %]
+                    [% END %]
+                    [% betrokkene_naam = betrokken_cache.${search_query.ldap_id} %]
+
+				<tr class="table_zaken_tr sortable-element">
+				    <td class="td15 ver_center no-border drag"></td>
+					<td><a href="/search/[% search_query.id %]/results" style="white-space: nowrap;overflow:hidden;">[% search_query.name %]</a>		
+						
+                    </td>
+                    <td class="td100" style="text-align:right;">
+                        <span style="color:#aaa;font-size:0.9167em;margin-left:5px;white-space: nowrap;overflow:hidden;">[% betrokkene_naam %]</span>
+                    </td>
+					<!--td>[% #count = c.model('SearchQuery').get_quick_count(c, search_query.id) %]
+					[% #count.count %]
+					([% #Math.int(count.elapsed * 1000) %] ms.)
+					</td-->
+					<td class="td40 center">
+    				    <input type="hidden" name="search_query_id_[% search_query.id %]" value="[% search_query.id %]"/>
+						<a href="/search/[% search_query.id %]" class="icon-edit"></a></td>
+					<td class="td40 center"><a href="#" class="delete_search_query icon-delete" id="[% search_query.id %]"></a></td>
+				</tr>
+				[% END %]
+				</tbody>
+				</table>
+[% IF show_more_search_queries && search_queries.pager.total_entries > search_queries.pager.entries_per_page %]
+    <div class="buttons buttons-front">
+        <a href="[% c.uri_for('/search/dashboard') %]" >Toon alle zoekopdrachten</a>
+    </div>
+[% END %]
+			</div>
+		</div>
+	</div>
+</div>
+</form>

@@ -1,0 +1,44 @@
+<!-- zaaktype/widgets/row_categorie.tt -->
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        <a href="[% c.uri_for('/zaaktype/categorie/' _ categorie.id) %]">
+            <img src="/images/icon-folder.gif" width="16" height="16" border="0" />
+        </a>
+    </td>
+    <td class="tdvar">
+        <a href="[% c.uri_for('/zaaktype/categorie/' _ categorie.id) %]">
+            [% categorie.categorie %]
+        </a>
+    </td>
+<!--
+    <td class="table_zaken_td100">
+        <a href="#" class="betrokkene-get" rel="id: [% c.model('Betrokkene').get({}, categorie.behandelaar).id %]" title="Informatie over eigenaar">
+            [% c.model('Betrokkene').get({}, categorie.eigenaar).naam %]
+        </a>
+    </td>
+    <td class="table_zaken_td100">
+        <a href="#" class="betrokkene-get" rel="id: [% c.model('Betrokkene').get({}, categorie.behandelaar).id %]" title="Informatie over eigenaar">
+            [% c.model('Betrokkene').get({}, categorie.behandelaar).naam %]
+        </a>
+    </td>
+-->
+    [% IF PARENTROW %]
+    <td class="td60">
+            -
+    </td>
+    [% END %]
+    <td class="td150">
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option value="[% c.uri_for('/zaaktype/categorie/edit/' _ categorie.id) %]" class="popup">Bewerken</option>
+                    <option value="[% c.uri_for('/zaaktype/categorie/delete/' _ categorie.id) %]" class="popup">Verwijderden</option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+            </div>
+        </div>
+    </td>
+</tr>
+<!-- zaaktype/widgets/row_categorie.tt -->

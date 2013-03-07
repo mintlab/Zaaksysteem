@@ -1,0 +1,17 @@
+<!-- Begin Vernietigingslijst -->
+<div class="block">
+    <form name="zaken_results">
+
+    <div class="header clearfix">
+    <div class="col">Zaken vernietigen (<span class="total_entries">[% results.pager.total_entries %]</span>) </div>
+    </div>
+        
+    <div class="blockcontent zaken_filter_wrapper">
+        <div class="zaken_filter_inner">
+        [% PROCESS zaak/widgets/result.tt checkbox="vernietig" %]
+        [% PROCESS widgets/pager2.tt %]
+        </div>
+    </div>
+    <input type="submit" name="actie" value="Vernietigen" class="element in-header">
+    </form>
+</div>

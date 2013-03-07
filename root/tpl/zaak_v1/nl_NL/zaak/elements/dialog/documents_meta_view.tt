@@ -1,0 +1,85 @@
+[%
+USE format;
+USE wrap;
+nowrapper=1;
+%]
+<table cellspacing="1" class="table_zaakinformatie">
+    <tbody>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Naam:</td>
+        <td class="table_td_right_zaakinformatie">[% document.filename %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Documentnummer:</td>
+        <td class="table_td_right_zaakinformatie">[% document.id %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Documenttype:</td>
+        <td class="table_td_right_zaakinformatie">[% document.category %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Bestandsformaat:</td>
+        <td class="table_td_right_zaakinformatie">[% document.mimetype %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Verplicht?:</td>
+        <td class="table_td_right_zaakinformatie">[% (document.verplicht ? 'Ja' : 'Nee') %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Versienummer</td>
+        <td class="table_td_right_zaakinformatie">[% document.versie %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">MD5-hash</td>
+        <td class="table_td_right_zaakinformatie">[% document.md5 %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Origineel/Geconverteerd</td>
+        <td class="table_td_right_zaakinformatie">Origineel</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Publiceren op PIP?</td>
+        <td class="table_td_right_zaakinformatie">[% (document.pip ? 'Ja' : 'Nee') %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Gewijzigd op:</td>
+        <td class="table_td_right_zaakinformatie">[% document.last_modified.dmy %] [% document.last_modified.hms %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">In status:</td>
+        <td class="table_td_right_zaakinformatie">[% document.zaakstatus %] van [% zaak.zaakstatusinfo.count %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Gewijzigd door:</td>
+        <td class="table_td_right_zaakinformatie">[% c.model('Betrokkene').get({}, document.betrokkene_id).naam %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Grootte:</td>
+        <td class="table_td_right_zaakinformatie">
+            [% filesize = format('%.2f'); %]
+            [% IF document.filesize < 1024 %]
+                [% filesize(document.filesize) %]B
+            [% ELSIF document.filesize < 1048576 %]
+                [% filesize((document.filesize / 1024)) %]KB
+            [% ELSE %]
+                [% filesize(((document.filesize / 1024) / 1024)) %]MB
+            [% END %]
+        </td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Ontvangstdatum:</td>
+        <td class="table_td_right_zaakinformatie">[% document.ontvangstdatum.dmy %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Dagtekeningdatum:</td>
+        <td class="table_td_right_zaakinformatie">[% document.dagtekeningdatum.dmy %]</td>
+    </tr>
+    <tr class="table_zaakinformatie_tr">
+        <td class="table_td_left_zaakinformatie">Toelichting:</td>
+        <td class="table_td_right_zaakinformatie">[% document.help %]</td>
+    </tr>
+   </tbody>
+</table>
+<div id="email_message">
+<pre>[% mail.message | wrap(80) %]</pre>
+</div>

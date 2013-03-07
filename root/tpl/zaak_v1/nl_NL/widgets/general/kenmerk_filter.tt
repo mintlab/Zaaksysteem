@@ -1,0 +1,110 @@
+[% 
+
+#
+# kenmerk filter widget
+#
+# hiermee kan een gebruiker een filter op geven waarmee alleen bepaalde waarde voor een kenmerk
+# getoond worden.
+#
+# op basis van een kenmerk type wordt optioneel een operator selectie dropdown getoond, plus
+# een invoerveld voor de waarde van het kenmerk.
+#
+#
+# operators:
+#
+
+    numeric_operators = [
+        { value => '=',  label => 'is gelijk aan' },
+        { value => '!=', label => 'is niet gelijk aan' },
+        { value => '>', label => 'is groter dan' },
+        { value => '<', label => 'is kleiner dan' },
+        { value => '>=', label => 'is tenminste' },
+        { value => '<=', label => 'is ten hoogste' },
+    ]
+    
+    date_operators = [
+        { value => '=',  label => 'is gelijk aan' },
+        { value => '!=', label => 'is niet gelijk aan' },
+        { value => '>', label => 'later dan' },
+        { value => '<', label => 'eerder dan' },
+        { value => '>=', label => 'is tenminste' },
+        { value => '<=', label => 'is ten hoogste' },
+    ]
+
+
+	text_operators = [
+        { value => '=',  label => 'is gelijk aan' },
+        { value => '!=', label => 'is niet gelijk aan' },
+        { value => 'like',  label => 'bevat' },
+        { value => 'not_like', label => 'bevat niet' },
+    ]
+
+	text_with_numbers_operators = [
+        { value => '=',  label => 'is gelijk aan' },
+        { value => '!=', label => 'is niet gelijk aan' },
+        { value => 'like',  label => 'bevat' },
+        { value => 'not_like', label => 'bevat niet' },
+        { value => 'text>',  label => 'groter dan' },
+        { value => 'text<', label => 'kleiner dan' },
+    ]
+
+#
+# given the veldoptie type, these are the available operators
+#
+
+    operators = {
+        numeric  => numeric_operators,
+        valuta   => numeric_operators,
+        date     => date_operators,
+        text     => text_with_numbers_operators,
+        text_uc  => text_operators,
+        textarea => text_operators,
+    }
+
+%]
+[% IF !veldoptie_type %]
+    ERROR: Geef veldoptie_type
+    [% RETURN %]
+[% END %]
+
+[% IF !veldoptie_name %]
+    ERROR: Geef veldoptie_name
+    [% RETURN %]
+[% END %]
+
+
+[% kenmerk_filter_debug = 0 %]
+[% IF kenmerk_filter_debug %]
+<pre>
+veldoptie_type: [% veldoptie_type %]
+operators: [% operators.$veldoptie_type %]
+</pre>
+[% END %]
+
+
+[% IF operators.$veldoptie_type %]
+    <div class="kenmerk_filter_operator">
+        <select name="[% veldoptie_operator_fieldname %]">
+            [% FOREACH option = operators.$veldoptie_type %]
+                <option value="[% option.value %]"
+                [% IF kenmerk_item.operator == option.value %]selected[%END%]
+                >[% option.label %]</option>
+            [% END %]
+        </select>
+    </div>
+[% END %]
+
+
+<div class="kenmerk_filter">
+    [% IF veldoptie_type == 'option' || veldoptie_type == 'select' %]
+        [% kenmerk_type = 'checkbox' %]
+    [% ELSE %]
+        [% kenmerk_type = veldoptie_type %]
+    [% END %]
+    [% PROCESS widgets/general/veldoptie.tt 
+        veldoptie_type   = kenmerk_type
+        veldoptie_opties = kenmerk.kenmerk_options
+        veldoptie_value  = kenmerk_item.data				        
+    %]
+</div>
+

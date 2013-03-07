@@ -1,0 +1,107 @@
+<div class="block">
+	<form name="zaken_openstaand">
+	<p class="header">Mijn openstaande zaken (<span class="total_entries">[% zaken_openstaand.pager.total_entries %]</span>)</p>
+    <div class="blockcontent">
+		[% PROCESS widgets/general/zaken_filter.tt
+			zaken_filter_prefix = 'openstaand_'
+		%]
+		<div class="zaken_filter_wrapper">
+			<div class="zaken_filter_inner">
+			[% results = zaken_openstaand %]
+			[% PROCESS zaak/widgets/result.tt %]
+			[% PROCESS widgets/pager2.tt %]
+			
+			[% #PROCESS widgets/more.tt
+				#more.uri = c.uri_for('/zaak/list', { view => 'zaken_openstaand' })
+			%]
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+
+<div class="block">
+	<form name="zaken_intake">
+	<p class="header">Zaakintake (<span class="total_entries">[% zaken_intake.pager.total_entries %]</span>)</p>
+
+	<div class="blockcontent">
+		[% query_status_type = 'new' %]
+		[% results = zaken_intake %]
+
+		[% PROCESS widgets/general/zaken_filter.tt
+			zaken_filter_prefix = 'intake_'
+		%]
+		<div class="zaken_filter_wrapper">
+			<div class="zaken_filter_inner">				
+				[% PROCESS zaak/widgets/result.tt %]
+				[% PROCESS widgets/pager2.tt %]
+				[% #PROCESS widgets/more.tt
+					#more.uri = c.uri_for('/zaak/list', { view => 'zaken_intake' })
+				%]
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+
+
+             
+
+                <table class="table_zoektabber honderd">
+                    <tr class="table_zoektabber_tr">
+
+                        <td class="table_zoektabber_tdleft">
+                            [% PROCESS search/dashboard.tt %]
+                        </td>
+                        
+                        <td class="table_zoektabber_tdspace"></td>
+
+                        <td class="table_zoektabber_tdright">
+                            
+                                <div class="tabber" id="tabinterface-2">
+                                    <p class="header tabbed">Handige informatie</p>
+                                    <ul class="ui-rounded-corners-off">
+                                        <li><a href="#tab-wgt-info-contact">Contactinformatie</a></li>
+                                        <!-- <li><a href="#tab-wgt-info-tijden">Openingstijden</a></li>
+                                        <li><a href="#tab-wgt-info-agenda">Agenda</a></li> -->
+                                    </ul>
+
+                                  <div class="tabbertab" id="tab-wgt-info-contact">
+                                        <table class="table_zoeken">
+                                            <tr class="table_zoeken_tr">
+                                                <td class="td150">Bezoekadres:<br /><br /></td>
+                                                <td class="table_zoeken_tdvar">[% c.config.gemeente.adres %]<br /> [% c.config.gemeente.postcode %] [% c.config.gemeente.woonplaats %]</br></td>
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="td150">Correspondentieadres:<br /><br /></td>
+                                                <td class="table_zoeken_tdvar">[% c.config.gemeente.postbus %]<br /> [% c.config.gemeente.postbus_postcode %] [% c.config.gemeente.woonplaats %]</td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="td150">E-mailadres:</td>
+                                                <td class="table_zoeken_tdvar">[% c.config.gemeente.email %]</td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="td150">Telefoonnummer:</td>
+                                                <td class="table_zoeken_tdvar">[% c.config.gemeente.telefoonnummer %]</td>
+
+                                            </tr>
+                                            <tr class="table_zoeken_tr">
+                                                <td class="td150">Fax:</td>
+                                                <td class="table_zoeken_tdvar">[% c.config.gemeente.faxnummer %]</td>
+
+                                            </tr>
+
+                                  </div>
+                                  <!-- <div class="tabbertab" id="tab-wgt-info-tijden">
+                                  </div>
+                                  <div class="tabbertab" id="tab-wgt-info-agenda">
+                                  </div> -->
+
+                    
+                                </div>
+                            <!-- End Tabber -->
+                        </td>
+                    </tr>
+                </table>

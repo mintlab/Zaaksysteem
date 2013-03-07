@@ -1,0 +1,16 @@
+<html>
+<head>
+    [% PROCESS layouts/common_header_includes.tt %]
+
+<script>
+<!--
+//document.getElementById("filestore_id").value = '[% filestore_id %]';
+$('input[name="filestore_id"]', window.parent.document).val('[% filestore_id %]');
+window.parent.notifyUploadFinish('[% fileuploadfield %]', '[% filestore_id %]', '[% filename %]');
+-->
+</script>
+</head>
+<body>
+[% filestore_id %]
+</body>
+</html>

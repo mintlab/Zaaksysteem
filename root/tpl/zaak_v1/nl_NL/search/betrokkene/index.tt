@@ -1,0 +1,49 @@
+<div class="block">
+    <div class="header tabbed">Contact zoeken</div>
+
+    <div class="blockcontent">
+        <form action="/search/betrokkene/postuploads" target="iframe">
+            <input type="text" name="query" value="[% query %]"/>
+            <input type="checkbox" name="personen" value="personen" checked="checked" /> Personen
+            <input type="checkbox" name="organisaties" value="organisaties" checked="checked" /> Organisaties
+            <input type="checkbox" name="behandelaars" value="behandelaars" checked="checked" /> Behandelaars
+            <input type="button" value="Zoek" class="search_betrokkene2 knop" />
+            
+            <input type="text" name="filestore_id" value=""/>
+            <input type="file" name="filename" value="bla.jpg" />
+            <input type="submit">
+        </form>
+        
+        <div style="position: relative">    
+            <div class="spinner-groot"><div></div></div>
+            <iframe name="iframe" id="miframe"></iframe>
+        </div>
+    </div>
+
+ 
+    
+    <div class="betrokkene_search_results_wrapper">
+        <div class="betrokkene_search_results_inner">
+            <div class="spinner-groot"><div></div></div>
+            <table>
+                [% WHILE (betrokkene = betrokkenen.next) %]
+                 <tr class="table_zaken_tr">
+                    <td class="table_zaken_td250"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.handelsnaam %]</a></td>
+                    <td class="table_zaken_td250"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.vestiging_woonplaats %]</a></td>
+                    <td class="table_zaken_td100"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.vestiging_postcode %]</a></td>
+                    <td class="table_zaken_title_td30">
+                        [% IF betrokkene.authenticated %]
+                            <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+                        [% ELSE %]
+                            <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+                        [% END %]
+                    </td>
+                    <td class="table_zaken_td200"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.ldapid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.telefoonnummer %]</a></td>
+                </tr>
+                [% END %]
+             </table>           
+        </div>
+    </div>
+</div>
+
+

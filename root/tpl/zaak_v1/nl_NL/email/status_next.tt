@@ -1,0 +1,15 @@
+Beste heer/mevrouw,
+
+Onlangs heeft u een zaak ingediend binnen de gemeente [% c.config.gemeente_id %] onder zaaknummer:
+[% zaak.nr %]
+
+Ik zou zeggen, hatsjikidee, we zijn weer een status verder. De huidige status van uw zaak is:
+[% zaak.zaakstatus.next %] ([% zaak.zaakstatus.info.status.${ zaak.zaakstatus.next } %])
+
+De volgende personen zijn verantwoordelijk voor uw zaak:
+Zaakcoordinator: [% zaak.kenmerk.zaakeigenaar.naam %]
+
+Met vriendelijke groet,
+
+[% zaak.kenmerk.zaakeigenaar.naam %]
+Gemeente [% c.config.gemeente_id %]

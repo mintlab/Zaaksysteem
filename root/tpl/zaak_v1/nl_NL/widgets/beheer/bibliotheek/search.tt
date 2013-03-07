@@ -1,0 +1,29 @@
+[% nowrapper = 1 %]
+<div class="ztAccordion">
+    <h3><a href="#">Zoek bestaand [% c.loc(bib_type) %]</a>
+        [% IF c.req.params.row_id && bib_type == 'kenmerken' %]
+            <input type="button" class="element in-header in-accordion ezra_bibliotheek_nieuw bib_type_[% bib_type %]" name="nieuw" value="Nieuw Kenmerk" />
+        [% END %]
+    </h3>
+
+    <div>
+       <div id="search_bibliotheek_[% bib_type %]" class="ui-accordion-table-bg clearfix">
+            <form action="[% c.uri_for('/beheer/bibliotheek/' _ bib_type _ '/search') %]">
+               <input type="hidden" name="search" value="1" />
+               <input type="hidden" name="search_filter_post" value="[% search_filter_post %]"/>
+               <input type="hidden" name="uniquehidden" value="[% c.req.params.hidden_name %]" />
+               <input type="hidden" name="row_id" value="[% c.req.params.row_id %]" />
+               [% includefile = 'widgets/beheer/bibliotheek/' _ bib_type _ '/search.tt'; %]
+               [% INCLUDE $includefile %]
+                <input type="submit" class="button140 right" name="submit" value="Zoeken" />
+                <img id="betrokkene_loader" src="images/loader.gif" class="disabled">
+            </form>
+        </div>
+    </div>
+
+    <h3><a href="#">Resultaten</a></h3>
+    <div>
+        <div class="ui-accordion-table-bg clearfix" id="resultaten">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+
+#ppp {
+    background:url(../images/dienstenenproducten01.jpg) no-repeat;
+    height: 210px;
+    width: 960px;
+    position: absolute;
+    left: 0px;
+    top: 173px;
+    z-index: 10;
+    overflow: hidden;  
+}
+
+#ppp_overlay {
+    height: 210px;
+    width: 960px;
+    left: 0px;
+    top: 173px;
+    background: url('../images/caroussel_overlay.png');
+    position: absolute;
+    z-index: 20;
+}

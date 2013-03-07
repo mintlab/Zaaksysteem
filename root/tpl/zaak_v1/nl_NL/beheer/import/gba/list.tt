@@ -1,0 +1,10 @@
+<!-- Begin GBA Import List -->
+<div class="block">
+    <p class="header">Gegevensbeheer ([% c.loc('gba') %])</p>
+    <div class="blockcontent">
+        [% PROCESS widgets/beheer/import/table.tt %]
+    </div>
+</div>
+<!-- End GBA Import List -->
+
+

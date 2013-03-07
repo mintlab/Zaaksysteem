@@ -1,0 +1,77 @@
+<!-- WIDGET: betrokkene/natuurlijk_persoon_search -->
+
+
+
+<div class="wgt-betrokkene-natuurlijk_persoon_search">
+    <table class="table_zaakinformatie marginbottom">
+        <tr>
+
+            <td class="table_td_left_zaakinformatie">BSN:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="np-burgerservicenummer" class="input_medium"></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Voorvoegsel:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="np-voorvoegsel" class="input_mini"> (bijv: van der)</td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Achternaam:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="np-geslachtsnaam" class="input_medium"></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Geslacht:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                <div class="col"><input type="radio" name="np-geslachtsaanduiding" value="M"> Man</div>
+                <div class="col"><input type="radio" name="np-geslachtsaanduiding" value="V"> Vrouw</div>
+                <div class="col"><input selected="selected" type="radio" name="np-geslachtsaanduiding" value=""> Beide</div>
+                </div>                                                  
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Straat:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="np-straatnaam" class="input_medium"></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Postcode:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="np-postcode" class="input_mini"> 1234AZ</td>
+        </tr>
+        <tr>
+
+            <td class="table_td_left_zaakinformatie">Huisnummer:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="np-huisnummer" class="input_medium"></td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Geboortedatum:</td>
+            <td class="table_td_right_zaakinformatie">
+                <input type="text" name="np-geboortedatum" class="input_medium"> (09-06-1983)
+            </td>
+            <!--
+            <td class="table_td_right_zaakinformatie">
+
+                [%
+                PROCESS widgets/general/periode.tt
+                    input_dag = 'np-geboortedatum-dag'
+                    input_maand = 'np-geboortedatum-maand'
+                    input_jaar = 'np-geboortedatum-jaar'
+                    start_jaar = 1850
+                    start_empty = 1
+                %]
+            </td>
+            -->
+        </tr>
+        <!--
+        <tr>
+            <td class="table_td_left_zaakinformatie">Exact zoeken:</td>
+            <td class="table_td_right_zaakinformatie"><input type="checkbox" name="np-EXACT" /></td>
+        </tr>
+        -->
+        [% IF wgt_config.post_button %]
+        <tr class="table_zoeken_tr_bottom">
+            <td class="table_zoeken_td100_2"></td>
+            <td class="table_zoeken_tdvar"><input type="submit" value="Zoeken" class="button140 right"></td>
+
+        </tr>
+        [% END %]
+    </table>
+</div>
+<!-- END WIDGET: betrokkene/natuurlijk_persoon_search -->

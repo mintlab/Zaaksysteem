@@ -1,0 +1,15 @@
+Geachte heer/mevrouw,
+
+Hartelijk dank voor uw aanvraag. Uw aanvraag naar een [% zaak.zaaktype.node.titel %]
+is bij ons geregistreerd onder zaaknummer [% zaak.nr %] en heeft de status [%
+zaak.zaakstatus.current %] van 5 (Geregistreerd). Wij verzoeken u om in geval
+van verdere communicatie dit zaaknummer te gebruiken. Het is ons streven om uw
+aanvraag binnen 6 weken af te handelen.
+
+Indien u vragen of opmerkingen heeft over uw zaak kunt u contact opnemen met
+mevr. M. Jabroer, e-mailadres m.jabroer@bussum.nl of telefoonnummer
+035-69 28 753.
+
+Met vriendelijke groet,
+
+Gemeente Bussum

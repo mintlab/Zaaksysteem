@@ -1,0 +1,14 @@
+[% # print a css class corresponding to a given mimetype -%]
+[% RETURN UNLESS filename -%]
+[% filename_formatted = filename %]
+[% 
+
+IF(filename.length > 43) %]
+[%
+    filename_formatted = filename.substr(0, 26) _ '...' _ filename.substr(-17,17); 
+%]
+[% END
+
+-%]<div class="filename_formatted">[% filename_formatted %]
+    <!--div class="tooltip">tooltip:[% filename %]</div-->
+</div>

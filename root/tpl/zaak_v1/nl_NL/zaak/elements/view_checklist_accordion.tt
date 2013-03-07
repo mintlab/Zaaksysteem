@@ -1,0 +1,10 @@
+<h3><a href="#">Checklist</a></h3>
+<div>
+    <div class="ui-accordion-table-bg clearfix">
+        <form class="ztSpinnerWait" method="POST" action="[%
+            c.uri_for('/zaak/' _ zaak.nr _ '/checklist/update') %]">
+            [% PROCESS zaak/elements/checklist_question.tt %]
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,37 @@
+<!-- WIDGET: betrokkene/medewerker_search -->
+<div class="wgt-betrokkene-medewerker_search">
+    <table class="table_zaakinformatie marginbottom">
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Voornaam:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="[% SEARCH_INPUT_PREFIX %]voornamen" class="input_large" value=""></td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Achternaam:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="[% SEARCH_INPUT_PREFIX %]geslachtsnaam" class="input_large" value=""></td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Telefoonnummer:</td>
+            <td class="table_td_right_zaakinformatie"><input type="text" name="[% SEARCH_INPUT_PREFIX %]telefoonnummer" class="input_large" value=""></td>
+        </tr>
+        <tr class="table_zaakinformatie_tr">
+            <td class="table_td_left_zaakinformatie">Organisatorische Eenheid:</td>
+            <td class="table_td_right_zaakinformatie">
+<select name="[% SEARCH_INPUT_PREFIX %]org_eenheid">
+<option value="">Geen keuze</option>
+[% WHILE (org_eenheid = org_eenheden.next) %]
+<option value="[% org_eenheid.ex_id %]">[% org_eenheid.omschrijving %]</option>
+[% END %]
+</select>
+            </td>
+        </tr>
+        [% IF wgt_config.post_button %]
+        <tr class="table_zoeken_tr_bottom">
+            <td class="table_zoeken_td100_2"></td>
+            <td class="table_zoeken_tdvar"><input type="submit" value="Zoeken" class="button140 right"></td>
+
+        </tr>
+        [% END %]
+    </table> 
+</div>
+<!-- END WIDGET: betrokkene/medewerker_search -->
+

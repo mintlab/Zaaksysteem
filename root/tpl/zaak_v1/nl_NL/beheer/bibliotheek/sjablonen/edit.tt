@@ -1,0 +1,133 @@
+[% BLOCK block_categorie %]
+    [% WHILE (categorie = bib_cat.next) %]
+        <option
+            value="[% categorie.id %]"
+            class="[% (invoertype.value.multiple ? ' has_options' : '') %][% (invoertype.key == 'file' ? ' file' : '') %]"
+            [% (categorie_id == categorie.id) ? ' selected' : '' %]
+        >[% '-' | repeat(CAT_STR_DEPTH) %] [% categorie.naam %]</option>
+        [% IF categorie.scalar.bibliotheek_categories.count %]
+        [% SET CAT_STR_DEPTH = CAT_STR_DEPTH + 1 %]
+            [% inner_cat = categorie.scalar.bibliotheek_categories %]
+            [% save_categorie = bib_cat %]
+            [% INCLUDE block_categorie
+                bib_cat = inner_cat
+                CAT_STR_DEPTH = CAT_STR_DEPTH
+            %]
+            [% categorie = save_categorie %]
+            [% SET CAT_STR_DEPTH = CAT_STR_DEPTH - 1 %]
+        [% END %]
+    [% END %]
+[% END %]
+
+[% nowrapper = 1 %]
+<div id="sjabloon_definitie">
+    <form action="[%
+        formaction || c.uri_for(
+            '/beheer/bibliotheek/sjablonen/skip/' _ bib_id _ '/bewerken'
+        )
+    %]" method="POST"[% (c.req.params.row_id ? '' : ' class="zvalidate"') %] enctype="multipart/form-data">
+
+    <input type="hidden" name="id" value="[% bib_id %]" />
+    <input type="hidden" name="update" value="1" />
+    <input type="hidden" name="uniquehidden" value="[% c.req.params.hidden_name %]" />
+    <input type="hidden" name="row_id" value="[% c.req.params.row_id %]" />
+    <div>
+        <table class="form table_zaakinformatie">
+            <tbody>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">Naam [% c.loc(bib_type _ '1') %]</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <input type="text" name="naam" value="[% bib_entry.naam %]" class="input_large ezra_sjabloon_naam">
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Deze naam bestaat al in een andere categorie.
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Type hier de naam van het sjabloon</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">
+                        Mogelijke bestandsformaten:
+                    </td>
+                    <td class="table_td_right_zaakinformatie">odf</td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">
+                        [% 'Selecteer een sjabloon' %]:</td>
+                    <td class="table_td_right_zaakinformatie"><input type="file" name="filename" /></td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Deze naam bestaat al in een andere categorie.
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                De mogelijke bestandsformaten</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">Categorie (verplaatsen)</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <select name="bibliotheek_categorie_id">
+                            [%
+                                INCLUDE block_categorie
+                                CAT_STR_DEPTH = 1
+                            %]
+                        </select>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Deze naam bestaat al in een andere categorie.
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Selecteer hier de juiste categorie</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie">Toelichting</td>
+                    <td class="table_td_right_zaakinformatie">
+                        <textarea cols="60" rows="10" name="kenmerk_help">[% bib_entry.kenmerk_help %]</textarea>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Deze naam bestaat al in een andere categorie.
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Extra informatie over de inhoud van dit
+                                sjabloon</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        <table>
+    </div>
+    <input type="submit" value="Opslaan" class="button140">
+    </form>
+</div>

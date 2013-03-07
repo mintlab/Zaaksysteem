@@ -1,0 +1,269 @@
+[% BLOCK block_categorie %]
+    [% WHILE (categorie = bib_cat.next) %]
+        <option
+            value="[% categorie.id %]"
+            class="[% (invoertype.value.multiple ? ' has_options' : '') %][% (invoertype.key == 'file' ? ' file' : '') %]"
+            [% (categorie_id == categorie.id) ? ' selected' : '' %]
+        >[% '-' | repeat(CAT_STR_DEPTH) %] [% categorie.naam %]</option>
+        [% IF categorie.scalar.bibliotheek_categories.count %]
+        [% SET CAT_STR_DEPTH = CAT_STR_DEPTH + 1 %]
+            [% inner_cat = categorie.scalar.bibliotheek_categories %]
+            [% save_categorie = bib_cat %]
+            [% INCLUDE block_categorie
+                bib_cat = inner_cat
+                CAT_STR_DEPTH = CAT_STR_DEPTH
+            %]
+            [% categorie = save_categorie %]
+            [% SET CAT_STR_DEPTH = CAT_STR_DEPTH - 1 %]
+        [% END %]
+    [% END %]
+[% END %]
+
+[% nowrapper = 1 %]
+<div id="kenmerk_definitie">
+    <form action="[%
+        formaction || c.uri_for(
+            '/beheer/bibliotheek/kenmerken/skip/' _ bib_id _ '/bewerken'
+        )
+    %]" method="POST"[% (c.req.params.row_id ? '' : ' class="zvalidate"') %]>
+    <input type="hidden" name="id" value="[% bib_id %]" />
+    <input type="hidden" name="update" value="1" />
+    <input type="hidden" name="row_id" value="[% c.req.params.row_id %]" />
+    <div>
+        <table class="form popup-form" id="kenmerk_template">
+            <tbody>
+                <tr>
+                    <td class="table_td_left_zaakinformatie"><label>Naam [% c.loc(bib_type _ '1') %]</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        <input type="text" name="kenmerk_naam" value="[% bib_entry.kenmerk_naam %]" class="input_large ezra_kenmerk_naam">
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Deze naam bestaat al in een andere categorie.
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Type hier de naam van het kenmerk</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie"><label>Invoertype</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                    [% IF bib_id %]
+                        [% FOR invoertype IN constants.veld_opties %]
+                            [% NEXT UNLESS bib_entry.kenmerk_type == invoertype.key %]
+                            [% invoertype.value.label %]
+                            <input type="hidden" name="kenmerk_type" value="[% bib_entry.kenmerk_type %]"
+                                class="[% (invoertype.value.multiple ? 'has_options' : '') %]
+                                [% (invoertype.key == 'file' ? ' file' : '') %]"
+                                id="kenmerk_invoertype"
+                            /> [% IF bib_entry.kenmerk_type_multiple %](meervoudig)[% END %]
+                        [% END %]
+                        [% ELSE %]
+                        <select name="kenmerk_type" id="kenmerk_invoertype">
+                            <option value="">Selecteer</option>
+                            [% FOR invoertype IN constants.veld_opties %]
+                                <option value="[% invoertype.key %]" [% (bib_entry.kenmerk_type == invoertype.key) ? ' selected="selected"' : '' %]
+                                    class="[% (invoertype.value.multiple ? 'has_options' : '') %]
+                                    [% (invoertype.key == 'file' ? ' file' : '') %]
+                                    [% (invoertype.value.allow_multiple_instances ? ' allow_multiple_instances' : '') %]
+                                    [% (invoertype.value.allow_default_value ? ' allow_default_value' : '') %]
+                                    "
+                                >[% invoertype.value.label %]</option>
+                            [% END %]
+                            </select>
+                    [% END %]
+                    <div class="edit_kenmerk_multiple">
+                [% IF bib_id %]
+                        <input type="hidden" name="kenmerk_type_multiple" value="[% bib_entry.kenmerk_type_multiple %]" id="kenmerk_invoertype_multiple"/>
+                [% ELSE %]
+                            <input type="checkbox" name="kenmerk_type_multiple" [% IF bib_entry.kenmerk_type_multiple %]checked[% END %]
+                                id="kenmerk_invoertype_multiple"/> Meerdere waarden toegestaan
+                    </div>
+                [% END %]
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Invoertype is verplicht
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Selecteer hier een invoertype, maar let op:
+                                deze kan niet meer gewijzigd worden.</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie"><label>Categorie (verplaatsen)</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        <select name="bibliotheek_categorie_id">
+                            [%
+                                INCLUDE block_categorie
+                                CAT_STR_DEPTH = 1
+                            %]
+                        </select>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Categorie is verplicht
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Selecteer hier een categorie</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="multiple-options">
+                    <td class="table_td_left_zaakinformatie"><label>Mogelijkheden</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        [% kenmerk_options = '' %]
+                        [% IF bib_entry.kenmerk_options %]
+                            [% kenmerk_options = bib_entry.kenmerk_options.join("\n") %]
+                        [% END %]
+                        <textarea cols="60" rows="5" name="kenmerk_options" class="small">[% kenmerk_options %]</textarea>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Minimaal 1 mogelijkheid
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Type verschillende mogelijkheden, gescheiden
+                                door een "enter"</div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie"><label>Toelichting</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        <textarea cols="40" rows="10" name="kenmerk_help" class="small">[% bib_entry.kenmerk_help %]</textarea>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Toelichting
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Vul hier een tekstuele omschrijving van dit
+                                kenmerk
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="table_td_left_zaakinformatie"><label>Voorinvulling</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        <textarea cols="40" rows="10" name="kenmerk_value_default" class="small">[% bib_entry.kenmerk_value_default %]</textarea>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Toelichting
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Vul hier een tekstuele voorinvulling in voor dit
+                                kenmerk
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr class="ezra_is_for_document">
+                    <td class="table_td_left_zaakinformatie"><label>Documenttype</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        <select name="kenmerk_document_categorie">
+                    [% FOREACH doc_category IN constants.document.categories %]
+                            <option value="[% doc_category %]"[% (bib_entry.kenmerk_document_categorie == doc_category) ? ' selected' : '' %]>[% doc_category %]</option>
+                    [% END %]
+                        </select>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                Een documenttype is verplicht
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Selecteer een documenttype behorende bij dit
+                                document
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                <tr>
+                <tr class="ezra_is_not_for_document">
+                    <td class="table_td_left_zaakinformatie"><label>Magic String</label></td>
+                    <td class="table_td_right_zaakinformatie">
+                        <input
+                            [% (bib_id ? 'disabled="disabled"' : '') %]
+                            type="text"
+                            name="kenmerk_magic_string"
+                            value="[% bib_entry.kenmerk_magic_string %]"
+                            class="input_large ezra_kenmerk_magic_string"
+                        >
+                        [% IF bib_id %]
+                            <input
+                                type="hidden"
+                                name="kenmerk_magic_string"
+                                value="[% bib_entry.kenmerk_magic_string %]"
+                                class="input_large ezra_kenmerk_magic_string"
+                            >
+                        [% END %]
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                                magic string
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Vul hier een unieke naam in van dit kenmerk
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="nextprev clearfix nextprev-dialog">
+    <input type="submit" value="Opslaan" class="button140 right">
+    </div>
+    </form>
+</div>

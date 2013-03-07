@@ -1,0 +1,84 @@
+[% process_template = 'form/' _ c.config.gemeente_id _ '/header.tt' %]
+[% PROCESS $process_template %]
+
+<!-- [% IF nowrapper %]
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<title>Leidend zaaksysteem</title>
+<link rel="stylesheet" href="/tpl/zaak_v1/nl_NL/css/stylesheet.css" type="text/css" media="screen" />
+<base href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/" />
+</head>
+<body id="webform">
+	<h2>[% definitie.zaaktype_naam | ucfirst %]</h2>
+	
+
+
+[% END %] -->
+						
+	<div class="block">
+	<p class="header">Belangrijk keuzemoment voor vervolg van de aanvraag</p>
+		<div class="blockcontent">
+	
+    <form method="POST" action="[% c.uri_for('/zaak/create/' _ aangevraagd_via _ '/zaakcontrole') %]">
+    [% IF vorige_zaak %]
+    <input type="hidden" name="vorige_zaak" value="[% vorige_zaak.nr %]">
+    [% END %]
+
+
+
+						
+            [% IF vorige_zaak %]
+						<p style="margin-bottom:20px;">Het blijkt dat u al eens een aanvraag heeft gedaan
+                        voor een [% definitie.titel %]. <br/>Wilt u de
+                        gegevens van de vorige zaak gebruiken voor deze aanvraag?</p>
+
+						<div>
+						<div><input type="radio" name="copy_gegevens" value="1" /> Ja, ik wil graag dezelfde gegevens weer gebruiken en wellicht aanpassen</div>
+						<div>
+						<input type="radio" name="copy_gegevens" value="0" /> Nee, ik wil alle gegevens opnieuw invullen</div>
+						</div>
+						
+            [% ELSE %]
+						<font color="#EE0000"><b>Wij hebben nog geen soortgelijke zaak van u aangetroffen</b></font>
+            [% END %]
+            <br/>
+
+			
+            <br />
+            <br />
+	
+	<!-- <table class="table_ztbmenu">
+		<tr class="table_ztbmenu_tr">
+			<td class="table_ztbmenu_tdleft"><a href="[% c.uri_for('/form') %]" title="Annuleren"><input type="button" value="Annuleren" class="button140"></a></td>
+			<td class="table_ztbmenu_tdright"><input type="submit" value="Volgende" class="button140 right"></td>
+		</tr>
+	</table> -->
+	
+	
+	   <div class="nextprev clearfix">
+        <a href="[% (c.user_exists ? c.uri_for('/') : c.config.gemeente.gemeente_portal) %]" title="Annuleren">
+            <input type="button" value="Annuleren" class="button140">
+        </a>
+        <input type="submit" value="Volgende" class="button140 right">
+    </div>
+	
+	</form>
+	
+	</div>
+	</div>
+
+<!-- [% IF nowrapper %]
+
+
+</body>
+</html>
+[% END %] -->
+
+
+[% process_template = 'form/' _ c.config.gemeente_id _ '/footer.tt' %]
+[% PROCESS $process_template %]
+

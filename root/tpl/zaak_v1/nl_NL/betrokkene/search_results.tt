@@ -1,0 +1,208 @@
+                
+                <div class="block">
+                <p class="header">Zoekresultaten</p>
+				<div class="blockcontent">
+                <table class="table_zaken_title no_margin">
+                	<thead>
+        [% IF betrokkene_type == 'bedrijf' %]
+                    <tr class="table_zaken_title_tr">
+                        <td class="table_zaken_title_td100">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'dossiernummer',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'dossiernummer' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>KVK:</a>
+                        <td class="table_zaken_title_td250">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'handelsnaam',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'handelsnaam' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Handelsnaam:</a>
+                        <td class="table_zaken_title_td250">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'vestiging_woonplaats',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'vestiging_woonplaats' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Vestigingsplaats:</a>
+                        <td class="table_zaken_title_td100">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'vestiging_postcode',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'vestiging_postcode' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Postcode:</a>
+                    <td class="table_zaken_title_td30"><img src="/images/icon-down.png" width="16" height="16"></td>
+                    </tr>
+        [% ELSIF betrokkene_type == 'natuurlijk_persoon' %]
+                    <tr class="table_zaken_title_tr">
+                        <td class="table_zaken_title_td30"><img src="/images/icon-down.png" width="16" height="16"></td>
+                        <td class="table_zaken_title_td100">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'bsn',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'bsn' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>BSN:</a>
+                        <td class="table_zaken_title_td200">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'voornamen',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'voornamen' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Voornamen:</a>
+                        <td class="table_zaken_title_td100">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'voorvoegsel',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'voorvoegsel' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Tussenvg:</a>
+                        <td class="table_zaken_title_td200">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'geslachtsnaam',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'geslachtsnaam' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Achternaam:</a>
+                        <td class="td100">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'geboortedatum',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'geboortedatum' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Geb.datum:</a>
+                        <td class="td300">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'straatnaam',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'straatnaam' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Straatnaam:</a>
+                        <td class="table_zaken_title_td60">
+                            <a href="[%
+                                c.req.uri_with( {
+                                    order        => 'huisnummer',
+                                    order_direction   => (
+                                        c.req.params.order_direction == 'ASC'
+                                            ? 'DESC'
+                                            : 'ASC'
+                                        )
+                                })
+                            %]"[% (c.req.params.order == 'huisnummer' ? ' class="' _ c.req.params.order_direction _ ' sort"' : '') %]>Huisnr:</a>
+                        <td class="table_zaken_title_td30"><img src="/images/icon-down.png" width="16" height="16"></td>
+                    </tr>
+        [% ELSIF betrokkene_type == 'medewerker' %]
+                    <tr class="table_zaken_title_tr">
+                        <td class="table_zaken_title_td200">Voornamen:</td>
+                        <td class="table_zaken_title_td200">Achternaam:</td>
+                        <td class="table_zaken_title_tdvar">Organisatorische eenheid:</td>
+                        <td class="table_zaken_title_td200">Telefoonnummer:</td>
+                    </tr>
+        [% END %]
+                </thead>
+                <tbody>
+    [% WHILE (betrokkene = betrokkenen.next) %]
+        [% IF betrokkene_type == 'bedrijf' %]
+                    <tr class="table_zaken_tr">
+                        <td class="table_zaken_td100"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.dossiernummer %]</a></td>
+                        <td class="table_zaken_td250"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.handelsnaam %]</a></td>
+                        <td class="table_zaken_td250"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.vestiging_woonplaats %]</a></td>
+                        <td class="table_zaken_td100"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.vestiging_postcode %]</a></td>
+                        <td class="table_zaken_title_td30">
+                            [% IF betrokkene.authenticated %]
+                                <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+                            [% ELSE %]
+                                <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+                            [% END %]
+                        </td>
+                    </tr>
+        [% ELSIF betrokkene_type == 'natuurlijk_persoon' %]
+                    <tr class="table_zaken_tr">
+                        <td class="table_zaken_td30"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]"><img src="/images/icon-[% (betrokkene.geslachtsaanduiding == 'M' ? 'man.png' : 'vrouw.png') %]" width="16" height="16" border="0" /></a></td>
+                        <td class="table_zaken_td100"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.burgerservicenummer %]</a></td>
+                        <td class="table_zaken_td200"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.voornamen %]</a></td>
+                        <td class="table_zaken_td100"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.voorvoegsel %]</a></td>
+                        <td class="table_zaken_td200"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.gmid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.geslachtsnaam %]</a></td>
+                        <td class="td100">[% betrokkene.geboortedatum.dmy %]</td>
+                        <td class="td300">[% betrokkene.straatnaam %]</td>
+                        <td class="table_zaken_td60">[% betrokkene.huisnummer %]
+                            [% (betrokkene.huisletter ? betrokkene.huisletter : '') %]
+                            [% (betrokkene.huisnummertoevoeging ? ' - ' _ betrokkene.huisnummertoevoeging : '') %]</td>
+                        <td class="table_zaken_title_td30">
+                            [% IF betrokkene.authenticated %]
+                                <img src="/images/icon-betrokkene_gm.png" width="16" height="16">
+                            [% ELSE %]
+                                <img src="/images/icon-betrokkene_zs.png" width="16" height="16">
+                            [% END %]
+                        </td>
+                    </tr>
+        [% ELSIF betrokkene_type == 'medewerker' %]
+                    <tr class="table_zaken_tr">
+                        <td class="table_zaken_td200"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.ldapid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.voornamen %]</a></td>
+                        <td class="table_zaken_td200"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.ldapid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.geslachtsnaam %]</a></td>
+                        <td class="table_zaken_tdvar"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.ldapid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.org_eenheid.naam %]</a></td>
+                        <td class="table_zaken_td200"><a href="[% c.uri_for('/betrokkene/' _ betrokkene.ldapid, { type => betrokkene_type, gm => 1}) %]">[% betrokkene.telefoonnummer %]</a></td>
+                    </tr>
+
+
+        [% END %]
+    [% END %]
+    			</tbody>
+                </table>
+                
+
+                <!-- End Zoekresultaten -->
+        
+
+                <div class="div_result">
+                    [% PROCESS widgets/pager.tt %]
+                </div>
+
+
+                </div>
+                </div>
+                </div>
+

@@ -1,0 +1,64 @@
+[% RETURN IF c.user_exists -%]
+[% nowrapper=1 -%]
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="author" content="Baarn" />
+<meta name="description" content="Welkom bij de Gemeente Baarn" />
+<meta name="distribution" content="global" />
+<meta name="revisit-after" content="7 days" />
+<title>Gemeente Baarn / Diensten en Producten</title>
+<link rel="stylesheet" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/css/default.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/css/style_default.css" type="text/css" media="screen"/>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/js/jquery-1.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/js/external_links_converter.js"></script>
+
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/css/style_ppp.css" media="screen"/>
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/css/style_portal_internet.css" media="screen"/>
+<!--[if IE 7]><link rel="stylesheet" type="text/css" href="/templates/css/style_ie7.css" media="screen"><![endif]-->
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/css/style_print.css" media="print"/>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/js/print.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/js/searchbox.js"></script>
+<script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/js/jquery.js"></script>
+<!--script type="text/javascript" src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/js/carrousel.js"></script-->
+
+<link rel="stylesheet" type="text/css" href="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/form/baarn/css/baarn.css" media="screen"/>
+
+
+<!-- einde head items -->
+
+[% PROCESS layouts/common_header_includes.tt %]
+[% PROCESS form/common_form_header_includes.tt %]
+
+
+
+</head>
+<body>
+
+<!-- zs spinner -->
+
+<div class="custom_overlay"><div><img src="[% c.uri_for('/tpl/zaak_v1/nl_NL') %]/images/apple-spinner.gif" /></div></div>
+
+<!-- end zs spinner -->
+
+
+
+         
+<!-- header -->
+
+ <ul class="skiplinks">
+        <li><a href="#search_wrapper">Ga direct naar zoeken</a></li>
+        <li><a href="#content_wrapper">Ga direct naar het tekstgedeelte</a></li>
+        <li><a href="#navigatie_wrapper">Ga direct naar de navigatie</a></li>
+    </ul>
+    <div id="globalwrapper">
+        <div id="content_wrapper">
+            <div id="kruimelspoor">
+                <a href="http://www.baarn.nl/portal">Home</a><span class="seperator"> &gt; </span><a href="http://www.baarn.nl/diensten-en-producten">Diensten en Producten</a>
+            </div>
+            <div id="content_block">
+
+<!-- einde header -->

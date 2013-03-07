@@ -1,0 +1,211 @@
+<!-- Begin Zaaktype -->
+<div id="fresh-form">
+    <form method="POST" action="[% formaction %]" class="zvalidate use_submit" enctype="multipart/form-data">
+        <input type="hidden" name="zaaktype_update" value="1" />
+        <div class="block clearfix">
+            <p class="header">Zaakacties</p>
+            <div class="blockcontent">
+
+
+                <table class="marginbottom form">
+
+                    <tbody>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.aanvrager_hergebruik" />
+                                <input
+                                    class="voor_label"
+                                    id="hergebruik"
+                                    type="checkbox"
+                                    name="node.aanvrager_hergebruik"
+                                    value="1"
+                                    [% (
+                                        params.node.aanvrager_hergebruik
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                /> <label for="hergebruik">Aanvragers kunnen gegevens uit vorige zaak hergebruiken</label>
+                            </td>
+                            <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.automatisch_behandelen" />
+                                    <input
+                                        class="voor_label"
+                                        id="automatisch_behandelen"
+                                        type="checkbox"
+                                        name="node.automatisch_behandelen"
+                                        value="1"
+                                        [% (
+                                            params.node.automatisch_behandelen
+                                                ? 'checked="checked"'
+                                                : ''
+                                        ) %]
+                                    /> <label for="automatisch_behandelen">Deze zaak automatisch in behandeling nemen</label>
+                                
+                            </td>
+                        <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.online_betaling" />
+                                <input
+                                    class="voor_label"
+                                    id="online_betaling"
+                                    type="checkbox"
+                                    name="node.online_betaling"
+                                    value="1"
+                                    [% (
+                                        params.node.online_betaling
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                /> <label for="online_betaling">Online betalen</label>
+                            </td>
+                        <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.webform_toegang" />
+                                <input
+                                    class="voor_label"
+                                    id="webform"
+                                    type="checkbox"
+                                    name="node.webform_toegang"
+                                    value="1"
+                                    [% (
+                                        params.node.webform_toegang
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                /> <label for="webform">Aanvragen met webformulier</label>
+                            </td>
+                        <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.bedrijfid_wijzigen" />
+                                <input
+                                    class="voor_label"
+                                    id="bedrijfid"
+                                    type="checkbox"
+                                    name="node.bedrijfid_wijzigen"
+                                    value="1"
+                                    [% (
+                                        params.node.bedrijfid_wijzigen
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                /> <label for="bedrijfid">Kan [% c.config.gemeente.naam %]ID wijzigen</label>
+                            </td>
+                        <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.toewijzing_zaakintake" />
+                                <input
+                                    class="voor_label"
+                                    id="toewijzing"
+                                    type="checkbox"
+                                    name="node.toewijzing_zaakintake"
+                                    value="1"
+                                    [% (
+                                        params.node.toewijzing_zaakintake
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                />
+                                <label for="toewijzing">Toewijzing tonen bij zaakintake</label>
+                            </td>
+                        <td>
+                                <span class="validator"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.zaaktype_vertrouwelijk" />
+                                <input
+                                    class="voor_label"
+                                    id="vertrouwelijk"
+                                    type="checkbox"
+                                    name="node.zaaktype_vertrouwelijk"
+                                    value="1"
+                                    [% (
+                                        params.node.zaaktype_vertrouwelijk
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                />
+                                <label for="vertrouwelijk">Zaaktype is vertrouwelijk</label>
+                            </td>
+                        <td>
+                                <span class="validator">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="hidden"
+                                name="ezra_checkboxes"
+                                value="node.extra_relaties_in_aanvraag" />
+                                <input
+                                    class="voor_label"
+                                    id="extra_relaties_in_aanvraag"
+                                    type="checkbox"
+                                    name="node.extra_relaties_in_aanvraag"
+                                    value="1"
+                                    [% (
+                                        params.node.extra_relaties_in_aanvraag
+                                            ? 'checked="checked"'
+                                            : ''
+                                    ) %]
+                                />
+                                <label for="extra_relaties_in_aanvraag">
+                                    Mogelijkheid om relaties toe te voegen bij
+                                    zaakintake
+                                </label>
+                            </td>
+                        <td>
+                                <span class="validator">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="nextprev clearfix">
+                    <input type="button" name="goback" value="Vorige" class="go_back button140 btn" />
+                    <input type="submit" value="Volgende" class="button140 right btn" />
+                    [% UNLESS params.create %]
+                    <input name="direct_finish" type="hidden" value="" />
+                    <input class="button140 grijs btn right ezra_direct_finish" value="Afronden" type="button" />
+                    [% END %]
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

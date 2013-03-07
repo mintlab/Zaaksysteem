@@ -1,0 +1,619 @@
+/************************************************************
+Title:     Extensions | Emile Blume - Netcreators.com
+************************************************************/
+
+/* Tools ///////////////////////////////////////////////*/
+#tools div { float:left; }
+#tools a { 
+	color:#858585;
+	padding:2px 30px 2px 10px;
+}
+#tools a:hover { 
+	color:#333;
+	text-decoration:none;
+}
+#tools .browsealoud a {
+	background:url(../img/sprite.gif) no-repeat 80px 4px;
+	border-right:1px solid #CCCCCC;
+	padding:2px 36px 2px 0px;
+}
+.rss a {
+	background:url(../img/sprite.gif) no-repeat 40px -45px;
+	border-right:1px solid #CCCCCC;
+}
+.print a {
+	border-left:1px solid #CCCCCC;
+	margin-left:10px;
+}
+#tools {z-index:999;}
+#tools .sitemap {
+	position:absolute;
+	right:-635px;
+	top:60px;
+	z-index:900;
+	padding:0;
+}
+#tools .sitemap a {padding:0;}
+#tools .sitemap a:hover { text-decoration:underline; }
+
+/* FONTSIZE ////////////////////////*/
+#fontsize { padding-left:10px; }
+#fontsize span { float:left; }
+#fontsize ul, #fontsize li {
+	display:inline;
+	float:left;
+	list-style:none;
+	margin:0;
+	padding:0;
+}
+#fontsize ul { 
+	padding:0 0 0 5px;
+	position:relative;
+	top:-2px;
+}
+
+#fontsize a { 	
+	background:url(../img/sprite.gif) no-repeat 0 -200px; 
+	display:block; 
+	height:20px; 
+	width:19px;
+	text-indent:-9999px;
+	padding:0;
+}
+#fontsize a.large { background-position:-20px -220px;width:20px; }
+#fontsize a.largest { background-position:-20px -240px; }
+#fontsize a:hover { color:#CC0000; }
+
+#introduction { width:286px; }
+
+/* Taalkeuze ////////////////////////////////*/
+#language {
+	border-top:1px solid #CCCCCC;
+	float:right;
+	position:absolute;
+	left:845px;
+	top:0.333em;
+	width:110px;
+	height:23px;
+	z-index:999;
+	padding:0;
+	margin:0;
+	display:block;
+}
+#language li {list-style:none;}
+#language a, #language span {
+	background:#fff;
+	display:block;
+	padding:3px 5px;
+	border-bottom:1px solid #CCCCCC;
+	color:#666;
+	text-decoration:none;
+	
+}
+#language a {
+	border-left:1px solid #CCCCCC;
+	border-right:1px solid #CCCCCC;
+}
+#language li.current span {
+/* TODO
+	background: #fff url(../img/arrow-language.gif) no-repeat left 8px;
+*/
+
+}
+#language a:hover {
+	background-color:#efefef;
+	color:#333;
+}
+
+#language li a img, #language li span img {
+	float:left;
+	margin:2px 4px;
+}
+
+/* IR FAQ ////////////////////////////////////*/
+.tx-irfaq-pi1 { margin-bottom: 1em; }
+.tx-irfaq-pi1 .irfaq-show-hide { font-size: 0.9em; }
+.tx-irfaq-pi1 dl { clear: both; }
+
+.tx-irfaq-pi1 dt {
+	font-size: 1.1em;
+	margin-bottom: 0.3em;
+	padding-bottom: 0.3em;
+	color: #0E6293;
+	border-bottom: 1px solid #E6E6E6;
+}
+
+.tx-irfaq-pi1 dt:hover { color: #D64DA0; }
+
+.tx-irfaq-dynheader img {padding-right: 10px; }
+.tx-irfaq-dynans-visible p {padding-left: 24px; }
+.tx-irfaq-pi1 .tx-irfaq-pi1 .additional-info { border-top: 1px solid #E6E6E6; }
+
+.tx-irfaq-pi1 p, .tx-irfaq-pi1 ul, .additional-info { margin-bottom: 1em;}
+
+/* SEARCH /////////////////////////////////////*/
+#search {
+	background: url(../img/bg-search-left.gif) no-repeat left top;
+	height:37px;
+	left:400px;
+	top: 50px;
+	position: absolute;
+	z-index:900;
+	padding-left:8px;
+}
+.search-left {
+	font-size:11px;
+	width:556px;
+	background: url(../img/bg-search.gif) repeat-x left top;
+	height:35px;
+	padding:3px 0 0;
+}
+#searchform {margin-bottom:0;}
+#search input { 
+	float:left; 
+	margin-top:2px; 
+	padding:5px 0 0 3px; 
+	width:310px; 
+	height:19px; 
+	font-size:11px;
+	padding-right:0;
+	display:block;
+	line-height:1.6em;
+	background: url(../img/tx-solr-q-bg.gif) no-repeat left top;
+	border: 1px solid #CBCBCB;
+	color: #4A4A4A;
+}
+#search input.submit {
+	background: url(../img/button-solr-search.gif) no-repeat left top; 
+	border:0; 
+	clear:none; 
+	padding:0px;
+	width:57px;
+	height:27px;
+	margin-left:10px;
+	line-height:1.5em;
+	color:#fff;
+}
+
+#search #generalSearchBox { width: 177px; }
+.ncsolr-label-search {width:0;padding:0;text-indent:-9999px;}
+
+.tx-indexedsearch-browsebox { margin-bottom:1em;}
+.tx-indexedsearch-res { margin-bottom:0.3em; border-bottom:1px solid #CCC; }
+.tx-indexedsearch-res-item { padding:0.3em; margin:0.3em; border-top:1px solid #CCC; }
+.tx-indexedsearch p { margin:0; }
+ul.browsebox, ul.browsebox li {
+ 	margin: 0;
+ 	padding: 0;
+ 	display: inline;
+}
+
+ul.browsebox a {
+ 	margin-right: 0.3em;
+ 	text-decoration: none;
+}
+
+.tx-ncstsolrsearch-pi1 ul{margin-left:0px; }
+.tx-ncstsolrsearch-pi1 li, tx-ncstsolrsearch-pi1 {list-style-type:none; }
+.tx-ncstsolrsearch-pi1 .hide-did-you-mean-page-suggestion{display:none;}
+.tx-ncstsolrsearch-pi1 .hide-moreLikeThis-0{display:none;}
+.tx-ncstsolrsearch-pi1 .hideRow-1{display:none;}
+.tx-ncstsolrsearch-pi1 .showRestrictedHeader-0{display:none;}
+.hide-did-you-mean-page-suggestion{display:none; }
+
+/* FE User /////////////////////////////////////////////////*/
+.tx-srfeuserregister-pi1 form legend { margin-bottom: 1em; }
+.tx-srfeuserregister-pi1 form li { margin-bottom: 4px; width:100%; }
+.tx-srfeuserregister-pi1 form li label { width: 200px; }
+.tx-srfeuserregister-pi1 .radio { float: left; display:inline; }
+
+.tx-srfeuserregister-pi1 .radio input, .tx-srfeuserregister-pi1 .radio label {
+	background: 0;
+	border: none;
+	float: left;
+	margin-right: 10px;
+	width: auto;
+}
+
+/* JK Poll /////////////////////////////////////*/
+.tx-jkpoll-pi1 label { float: none; }
+
+/* submit extensions ////////////////////////////*/
+.tx-jkpoll-pi1 .pollsubmit, .tx-pbsurvey-pi1-submit, .tx-pbsurvey-pi1-back,
+.news-single-item .news-single-backlink a { 
+	background: url(../img/sprite.gif) no-repeat scroll -7px -373px;
+	padding-left:15px;
+	font-weight: normal;
+	display:block;
+}
+.tx-jkpoll-pi1 .pollsubmit:hover, .tx-pbsurvey-pi1-submit:hover, 
+.tx-pbsurvey-pi1-back:hover, .news-single-item .news-single-backlink a:hover {
+	background-position: -7px -94px;
+} 
+/* fe login ////////////////////////////////*/
+.tx-felogin-pi1 legend {
+	font-size:1.413em;
+	color:#073D7B;
+	font-weight:normal;
+	margin-bottom:0;
+	padding:0.9em 0 1em;
+}
+.tx-felogin-pi1 label { float: none; }
+.felogin-user, .felogin-pw, .tx-felogin-pi1 .button { float:left; }
+#pass, #user {
+	width:142px;
+	height:25px;
+	background: url(../img/bg-felogin-input.gif) no-repeat left top;
+	border:0;
+}
+.tx-felogin-pi1 .button { margin-top:15px; }
+
+.felogin_submit {
+	background:url(../img/button-solr-search.gif) no-repeat scroll left 6px;
+	border:0 none;
+	clear:none;
+	height:33px;
+	padding:7px;
+	width:57px;
+	color:#fff;
+}
+.felogin_submit:hover { cursor:pointer; }
+/* dmmjobcontrol ///////////////////////*/
+.dmmjobcontrol_list_th1 { 
+	color: #0E6293;
+	font-size:1.1em;
+	text-align: left;
+	font-weight: normal;
+}
+
+.jobcontrol-definition { padding-bottom: 5px; }
+
+.dmmjobcontrol_list_tr a, .dmmjobcontrol_list_tr_alt a {
+	background:url(../img/arrow.gif) no-repeat left 2px;
+	padding-left:15px;
+}
+
+.jobcontrol-detail div.jobcontrol-label {
+	float:left;
+	padding-right:5px;
+	margin-bottom:10px;
+}
+.jobcontrol-detail {clear:both;margin-bottom:10px;}
+.jobcontrol-desc {font-weight:bold;}
+.dmmjobcontrol_apply_backtolist {
+	background:url(../img/arrow.gif) no-repeat left 2px;
+	padding-left:15px;
+}
+
+/* nc_risbis//////////////////////////*/
+.prencrisbisleiden ul { margin-bottom: 0px; padding-bottom: 0px; }
+.backLink {padding:5px 0;}
+
+/* Pagebrowser /////////////////////////////////////////// */
+.tx-pagebrowse { text-align: center; list-style: none inside none; padding: 0 0; margin: 0 0; width: 100%; }
+.tx-pagebrowse li { display: inline; list-style: none; margin: 0 0; padding: 0 5px 0 0; }
+li.tx-pagebrowse-pages { width: 80%; }
+li.tx-pagebrowse-pages ol { display: inline; margin: 0 0; padding: 0 10px; }
+
+/* addthis //////////////////////////////////*/
+.addthis_toolbox {clear:both;padding:10px 0;}
+
+/* tt_address ////////////////////////////*/
+.tx-ttaddress-pi1 ul, .tx-ttaddress-pi1 li { list-style:none; margin:0; padding:0; }
+.vcard {clear:both; margin-bottom:10px; overflow:auto;}
+.vcard .photo {float:left; margin-right:10px;}
+.tt_address-adr, .tt_address-contact {float:left;margin-right:10px;width:33%;}
+.tt_address-adr-label {color:#00354A;}
+a.url {display:block;}
+
+#right .vcard .photo {float:right;margin-left:10px;margin-right:0px;}
+#right .tt_address-adr {width:auto;}
+#right .tx-ttaddress-pi1 {width:230px;}
+
+/* overheid zoekbox ////////////////////////////*/
+#onlzoekbox {
+	font-size:0.7em;
+	border: 1px solid #000;
+	background: #FFF;
+	min-width: 195px;
+	max-width: 280px;
+	float:left;
+}
+
+#onlzoekbox p { margin:0; padding:0 3px; }
+
+#onlzoekbox p.head{
+	font: 1.6em bold;
+	color: #FF8A00;
+	border-bottom:3px solid #FF8A00;
+	padding: 0 3px 3px 3px;
+}
+
+#onlzoekbox p.head a{
+	background:transparent url(http://www.overheid.nl/media/css/images/overheid.nl.png) no-repeat scroll 0 0;
+	display:block;
+	margin: 3px 0 0 0;
+	height:33px;
+	left:27px;
+	text-indent:-999em;
+	top:33px;
+	width:185px;
+}
+
+#onlzoekbox p.info { padding:3px 0 0 3px; color:#6D7F97; }
+#onlzoekbox p.foot{ border-top:1px solid #000; background:#8294A9; padding:0 3px; }
+
+#onlzoekbox fieldset { 
+	margin:0;
+	padding:3px;
+	border:0;
+	font-weight:bold;
+}
+
+#onlzoekbox button {
+	background:transparent url(http://www.overheid.nl/media/css/images/button.gif) no-repeat scroll right top;
+	border:medium none;
+	clear:both;
+	cursor:pointer;
+	display:block;
+	font-weight:bold;
+	height:20px;
+	padding:1px 25px 3px 0;
+	margin:3px 0 0 0;
+	text-align:right;
+	width:100%;
+}
+
+#onlzoekbox button:hover, button:focus { background-position:right bottom; }
+
+/* direct mail subscription ///////////////////*/
+.dmailsub {display:block;}
+.dmailsub-name {overflow:auto;}
+.dmailsub-choices {clear:both;}
+.dmailsub-choices input, #dmailsub-cat-htmlmails {
+	float:left;
+	display:inline;
+	border:0;
+}
+.dmailsub form label {width:70px;}
+.dmailsub-email {margin-bottom:10px;}
+.dmailsub form .dmailsub-choices label {width:150px;}
+.dmailsub-html label {float:none;}
+.cat br {clear:both;}
+.dmailsub-subscribe {margin-top:10px;}
+
+/* yellow pages //////////////////////////*/
+/* list ---------------------------------------*/
+.tx_mh_branchenbuch-category {
+	padding:0;
+	margin:0 0 10px 0;
+	list-style-type:none;
+}
+.tx_mh_branchenbuch-category a {
+	background:url(../img/arrow.gif) no-repeat left 3px;
+	padding-left:15px;
+}
+.xs_entry h4 a {
+	background:url(../img/arrow-right.gif) no-repeat left 3px;
+	display:block;
+	padding-left:20px;
+	min-height:18px;
+}
+.xs_entry, .tx_mh_branchenbuch-detail-info {
+	background:#F0F2F2;
+	margin-bottom:10px;
+	padding:10px;
+	overflow:hidden;
+}
+.xs_entry-naw, .xs_entry-contact {
+	float:left;
+	width:50%;
+}
+.xs_entry-naw p, .xs_entry-contact p, .tx_mh_branchenbuch-detail p {margin-bottom:0;}
+.xs_entry-contact-phone, .xs_entry-contact-fax, .xs_entry-contact-cellphone,
+.tx_mh_branchenbuch-detail-phone, .tx_mh_branchenbuch-detail-fax, 
+.tx_mh_branchenbuch-detail-cellphone, .tx_mh_branchenbuch-detail-www,
+.tx_mh_branchenbuch-detail-email, .tx_mh_branchenbuch-detail-vcard {
+	background:url(../img/sprite-yp.gif) no-repeat left -200px;
+	padding-left:30px;
+	height:30px;
+}
+.xs_entry-contact-fax, .tx_mh_branchenbuch-detail-fax {background-position:left top;}
+.xs_entry-contact-cellphone, .tx_mh_branchenbuch-detail-cellphone {background-position:left -100px;}
+/* detail -------------------------------------------------*/
+.tx_mh_branchenbuch-detail-info-image, .tx_mh_branchenbuch-detail-naw,
+.tx_mh_branchenbuch-detail-contact {
+	float:left;
+	width:33%;
+}
+.tx_mh_branchenbuch-detail-www {background-position:left -300px;}
+.tx_mh_branchenbuch-detail-email {background-position:left -400px;}
+.tx_mh_branchenbuch-detail-vcard {background-position:left -500px;}
+.tx_mh_branchenbuch-detail-descr {
+	clear:both; 
+	background: url(../img/border-rulerafter.gif) repeat-x left top;
+	padding-top:5px;
+	margin-top:10px;
+	overflow:hidden;	
+}
+
+/* Social bookmarks /////////////////////////////////////*/
+#sp_socialbookmarks_link_bar {
+	background: url(../img/bg-sb.gif) no-repeat left top;
+	width:680px;
+	height: 21px;
+	padding:10px;
+}
+#sp_socialbookmarks_link_bar span {
+	float:left; 
+	margin-right:5px;
+	line-height:1.9em;
+}
+#sp_socialbookmarks_link_bar a {
+	width:26px;
+	height:26px;
+	display:block;
+	float:left;
+}
+a#bookmark_Twitter {
+	background: url(../img/icon-twitter.gif) no-repeat left top;	
+}
+a#bookmark_Facebook {
+	background: url(../img/icon-facebook.gif) no-repeat left top;	
+}
+a#bookmark_Hyves {
+	background: url(../img/icon-hyves.gif) no-repeat left top;
+}
+#sp_socialbookmarks_link_bar a:hover { background-position: left bottom;}
+#sp_socialbookmarks_link_bar #share-mail {width:auto; line-height:1.9em; padding-left:5px;}
+
+/* Smoelenboek ////////////////////////////////////////////*/
+.tx-ncgovsmoelenboek-pi1 label {
+	float:none;
+	position:relative;
+	top:6px;
+}
+.tx-ncgovsmoelenboek-pi1 select {
+	height:27px;
+	position:relative;
+	top:-4px;
+}
+#tx_ncgovsmoelenboek_pi1_sword {
+	background: url(../img/ncgov-smoelenboek-input.gif) no-repeat left top;
+	height:20px;
+	width:165px;
+	line-height:1.6em;
+	padding:5px 0 0 3px;
+}
+#tx_ncgovsmoelenboek_submit {
+	color:#fff;
+	text-transform:capitalize;
+	background:url(../img/button-solr-search.gif) no-repeat left top;
+	border:0 none;
+	clear:none;
+	height:27px;
+	line-height:1.5em;
+	margin-left:10px;
+	padding:0;
+	width:57px;
+}
+
+.ncgov-smoelenboek-index {
+	background:url(../img/dotted.gif) repeat-x left top;
+	clear:both;
+	display:block;
+	margin-top:10px;
+	padding:10px 0 20px 0;
+}
+
+.ncgov-smoelenboek-index ul {
+	float:left;
+	list-style:none outside none;
+	margin:0;
+	padding:0;
+}
+.ncgov-smoelenboek-index li, .ncgov-smoelenboek-index li a {
+	height:18px;
+	margin:0 2px 0 0;
+	overflow:hidden;
+	padding:0;
+	text-align:center;
+	text-decoration:none;
+	width:18px;
+	float:left;
+}
+.ncgov-smoelenboek-index li a {margin:0;}
+.ncgov-smoelenboek-index li a:hover {
+	background:url(../img/bg-pdc-az.gif) no-repeat center center;
+	color:#0099FF;	
+}
+.ncgov-smoelenboek-index-all a, .smoelenboek-terug a {
+	margin-left:10px;
+	width:37px;
+	height:18px;
+	display:block;
+	float:left;
+	text-align:center;
+}
+.ncgov-smoelenboek-index-all a:hover, .smoelenboek-terug a:hover {
+	background:url(../img/smoelenboek-all.gif) no-repeat center center;
+}
+.tx-ncsmoelenboek-pi1-list {
+	background:url(../img/dotted.gif) repeat-x left top;
+	clear:both;
+	display:block;
+	margin-top:10px;
+	padding:10px 0;
+}
+.tx-ncsmoelenboek-pi1-list th, .tx-ncsmoelenboek-pi1-list td {
+	width:15%;
+	text-align:left;
+}
+td.smoelenboek-mail, th.smoelenboek-mail {
+	width:20px;
+}
+.tx-ncsmoelenboek-pi1-single dl {float:left;}
+.tx-ncsmoelenboek-pi1-single dt, .tx-ncsmoelenboek-pi1-single dd {
+	float:left;
+}
+.tx-ncsmoelenboek-pi1-single dt { 
+	clear:both; 
+	width:100px;
+	text-align:right;
+	color:#666;
+	margin-bottom:5px;
+}
+.tx-ncsmoelenboek-pi1-single dd {font-weight:bold;margin-bottom:5px;}
+
+/* useful links ////////////////////////////////////*/
+.tx-ncusefulpages-pi1 {clear:both;padding-top:10px;}
+.useful-links {
+	background: url(../img/useful-links.gif) no-repeat left top;
+	width:113px;
+	height:32px;
+	padding:2px;
+	margin-top:10px;
+}
+.useful-links input {
+	float:left;
+	border:0;
+	font-weight:bold;
+	padding-left:20px;
+}
+.useful-links input:hover {cursor:pointer;}
+.useful-link {
+	background: url(../img/useful-links.gif) no-repeat left -36px;
+	width:57px;
+	height:32px;
+}
+.unuseful-link {
+	background: url(../img/useful-links.gif) no-repeat left -68px;
+	width:56px;
+	height:32px;
+}
+.useful-links-nav p a {
+    background: url(../img/sprite.gif) no-repeat scroll -7px -371px transparent;
+    clear: both;
+    display: block;
+    float: left;
+    padding: 3px 13px;
+}
+.useful-links-nav p a:hover {background-position: -7px -92px;}
+
+/* Image carousel /////////////////////////////////////////////*/
+.cloudcarousel-left, .cloudcarousel-right {
+	display:block;
+	position:relative;
+	float:left;
+	background-image: url(../img/button-glider.gif);
+	background-repeat:no-repeat;
+}
+.cloudcarousel-left {left:0;background-position:left top;}
+.cloudcarousel-right {float:right;background-position:right top;}
+.cloudcarousel-left:hover, .cloudcarousel-right:hover {cursor:pointer;}
+.cloudcarousel-right:hover {background-position:right bottom;}
+
+/* Wecmap /////////////////////////////////////////////////////*/
+.tx-wecmap_map .sidebar {display:block; overflow:auto;}
+.tx-wecmap-map .startendaddress {display:block; color:#333333; font-size:85%;}
+.tx-wecmap-map .infotitle { font-weight:bold; font-size:110%;}

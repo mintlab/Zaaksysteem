@@ -1,0 +1,724 @@
+[% USE Scalar %]
+
+<!-- Begin Zaaktype -->
+<div id="fresh-form">
+<form method="POST" action="[% formaction %]" class="zvalidate use_submit" enctype="multipart/form-data">
+    <input type="hidden" name="zaaktype_update" value="1" />
+<div class="block clearfix">
+    <p class="header">
+        [% IF(zaaktype_id) %]
+            Zaaktype bewerken
+        [% ELSE %]
+            Zaaktype aanmaken
+        [% END %]
+    </p>
+    <div class="blockcontent">
+        <table class="marginbottom form">
+            <thead>
+                <tr>
+                    <th colspan="3" class="th_16px blue">Basisattributen</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="td300">Generieke categorie</td>
+                <td class="td310">
+                    [% PROCESS widgets/general/categorie.tt 
+                    fieldname = 'zaaktype.bibliotheek_categorie_id' %]
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> Categorie is verplicht
+                        </div>
+                    </div>
+                    
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">Selecteer hier de juiste categorie.</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                    &nbsp;
+                </td>
+            </tr>
+            
+            
+            
+            <tr>
+                <td class="td300">Naam zaaktype</td>
+                <td class="td310">
+                    <input
+                        type="text"
+                        name="node.titel"
+                        class="input_large"
+                        value="[% params.node.titel %]"
+                    />
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> De naam van dit zaaktype is verplicht
+                        </div>
+                    </div>
+                    
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">Type hier de naam van het zaaktype.</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                    &nbsp;
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="td300">Omschrijving UPL</td>
+                <td class="td310">
+                    <input
+                    name="definitie.omschrijving_upl"
+                    value="[% params.definitie.omschrijving_upl %]"
+                    type="text" class="input_large" />
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> Omschrijving verplicht
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">UPL staat voor Uniforme Producten Lijst, welke door Antwoord wordt onderhouden. Dit is een mogelijke benaming van het zaaktype die voorkomt in deze lijst.</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="td300">Aard</td>
+                <td class="td310">
+                    <input
+                    name="definitie.aard"
+                    value="[% params.definitie.aard %]"
+                    type="text"
+                    class="input_large" />
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> Aard van het zaaktype verplicht
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">Geef hier aan op welke wijze het product of de dienst wordt geleverd. Bijvoorbeeld 'Klaar terwijl u wacht.'</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+
+            </tr>
+            
+            
+            
+            <tr>
+                <td class="td300">Zaaktypecode</td>
+                <td class="td310">
+                    <input
+                        type="text"
+                        name="node.code"
+                        class="input_large"
+                        value="[% params.node.code %]"
+                    />
+                </td>
+            <td class="tdvar">
+                    <div class="validator rounded"><div class="validate-tip"></div><div class="validate-content rounded-right"><span></span></div></div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">Vul hier de unieke code van het zaaktype in. Let op, voor sommige zaaktypen is er een landelijke code beschikbaar (zie de ZTC)</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                    
+                </td>
+            </tr>
+            <tr>
+                <td>Speciaal webformulier</td>
+                <td>
+                    <select name="definitie.custom_webform" class="replace-select">
+                            <option
+                                value=""
+                                [% (
+                                    params.definitie.custom_webform
+                                        == ''
+                                            ? 'selected="selected"'
+                                            : '')
+                                %]
+                            > Geen</option>
+                        [% FOREACH webformulier IN speciale_webformulieren %]
+                            <option
+                                value="[% webformulier %]"
+                                [% (
+                                    params.definitie.custom_webform
+                                        == webformulier
+                                            ? 'selected="selected"'
+                                            : '')
+                                %]
+                            > [% webformulier %]</option>
+                        [% END %]
+                    </select>
+                </td>
+                <td>
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Selecteer hier het type besluit dat wordt toegepast voor het afhandelen van dit zaaktype.
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            
+            
+            <!-- <tr>
+                <td>Trigger</td>
+                <td>
+                    <select name="zt_trigger" id="change_aanvragers" class="replace-select">
+                        [% FOREACH trigger IN ZOPTIONS.TRIGGERS.sort %]
+                            <option
+                                value="[% trigger %]"
+                                [%
+                                    (
+                                        params.node.trigger == trigger
+                                            ?  'selected="selected"'
+                                            : ''
+                                    )
+                                %]
+                            >[% c.loc(trigger) %]</option>
+                        [% END %]
+                    </select>
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            
+            
+            
+            <tr>
+                <td>Mogelijke aanvragers selecteren</td>
+                <td>
+                    <div class="aanvragers_extern checkboxes">
+                        [% FOREACH aanvrager IN ZOPTIONS.AANVRAGERS_INTERN.sort %]
+                            <div><input
+                                type="checkbox"
+                                name="type_aanvragers"
+                                value="[% aanvrager %]"
+                                [% (
+                                        params.algemeen.type_aanvragers.$aanvrager
+                                            ? 'checked="checked"'
+                                            : ''
+                                    )
+                                %]
+                            > <label>[% c.loc(aanvrager) %]</label></div>
+                        [% END %]
+                    </div>
+                    <div class="aanvragers_intern">
+                        <input
+                            type="checkbox"
+                            name="type_aanvragers"
+                            value="[% ZNAMING.AANVRAGER_TYPE_MEDEWERKER %]"
+                            [% (
+                                params.algemeen.type_aanvragers.medewerker
+                                    ? 'checked="checked"'
+                                    : ''
+                            ) %]
+                            > <label>[% c.loc(ZNAMING.AANVRAGER_TYPE_MEDEWERKER) %]</label><br />
+                    </div>
+                    
+                </td>
+            <td>
+                	<span class="validator"></span>
+                	
+                </td>
+            </tr>
+            
+            
+            
+            
+            
+            
+            
+            
+            <tr>
+                <td>
+                    Toewijzing tonen bij zaakintake
+                </td>
+                <td>
+                    <input
+                        type="checkbox"
+                        name="node.toewijzing_zaakintake"
+                        value="1"
+                        [% (
+                            params.node.toewijzing_zaakintake
+                                ? 'checked="checked"'
+                                : ''
+                        ) %]
+                    /> <label>Ja</label><br />
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            
+            
+        
+            <tr class="aanvragers_extern">
+                <td>
+                    Webform authenticatie
+                </td>
+                <td>
+                    <select name="zt_webform_authenticatie" class="replace-select">
+                        <option value=""[% (params.algemeen.zt_webform_authenticatie == '' ? ' selected' : '') %]> Geen</option>
+                        [% FOREACH authenticatie IN ZOPTIONS.WEBFORM_AUTHENTICATIE.sort %]
+                            <option
+                                value="[% authenticatie %]"
+                                [% (
+                                    params.algemeen.zt_webform_authenticatie
+                                        == authenticatie
+                                            ? 'selected="selected"'
+                                            : ''
+                                )
+                            %]> [% c.loc(authenticatie) %]</option>
+                        [% END %]
+                    </select>
+                    <span class="validator"></span>
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+        
+            
+            
+            
+            <tr>
+                <td>Relatie met locatie</td>
+                <td>
+                    <div class="aanvragers_extern">
+                        <select name="node.adres_relatie" class="replace-select">
+                            [% FOREACH adrestype IN ZOPTIONS.AANVRAGER_ADRES_TYPEN.sort %]
+                                <option
+                                    value="[% adrestype %]"
+                                    [% (
+                                        params.node.adres_relatie
+                                            == adrestype
+                                                ? 'selected="selected"'
+                                                : ''
+                                    )
+                                %]> [% c.loc(adrestype) %]</option>
+                            [% END %]
+                            <option value=""[% (params.node.adres_relatie == '' ? ' selected' : '') %]>N.V.T</option>
+                        </select>
+                    </div>
+                    <div class="aanvragers_intern">
+                        Anders
+                    </div>
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            -->
+            
+            
+            
+            
+            <tr>
+                <td class="td300">Procesbeschrijving</td>
+                <td class="td310">
+                    <input
+                        type="text"
+                        name="definitie.procesbeschrijving"
+                        class="input_large"
+                        value="[% params.definitie.procesbeschrijving %]"
+                    />
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> De url van dit zaaktype is verplicht.
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">De url van de procesomschrijving van dit zaaktype, bijvoorbeeld  www.gemeente.nl/123.pdf</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td300">Handelingsinitiatior</td>
+                <td class="td310">
+                    <select name="definitie.handelingsinitiator" class="replace-select">
+                        [% FOREACH hinit IN ZOPTIONS.HANDELINGSINITIATORS.sort %]
+                            <option
+                                value="[% hinit %]"
+                                [% (
+                                    params.definitie.handelingsinitiator
+                                        == hinit
+                                            ? 'selected="selected"'
+                                            : ''
+                            ) %]>[% c.loc(hinit) %]</option>
+                        [% END %]
+                    </select>
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> Handelingsinitiator is verplicht
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">De handelingsinititator geeft aan via welke handeling de zaak wordt aangevraagd.</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr>
+                <td class="td300">Extra informatie (magic strings)</td>
+                <td class="td310">
+                    <input
+                    name="definitie.extra_informatie"
+                    value="[% params.definitie.extra_informatie %]"
+                    type="text" class="input_large" /></td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Maak hier eventueel gebruik van extra informatie van een zaak door gebruik te maken van een magic string.
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td class="td300">Trefwoorden</td>
+                <td class="td310">
+                    <input
+                        type="text"
+                        name="node.zaaktype_trefwoorden"
+                        class="input_large"
+                        value="[% params.node.zaaktype_trefwoorden %]"
+                    />
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> De url van dit zaaktype is verplicht.
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">Geef trefwoorden op zodat je er later op kunt zoeken om bij dit zaaktype uit kan komen</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="td300">Omschrijving</td>
+                <td class="td310">
+                    <input
+                        type="text"
+                        name="node.zaaktype_omschrijving"
+                        class="input_large"
+                        value="[% params.node.zaaktype_omschrijving %]"
+                    />
+                </td>
+                <td class="tdvar">
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span> De url van dit zaaktype is verplicht.
+                        </div>
+                    </div>
+                    <div class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">Geef een omschrijving van dit zaaktype</div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+
+
+            <tr>
+                <th colspan="3" class="th_16px blue tussenkop">Archief</th>
+                </tr>
+                <tr>
+                    <td>Grondslag</td>
+                    <td>
+                        <input type="text" name="definitie.grondslag" class="input_large" value="[% params.definitie.grondslag %]" />
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                De grondslag geeft aan op welke gronden dit zaaktype bestaat, bijvoorbeeld een bepaalde Wet of verordening.
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>IV3 Categorie</td>
+                    <td>
+                        <input type="text" name="definitie.iv3_categorie" class="input_large" value="[% params.definitie.iv3_categorie %]" />
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                IV3 staat voor Informatie Voor Derden en is een financiele categorisering die kan gelden voor een zaaktype.
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Selectielijst</td>
+                    <td>
+                        <input type="text" name="definitie.selectielijst" class="input_large" value="[% params.definitie.selectielijst %]" />
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Geef aan binnen welke selectielijst het zaaktype het beste is te plaatsen om de bewaartermijnen te bepalen. 
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Besluittype</td>
+                    <td>
+                        <select name="definitie.besluittype" class="replace-select">
+                                <option
+                                    value=""
+                                    [% (
+                                        params.definitie.besluittype
+                                            == ''
+                                                ? 'selected="selected"'
+                                                : '')
+                                    %]
+                                > Maak een keuze</option>
+                            [% FOREACH besluittype IN ZOPTIONS.BESLUITTYPEN.sort %]
+                                <option
+                                    value="[% besluittype %]"
+                                    [% (
+                                        params.definitie.besluittype
+                                            == besluittype
+                                                ? 'selected="selected"'
+                                                : '')
+                                    %]
+                                > [% c.loc(besluittype) %]</option>
+                            [% END %]
+                        </select>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Selecteer hier het type besluit dat wordt toegepast voor het afhandelen van dit zaaktype.
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Openbaarheid</td>
+                    <td>
+                        <select name="definitie.openbaarheid" class="replace-select">
+                            [% FOREACH openbaarheid IN ZOPTIONS.OPENBAARHEDEN.sort %]
+                                <option
+                                    value="[% openbaarheid %]"
+                                    [% (
+                                        params.definitie.openbaarheid
+                                            == openbaarheid
+                                                ? ' selected="selected"'
+                                                : '')
+                                    %]
+                                >[% c.loc(openbaarheid) %]</option>
+                            [% END %]
+                        </select>
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Selecteer hier aan of de zaken van dit zaaktype openbaar zijn voor burgers en bedrijven.
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr>
+                    <th colspan="3" class="th_16px blue tussenkop">Monitoring</th>
+                </tr>
+                
+                <tr
+                    class="ignore-field-definitie.servicenorm_type">
+                    <td>Afhandeltermijn wettelijk</td>
+                    <td>
+                        [% PROCESS widgets/general/terms.tt
+                            terms_name  = "definitie.servicenorm"
+                            terms_value = params.definitie.servicenorm
+                            terms_name_type = "definitie.servicenorm_type"
+                            terms_name_type_value = params.definitie.servicenorm_type
+                        %]
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                                Wettelijke afhandeltermijn. Deze termijn wordt toegepast voor het bepalen van de dagen die nog over zijn. 
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+                <tr
+                    class="ignore-field-definitie.afhandeltermijn_type">
+                    <td>Afhandeltermijn norm</td>
+                    <td>
+                        [% PROCESS widgets/general/terms.tt
+                            terms_name  = "definitie.afhandeltermijn"
+                            terms_value = params.definitie.afhandeltermijn
+                            terms_name_type = "definitie.afhandeltermijn_type"
+                            terms_name_type_value = params.definitie.afhandeltermijn_type
+                        %]
+                    </td>
+                    <td>
+                        <div class="validator rounded">
+                            <div class="validate-tip"></div>
+                            <div class="validate-content rounded-right">
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="tooltip-test-wrap">
+                            <div class="tooltip-test rounded">
+                               Eigen gewenste afhandeltermijn van de organisatie. Deze kan dus afwijken van de wettelijke termijn.
+                            </div>
+                            <div class="tooltip-test-tip"></div>
+                        </div>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+        
+        
+        
+        
+        
+        <!-- <table class="form">
+            <thead>
+                <tr>
+                    <th colspan="3">PDC Informatie</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="td300">Omschrijving</td>
+                <td class="td310">
+                    <textarea name="definitie.pdc_description">[% params.definitie.pdc_description %]</textarea>
+                </td>
+                <td class="tdvar">
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Voorwaarden</td>
+                <td>
+                    <textarea name="definitie.pdc_voorwaarden">[% params.definitie.pdc_voorwaarden %]</textarea>
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Aanpak</td>
+                <td>
+                    <textarea name="definitie.pdc_meenemen">[% params.definitie.pdc_meenemen %]</textarea>
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            <tr>
+                <td>Tarief</td>
+                <td>
+                    &euro; <input type="text" name="definitie.pdc_tarief_eur" size="8" value="[% params.definitie.pdc_tarief_eur %]"> , <input type="text" name="definitie.pdc_tarief_cnt" size="2" value="[% params.definitie.pdc_tarief_cnt %]" />
+                </td>
+            <td>
+                	<span class="validator"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table> -->
+  
+        <div class="nextprev clearfix">
+            <input type="button" name="goback" value="Vorige" class="go_back button140 btn" />
+            
+            <input type="submit" value="Volgende" class="button140 right btn" />
+            [% UNLESS params.create %]
+            <input name="direct_finish" type="hidden" value="" />
+            <input class="button140 grijs btn right ezra_direct_finish" value="Afronden" type="button" />
+            [% END %]
+        </div>
+
+
+    </div>
+</div>
+</form>
+</div>

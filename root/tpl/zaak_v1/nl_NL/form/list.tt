@@ -1,0 +1,42 @@
+[% USE Scalar; %]
+[% formurlprefix = '/zaak/create/webformulier' %]
+[% IF behandelaar_form; formurlprefix = '/behandelaar/'; END %]
+<!-- Overzicht Zaken -->
+<div class="block">
+    <p class="header">Mogelijke zaaktypen</p>
+    <div class="blockcontent">
+        <table class="table_zaken_title" cellspacing="0">
+            <thead>
+                <tr class="table_zaken_title_tr">
+                    <td class="td30"><img src="/images/icon-down.png" width="16" height="16" alt="bullet" /></td>
+                    <td class="tdvar">Zaaktype</td><td>Burger directe link</td><td>Ondernemer directe link</td>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+            </tr>
+            [% WHILE (zaaktype = zaaktypen.next) %]
+                <tr class="table_zaken_tr">
+                    <td class="td30">
+                        <img src="/images/icon-case.gif" width="16" height="16" class="noborder"  alt="bullet"/>
+                    </td><td>[% zaaktype.zaaktype_node_id.titel %]
+                    </td>
+                    [% lowercase = '/aanvraag/' _ zaaktype.zaaktype_node_id.titel _ '/natuurlijk_persoon' | trim | replace('\s+', '-') FILTER lower %]
+                    <td class="tdvar">
+                        <a href="[% c.uri_for(lowercase) %]">
+                            Burger
+                        </a>
+                    </td>
+                    [% lowercase = '/aanvraag/' _ zaaktype.zaaktype_node_id.titel _ '/niet_natuurlijk_persoon' | trim | replace('\s+', '-') FILTER lower %]
+                    <td class="tdvar">
+                        <a href="[% c.uri_for(lowercase) %]">
+                            Ondernemer
+                        </a>
+                    </td>
+
+                </tr>
+            [% END %]
+            </tbody>
+        </table>
+    </div>
+</div>

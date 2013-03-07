@@ -1,0 +1,77 @@
+[% catalogus = zaak.definitie %]
+<table class="table_zaakinformatie marginbottom" cellspacing="0">
+<thead>
+    <tr>
+        <th colspan="2">Zaakkenmerken (zaaktypecatalogus)</td>
+    </tr>
+</thead>
+<tbody>
+    [% PROCESS widgets/zaak/ztc.tt
+        ZAAKINFO = 0
+    %]
+</tbody>
+</table>
+
+<table class="table_zaakinformatie marginbottom" cellspacing="0">
+    <thead>
+    <tr>
+        <th colspan="2">Producten- en dienstencatalogus</td>
+    </tr>
+</thead>
+<tbody>
+    <tr>
+        <td class="table_td_left_zaakinformatie td100">Omschrijving:</td>
+        <td class="table_td_right_zaakinformatie td450">[% catalogus.definitie.pdc_description %]</td>
+
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie td100">Voorwaarden:</td>
+        <td class="table_td_right_zaakinformatie td450">[% catalogus.definitie.pdc_voorwaarden %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie td100">Aanpak:</td>
+        <td class="table_td_right_zaakinformatie td450">[% (catalogus.definitie.pdc_meenemen ? catalogus.definitie.pdc_meenemen : 'N.v.t.') %]</td>
+    </tr>
+    <tr>
+        <td class="table_td_left_zaakinformatie td100">Tarief:</td>
+        <td class="table_td_right_zaakinformatie td450">[% (catalogus.definitie.pdc_tarief ? catalogus.definitie.pdc_tarief : 'Er zijn geen kosten verbonden aan het aanvragen van dit product')  %]</td>
+    </tr>
+</tbody>
+</table>
+
+<table class="table_zaakinformatie marginbottom"  cellspacing="0">
+    <thead>
+        <tr>
+            <th colspan="4">Resultaatmogelijkheden en archiefkenmerken</td>
+        </tr>
+    </thead>
+    <tbody>
+    <tr class="table_ztb_title_tr">
+        <td class="table_ztb_title_td200">Resultaat</td>
+        <td class="table_ztb_title_td200">Bewaartermijn</td>
+        <td class="table_ztb_title_td200">Dossiertype</td>
+        <td class="table_ztb_title_var">Ingang</td>
+    </tr>
+
+    [% USE Scalar %]
+    [% resultaten = zaak.definitie.resultaten.scalar.search %]
+    [% WHILE (resultaat = resultaten.next) %]
+        <tr class="table_ztb_tr">
+            <td class="table_ztb_td_200">
+                [% resultaat.resultaat | ucfirst %]
+            </td>
+            <td class="table_ztb_td_200">
+                [% (resultaat.bewaartermijn == '0.3' ? '3 maanden' : resultaat.bewaartermijn _ ' jaar') %]
+            </td>
+            <td class="table_ztb_td_200">
+                [% resultaat.dossiertype | ucfirst %]
+            </td>
+            <td class="table_ztb_td_var">
+                [% resultaat.ingang | ucfirst %]
+            </td>
+        </tr>
+    [% END %]
+</tbody>
+</table>
+
+

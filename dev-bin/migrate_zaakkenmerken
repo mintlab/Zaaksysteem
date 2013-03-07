@@ -1,0 +1,222 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use Moose;
+use Data::Dumper;
+
+use Text::CSV;
+use Unicode::String;
+use utf8;
+
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+
+use Catalyst qw/
+    ConfigLoader
+/;
+
+use Catalyst::Log;
+use Catalyst::Model::DBIC::Schema;
+use Zaaksysteem::Zaken;
+
+### Start logging
+my $log         = Catalyst::Log->new();
+
+
+error("USAGE: $0 [dsn] [user] [password] [commit]") unless @ARGV && scalar @ARGV >= 3;
+
+my ($dsn, $user, $password, $commit) = @ARGV;
+my $dbic = database($dsn, $user, $password);
+
+
+$dbic->txn_do(sub {
+    eval {
+        fill_new_table($dbic);
+        die "rollback" unless $commit;
+    };
+
+    if ($@) {
+        warn('Error: ' . $@);
+        die("Import error: " . $@);
+    } 
+});
+
+
+
+sub database {
+    my ($dsn, $user, $password) = @_;
+                       
+    Catalyst::Model::DBIC::Schema->config(
+        schema_class => 'Zaaksysteem::Schema',
+        connect_info => {
+            dsn 			=> $dsn,
+            pg_enable_utf8  => 1,
+			user            => $user,
+			password        => $password
+        }
+    );
+
+    my $db = Catalyst::Model::DBIC::Schema->new();
+    my $dbic = $db->schema;
+
+    $log->info('Connection to DB established');
+    return $dbic;
+}
+
+
+sub error {
+    my ($msg) = @_;
+
+    $log->error($msg);
+    $log->_flush;
+
+    exit;
+}
+
+# 
+# sub fill_new_table_old {
+#     my ($dbic) = @_;
+# #INSERT INTO zaak_kenmerk (zaak_id, bibliotheek_kenmerken_id, value) 
+#     
+#     print "querying for values\n";
+# 
+#     my $resultset_kenmerk_values = $dbic->resultset("ZaakKenmerken")->search({
+#         '-and' => 
+#             [ 
+#                { value => {'-not' => undef} },
+#                { value => {'!=' => ''}    },
+#                { 'zaak.deleted' => undef },
+#             ]
+#     },
+#     {
+#         join => ['zaak_kenmerken_values', 'zaak'],
+#         #prefetch =>  ['zaak_kenmerken_values', 'zaak'],
+#     });
+#     my $zaak_kenmerk_model = $dbic->resultset("ZaakKenmerk");
+#     
+#     my $count = 0;
+#     while(my $kenmerk_value = $resultset_kenmerk_values->next) {
+#     	print "kenmerk value: " . Dumper $kenmerk_value->value;
+#         last if(++$count >= 2);
+#         next;
+#         my $zaak_id = $kenmerk_value->zaak_id->id;      
+#         my $bibliotheek_kenmerken_id = $kenmerk_value->bibliotheek_kenmerken_id->id;        
+#         my $values = $kenmerk_value->value;
+#         $values = [$values] unless(ref $values);
+#         foreach my $value (@$values) {
+#             utf8::encode($value);
+#             print "Trying INSERT INTO zaak_kenmerk (zaak_id, bibliotheek_kenmerken_id, value) VALUES($zaak_id, $bibliotheek_kenmerken_id, '$value');\n";
+#             $zaak_kenmerk_model->find_or_create({
+#                 zaak_id => $zaak_id,
+#                 bibliotheek_kenmerken_id => $bibliotheek_kenmerken_id,
+#                 value => $value
+#             });
+#         }
+#     }
+# #        SELECT k.zaak_id, k.bibliotheek_kenmerken_id, v.value FROM zaak_kenmerken k JOIN zaak_kenmerken_values v on v.zaak_kenmerken_id = k.id JOIN zaak z ON z.id = k.zaak_id WHERE v.value IS NOT NULL AND v.value != '' AND z.deleted IS NULL ORDER BY k.zaak_id;
+#     
+# }
+
+
+
+sub fill_new_table {
+    my ($dbic) = @_;
+#INSERT INTO zaak_kenmerk (zaak_id, bibliotheek_kenmerken_id, value) 
+    
+    print "querying for values\n";
+
+    my $resultset_kenmerk_values = $dbic->resultset("ZaakKenmerkenValues")->search({
+        '-and' => 
+            [ 
+               { value => {'-not' => undef} },
+               { value => {'!=' => ''}    },
+               { 'zaak.deleted' => undef },
+            ]
+    },
+    {
+        join => [{ 'zaak_kenmerken' => 'zaak' }],
+        prefetch =>  {'zaak_kenmerken' =>'zaak'},
+    });
+	$resultset_kenmerk_values->result_class('DBIx::Class::ResultClass::HashRefInflator');
+    my $zaak_kenmerk_model = $dbic->resultset("ZaakKenmerk");
+    $zaak_kenmerk_model->delete;
+    
+    my $total = $resultset_kenmerk_values->count;
+    my $seen = {};
+    my $count = 0;
+    my $percentage = 0;
+    while(my $kenmerk_value = $resultset_kenmerk_values->next) {
+	    #warn Dumper $kenmerk_value;
+        my $value = $kenmerk_value->{value};
+ #   	print "kenmerk value: " . Dumper $value;
+ 		$count++;
+ 		my $new_percentage = int(100* $count / $total);
+ 		if($new_percentage ne $percentage) {
+	 		print "count: $count, " . $new_percentage . "\%\n";
+	 		$percentage = $new_percentage;
+ 		}
+        my $zaak_id = $kenmerk_value->{zaak_kenmerken}->{zaak_id};      
+        my $bibliotheek_kenmerken_id = $kenmerk_value->{bibliotheek_kenmerken_id};        
+
+
+#       last if(++$count >= 10);
+
+		utf8::encode($value);
+#		print "INSERT INTO zaak_kenmerk (zaak_id, bibliotheek_kenmerken_id, value) VALUES($zaak_id, $bibliotheek_kenmerken_id, '$value');\n";
+		unless($seen->{$zaak_id . '-' . $bibliotheek_kenmerken_id . '-' . $value}++) {
+			$zaak_kenmerk_model->create({
+				zaak_id => $zaak_id,
+				bibliotheek_kenmerken_id => $bibliotheek_kenmerken_id,
+				value => $value
+			});
+		}
+    }
+    
+}
+
+
+=head1 PROJECT FOUNDER
+
+Mintlab B.V. <info@mintlab.nl>
+
+=head1 CONTRIBUTORS
+
+Arne de Boer
+
+Nicolette Koedam
+
+Marjolein Bryant
+
+Peter Moen
+
+Michiel Ootjers
+
+Jonas Paarlberg
+
+Jan-Willem Buitenhuis
+
+Martin Kip
+
+Gemeente Bussum
+
+=head1 COPYRIGHT
+
+Copyright (c) 2009, the above named PROJECT FOUNDER and CONTRIBUTORS.
+
+=head1 LICENSE
+
+The contents of this file and the complete zaaksysteem.nl distribution
+are subject to the EUPL, Version 1.1 or - as soon they will be approved by the
+European Commission - subsequent versions of the EUPL (the "Licence"); you may
+not use this file except in compliance with the License. You may obtain a copy
+of the License at
+L<http://joinup.ec.europa.eu/software/page/eupl>
+
+Software distributed under the License is distributed on an "AS IS" basis,
+WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License for
+the specific language governing rights and limitations under the License.
+
+=cut
+

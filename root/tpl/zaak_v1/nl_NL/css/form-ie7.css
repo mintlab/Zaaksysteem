@@ -1,0 +1,63 @@
+table{
+border-collapse: collapse;
+}
+
+input.knop{
+filter:chroma(color=#000000);
+border:none;
+width: auto;
+padding: 4px !important;
+height: 27px;
+}
+
+.grote-id-knop input{
+overflow: hidden; 
+font-size: 0; 
+line-height: 0;
+}
+
+.logout.knop,input.knop,.knop{
+	padding-left: 8px !important;
+}
+
+.form{
+	zoom: 1 !important;
+}
+
+.radio-item, .checkbox-item{
+	margin-bottom: 8px;
+	position: static;
+}
+
+.radio-item input, .checkbox-item input{
+	margin: 0;
+	position:static;
+	padding: 0;
+}
+
+.radio-item label, .checkbox-item label{
+	padding: 0 !important;
+	display: inline;
+	line-height: auto;
+	width: auto !important;
+}
+
+.mintloader,.fileUpload .new_upload,.knop{
+	position: static !important;
+}
+
+
+.fileuploadthumbnail{zoom:1;}
+
+#stappen{
+	zoom: 1;
+	width: 100%;
+	display: block;
+	border-bottom: none;
+	z-index: 1;
+	position: relative;
+}
+
+.step{
+	border-top: 1px solid #ccc;
+}

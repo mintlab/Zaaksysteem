@@ -1,0 +1,39 @@
+<div id="wijzig_route">
+    <form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/afdeling') %]" class="submitWaiter">
+    <input type="hidden" name="confirmed" value="1">
+    <table cellspacing="1" class="table_zaakinformatie">
+        <tbody>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Wijzigen route:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <p>
+                    Hieronder kan de afdeling en rol worden gewijzigd voor
+                    deze zaak.
+                    </p>
+                </td>
+            </tr>
+            <tr class="table_zaakinformatie_tr">
+                <td class="table_td_left_zaakinformatie">Afdeling:</td>
+                <td class="table_td_right_zaakinformatie">
+                    <div class="auth_edit_box" style="width:350px;padding:6px">
+                    [% PROCESS widgets/general/auth_select.tt
+                        AUTH_SELECT_OU_NAME   = 'ou_id'
+                        AUTH_SELECT_OU_VALUE  = zaak.route_ou
+                        AUTH_SELECT_ROLE_NAME = 'role_id'
+                        AUTH_SELECT_ROLE_VALUE = zaak.route_role
+                        AUTH_SELECT_NO_GLOBAL = 1
+                    %]
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table_ztbmenu">
+        <tbody>
+            <tr class="table_ztbmenu_tr">
+                <td class="table_ztbmenu_tdright"><input type="submit" value="Wijzigen" class="button140" id="dialog-submit"/></td>
+            </tr>
+        </tbody>
+    </table>
+</form>
+</div>

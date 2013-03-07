@@ -1,0 +1,147 @@
+<div id="create_relatie" class="form">
+    <form method="POST" action="[% c.uri_for(c.action,c.req.captures) %]" class="zvalidate">
+    <input type="hidden" name="confirmed" value="1" />
+    <table>
+        <tbody>
+            <tr>
+                <td class="td200">Relatietype:</td>
+                <td>
+                    <div class="ezra_betrokkene_type">
+                        <div class="radio-item">
+                            <input type="radio"
+                            name="type"
+                            value="natuurlijk_persoon"
+                            checked="checked"
+                            id="persoon">
+                            <label for="persoon">Persoon</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio"
+                            name="type"
+                            value="bedrijf"
+                            id=="bedrijf">
+                            <label for="bedrijf">Bedrijf</label>
+                        </div>
+                        <div class="radio-item">
+                            <input type="radio"
+                            name="type"
+                            value="medewerker"
+                            id="behandelaar">
+                            <label for="behandelaar">Behandelaar</label>
+                        </div>
+                    </div>
+                </td>
+                <td class="td260"></td>
+            </tr>
+            <tr>
+                <td>Selecteer een betrokkene:</td>
+                <td>
+                    <div class="ezra_select_betrokkene">
+                        <div class="betrokkene zoek_veld">
+                            <input
+                                type="hidden"
+                                name="betrokkene_identifier"
+                            />
+                            <input type="text"
+                                name="betrokkene_naam"
+                                class="input_large"
+                            />
+                            
+                            <a href="#" title="Zoek een nieuwe aanvrager"
+                            class="ezra_betrokkene_selector icon-magnifier knop medium no-icon"
+                            rel="betrokkene_type: medewerker;
+                            selector_identifier: #create_relatie .ezra_select_betrokkene input[name='betrokkene_identifier'];
+                            selector_naam: #create_relatie .ezra_select_betrokkene input[name='betrokkene_naam'];
+                            betrokkene_type_selector: #create_relatie .ezra_betrokkene_type"
+                            >
+                            </a>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Select hier de gewenste betrokkene.
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Rol relatie:</td>
+                <td>
+                    <input
+                    type="text"
+                    name="rol"
+                    class="ezra_id_rol large"
+                    /> </td>
+                <td>
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Geef een korte omschrijving van de relatie.
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Magic string prefix:</td>
+                <td>
+                    <div class="spinner_input_wrap">
+                        <input
+                        type="text"
+                        name="magic_string_prefix"
+                        class="ezra_id_magic_string large"
+                        />
+                        <div class="spinner-klein spinner_input ezra_id_magic_spinner"></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="validator rounded">
+                        <div class="validate-tip"></div>
+                        <div class="validate-content rounded-right">
+                            <span></span>
+                        </div>
+                    </div>
+                    <div style="display: none;" class="tooltip-test-wrap">
+                        <div class="tooltip-test rounded">
+                            Geef een voorvoegsel voor de magic string van
+                            deze gerelateerde betrokkenen.
+                        </div>
+                        <div class="tooltip-test-tip"></div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Magic strings:</td>
+                <td>
+                    <p>
+                        Informatie van betrokkenen kunnen door middel van
+                        magic strings worden opgehaald. Bij een prefix van
+                        rijkswaterstaat, worden de magic strings bijvoorbeeld:
+                    </p>
+                    <ul class="list">
+                        <li>[[rijkswaterstaat_naam(1)]]</li>
+                        <li>[[rijkswaterstaat_voorvoegsel(1)]]</li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="clearfix dialog-buttons">
+    <input type="submit" value="Toevoegen" id="dialog-submit" class="" />
+    </div>
+    </form>
+</div>

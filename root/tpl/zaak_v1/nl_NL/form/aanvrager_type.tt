@@ -1,0 +1,103 @@
+[% layout_type = 'simple' %]
+<div class="left flex50 block" id="burger">
+    <div id="inner">
+        <p class="header">
+            [% zaaktype_node.titel %]
+            [% zaaktype_node.zaaktype_definitie_id.handelingsinitiator %]
+            als burger
+        </p>
+        <div class="blockcontent">
+            <p>[% IF type_aanvragers.grep('^natuurlijk_persoon').size %]
+                    Voor het [%
+                    zaaktype.algemeen.ztc_handelingsinitiator %]
+                    van dit product of deze dienst, dient u
+                    gebruik te maken van DigiD. Wanneer u in [% c.config.gemeente.naam %]
+                    woont worden uw gegevens automatisch ingevuld. Wanneer u niet in
+                    [% c.config.gemeente.naam %] woont vragen wij eenmalig uw persoonsgegevens te verstrekken.</p>
+                    <a href="[%
+                        c.uri_for(
+                            '/zaak/create/webformulier/aanvrager'
+                            {
+                                authenticatie_methode   => 'digid',
+                                ztc_aanvrager_type      => 'natuurlijk_persoon',
+                            }
+                        ) | url
+                        %]"
+                        class="link digid-aanvragen id-knop"
+                        ></a>
+
+                    
+                    <div class="digid">
+                        <strong>Wat is DigiD?</strong>
+                        <p class="digid-tekst no_margin">
+                        Met uw persoonlijke DigiD kunt u inloggen op
+                        de website van de gemeente [% c.config.gemeente.naam %]
+                        om zaken te regelen.
+                        Bijvoorbeeld een vergunning of een uittreksel. Uw
+                        DigiD bestaat uit een gebruikersnaam en een
+                        wachtwoord. Klik op het DigiD-logo voor meer
+                        informatie of ga naar
+                        <a href="http://www.digid.nl">http://www.digid.nl</a>.</p>
+
+                        <a href="http://www.digid.nl/" class="digid-logo">
+                            <img width="50" height="50" src="images/digid_eo_rgb_50.gif" alt="digid logo"/>
+                        </a>
+                    </div>
+            [% ELSE %]
+                <p>Het [% zaaktype.algemeen.ztc_handelingsinitiator %]
+                van dit product of deze dienst is helaas niet
+                mogelijk voor burgers maar is alleen bedoeld
+                voor organisaties.</p>
+            [% END %]
+        </div>
+    </div>
+</div>
+
+
+<div class="right flex50 block" id="bedrijf">
+    <p class="header">
+        [% zaaktype_node.titel %]
+        [% zaaktype_node.zaaktype_definitie_id.handelingsinitiator %]
+        als organisatie
+    </p>
+    <div class="blockcontent">
+                                <p>
+                        [% IF type_aanvragers.grep('^niet_natuurlijk_persoon').size %]
+                            Voor het [%
+                            zaaktype.algemeen.ztc_handelingsinitiator %] van
+                            dit product of deze dienst, dient u gebruik te
+                            maken van uw [% c.config.gemeente.naam %]ID. Wanneer u in [% c.config.gemeente.naam %] bent gevestigd, worden uw gegevens automatisch ingevuld. Wanneer u niet in [% c.config.gemeente.naam %] gevestigd bent, vragen wij eenmalig uw gegevens te verstrekken.</p>
+                            <a href="[%
+                                c.uri_for(
+                                    '/zaak/create/webformulier/aanvrager'
+                                    {
+                                        authenticatie_methode   => 'bedrijfid',
+                                        ztc_aanvrager_type      => 'niet_natuurlijk_persoon',
+                                    }
+                                ) | url
+                                %]"
+                                class="link [% c.config.gemeente_id %]id-aanvragen id-knop">Aanvragen met [% c.config.gemeente.naam %]ID</a>
+                            
+                            <div class="digid">
+                            <strong>Wat is een [% c.config.gemeente.naam %]ID?</strong>
+                            
+                            <p class="digid-tekst no_margin">[% c.config.gemeente.naam %]ID is een authenticatiemiddel voor
+                            organisaties om zaken te regelen bij de gemeente
+                            [% c.config.gemeente.naam %]. Het [% c.config.gemeente.naam %]ID bestaat uit een
+                            gebruikersnaam en een wachtwoord. Bent u een
+                            onderneming of instelling en heft u nog geen
+                            [% c.config.gemeente.naam %]ID?  Vraag deze dan gratis aan door op het
+                            logo te klikken.<br />
+                            
+                            <a href="[% c.config.gemeente.gemeente_id_url %]">
+                                <img class="digid-logo" width="100" height="100" src="images/[% c.config.gemeente_id %]id.jpg" alt="[% c.config.gemeente_id %]id logo" />
+                            </a>
+                            </div>
+                        [% ELSE %]
+                            Het [% zaaktype.algemeen.ztc_handelingsinitiator %]
+                            van dit product of deze dienst is helaas niet
+                            mogelijk voor organisaties maar is alleen bedoeld
+                            voor burgers.
+                        [% END %]
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<!-- widgets/beheer/bibliotheek/table.tt -->
+<table class="table_zaken_title" cellspacing="0">
+    <thead>
+        <tr class="table_zaken_title_tr">
+            <td class="td30 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+            <td class="tdvar">[% c.loc(bib_type _ '1') %]</td>
+            <td class="td100">[% c.loc('magic strings') %]</td>
+            <td class="td150">[% c.loc('acties') %]</td>
+        </tr>
+    </thead>
+    <tbody>
+        [% IF categorie.scalar.bibliotheek_categories.count %]
+            [% # AI WE WILL LOOSE THE CATEGORIE VARIABLE HERE,SAVE IT,LOCAL IT
+            %]
+            [% bib_cat_children = categorie.scalar.bibliotheek_categories %]
+            [% save_categorie = categorie %]
+            [% WHILE (categorie = bib_cat_children.next) %]
+                [% PROCESS widgets/beheer/categories/row.tt
+                %]
+            [% END %]
+            [% categorie = save_categorie %]
+        [% END %]
+        [% WHILE (entry = bib_list.next) %]
+            [% PROCESS widgets/beheer/bibliotheek/sjablonen/table_row.tt %]
+        [% END %]
+    </tbody>
+</table>
+<!-- END widgets/beheer/bibliotheek/table.tt -->

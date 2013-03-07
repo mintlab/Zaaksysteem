@@ -1,0 +1,5 @@
+Er is iets misgegaan bij de export:
+<br/><br/>
+<span color="red">
+[% export_error %]
+</span>

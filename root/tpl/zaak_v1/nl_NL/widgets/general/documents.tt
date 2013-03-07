@@ -1,0 +1,301 @@
+[% IF c.can_change %]
+<form method="POST" action="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/update') %]">
+[% END %]
+    <table class="table_zaken_title no_margin" cellspacing="0">
+        <thead>
+            <tr>
+                <th colspan="1">
+                    [% TABLE_TITLE %]
+                </th>
+                <th colspan="4" class="add-right">
+            <div><input type="hidden" id="option-documentdepth" name="documentdepth" value="[% (document_depth.id || 0) %]" /></div>
+            
+            
+        [% UNLESS QUEUE %]
+            [% IF c.can_change %]
+            <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0)_ '/mapadd') %]" class="dialog-post knop voeg-toe right">Map</a>
+            <a
+                title="Sjabloon gebruiken"
+                class="knop voeg-toe right dialog-post"
+                rel="callback: ezra_document_functions"
+                href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _'/add/sjabloon') %]">Sjabloon</a>
+            <a title="Email versturen met zaakinformatie" class="knop voeg-toe right dialog-post" href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _'/add/mail') %]">E-mail</a>
+            <a
+                title="Handmatig document toevoegen"
+                class="knop voeg-toe right fire-dialog"
+                rel="callback: ezra_document_functions"
+                href="[% c.uri_for(
+                    (pip ? '/pip' : '') _ '/zaak/' _ zaak.nr
+                    _ '/documents/'
+                    _ (document_depth.id || 0) _'/add/file')
+                %]">Uploaden</a>
+            [% ELSIF pip && zaak.is_open %]
+            <a
+                title="Handmatig document toevoegen"
+                class="knop voeg-toe right fire-dialog"
+                rel="callback: ezra_document_functions"
+                href="[% c.uri_for(
+                    (pip ? '/pip' : '') _ '/zaak/' _ zaak.nr
+                    _ '/documents/'
+                    _ (document_depth.id || 0) _'/add/file')
+                    %]">Uploaden</a>
+            [% END %]
+        [% END %]
+            <!--
+            <div><input name="sex" value="female" type="radio"> Webdocument aanmaken (FCKEditor plugin) (Disabled)</div>
+            <div><input name="sex" value="female" type="radio"> Zaakinformatie exporteren naar pdf (plugin) (Disabled)</div>
+            <div><input name="sex" value="female" type="radio"> PDF-sjabloon genereren (plugin) (Disabled)</div>
+            -->
+           </th>
+            </tr>
+        </thead>
+        </table>
+        <table class="marginbottom docs table_zaken_title">
+        </tbody>
+            <tr class="table_zaken_title_tr">
+                <td class="td40 center"><img src="/images/icon-down.png" width="16" height="16"></td>
+                <td class="">Naam</td>
+                <td class="td120">Gewijzigd</td>
+<!--
+    [% UNLESS pip %]
+                <td class="td60">Fase</td>
+                <td class="td100">Gewijzigd door</td>
+    [% END %]
+
+                <td class="td60">Grootte</td>
+                <td class="td100">Formaat</td>-->
+    [% UNLESS pip %]
+                <td class="td120">Type</td>
+        
+                <td class="td150">Acties</td>
+        
+<!--
+                    <td class="td30 center">I</td>
+            [% IF c.can_change %]
+                    <td class="td30 center">B</td>
+                    <td class="td30 center">V</td>
+            [% END %]
+-->
+        
+    [% END %]
+            </tr>
+    [% UNLESS documents.count || QUEUE_LOGGING.count %]
+            <tr>
+                <td>&nbsp;</td>
+                <td colspan="9">
+                    Er zijn nog geen documenten geplaatst
+                </td>
+            </tr>
+    [% END %]
+    [% WHILE (document = documents.next) %]
+            <tr class="doc_intake_row [% IF document.mimetype == 'dir' %]folder[% END %]" id="[% document.id %]">
+        [% IF document.mimetype == 'application/vnd.oasis.opendocument.text' %]
+            [% doc_href = '<a href="' _ c.uri_for((pip ? '/pip/' : '/')) _
+                'zaak/'
+                _ zaak.nr
+                _ '/documents/'
+                _ (document_depth.id || 0)
+                _ '/get/' _ document.id _ '/' _ document.id _ '.odt'
+                _ '" target="_blank" class="fire-dialog doc-show">' %]
+        [% ELSE %]
+            [% doc_href = '<a class="" href="' _ ((document.mimetype != 'dir') ? c.uri_for((pip ? '/pip/' : '/')) _ 'zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0)_ '/get/' _ document.id _ '/' _ (document.documenttype == 'sjabloon' ? document.id _ '.pdf': document.filename) _ '?filetype=pdf' : c.uri_for((pip ? '/pip/' : '/') _ 'zaak/' _ zaak.nr, undef, { current_element => 'documents', 'documentdepth' => document.id})) _ (document.mimetype != 'dir' ? '" target="_blank">' : '">') %]
+        [% END %]
+        [% documentnaam = document.filename %]
+        [% IF document.category == 'Email' %]
+            [% mail = document.documents_mails.first %]
+            [% documentnaam = mail.subject %]
+            [% IF documentnaam.length > 25 %]
+                [% documentnaam = documentnaam.substr(0,25) _ ' ...' %]
+            [% END %]
+            [% doc_href = '<a href="' _ c.uri_for((pip ? '/pip/' : '/')) _ 'zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0)_ '/show/' _ document.id _ '" class="fire-dialog" rel="" title="Bekijk E-mail">' %]
+        [% END %]
+        [% zaakeigenaar = c.model('Betrokkene').get({}, document.betrokkene_id) %]
+        
+        
+        
+        
+               <!-- Cell -->
+               <td class="td40 center doc-icon">
+                    [% doc_href %]
+                    <img
+                    src="/images/[% (
+                    document.mimetype == 'dir'
+                        ? 'icon-folder-32.gif'
+                        : (
+                            icons.${document.mimetype}
+                                ? icons.${document.mimetype}
+                                : icons.default
+                        )
+                    ) %]"
+                    width="[% (document.mimetype == 'dir' ? '32' : '27') %]"
+                    height="[% (document.mimetype == 'dir' ? '32' : '30') %]"
+                    border="0"
+                    />
+                </td>
+                
+                
+                
+                <!-- Cell -->
+                <td class="">
+                    
+                    <div class="doc-titel">[% doc_href %][% documentnaam %]
+                        </a>
+                        <!--
+                        <div class="doc_preview_wrap" style="display:inline;position:relative;">
+                            <div class="doc_preview_pijl"></div>
+                            <div class="doc_preview"><img src="/images/zaakinfo-loader.gif" class="loader" alt="bezig met laden" style="display: none; "/></div>
+                        </div>
+                        -->
+                        
+                        [% UNLESS pip || document.category == 'Email' %]
+                        <div class="doc-preview-init">
+                            <!-- <div class="doc_preview_wrap"> -->
+                                <!-- <div class="doc_preview_pijl"></div> -->
+                                <div class="doc_preview">
+                                    <img src="/images/zaakinfo-loader.gif" class="loader" alt="bezig met laden" style="display: none; "/>
+                                </div>
+                            
+                        </div>
+                        [% END %]
+
+                        <span style="display:block">[% IF  document.category != 'Email' %]
+                          [% document.help %]
+                          [% END %]
+                    [% IF document.mimetype != 'dir' && document.filesize %]
+                        [% filesize = format('%.2f'); %]
+                        [% IF document.filesize < 1024 %]
+                            [% filesize(document.filesize) %]B
+                        [% ELSIF document.filesize < 1048576 %]
+                            [% filesize((document.filesize / 1024)) %]KB
+                        [% ELSE %]
+                            [% filesize(((document.filesize / 1024) / 1024)) %]MB
+                        [% END %]
+                    [% END %]&nbsp;</span>
+                    </div>
+                    
+                        
+
+
+                </td>
+
+                [% document_betrokkene = c.model('Betrokkene').get({}, document.betrokkene_id) %]
+                <!-- Cell -->
+                <td class="td120">
+                    <a  href=""
+                        class="betrokkene-get"
+                        title="Informatie over behandelaar"
+                        rel="zaak: [% zaak.nr %]; id: [% document_betrokkene.betrokkene_identifier %]"
+                        >[% document_betrokkene.naam %]</a>
+                        <br/>
+                    <span>[% document.created.dmy %]</span>
+                </td>
+                
+        [% UNLESS pip %]
+        
+        
+                <!-- Cell -->
+                <td class="td120">
+                    [% document.category %]
+                </td>
+            [% IF QUEUE %]
+                <td class="td150">
+                    <div class="select_actie_container">
+                        <div class="col">
+                            <select name="">
+                                <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/accepteer/' _ document.id) %]">Accepteren</option>
+                                <option value="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/weiger/' _ document.id) %]" class="popup">Weigeren</option>
+                                <option value="[% c.uri_for('/zaak/intake/link', {'queue_document_id' => document.id, vanuit_zaak => 1 }) %]" class="popup">Naar zaak verplaatsen</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+                        </div>
+                    </div>
+                </td>
+            [% ELSE %]
+                <td class="td150 ie-lines-gone">
+                    <!-- bekijken of exporteren -->
+                    [% IF document.mimetype != 'dir' %]
+
+                    [% IF document.documenttype == 'sjabloon' %]
+                            <a class="icon icon-archief left" href="[%
+                                c.uri_for(
+                                    (pip ? '/pip/' : '/') _ 'zaak/' _ zaak.nr
+                                    _ '/documents/' _ (document_depth.id || 0)
+                                    _ '/get/' _ document.id
+                                    _ '/'
+                                    , null, {confirmed => 1, filetype => 'pdf'}) %]"
+                                >
+                                <img src="/images/icon-pdf.png" class="document_formaat_icon" />
+                            </a>
+                        [% FOR fileexport IN ZCONSTANTS.document.sjabloon.export_types %]
+                            [% filetype = fileexport.key %]
+                            [% filedata = fileexport.value %]
+                            [% NEXT IF filetype == 'pdf' %]
+                            <a class="icon icon-archief left" href="[%
+                                c.uri_for(
+                                    (pip ? '/pip/' : '/') _ 'zaak/' _ zaak.nr
+                                    _ '/documents/' _ (document_depth.id || 0)
+                                    _ '/get/' _ document.id
+                                    _ '/'
+                                    , null, {confirmed => 1, filetype => filetype}) %]"
+                                >
+                                <img src="/images/icon-[% filetype %].png" />
+                            </a>
+                        [% END %]
+                    [% ELSE %]
+                                [% doc_href %] <img src="/images/icon-magnifier.png" />
+                            </a>
+                    [% END %]
+
+                [% END %]
+                <!-- end bekijken -->
+                <!-- overige acties -->
+                    <a href="[%
+                        c.uri_for('/zaak/'
+                            _ zaak.nr
+                            _ '/documents/'
+                            _ (document_depth.id || 0)
+                            _ '/get_meta/' _ document.id) %]"
+                        class="fire-dialog icon left icon-info icon-archief" title="Meer informatie">
+                    </a>
+
+                [% IF document.mimetype != 'dir' && document.mimetype != 'text/email' && c.can_change %]
+                    <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/edit/' _ document.id) %]" class="fire-dialog icon  icon-archief left icon-edit" title="Bewerken" rel="callback: ezra_document_functions">
+                    </a>
+                [% END %]
+
+                [% IF c.can_change %]
+                <!-- Cell 10 -->
+
+                    <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _ '/del/' _ document.id) %]" class="fire-dialog icon icon-archief left icon-del" title="Verwijderen">
+                    </a>
+                </td>
+                [% END %]
+            [% END %]
+        [% END %]
+            </tr>
+    [% END %]
+    [% IF QUEUE_LOGGING.count %]
+        [% WHILE (queue_log = QUEUE_LOGGING.next) %]
+            <tr>
+                <td>&nbsp;</td>
+                <td>
+                    [% queue_log.onderwerp %]
+                </td>
+                <td>
+                    [% queue_log.created.dmy %]
+                </td>
+                <td>&nbsp;</td>
+                <td colspan="7">
+                    [% c.model('Betrokkene').get({intern => 1},
+                    queue_log.betrokkene_id.id).naam %]
+                </td>
+            </tr>
+        [% END %]
+    [% END %]
+        </tbody>
+    </table>
+[% IF c.can_change %]
+</form>
+[% END %]

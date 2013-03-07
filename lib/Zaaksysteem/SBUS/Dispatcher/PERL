@@ -1,0 +1,38 @@
+---
+body:
+  PRS:
+    - geboortedatum:
+        _: 19850101
+        exact: 1
+        indOnvolledigeDatum: V
+        kerngegeven: 1
+      soortEntiteit: F
+    - geboortedatum:
+        _: 19950101
+        exact: 1
+        indOnvolledigeDatum: V
+        kerngegeven: 1
+      soortEntiteit: F
+    - a-nummer: NIL
+      bsn-nummer: NIL
+      geboortedatum: NIL
+      geslachtsnaam: NIL
+      soortEntiteit: F
+      voornamen: NIL
+stuurgegevens:
+  berichtsoort: Lv01
+  entiteittype: PRS
+  ontvanger:
+    administratie: ''
+    applicatie: app2
+    organisatie: ''
+  referentienummer: 123456
+  sectormodel: BG
+  tijdstipBericht: 1234567890123456
+  versieSectormodel: 0204
+  versieStUF: 0204
+  vraag: {}
+  zender:
+    administratie: ''
+    applicatie: app1
+    organisatie: ''

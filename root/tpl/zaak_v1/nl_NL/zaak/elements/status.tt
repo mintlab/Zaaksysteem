@@ -1,0 +1,125 @@
+                        <!-- <table class="table_zaken_title marginbottom" id="hoofddeelzaken_table" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th colspan="9">Hoofd- en deelzaken</th>
+                            </tr>
+                        </thead>
+                        <tbody>                        
+                        
+                            <tr class="table_zaken_title_tr">
+                                <td class="table_zaken_title_td100">Zaakniveau</td>
+                                <td class="table_zaken_title_td60">Zaaknr</td>
+                                <td class="table_zaken_title_td100">Status</td>
+                                <td class="table_zaken_title_td200">Zaaktype</td>
+                                <td class="table_zaken_title_td150">Zaakcoordinator</td>
+                                <td class="table_zaken_title_td150">Behandelaar</td>
+                                <td class="table_zaken_title_td200">Besluit</td>
+                                <td class="table_zaken_title_td100">Dagen</td>
+                                <td class="table_zaken_title_td50 td_i" class="center">I</td>
+                            </tr>
+                           
+                            [% prevnode = 1 %]
+                            [% parenthtml = 'A' %]
+                            [% childhtml = 'B' %]
+                            [% startzaak = zaak %]
+                            [% WHILE (startzaak.relation.has_parent) %]
+                                [% startzaak = c.model('Zaak').get(startzaak.relation.parent) %]
+                            [% END %]
+                            [% global.nodecount = 0 %]
+                            [% INCLUDE zaak/elements/relation/child.tt
+                                prevnode  = 0
+                                startzaak = startzaak
+                                niveau    = 1
+                            %]
+                            </tbody>
+                        </table>
+
+                        <table class="table_zaken_title marginbottom" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th colspan="6">Vervolgzaken</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="table_zaken_title_tr">
+                                    <td class="table_zaken_title_td60">Zaaknr</td>
+                                    <td class="table_zaken_title_tdvar">Zaaktype</td>
+                                    <td class="table_zaken_title_td100">Status</td>
+                                    <td class="table_zaken_title_td100">Startmoment</td>
+                                    <td class="table_zaken_title_td50 td_i" class="center">I</td>
+                                </tr>
+                            [% FOR relatie IN zaak.relation.relatie %]
+                            [% otherzaak = c.model('Zaak').get(relatie) %]
+                            [% NEXT UNLESS otherzaak.kenmerk.depend_info == 'vervolg' %]
+                                <tr class="table_zaken_tr">
+                                    <td class="table_zaken_td60"><a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">[% otherzaak.nr %]</a></td>
+                                    <td class="table_zaken_tdvar"><a href="[% (pip ? '/pip' : '') %]/zaak/[% zaak.nr %]/zaaktypeinfo" class="fire-dialog" title="Informatie over dit zaaktype" rel="zaak: [% otherzaak.nr %]">[% otherzaak.zaaktype.node.titel %]</a></td>
+                                    <td class="table_zaken_td100"><a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">[% otherzaak.kenmerk.status %] van [% otherzaak.zaakstatusinfo.count %]</a></td>
+                                    <td class="table_zaken_td100">[% otherzaak.kenmerk.registratiedatum.dmy %]</td>
+                                    <td class="table_zaken_td50 td_i td_i_img"><a href="[% c.uri_for('/zaak/get_meta/' _ otherzaak.nr) %]" class="fire-dialog" title="Informatie over zaak"><img border="0" src="/images/icon-info.png"></a></td>
+                                </tr>
+                            [% END %]
+                            </tbody>
+                        </table>
+
+                        <table class="table_zaken_title marginbottom" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th colspan="6">Overige relaties met zaken</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="table_zaken_title_tr">
+
+                                <td class="table_zaken_title_td60">Zaaknr</td>
+                                <td class="table_zaken_title_td100">Status</td>
+                                <td class="table_zaken_title_tdvar">Zaaktype</td>
+                                <td class="table_zaken_title_td150">Zaakcoordinator</td>
+                                <td class="table_zaken_title_td150">Behandelaar</td>
+                                <td class="table_zaken_title_td50 td_i" class="center">I</td>
+
+                            </tr>
+                        [% FOR relatie IN zaak.relation.relatie %]
+                            [% otherzaak = c.model('Zaak').get(relatie) %]
+                            [% NEXT IF otherzaak.kenmerk.depend_info == 'vervolg' %]
+
+                            <tr class="table_zaken_tr">
+                                <td class="table_zaken_td60"><a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">[% otherzaak.nr %]</a></td>
+                                <td class="table_zaken_td100"><a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">[% otherzaak.kenmerk.status %] van [% otherzaak.zaakstatusinfo.count %]</a></td>
+                                <td class="table_zaken_tdvar"><a href="[% (pip ? '/pip' : '') %]/zaak/[% zaak.nr %]/zaaktypeinfo" class="fire-dialog" title="Informatie over dit zaaktype" rel="zaak: [% otherzaak.nr %]">[% otherzaak.zaaktype.node.titel %]</a></td>
+                                <td class="table_zaken_td150"><a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">[% otherzaak.kenmerk.aanvrager.naam %]</a></td>
+                                <td class="table_zaken_td150"><a href="[% c.uri_for('/zaak/' _ otherzaak.nr) %]">[% otherzaak.kenmerk.zaakeigenaar.naam %]</a></td>
+                                <td class="table_zaken_td50 td_i td_i_img"><a href="[% c.uri_for('/zaak/get_meta/' _ otherzaak.nr) %]" class="fire-dialog" title="Informatie over zaak"><img border="0" src="/images/icon-info.png"></a></td>
+                            </tr>   
+                            [% END %]
+                        </tbody>
+                        </table>                        
+                        
+                        <table class="table_zaken_title marginbottom" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th colspan="6">Zaakhistorie</th>
+
+                            </tr>
+                            
+                        </thead>
+                        <tbody>
+                            <tr class="table_zaken_title_tr">
+                                <td class="table_zaken_title_td200">Datum</td>
+                                <td class="table_zaken_title_tdvar">Gebeurtenis</td>
+                                <td class="table_zaken_title_td200">Behandelaar</td>
+                            </tr>
+    [% FOREACH note IN zaak.notes.list_all %]
+    [% NEXT IF (note.commenttype == 'note' ) %]
+                            <tr class="table_zaken_tr">
+                                <td class="table_zaken_td200">[% note.date %]</td>
+                                <td class="table_zaken_tdvar">[% note.content %]</td>
+                                <td class="table_zaken_td200">[% note.commentowner %]</td>
+
+                            </tr>
+    [% END %]
+                            </tbody>
+                        </table>
+                         -->
+
+

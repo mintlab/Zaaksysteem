@@ -1,0 +1,16 @@
+<form method="POST" id="search_query_edit_name_form">
+
+<div class="dialog-content-inner">
+<label>Geef naam voor zoekopdracht:</label>
+<input type="text" name="search_query_edit_name_input" class="infinite" value="[% search_query_name %]"/>
+</div>
+
+
+<div class="dialog-buttons">
+<input type="button" name="search_query_cancel_button" id="cancel" value="Annuleren"/>
+<input type="submit" name="search_query_save_button" id="save" value="Opslaan"/>
+</div>
+
+
+
+</form>

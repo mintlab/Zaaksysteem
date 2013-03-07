@@ -1,0 +1,36 @@
+<h3 class="ui-last-panel"><a href="#">Sjablonen</a></h3>
+<div>
+    <div class="ui-accordion-table-bg clearfix">
+        <table class="table_zaakinformatie marginbottom"  cellspacing="0">
+            <tbody>
+                <tr class="table_ztb_title_tr">
+                    <td class="td400">Naam</td>
+                    <td class="td50">Automatisch</td>
+                    <td class="td50">Gebruiken</td>
+                </tr>
+                [% USE Scalar %]
+                [% sjablonen = zaak.zaaktype_node_id.scalar.zaaktype_sjablonen.scalar.search(
+                    { zaak_status_id => requested_fase.id},{prefetch => 'bibliotheek_sjablonen_id', order_by => 'me.id' }
+                ) %]
+                [% WHILE (sjabloon = sjablonen.next)
+                %]
+                <tr>
+                    <td>[% sjabloon.naam %]</td>
+                    <td>
+                         [% (sjabloon.automatisch_genereren ? 'Ja' : 'Nee') %]
+                    </td>
+                    <td>
+                        <a
+                            title="Sjabloon gebruiken"
+                            class="dialog-post"
+                            rel="callback: ezra_document_functions"
+                            href="[% c.uri_for('/zaak/' _ zaak.nr _ '/documents/' _ (document_depth.id || 0) _'/add/sjabloon', undef, { sjabloon_id => sjabloon.id }) %]">
+                                <img alt="go" src="/images/icon-go-pijl.gif">
+                        </a>
+                    </td>
+                </tr>
+                [% END %]
+            </table>
+        </div>
+    </div>
+

@@ -1,0 +1,211 @@
+<!-- WIDGET: /search/widgets/zaakkenmerken_search -->
+<div class="search-wgt-zaakkenmerken_search">
+    <!-- Bogus zt_trigger, needed for searchBetrokkene, kan anders form niet
+    vinden -->
+    <input type="hidden" name="ztc_trigger" value="intern" />
+    <table class="table_zaakinformatie">
+        <tr>
+            <td class="table_td_left_zaakinformatie">Generieke categorie:</td>
+            <td class="table_td_right_zaakinformaties">
+                <div class="clearfix">
+                    <!-- <div><input type="checkbox" name="zk-proces" value="subsidies"> Subsidies</div> -->
+                    
+                    [% cats = c.model('DB::ZaaktypeCategorie').search({}) %]
+                    [% FOREACH cat IN cats %]
+                    <div><input type="checkbox" name="zk-categorie_id" value="[% cat.id %]"[% (generiek_proces == cat.categorie ? ' checked' : '') %]> [% cat.categorie %] </div>
+                    [% END %]
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Locatie:</td>
+            <td class="">
+                <input type="text" name="zkl-locatie">
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaaktype:</td>
+            <td class="table_td_right_zaakinformatie">
+                <select multiple size=8 name="zk-zaaktype_id" style="width:230px;">
+                    <option value="">Geen keuze</option>
+                    [% zts = c.model('Zaaktype').list %]
+                    [% WHILE (zt = zts.next) %]
+                        <option value="[% zt.id %]">[% zt.zaaktype_node_id.titel %]</option>
+                    [% END %]
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Initiatie:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div><input type="checkbox" name="zk-trigger" value="intern"> Intern</div>
+                    <div><input type="checkbox" name="zk-trigger" value="extern"> Extern</div>
+                </div>
+            </td>
+        </tr>
+        <!--
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaakniveau:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div><input type="radio" name="zks-niveau" value="" checked> Geen</div>
+                    <div><input type="radio" name="zks-niveau" value="A"> Hoofdzaak</div>
+                    <div><input type="radio" name="zks-niveau" value="B"> Deelzaak</div>
+                </div>
+            </td>
+        </tr>
+        -->
+        <tr>
+            <td class="table_td_left_zaakinformatie">Verificatie aanvrager:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div><input type="checkbox" name="zk-aanvrager_verificatie" value="behandelaar"> Behandelaar (balie)</div>
+                    <div><input type="checkbox" name="zk-aanvrager_verificatie" value="digid"> DigiD</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Status:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div><input type="checkbox" name="zks-status" value="resolved"> Afgehandeld</div>
+                    <div><input type="checkbox" name="zks-status" value="open"> In behandeling</div>
+                    <div><input type="checkbox" name="zks-status" value="stalled"> Opgeschort</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Urgentie:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="clearfix">
+                    <div><input type="checkbox" name="zks-urgentie" value=""> Normaal</div>
+                    <div><input type="checkbox" name="zks-urgentie" value="medium"> <span style="background:orange;padding:0 2px;">Oranje</span></div>
+                    <div><input type="checkbox" name="zks-urgentie" value="high"> <span style="background:red;padding:0 2px;">Rood</div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Ontvangen via:</td>
+            <td class="">
+                <div class="clearfix">
+                    [% FOREACH contactkanaal IN ZCONSTANTS.contactkanalen %]
+                    <div>
+                        <input
+                        type="checkbox"
+                        name="zk-contactkanaal"
+                        value="[% contactkanaal %]"
+                        > [% contactkanaal | ucfirst %]</div>
+                    [% END %]
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Organisatorische eenheid:</td>
+            <td class="table_td_right_zaakinformatie">
+                [% IF org_eenheiden %]
+                <select name="zks-org_eenheid" multiple size=8 style="width:230px;">
+                    <option value="">Geen keuze</option>
+                    [% WHILE (org_eenheid = org_eenheiden.next) %]
+                        <option value="[% org_eenheid.ex_id %]">[% org_eenheid.naam %]</option>
+                    [% END %]
+                </select>
+                [% END %]
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Zaakcoordinator:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="ezra_select_betrokkene">
+                    <div class="medewerker">
+                        <input
+                            type="hidden"
+                            name="ztc_coordinator_id"
+                            value="[%
+                                c.req.params.betrokkene_id || ''
+                            %]"
+                        />
+                        <input type="text"
+                            value="[%
+                                c.req.params.betrokkene_type == 'medewerker'
+                                    ?  c.req.params.betrokkene_naam
+                                    : ''
+                            %]"
+                            name="ztc_coordinator_naam"
+                            class="input_large"
+                        />
+                        <a href="#" title="Zoek een nieuwe aanvrager" class="ezra_betrokkene_selector" rel="betrokkene_type: medewerker; selector_identifier: .search-wgt-zaakkenmerken_search input[name='ztc_coordinator_id']; selector_naam: .search-wgt-zaakkenmerken_search input[name='ztc_coordinator_naam']">
+                            <img src="/images/icon-magnifier.png" width="16" height="16" border="0" />
+                        </a><span class="validator"></span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Huidige behandelaar:</td>
+            <td class="table_td_right_zaakinformatie">
+                <div class="ezra_select_betrokkene">
+                    <div class="medewerker">
+                        <input
+                            type="hidden"
+                            name="ztc_behandelaar_id"
+                            value="[%
+                                c.req.params.betrokkene_id || ''
+                            %]"
+                        />
+                        <input type="text"
+                            value="[%
+                                c.req.params.betrokkene_type == 'medewerker'
+                                    ?  c.req.params.betrokkene_naam
+                                    : ''
+                            %]"
+                            name="ztc_behandelaar_naam"
+                            class="input_large"
+                        />
+                        <a href="#" title="Zoek een nieuwe aanvrager" class="ezra_betrokkene_selector" rel="betrokkene_type: medewerker; selector_identifier: .search-wgt-zaakkenmerken_search input[name='ztc_behandelaar_id']; selector_naam: .search-wgt-zaakkenmerken_search input[name='ztc_behandelaar_naam']">
+                            <img src="/images/icon-magnifier.png" width="16" height="16" border="0" />
+                        </a><span class="validator"></span>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Besluittype:</td>
+            <td class="">
+                [% FOREACH besluittype IN ZOPTIONS.BESLUITTYPEN.sort %]
+                <div><input
+                        type="checkbox"
+                        name="zk-besluittype"
+                        value="[% besluittype %]"
+                        > [% c.loc(besluittype) %]</div>
+                [% END %]
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Resultaat:</td>
+            <td class="">
+                <div class="clearfix">
+                [% FOREACH resultaattype IN ZOPTIONS.RESULTAATTYPEN.sort %]
+                <div><input
+                        type="checkbox"
+                        name="zk-resultaat"
+                        value="[% resultaattype %]"
+                        > [% resultaattype | ucfirst %]</div>
+                [% END %]
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="table_td_left_zaakinformatie">Besluit:</td>
+            <td class="">
+                <select name="zks-besluit">
+                    <option value="">Maak keuze</option>
+                    <option value="Akkoord">Akkoord</option>
+                    <option value="Niet akkoord">Niet akkoord</option>
+                    <option value="Niet nodig">Niet nodig</option>
+                </select>
+            </td>
+        </tr>
+    </table>
+</div>
+<!-- END WIDGET: betrokkene/aanvrager_search -->

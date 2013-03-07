@@ -1,0 +1,88 @@
+                        <table class="table_zaakinformatie_title">
+                            <tr>
+                                <td>Acties voor het vervolg van de zaak</td>
+                            </tr>
+                        </table>
+                        <table class="table_zaakinformatie_title">
+            [% IF c.check_any_zaak_permission('zaak_edit') %]
+                [% IF c.can_change %]
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/status/next') %]">Naar volgende status</a></td>
+                            </tr>
+                [% END %]
+                [% IF c.check_any_zaak_permission('zaak_beheer') %]
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="[% c.uri_for('/zaak/' _ zaak.nr _ '/update/vorige_status') %]" class="fire-dialog" title="Naar vorige status">Naar vorige status</a></td>
+                            </tr>
+                [% END %]
+                [% IF c.can_change %]
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/aanvrager" class="fire-dialog" rel="" title="Wijzig aanvrager voor zaak">Aanvrager wijzigen</a></td>
+                            </tr>
+                [% END %]
+                [% IF zaak.kenmerk.aanvrager.btype == 'bedrijf' %]
+                    <tr>
+                        <td>
+                            <img src="/images/icon-item.png">
+                            <a href="/zaak/[% zaak.nr %]/update/bedrijfid/wijzig" class="fire-dialog" rel="" title="Wijzig wachtwoord voor [% c.config.gemeente.adres %]ID">[% c.config.gemeente.adres %]ID: Wijzig wachtwoord</a>
+                        </td>
+                    </tr>
+                [% END %]
+                [% IF c.check_any_zaak_permission('zaak_beheer') %]
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/behandelaar" class="fire-dialog" rel="" title="Wijzig behandelaar voor zaak">Behandelaar wijzigen</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/eigenaar" class="fire-dialog" rel="" title="Wijzig behandelaar voor zaak">Zaakcoordinator wijzigen</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/zaaktype" class="fire-dialog" rel="callback: ezra_basic_zaak_intake" title="Wijzig zaaktype voor zaak">Zaaktype wijzigen</a></td>
+                            </tr>
+                [% END %]
+                [% IF c.can_change %]
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/verlengen" class="fire-dialog" rel="" title="Wijzig afhandeldatum voor zaak">Zaak verlengen</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/opschorten" class="fire-dialog" rel="" title="Zaak opschorten">Zaak opschorten / activeren</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/afhandelen" class="fire-dialog" rel="" title="Wijzig behandelaar voor zaak">Zaak vroegtijdig afhandelen</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/relatie" class="fire-dialog" rel="callback: load_search_basics" title="Maak relatie met andere zaak">Relatie aanbrengen met andere zaak</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="/zaak/[% zaak.nr %]/update/deelzaak" class="fire-dialog" rel="callback: next_subzaak" title="Zaak starten">Handmatig een deelzaak / gerelateerde zaak starten</a></td>
+                            </tr>
+                [% END %]
+            [% END %]
+                        </table>
+                        <p />
+                        <br />
+                    <!--
+                        <p>
+                        <table class="table_zaakinformatie_title">
+                            <tr>
+                                <td>Acties voor het zaakdossier</td>
+
+                            </tr>
+                        </table>
+                        <table class="table_zaakinformatie_title">
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="#<h2>Checklisten</h2>">Een e-mail met zaakinformatie sturen naar een collega</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="#<h2>Checklisten</h2>">Een document uploaden</a></td>
+
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="#<h2>Checklisten</h2>">Een webdocument aanmaken</a></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/icon-item.png"> <a href="#<h2>Checklisten</h2>">Zaak naar pdf exporteren (plugin)</a></td>
+                            </tr>
+
+                        </table>
+-->
+

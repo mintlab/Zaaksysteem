@@ -1,0 +1,45 @@
+<!-- widgets/beheer/bibliotheek/table_row.tt -->
+<tr class="table_zaken_tr">
+    <td class="td30 center">
+        <a
+            href="[%
+            c.uri_for(
+                '/beheer/plugins/' _ entry.id
+            ) %]"
+        >
+            <img src="/images/icon-plugin.png" width="16" height="16" border="0" />
+        </a>
+    </td>
+    <td class="tdvar">
+        <a
+            href="[%
+            c.uri_for(
+                '/beheer/plugins/' _ entry.id
+            ) %]"
+        >
+            [% entry.label %]
+        </a>
+    </td>
+    <td class="td150">[% entry.versie %]</td>
+    <td class="td150">[% (entry.actief ? 'Ja' : 'Nee') %]</td>
+    <td class="td150">
+        <div class="select_actie_container">
+            <div class="col">
+                <select name="">
+                    <option
+                        class="popup"
+                        value="[%
+                    c.uri_for(
+                    '/beheer/plugins/' _ entry.id _ '/' _
+                    ( entry.actief ? 'uitschakelen' : 'inschakelen' )
+                    ) %]">[% (entry.actief ? 'uitschakelen' : 'inschakelen' ) %]
+                    </option>
+                </select>
+            </div>
+            <div class="col">
+                <a href="#" class="bevestig select_actie"><img src="/images/icon-go-pijl.gif" alt="go" /></a>
+            </div>
+        </div>
+    </td>
+</tr>
+<!-- zaaktype/widgets/row_categorie.tt -->
