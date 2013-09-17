@@ -1,15 +1,12 @@
-Zaaksysteem
-===========
+# Zaaksysteem.nl
 
-Zaaksysteem is a all-in-one application which organizations can use for their business processes. 
-It is common used by (semi) government administrations. Features are:
+This is the old code repository for the Zaaksysteem framework. The actual
+code has since migrated to our
+[BitBucket](https://bitbucket.org/mintlab/zaaksysteem/) repo. This repository
+is nothing but a handle for some of our issue tracking.
 
-- Authentication with OpenLDAP (DigiD, SAML, Other)
-- Document Management
-- Case Management
-- Custom Relation Management
-- Webforms
-- Client portal
-- Archiving (based on ISO/NEN2082)
+For more information, visit our [website](http://www.zaaksysteem.nl/).
 
-Check out the website for more information: http://www.zaaksysteem.nl
+
+-- 
+The [Mintlab](http://www.mintlab.nl/) Team
